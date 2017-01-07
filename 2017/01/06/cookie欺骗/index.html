@@ -29,7 +29,7 @@
 &amp;lt;html&amp;gt;">
 <meta property="og:image" content="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/2.png?raw=true">
 <meta property="og:image" content="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/2.png?raw=true">
-<meta property="og:updated_time" content="2017-01-07T11:47:45.252Z">
+<meta property="og:updated_time" content="2017-01-07T11:50:57.804Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cookie欺骗">
 <meta name="twitter:description" content="1.什么是cookie欺骗改变cookie的值，发给服务器，就是cookie欺骗。正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。
@@ -108,10 +108,8 @@
 
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre><p>运行index.html,通过Chrome F12开发者工具，可以看到cookie信息。<br><img src="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/2.png?raw=true" alt=""></p>
-<p>可以看到cookie要和domain域名对应。每个cookie只能被对应的域名所访问，其他域名无法访问。</p>
-<p>3.如何进行cookie欺骗<br>修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。<br>步骤：<br>1)修改host<br>121.43.113.200 dev.test.com<br>2)将index.html放入服务器121.43.113.200<br>3)访问url:dev.test.com/index.html<br>4)查看cookie信息<br><img src="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/2.png?raw=true" alt=""></p>
-<p>5)还原host　#121.43.113.200 dev.test.com<br>6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。</p>
+</code></pre><p>运行index.html,通过Chrome F12开发者工具，可以看到cookie信息。<br><img src="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/2.png?raw=true" alt=""><br>可以看到cookie要和domain域名对应。每个cookie只能被对应的域名所访问，其他域名无法访问。</p>
+<p>3.如何进行cookie欺骗<br>修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。<br>步骤：<br>1)修改host<br>121.43.113.200 dev.test.com<br>2)将index.html放入服务器121.43.113.200<br>3)访问url:dev.test.com/index.html<br>4)查看cookie信息<br><img src="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/2.png?raw=true" alt=""><br>5)还原host　#121.43.113.200 dev.test.com<br>6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。</p>
 <p>4.cookie欺骗防止<br>随机码防止cookie欺骗<br>原理：在服务端生成唯一随机码，每次提交cookie时带上随机码，和服务端的随机码校验。</p>
 
     
