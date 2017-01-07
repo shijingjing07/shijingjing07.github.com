@@ -11,27 +11,27 @@
   
   
     <meta name="description" content="1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
-2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：
-chmod 77">
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：  
+ chmod">
   
   <meta name="description" content="1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
-2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：
-chmod 77">
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：  
+ chmod">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx文件目录权限设置">
 <meta property="og:url" content="http://yoursite.com/2017/01/06/nginx文件目录权限设置/index.html">
 <meta property="og:site_name" content="迪米特">
 <meta property="og:description" content="1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
-2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：
-chmod 77">
-<meta property="og:image" content="http://yoursite.com/img/1.png">
-<meta property="og:updated_time" content="2017-01-06T16:17:37.418Z">
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：  
+ chmod">
+<meta property="og:image" content="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/1.png?raw=true">
+<meta property="og:updated_time" content="2017-01-07T12:27:26.625Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx文件目录权限设置">
 <meta name="twitter:description" content="1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
-2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：
-chmod 77">
-<meta name="twitter:image" content="http://yoursite.com/img/1.png">
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：  
+ chmod">
+<meta name="twitter:image" content="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/1.png?raw=true">
   
   
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -85,12 +85,24 @@ chmod 77">
   <div class="entry">
     
       <p>1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。</p>
-<p>2.生成用户名单<br>在nginx中我们使用htpasswd来生成用户名单<br>下载这个python文件：<a href="http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py" target="_blank" rel="external">http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py</a> （nginx wiki里推荐的）<br>运行示例：</p>
-<p>chmod 777 htpasswd.py<br>./htpasswd.py -c -b htpasswd username password</p>
-<p>#-c为生成文件 htpasswd为文件名</p>
+<p>2.生成用户名单<br>在nginx中我们使用htpasswd来生成用户名单<br>下载这个python文件：<a href="http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py" target="_blank" rel="external">http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py</a> （nginx wiki里推荐的）<br>运行示例：  </p>
+<pre><code> chmod 777 htpasswd.py
+./htpasswd.py -c -b htpasswd username password
+</code></pre><p>-c为生成文件 htpasswd为文件名</p>
 <p>nginx 的 http auth basic 的密码是用 crypt(3) 加密的<br>我们把生成的htpasswd文件放到/etc/nginx目录中，修改权限chmod 400 htpasswd来保护一下该文件。</p>
 <p>3.修改nginx配置文件</p>
-<p>复制代码<br>server {<br>server_name www.test.com;<br>root /usr/share/nginx/html;<br>location /devdoc {<br>autoindex on;#显示文件列表<br>index index.html index.htm;#默认首页<br>charset utf-8;#编码<br>auth_basic “Restricted”;#访问权限类型<br>auth_basic_user_file /etc/nginx/htpasswd;#用户名单<br>}<br>}<br>复制代码<br>重启nginx即可。访问网站www.test.com/devdoc，需要输入我们设置的用户名密码登录才能访问文件。如下图所示：<br><img src="/img/1.png"></p>
+<pre><code>server {
+server_name www.test.com;
+root /usr/share/nginx/html;
+location /devdoc {
+autoindex on;#显示文件列表
+index index.html index.htm;#默认首页
+charset utf-8;#编码
+auth_basic &quot;Restricted&quot;;#访问权限类型
+auth_basic_user_file /etc/nginx/htpasswd;#用户名单
+}
+}
+</code></pre><p>重启nginx即可。访问网站www.test.com/devdoc，需要输入我们设置的用户名密码登录才能访问文件。如下图所示：<br><img src="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/1.png?raw=true" alt=""></p>
 
     
   </div>
