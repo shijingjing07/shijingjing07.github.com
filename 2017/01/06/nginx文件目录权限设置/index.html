@@ -4,21 +4,34 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   
-  <title>迪米特</title>
+  <title>nginx文件目录权限设置 | 迪米特</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
     <meta name="author" content="迪米特">
   
   
-  <meta name="description" content="路过秋天">
-<meta property="og:type" content="website">
-<meta property="og:title" content="迪米特">
-<meta property="og:url" content="http://yoursite.com/index.html">
+    <meta name="description" content="1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：
+chmod 77">
+  
+  <meta name="description" content="1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：
+chmod 77">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx文件目录权限设置">
+<meta property="og:url" content="http://yoursite.com/2017/01/06/nginx文件目录权限设置/index.html">
 <meta property="og:site_name" content="迪米特">
-<meta property="og:description" content="路过秋天">
+<meta property="og:description" content="1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：
+chmod 77">
+<meta property="og:image" content="http://yoursite.com/img/1.png">
+<meta property="og:updated_time" content="2017-01-06T16:17:37.418Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="迪米特">
-<meta name="twitter:description" content="路过秋天">
+<meta name="twitter:title" content="nginx文件目录权限设置">
+<meta name="twitter:description" content="1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py （nginx wiki里推荐的）运行示例：
+chmod 77">
+<meta name="twitter:image" content="http://yoursite.com/img/1.png">
   
   
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -52,13 +65,7 @@
   </nav>
   <div class="clearfix"></div>
 </header>
-    <div class="content">
-
-
-
-
-  
-    <article class="post">
+    <div class="content"><article class="post">
   <header>
     
       <div class="icon"></div>
@@ -70,7 +77,7 @@
     
     
   
-    <h1 class="title"><a href="/2017/01/06/nginx文件目录权限设置/">nginx文件目录权限设置</a></h1>
+    <h1 class="title">nginx文件目录权限设置</h1>
   
 
   </header>
@@ -87,68 +94,22 @@
 
     
   </div>
-  <footer class="end-sep">
+  <footer>
     
       
-      
-    
-    <div class="clearfix"></div>
-  </footer>
-</article>
-
-
-  
-    <article class="post">
-  <header>
-    
-      <div class="icon"></div>
-      <a href="/2017/01/06/cookie欺骗/">
-  <time datetime="2017-01-06T15:27:06.000Z">
-    2017-01-06
-  </time>
-</a>
-    
-    
-  
-    <h1 class="title"><a href="/2017/01/06/cookie欺骗/">cookie欺骗</a></h1>
-  
-
-  </header>
-  
-  <div class="entry">
-    
-      <p>1.什么是cookie欺骗<br>改变cookie的值，发给服务器，就是cookie欺骗。<br>正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。</p>
-<p>2.cookie使用示例</p>
-<p>index.html 写入cookie {‘username’:’zhangsan’,’psw’:’123’}</p>
-<p>&lt;!DOCTYPE html&gt;</p>
-<html><br><head><br><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><br>    <title></title><br>    <meta charset="utf-8"><br>    <script type="text/javascript" src="jquery.min.js"></script><br>    <script type="text/javascript" src="jquery.cookie.js"></script><br>    <script type="text/javascript"><br>        $.cookie(‘username’, “zhangsan”);<br>        $.cookie(‘psw’, “123”);<br>    </script><br></head><br><body><br><br></body><br></html>
-
-<p>运行index.html,通过Chrome F12开发者工具，可以看到cookie信息。<br><img src="/img/2.png"></p>
-<p>可以看到cookie要和domain域名对应。每个cookie只能被对应的域名所访问，其他域名无法访问。</p>
-<p>3.如何进行cookie欺骗</p>
-<p>修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。<br>步骤：<br>1)修改host<br>121.43.113.200 dev.test.com<br>2)将index.html放入服务器121.43.113.200<br>3)访问url:dev.test.com/index.html<br>4)查看cookie信息<br><img src="/img/2.png"><br>5)还原host</p>
-<p>#121.43.113.200 dev.test.com<br>6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。</p>
-<p>4.cookie欺骗防止<br>随机码防止cookie欺骗<br>原理：在服务端生成唯一随机码，每次提交cookie时带上随机码，和服务端的随机码校验。</p>
-
-    
+  <div class="categories">
+    <a class="categories-link" href="/categories/前端开发/">前端开发</a>
   </div>
-  <footer class="end-sep">
-    
+
       
-      
+  <div class="tags">
+    <a class="tags-link" href="/tags/htpasswd/">htpasswd</a>, <a class="tags-link" href="/tags/nginx/">nginx</a>
+  </div>
+
     
     <div class="clearfix"></div>
   </footer>
 </article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav>
 
 </div>
   </div>

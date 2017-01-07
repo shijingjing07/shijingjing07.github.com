@@ -4,21 +4,39 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   
-  <title>迪米特</title>
+  <title>cookie欺骗 | 迪米特</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
     <meta name="author" content="迪米特">
   
   
-  <meta name="description" content="路过秋天">
-<meta property="og:type" content="website">
-<meta property="og:title" content="迪米特">
-<meta property="og:url" content="http://yoursite.com/index.html">
+    <meta name="description" content="1.什么是cookie欺骗改变cookie的值，发给服务器，就是cookie欺骗。正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。
+2.cookie使用示例
+index.html 写入cookie {‘username’:’zhangsan’,’psw’:’123’}
+&amp;lt;!DOCTYPE html&amp;gt;">
+  
+  <meta name="description" content="1.什么是cookie欺骗改变cookie的值，发给服务器，就是cookie欺骗。正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。
+2.cookie使用示例
+index.html 写入cookie {‘username’:’zhangsan’,’psw’:’123’}
+&amp;lt;!DOCTYPE html&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cookie欺骗">
+<meta property="og:url" content="http://yoursite.com/2017/01/06/cookie欺骗/index.html">
 <meta property="og:site_name" content="迪米特">
-<meta property="og:description" content="路过秋天">
+<meta property="og:description" content="1.什么是cookie欺骗改变cookie的值，发给服务器，就是cookie欺骗。正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。
+2.cookie使用示例
+index.html 写入cookie {‘username’:’zhangsan’,’psw’:’123’}
+&amp;lt;!DOCTYPE html&amp;gt;">
+<meta property="og:image" content="http://yoursite.com/img/2.png">
+<meta property="og:image" content="http://yoursite.com/img/2.png">
+<meta property="og:updated_time" content="2017-01-06T16:19:32.211Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="迪米特">
-<meta name="twitter:description" content="路过秋天">
+<meta name="twitter:title" content="cookie欺骗">
+<meta name="twitter:description" content="1.什么是cookie欺骗改变cookie的值，发给服务器，就是cookie欺骗。正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。
+2.cookie使用示例
+index.html 写入cookie {‘username’:’zhangsan’,’psw’:’123’}
+&amp;lt;!DOCTYPE html&amp;gt;">
+<meta name="twitter:image" content="http://yoursite.com/img/2.png">
   
   
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -52,53 +70,7 @@
   </nav>
   <div class="clearfix"></div>
 </header>
-    <div class="content">
-
-
-
-
-  
-    <article class="post">
-  <header>
-    
-      <div class="icon"></div>
-      <a href="/2017/01/06/nginx文件目录权限设置/">
-  <time datetime="2017-01-06T15:43:13.000Z">
-    2017-01-06
-  </time>
-</a>
-    
-    
-  
-    <h1 class="title"><a href="/2017/01/06/nginx文件目录权限设置/">nginx文件目录权限设置</a></h1>
-  
-
-  </header>
-  
-  <div class="entry">
-    
-      <p>1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。</p>
-<p>2.生成用户名单<br>在nginx中我们使用htpasswd来生成用户名单<br>下载这个python文件：<a href="http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py" target="_blank" rel="external">http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py</a> （nginx wiki里推荐的）<br>运行示例：</p>
-<p>chmod 777 htpasswd.py<br>./htpasswd.py -c -b htpasswd username password</p>
-<p>#-c为生成文件 htpasswd为文件名</p>
-<p>nginx 的 http auth basic 的密码是用 crypt(3) 加密的<br>我们把生成的htpasswd文件放到/etc/nginx目录中，修改权限chmod 400 htpasswd来保护一下该文件。</p>
-<p>3.修改nginx配置文件</p>
-<p>复制代码<br>server {<br>server_name www.test.com;<br>root /usr/share/nginx/html;<br>location /devdoc {<br>autoindex on;#显示文件列表<br>index index.html index.htm;#默认首页<br>charset utf-8;#编码<br>auth_basic “Restricted”;#访问权限类型<br>auth_basic_user_file /etc/nginx/htpasswd;#用户名单<br>}<br>}<br>复制代码<br>重启nginx即可。访问网站www.test.com/devdoc，需要输入我们设置的用户名密码登录才能访问文件。如下图所示：<br><img src="/img/1.png"></p>
-
-    
-  </div>
-  <footer class="end-sep">
-    
-      
-      
-    
-    <div class="clearfix"></div>
-  </footer>
-</article>
-
-
-  
-    <article class="post">
+    <div class="content"><article class="post">
   <header>
     
       <div class="icon"></div>
@@ -110,7 +82,7 @@
     
     
   
-    <h1 class="title"><a href="/2017/01/06/cookie欺骗/">cookie欺骗</a></h1>
+    <h1 class="title">cookie欺骗</h1>
   
 
   </header>
@@ -132,23 +104,22 @@
 
     
   </div>
-  <footer class="end-sep">
+  <footer>
     
       
+  <div class="categories">
+    <a class="categories-link" href="/categories/网络安全/">网络安全</a>
+  </div>
+
       
+  <div class="tags">
+    <a class="tags-link" href="/tags/cookie欺骗/">cookie欺骗</a>
+  </div>
+
     
     <div class="clearfix"></div>
   </footer>
 </article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav>
 
 </div>
   </div>
