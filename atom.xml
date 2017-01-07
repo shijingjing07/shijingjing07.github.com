@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>迪米特</title>
+  <subtitle>路过秋天</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-01-07T15:02:16.402Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>迪米特</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx文件目录权限设置</title>
+    <link href="http://yoursite.com/2017/01/06/nginx%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE/"/>
+    <id>http://yoursite.com/2017/01/06/nginx文件目录权限设置/</id>
+    <published>2017-01-06T15:43:13.000Z</published>
+    <updated>2017-01-07T15:02:16.402Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>1.使用场景</strong><br>有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。</p>
+<p><strong>2.生成用户名单</strong><br>在nginx中我们使用htpasswd来生成用户名单<br>下载这个python文件：<br><a href="http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py" target="_blank" rel="external">http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py</a> （nginx wiki里推荐的）<br>运行示例：  </p>
+<pre><code> chmod 777 htpasswd.py
+./htpasswd.py -c -b htpasswd username password
+</code></pre><p>-c为生成文件 htpasswd为文件名</p>
+<p>nginx 的 http auth basic 的密码是用 crypt(3) 加密的<br>我们把生成的htpasswd文件放到/etc/nginx目录中，修改权限chmod 400 htpasswd来保护一下该文件。</p>
+<p><strong>3.修改nginx配置文件</strong></p>
+<pre><code>server {
+server_name www.test.com;
+root /usr/share/nginx/html;
+location /devdoc {
+autoindex on;#显示文件列表
+index index.html index.htm;#默认首页
+charset utf-8;#编码
+auth_basic &quot;Restricted&quot;;#访问权限类型
+auth_basic_user_file /etc/nginx/htpasswd;#用户名单
+}
+}
+</code></pre><p>重启nginx即可。访问网站www.test.com/devdoc，需要输入我们设置的用户名密码登录才能访问文件。如下图所示：<br><img src="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/1.png?raw=true" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;1.使用场景&lt;/strong&gt;&lt;br&gt;有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.生成用户名单&lt;/strong&gt;&lt;br&gt;在nginx中我们使用htpass
+    
+    </summary>
+    
+      <category term="前端开发" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="nginx" scheme="http://yoursite.com/tags/nginx/"/>
+    
+      <category term="htpasswd" scheme="http://yoursite.com/tags/htpasswd/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cookie欺骗</title>
+    <link href="http://yoursite.com/2017/01/06/cookie%E6%AC%BA%E9%AA%97/"/>
+    <id>http://yoursite.com/2017/01/06/cookie欺骗/</id>
+    <published>2017-01-06T15:27:06.000Z</published>
+    <updated>2017-01-07T14:36:56.022Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>1.什么是cookie欺骗</strong><br>改变cookie的值，发给服务器，就是cookie欺骗。<br>正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。</p>
+<p><strong>2.cookie使用示例</strong><br>index.html 写入cookie {‘username’:’zhangsan’,’psw’:’123’}</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.cookie.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        $.cookie(&apos;username&apos;, &quot;zhangsan&quot;);
+        $.cookie(&apos;psw&apos;, &quot;123&quot;);
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>运行index.html,通过Chrome F12开发者工具，可以看到cookie信息。<br><img src="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/2.png?raw=true" alt=""><br>可以看到cookie要和domain域名对应。每个cookie只能被对应的域名所访问，其他域名无法访问。</p>
+<p><strong>3.如何进行cookie欺骗</strong><br>修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。<br>步骤：<br>1)修改host<br>121.43.113.200 dev.test.com<br>2)将index.html放入服务器121.43.113.200<br>3)访问url:dev.test.com/index.html<br>4)查看cookie信息<br><img src="https://github.com/shijingjing07/shijingjing07.github.com/blob/master/img/2.png?raw=true" alt=""><br>5)还原host　#121.43.113.200 dev.test.com<br>6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。</p>
+<p><strong>4.cookie欺骗防止</strong><br>随机码防止cookie欺骗<br>原理：在服务端生成唯一随机码，每次提交cookie时带上随机码，和服务端的随机码校验。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;1.什么是cookie欺骗&lt;/strong&gt;&lt;br&gt;改变cookie的值，发给服务器，就是cookie欺骗。&lt;br&gt;正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。&lt;/p&gt;
+&lt;p&gt;&lt;strong
+    
+    </summary>
+    
+      <category term="网络安全" scheme="http://yoursite.com/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="cookie欺骗" scheme="http://yoursite.com/tags/cookie%E6%AC%BA%E9%AA%97/"/>
+    
+  </entry>
+  
+</feed>
