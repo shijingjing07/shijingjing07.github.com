@@ -78,7 +78,7 @@
   <div class="entry">
     
       <p>1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。</p>
-<p>2.生成用户名单<br>在nginx中我们使用htpasswd来生成用户名单<br>下载这个python文件：<a href="http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py" target="_blank" rel="external">http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py</a> （nginx wiki里推荐的）<br>运行示例：  </p>
+<p>2.生成用户名单<br>在nginx中我们使用htpasswd来生成用户名单<br>下载这个python文件：<br><a href="http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py" target="_blank" rel="external">http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py</a> （nginx wiki里推荐的）<br>运行示例：  </p>
 <pre><code> chmod 777 htpasswd.py
 ./htpasswd.py -c -b htpasswd username password
 </code></pre><p>-c为生成文件 htpasswd为文件名</p>
