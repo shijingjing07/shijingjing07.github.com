@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++ 初始化列表 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.初始化列表的写法
+初始化列表，写在类的构造函数后面，以冒号开头，后跟一系列用逗号分隔的初始化字段。如下列所示：  
+class Person
+{
+public:
+    Person(std::string s, int i):name(s), age(i)
+    {
+    std::cout&amp;lt;&amp;lt;&amp;quot;Person(std::string s, int i)&amp;quot;&amp;">
+  
+  <meta name="description" content="1.初始化列表的写法
+初始化列表，写在类的构造函数后面，以冒号开头，后跟一系列用逗号分隔的初始化字段。如下列所示：  
+class Person
+{
+public:
+    Person(std::string s, int i):name(s), age(i)
+    {
+    std::cout&amp;lt;&amp;lt;&amp;quot;Person(std::string s, int i)&amp;quot;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 初始化列表">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/01/C++ 初始化列表/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.初始化列表的写法
+初始化列表，写在类的构造函数后面，以冒号开头，后跟一系列用逗号分隔的初始化字段。如下列所示：  
+class Person
+{
+public:
+    Person(std::string s, int i):name(s), age(i)
+    {
+    std::cout&amp;lt;&amp;lt;&amp;quot;Person(std::string s, int i)&amp;quot;&amp;">
+<meta property="og:updated_time" content="2017-01-12T01:35:39.021Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ 初始化列表">
+<meta name="twitter:description" content="1.初始化列表的写法
+初始化列表，写在类的构造函数后面，以冒号开头，后跟一系列用逗号分隔的初始化字段。如下列所示：  
+class Person
+{
+public:
+    Person(std::string s, int i):name(s), age(i)
+    {
+    std::cout&amp;lt;&amp;lt;&amp;quot;Person(std::string s, int i)&amp;quot;&amp;">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/01/C++ 初始化列表/">
+  <time datetime="2016-06-01T02:11:00.000Z">
+    2016-06-01
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++ 初始化列表</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.初始化列表的写法</strong></p>
+<p>初始化列表，写在类的构造函数后面，以冒号开头，后跟一系列用逗号分隔的初始化字段。如下列所示：  </p>
+<pre><code>class Person
+{
+public:
+    Person(std::string s, int i):name(s), age(i)
+    {
+    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
+    } ;
+private:
+    std::string name ;
+    int age;   
+};
+</code></pre><p>其中的:name(s), age(i){} 即为初始化列表，创建对象时，有两个步骤：<br>成员变量初始化阶段：会将对象中的变量进行初始化，就是初始化列表，示例中我们自定义了部分变量初始化的方式。<br>构造函数执行阶段：执行构造函数中的代码。</p>
+<p>下面的示例说明了以上的两个步骤，我们给Person类增加一个Pet字段，</p>
+<p>这样在创建Person对象时，会先初始化成员变量，执行Pet的构造函数，再执行Person的构造函数：</p>
+<pre><code>class Pet
+{
+public:
+Pet()
+{
+    std::cout&lt;&lt;&quot;Pet()&quot;&lt;&lt;std::endl;
+}
+private:
+    std::string  category;
+};
+class Person
+{
+public:
+    Person(std::string s, int i):name(s), age(i)
+    {
+    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
+    } ;
+private:
+    std::string name ;
+    int age;
+    Pet pet;   
+};
+int main()
+{
+    Person(&quot;Jack&quot;,20);
+    return 0;
+}
+</code></pre><p>输出结果：<br>Pet()<br>Person(std::string s, int i)</p>
+<p><strong>2.使用初始化列表的好处</strong><br>在上例中，每次初始化Person对象时都会调用Pet的构造函数，如果使用初始化列表，则在成员变量初始化步骤时，可以用一个已经存在的Pet对象，直接赋给Person的Pet字段，省略了调用Pet构造函数的过程，提高了效率。</p>
+<p>代码示例如下：</p>
+<pre><code>class Pet
+{
+public:
+Pet()
+{
+    std::cout&lt;&lt;&quot;Pet()&quot;&lt;&lt;std::endl;
+}
+private:
+    std::string  category;
+};
+class Person
+{
+public:
+    Person(std::string s,int i,Pet p):name(s), age(i),pet(p)
+    {
+    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
+    } ;
+private:
+    std::string name ;
+    int age;
+    Pet pet;   
+};
+int main()
+{
+    Pet pet;
+    Person(&quot;Jack&quot;,20,pet);
+    return 0;
+}
+</code></pre><p><strong>3.必须使用初始化列表的几种情况</strong><br>1)常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</p>
+<pre><code>class Test
+{
+public:
+    Test(int i):a(i){};
+private:
+    const int a;
+}
+</code></pre><p>2)引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面</p>
+<pre><code>class Test
+{
+public:
+    Test(int i):a(i){};
+private:
+    int&amp; a;
+}
+</code></pre><p>3)没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化。</p>
+<pre><code>class Test
+{
+public:
+    Test(int i):a(i){};
+private:
+    int a;
+}
+</code></pre><p>4)类继承中，基类私有字段的初始化有时必须通过在初始化列表中调用基类的构造函数</p>
+<pre><code>#include&lt;iostream&gt;
+class Test
+{
+public:
+        Test(int i):a(i){};
+        void Show()
+        {
+                std::cout&lt;&lt;a&lt;&lt;std::endl;
+        }
+private:
+        int a;
+};
+class SubTest:public Test
+{
+public:
+        SubTest(int i):Test(i){}
+};
+int main()
+{
+        SubTest subtest(5);
+        subtest.Show();
+        return 0;
+}
+</code></pre><p><strong>4.成员变量的初始化顺序</strong><br>成员是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的，看代码。</p>
+<pre><code>class Test
+{
+public:
+    Test(int x):j(x), i(j){} 
+private:
+    int i ;
+    int j ;
+};
+</code></pre><p>代码会报错，因为类中i限于j定义，所以用j初始化i时，会报错j还没有初始化。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/01/C++ 初始化列表/" data-title="C++ 初始化列表" data-url="https://shijingjing07.github.io/2016/06/01/C++ 初始化列表/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux进程间通信-信号 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是信号信号是Linux系统响应某些条件而产生的一个事件，接收到该信号的进程会执行相应的操作。
+2.信号的产生1)由硬件产生，如从键盘输入Ctrl+C可以终止当前进程2)由其他进程发送，如可在shell进程下，使用命令 kill -信号标号 PID，向指定进程发送信号。3)异常，进程异常时会发送信号
+3.信号的处理信号是由操作系统来处理的，说明信号的处理在内核态。信号不一定会立即被处理，此时">
+  
+  <meta name="description" content="1.什么是信号信号是Linux系统响应某些条件而产生的一个事件，接收到该信号的进程会执行相应的操作。
+2.信号的产生1)由硬件产生，如从键盘输入Ctrl+C可以终止当前进程2)由其他进程发送，如可在shell进程下，使用命令 kill -信号标号 PID，向指定进程发送信号。3)异常，进程异常时会发送信号
+3.信号的处理信号是由操作系统来处理的，说明信号的处理在内核态。信号不一定会立即被处理，此时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程间通信-信号">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/07/15/Linux进程间通信-信号/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是信号信号是Linux系统响应某些条件而产生的一个事件，接收到该信号的进程会执行相应的操作。
+2.信号的产生1)由硬件产生，如从键盘输入Ctrl+C可以终止当前进程2)由其他进程发送，如可在shell进程下，使用命令 kill -信号标号 PID，向指定进程发送信号。3)异常，进程异常时会发送信号
+3.信号的处理信号是由操作系统来处理的，说明信号的处理在内核态。信号不一定会立即被处理，此时">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715103955623-338884053.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104046451-1452925081.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104126107-306829576.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104211076-1829126528.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104227389-1017398124.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104254889-1228036479.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104314889-1220362811.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:30.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux进程间通信-信号">
+<meta name="twitter:description" content="1.什么是信号信号是Linux系统响应某些条件而产生的一个事件，接收到该信号的进程会执行相应的操作。
+2.信号的产生1)由硬件产生，如从键盘输入Ctrl+C可以终止当前进程2)由其他进程发送，如可在shell进程下，使用命令 kill -信号标号 PID，向指定进程发送信号。3)异常，进程异常时会发送信号
+3.信号的处理信号是由操作系统来处理的，说明信号的处理在内核态。信号不一定会立即被处理，此时">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715103955623-338884053.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/15/Linux进程间通信-信号/">
+  <time datetime="2016-07-14T18:44:00.000Z">
+    2016-07-15
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux进程间通信-信号</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.什么是信号<br>信号是Linux系统响应某些条件而产生的一个事件，接收到该信号的进程会执行相应的操作。</p>
+<p>2.信号的产生<br>1)由硬件产生，如从键盘输入Ctrl+C可以终止当前进程<br>2)由其他进程发送，如可在shell进程下，使用命令 kill -信号标号 PID，向指定进程发送信号。<br>3)异常，进程异常时会发送信号</p>
+<p>3.信号的处理<br>信号是由操作系统来处理的，说明信号的处理在内核态。<br>信号不一定会立即被处理，此时会储存在信号的信号表中。<br>处理过程示意图：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715103955623-338884053.png" alt=""></p>
+<p>由上图中可看出信号有三种处理方式：<br>1)忽略<br>2)默认处理方式：操作系统设定的默认处理方式<br>3)自定义信号处理方式：可自定义信号处理函数</p>
+<p>4.自定义信号处理方式<br>1)signal函数<br>原型：<br>void (<em>signal(int sig, void (</em>func)(int)))(int);<br>sig:信号值<br>func:信号处理函数指针，参数为信号值<br>代码示例如下：</p>
+<pre><code>#include &lt;signal.h&gt;
+#include &lt;stdio.h&gt;
+void ouch(int sig)
+{
+    printf(&quot;\nOUCH! - I got signal %d\n&quot;, sig);
+    //恢复终端中断信号SIGINT的默认行为
+    (void) signal(SIGINT, SIG_DFL);
+}
+int main()
+{
+    //改变终端中断信号SIGINT的默认行为，使之执行ouch函数
+    //而不是终止程序的执行
+    (void) signal(SIGINT, ouch);
+    while(1)
+    {
+        printf(&quot;Hello World!\n&quot;);
+        sleep(1);
+    }
+    return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104046451-1452925081.png" alt=""></p>
+<p>2)sigaction函数<br>原型：<br>int sigaction(int sig,const struct sigaction <em>act,struct sigaction </em>oact);<br>sig:信号值<br>act:指定信号的动作<br>oact:保存原信号的动作</p>
+<p>sigaction结构体的定义如下：<br>void (*)(int) sa_handler;处理函数指针，相当于signal函数的func参数。<br>sigset_t sa_mask;处理过程中，屏蔽对sa_mask信号集的处理，sa_mask可以消除信号间的竞态。<br>int sa_flags;信号处理修改器：处理函数执行完后，信号处理方式修改。如SA_RESETHAND，将信号处理方式重置为SIG_DFL<br>代码示例如下：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+void ouch(int sig)
+{
+    printf(&quot;\nOUCH! - I got signal %d\n&quot;, sig);
+}
+int main()
+{
+    struct sigaction act;
+    act.sa_handler = ouch;
+    //创建空的信号屏蔽字，即不屏蔽任何信息
+    sigemptyset(&amp;act.sa_mask);
+    //使sigaction函数重置为默认行为
+    act.sa_flags = SA_RESETHAND;
+    sigaction(SIGINT, &amp;act, 0);
+    while(1)
+    {
+        printf(&quot;Hello World!\n&quot;);
+        sleep(1);
+    }
+    return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104126107-306829576.png" alt=""></p>
+<p>4.信号的发送<br>1)kill函数<br>int kill(pid_t pid,int signo);<br>pid:进程ID<br>signo:信号值</p>
+<p>2)raise函数:只能向当前进程发信号<br>int raise(int signo);<br>signo:信号值</p>
+<p>3)abort函数:发送SIGABRT信号，可以让进程异常终止<br>void abort(void);</p>
+<p>4)alarm函数：发送SIGALRM闹钟信号<br>unsigned int alarm(unsigned int seconds);</p>
+<p>5.信号的阻塞<br>阻塞是阻止进程收到该信号，此时信号处于未决状态，放入进程的未决信号表中，<br>当解除对该信号的阻塞时，未决信号会被进程接收。</p>
+<p>1)阻塞信号<br>原型：<br>int sigprocmask(int how,const sigset_t <em>set,sigset_t </em>oset);<br>how:设置block阻塞表的方式<br>a.SIG_BLOCK:将信号集添加到block表中<br>b.SIG_UNBLOCK:将信号集从block表中删除<br>c.SIG_SETMASK：将信号集设置为block表<br>set:要设置的集合<br>oset:设置前保存之前block表信息</p>
+<p>2)获取未决信号<br>前面已经讲过，阻塞的信号处于未决的状态，会放入进程的未决信号表。<br>原型：<br>int sigpending(sigset_t *set);<br>set:out型参数，会将获得的当前进程的pending未决表中的信号集传入。</p>
+<p>代码示例如下：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;sys/signal.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;signal.h&gt;
+void func(int num)
+{
+  printf(&quot;catch signal number is %d&quot;,num);
+}
+void printfpendingsignal(sigset_t *set)
+{
+  int i;
+  for(i=1;i&lt;32;++i)
+  {
+    if(sigismember(set,i))
+    {
+      printf(&quot;1&quot;);
+    }
+    else
+    {
+      printf(&quot;0&quot;);
+    }
+  }
+  printf(&quot;\n&quot;);
+}
+int main()
+{ 
+  sigset_t s,p,o;
+  signal(SIGINT,func);
+  sigemptyset(&amp;s);
+  sigemptyset(&amp;p);
+  sigemptyset(&amp;o);
+  sigaddset(&amp;s,SIGINT);
+  sigprocmask(SIG_SETMASK,&amp;s,&amp;o);
+  int count=0;
+  while(1)
+  {
+    sigpending(&amp;p);
+    printfpendingsignal(&amp;p);
+    sleep(1);
+    if(count++==10)
+    {
+      printf(&quot;recover!\n&quot;);
+      sigprocmask(SIG_SETMASK,&amp;o,NULL);
+    }
+  }
+  return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104211076-1829126528.png" alt=""></p>
+<p>6.信号处理函数的安全问题<br>如果信号处理过程中被中断，再次调用，然后返回到第一次调用时，要保证操作的正确性。<br>这就要求信号处理函数必须是可重入的。<br>可重入函数表如下：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104227389-1017398124.png" alt=""></p>
+<p>7.一些常见的信号</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104254889-1228036479.png" alt=""></p>
+<p>如果进程接收到上面的这些信号，又没有安排捕获它，进程就会终止。</p>
+<p>其他的一些信号如下：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104314889-1220362811.png" alt=""></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/07/15/Linux进程间通信-信号/" data-title="Linux进程间通信-信号" data-url="https://shijingjing07.github.io/2016/07/15/Linux进程间通信-信号/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

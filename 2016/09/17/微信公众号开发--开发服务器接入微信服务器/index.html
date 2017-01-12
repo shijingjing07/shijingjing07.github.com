@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>微信公众号开发--开发服务器接入微信服务器 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.微信公众号注册到微信公众平台（https://mp.weixin.qq.com/）注册公众号。公众号有”服务号”，”订阅号”，”企业号”三种类别，”服务号”主要面向企业和个人，”订阅号”主要面向组织和个人。申请完毕后，登陆公众号，进入管理界面，公众号对应的二维码如下所示：2.开发服务器配置URL是开发者用来接收微信消息和事件的接口URLToken可由开发者任意填写，用作生成签名Encoding">
+  
+  <meta name="description" content="1.微信公众号注册到微信公众平台（https://mp.weixin.qq.com/）注册公众号。公众号有”服务号”，”订阅号”，”企业号”三种类别，”服务号”主要面向企业和个人，”订阅号”主要面向组织和个人。申请完毕后，登陆公众号，进入管理界面，公众号对应的二维码如下所示：2.开发服务器配置URL是开发者用来接收微信消息和事件的接口URLToken可由开发者任意填写，用作生成签名Encoding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信公众号开发--开发服务器接入微信服务器">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/09/17/微信公众号开发--开发服务器接入微信服务器/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.微信公众号注册到微信公众平台（https://mp.weixin.qq.com/）注册公众号。公众号有”服务号”，”订阅号”，”企业号”三种类别，”服务号”主要面向企业和个人，”订阅号”主要面向组织和个人。申请完毕后，登陆公众号，进入管理界面，公众号对应的二维码如下所示：2.开发服务器配置URL是开发者用来接收微信消息和事件的接口URLToken可由开发者任意填写，用作生成签名Encoding">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918001355273-1496569262.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918001455711-2130774720.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:18.746Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信公众号开发--开发服务器接入微信服务器">
+<meta name="twitter:description" content="1.微信公众号注册到微信公众平台（https://mp.weixin.qq.com/）注册公众号。公众号有”服务号”，”订阅号”，”企业号”三种类别，”服务号”主要面向企业和个人，”订阅号”主要面向组织和个人。申请完毕后，登陆公众号，进入管理界面，公众号对应的二维码如下所示：2.开发服务器配置URL是开发者用来接收微信消息和事件的接口URLToken可由开发者任意填写，用作生成签名Encoding">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918001355273-1496569262.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/09/17/微信公众号开发--开发服务器接入微信服务器/">
+  <time datetime="2016-09-17T08:16:00.000Z">
+    2016-09-17
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">微信公众号开发--开发服务器接入微信服务器</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.微信公众号注册</strong><br>到微信公众平台（<a href="https://mp.weixin.qq.com/）注册公众号。" target="_blank" rel="external">https://mp.weixin.qq.com/）注册公众号。</a><br>公众号有”服务号”，”订阅号”，”企业号”三种类别，”服务号”主要面向企业和个人，”订阅号”主要面向组织和个人。<br>申请完毕后，登陆公众号，进入管理界面，公众号对应的二维码如下所示：<br><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918001355273-1496569262.png" alt=""><br><strong>2.开发服务器配置</strong><br><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918001455711-2130774720.png" alt=""><br>URL是开发者用来接收微信消息和事件的接口URL<br>Token可由开发者任意填写，用作生成签名<br>EncodingAESKey由开发者手动填写或随机生成，将用作消息体加解密秘钥</p>
+<p><strong>3.验证开发服务器地址有效性</strong><br>开发者提交信息后，微信服务器将发送GET请求到开发服务器URL，GET请求有四个参数：<br>signature:微信加密签名<br>signature结合了token，timestamp，nonce三个参数<br>timestamp:时间戳<br>nonce:随机数<br>echostr:随机字符串</p>
+<p>开发者通过检验signature对请求进行检验，若检验成功，接入生效，否则接入失败</p>
+<p>加密/检验流程如下：<br>1)将token,timestamp,nonce三个参数进行字典序排序<br>2)将三个参数字符串拼接成一个字符串进行sha1加密<br>3)开发者获得加密后的字符串雨signature对比</p>
+<p>检验signature的C#示例代码如下：</p>
+<p>wxapi.ashx</p>
+<pre><code>&lt;%@ WebHandler Language=&quot;C#&quot; Class=&quot;wxapi&quot; %&gt;
+
+using System;
+using System.Web;
+using System.IO;
+using System.Text;
+using System.Web.Security;
+public class wxapi : IHttpHandler {
+
+    public void ProcessRequest (HttpContext context) {
+        string postString = string.Empty;
+        Auth(); //微信接入的测试
+    }
+    /// &lt;summary&gt;
+    /// 成为开发者的第一步，验证并相应服务器的数据
+    /// &lt;/summary&gt;
+    private void Auth()
+    {
+        string token = &quot;weixin&quot;;//从配置文件获取Token
+        if (string.IsNullOrEmpty(token))
+        {
+
+        }
+
+        string echoString = HttpContext.Current.Request.QueryString[&quot;echoStr&quot;];
+        string signature = HttpContext.Current.Request.QueryString[&quot;signature&quot;];
+        string timestamp = HttpContext.Current.Request.QueryString[&quot;timestamp&quot;];
+        string nonce = HttpContext.Current.Request.QueryString[&quot;nonce&quot;];
+
+        if (CheckSignature(token, signature, timestamp, nonce))
+        {
+            if (!string.IsNullOrEmpty(echoString))
+            {
+                HttpContext.Current.Response.Write(echoString);
+                HttpContext.Current.Response.End();
+            }
+        }
+    }
+    /// &lt;summary&gt;
+    /// 验证微信签名
+    /// &lt;/summary&gt;
+    public bool CheckSignature(string token, string signature, string timestamp, string nonce)
+    {
+        string[] ArrTmp = { token, timestamp, nonce };
+
+        Array.Sort(ArrTmp);
+        string tmpStr = string.Join(&quot;&quot;, ArrTmp);
+
+        tmpStr = FormsAuthentication.HashPasswordForStoringInConfigFile(tmpStr, &quot;SHA1&quot;);
+        tmpStr = tmpStr.ToLower();
+
+        if (tmpStr == signature)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool IsReusable {
+        get {
+            return false;
+        }
+    }
+
+}
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/09/17/微信公众号开发--开发服务器接入微信服务器/" data-title="微信公众号开发--开发服务器接入微信服务器" data-url="https://shijingjing07.github.io/2016/09/17/微信公众号开发--开发服务器接入微信服务器/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

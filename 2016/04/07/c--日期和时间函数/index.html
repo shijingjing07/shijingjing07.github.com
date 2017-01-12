@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>c--日期和时间函数 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="C的标准库&amp;lt;time.h&amp;gt;包含了一些处理时间与日期的函数。
+1.clock_t clock(void);
+函数返回程序自开始执行后的处理器时间，类型是clock_t，单位是tick。如果有错误，clock()函数就返回-1。
+类型clock_t在&amp;lt;time.h&amp;gt;中定义，等价于size_t类型。CLOCKS_PER_SEC是&amp;lt;time.h&amp;gt;中定义的宏，表示一秒内的">
+  
+  <meta name="description" content="C的标准库&amp;lt;time.h&amp;gt;包含了一些处理时间与日期的函数。
+1.clock_t clock(void);
+函数返回程序自开始执行后的处理器时间，类型是clock_t，单位是tick。如果有错误，clock()函数就返回-1。
+类型clock_t在&amp;lt;time.h&amp;gt;中定义，等价于size_t类型。CLOCKS_PER_SEC是&amp;lt;time.h&amp;gt;中定义的宏，表示一秒内的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c--日期和时间函数">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/07/c--日期和时间函数/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="C的标准库&amp;lt;time.h&amp;gt;包含了一些处理时间与日期的函数。
+1.clock_t clock(void);
+函数返回程序自开始执行后的处理器时间，类型是clock_t，单位是tick。如果有错误，clock()函数就返回-1。
+类型clock_t在&amp;lt;time.h&amp;gt;中定义，等价于size_t类型。CLOCKS_PER_SEC是&amp;lt;time.h&amp;gt;中定义的宏，表示一秒内的">
+<meta property="og:updated_time" content="2017-01-12T01:35:46.661Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="c--日期和时间函数">
+<meta name="twitter:description" content="C的标准库&amp;lt;time.h&amp;gt;包含了一些处理时间与日期的函数。
+1.clock_t clock(void);
+函数返回程序自开始执行后的处理器时间，类型是clock_t，单位是tick。如果有错误，clock()函数就返回-1。
+类型clock_t在&amp;lt;time.h&amp;gt;中定义，等价于size_t类型。CLOCKS_PER_SEC是&amp;lt;time.h&amp;gt;中定义的宏，表示一秒内的">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/07/c--日期和时间函数/">
+  <time datetime="2016-04-07T00:35:00.000Z">
+    2016-04-07
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">c--日期和时间函数</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>C的标准库&lt;time.h&gt;包含了一些处理时间与日期的函数。</p>
+<p>1.clock_t clock(void);</p>
+<p>函数返回程序自开始执行后的处理器时间，类型是clock_t，单位是tick。如果有错误，clock()函数就返回-1。</p>
+<p>类型clock_t在&lt;time.h&gt;中定义，等价于size_t类型。CLOCKS_PER_SEC是&lt;time.h&gt;中定义的宏，表示一秒内的tick数，且是clock_t类型。将clock()函数返回值除以CLOCKS_PER_SEC，得到处理器运行时间。</p>
+<p>代码示例：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include&lt;time.h&gt;
+#include&lt;windows.h&gt;
+#include&lt;stdlib.h&gt;
+main()
+{
+    clock_t start,end;
+    double cpu_time;
+    start = clock();
+    Sleep(2000);
+    end = clock();
+    cpu_time = (double)(end-start)/CLOCKS_PER_SEC;
+    printf(&quot;%.2lf&quot;,cpu_time);
+    system(&quot;pause&quot;);
+}
+</code></pre><p>输出结果：2.00</p>
+<p>2. time_t time(time_t *time_t)<br>time()函数返回从1970年1月1日格林威治时间0点0分0秒到现在的秒数。类型time_t在&lt;time.h&gt;中定义，等价于long。<br>如果变元不是NULL，则返回值就存在time_t变元指向的位置中。</p>
+<p>double difftime(time_t T2,time_t T1)<br>返回T2-T1的数值，类型是double，单位是秒。</p>
+<p>代码示例：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include&lt;time.h&gt;
+#include&lt;windows.h&gt;
+#include&lt;stdlib.h&gt;
+main()
+{
+    time_t calendar_start,calendar_end;
+    calendar_start = time(NULL);
+    Sleep(2000);
+    calendar_end = time(NULL);
+    printf(&quot;start:%d\n&quot;,calendar_start);
+    printf(&quot;end:%d\n&quot;,calendar_end);
+    printf(&quot;diff:%.0lf\n&quot;,difftime(calendar_end,calendar_start));
+    system(&quot;pause&quot;);
+}
+</code></pre><p>输出结果：<br>start:1460010918<br>end:1460010920<br>diff:2</p>
+<p>3.char <em>ctime(const time_t </em>timer)<br>函数接收一个time_t变量的指针作为变元，返回一个指向26个字符的字符串指针。其中有星期，日期，时间以及年，最后用一个\n和\0终止。如：”Mon Aug<br>25 10:45:36 2015\n\0”</p>
+<p>代码示例：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include&lt;time.h&gt;
+#include&lt;stdlib.h&gt;
+main()
+{
+    time_t calendar;
+    calendar = time(NULL);
+    printf(&quot;%s\n&quot;,ctime(&amp;calendar));
+    system(&quot;pause&quot;);
+}
+</code></pre><p>输出结果：Thu Apr 07 14:34:10 2016</p>
+<p>4.struct tm <em>localtime(const time_t</em> timer)<br>函数接收一个time_t值的指针，返回结构类型tm的指针。</p>
+<p>tm结构如下：<br>struct tm {<br>int tm_sec; /<em> 秒 - 取值区间为[0,59] </em>/<br>int tm_min; /<em> 分 - 取值区间为[0,59] </em>/<br>int tm_hour; /<em> 时 - 取值区间为[0,23] </em>/<br>int tm_mday; /<em> 一个月中的日期 - 取值区间为[1,31] </em>/<br>int tm_mon; /<em> 月份（从一月开始，0代表一月） - 取值区间为[0,11] </em>/<br>int tm_year; /<em> 年份，其值等于实际年份减去1900 </em>/<br>int tm_wday; /<em> 星期 - 取值区间为[0,6]，其中0代表星期天，1代表星期一 </em>/<br>int tm_yday; /<em> 从每年的1月1日开始的天数 </em>/<br>int tm_isdst; /<em> 夏令时标识符。</em>/<br>}</p>
+<p>代码示例：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include&lt;time.h&gt;
+#include&lt;stdlib.h&gt;
+main()
+{
+    time_t calendar;
+    struct tm *time_data;
+    char *month[] = {&quot;一月&quot;,&quot;二月&quot;,&quot;三月&quot;,&quot;四月&quot;,&quot;五月&quot;,&quot;六月&quot;,&quot;七月&quot;,&quot;八月&quot;,&quot;九月&quot;,&quot;十月&quot;,&quot;十一月&quot;,&quot;十二月&quot;};
+    char *week[] = {&quot;星期一&quot;,&quot;星期二&quot;,&quot;星期三&quot;,&quot;星期四&quot;,&quot;星期五&quot;,&quot;星期六&quot;,&quot;星期日&quot;};
+    char *suffix[] = {&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;};
+    enum suffixIndex {st,nd,rd,th} sufsel = th;
+    calendar = time(NULL);
+    time_data = localtime(&amp;calendar);
+    printf(&quot;format date:%d/%d/%d\n&quot;,time_data-&gt;tm_year+1900,time_data-&gt;tm_mon,time_data-&gt;tm_mday);
+    switch(time_data-&gt;tm_mday)
+    {
+    case 1:
+    case 21:
+    case 31:
+        sufsel = st;
+        break;
+    case 2:
+    case 22:
+        sufsel = nd;
+        break;
+    case 3:
+    case 23:
+        sufsel = rd;
+        break;
+    default:
+        sufsel = th;
+        break;
+    }
+    printf(&quot;today is %s,%s,%d%s,%d&quot;,week[time_data-&gt;tm_wday],month[time_data-&gt;tm_mon],time_data-&gt;tm_mday,suffix[sufsel],time_data-&gt;tm_year+1900);
+    system(&quot;pause&quot;);
+}
+</code></pre><p>输出结果：<br>format date:2016/3/7<br>today is 星期五,四月,7th,2016</p>
+<p>4.localtime()函数生成的是本地时间，若要使用UTC(世界调整时间)，可使用gmtime()函数</p>
+<p>5.time_t mktime(struct tm *ptime)<br>函数接收一个tm结构的变元指针，返回值类型为timt_t。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/07/c--日期和时间函数/" data-title="c--日期和时间函数" data-url="https://shijingjing07.github.io/2016/04/07/c--日期和时间函数/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

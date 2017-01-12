@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>JSONP详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是ajax跨域请求当通过ajax异步请求其他域名的服务时，存在跨域无权限访问的问题。此时，可以通过JSONP来实现跨域请求。
+2.JSONP原理ajax异步请求无权限访问。但我们发现，web页面调用js文件时不存在跨域问题(如在我们的页面中引入百度地图API， &amp;lt;scripttype=”text/javascript”src=”http://api.map.baidu.com/api">
+  
+  <meta name="description" content="1.什么是ajax跨域请求当通过ajax异步请求其他域名的服务时，存在跨域无权限访问的问题。此时，可以通过JSONP来实现跨域请求。
+2.JSONP原理ajax异步请求无权限访问。但我们发现，web页面调用js文件时不存在跨域问题(如在我们的页面中引入百度地图API， &amp;lt;scripttype=”text/javascript”src=”http://api.map.baidu.com/api">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSONP详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/10/03/JSONP详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是ajax跨域请求当通过ajax异步请求其他域名的服务时，存在跨域无权限访问的问题。此时，可以通过JSONP来实现跨域请求。
+2.JSONP原理ajax异步请求无权限访问。但我们发现，web页面调用js文件时不存在跨域问题(如在我们的页面中引入百度地图API， &amp;lt;scripttype=”text/javascript”src=”http://api.map.baidu.com/api">
+<meta property="og:updated_time" content="2017-01-12T01:35:17.319Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSONP详解">
+<meta name="twitter:description" content="1.什么是ajax跨域请求当通过ajax异步请求其他域名的服务时，存在跨域无权限访问的问题。此时，可以通过JSONP来实现跨域请求。
+2.JSONP原理ajax异步请求无权限访问。但我们发现，web页面调用js文件时不存在跨域问题(如在我们的页面中引入百度地图API， &amp;lt;scripttype=”text/javascript”src=”http://api.map.baidu.com/api">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/10/03/JSONP详解/">
+  <time datetime="2016-10-02T21:08:00.000Z">
+    2016-10-03
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">JSONP详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.什么是ajax跨域请求<br>当通过ajax异步请求其他域名的服务时，存在跨域无权限访问的问题。<br>此时，可以通过JSONP来实现跨域请求。</p>
+<p>2.JSONP原理<br>ajax异步请求无权限访问。但我们发现，web页面调用js文件时不存在跨域问题(如在我们的页面中引入百度地图API， &lt;script<br>type=”text/javascript”<br>src=”<a href="http://api.map.baidu.com/api?v=2.0&amp;ak=e3ZohdqyB0RL98hFOiC29xqh&quot;&gt;&lt;/script&gt;)，总结发现，凡是拥有&quot;src&quot;属性的标签都拥有跨域的能力，如&lt;script&gt;,&lt;img&gt;,&lt;iframe&gt;等。" target="_blank" rel="external">http://api.map.baidu.com/api?v=2.0&amp;ak=e3ZohdqyB0RL98hFOiC29xqh&quot;&gt;&lt;/script&gt;)，总结发现，凡是拥有&quot;src&quot;属性的标签都拥有跨域的能力，如&lt;script&gt;,&lt;img&gt;,&lt;iframe&gt;等。</a><br>这种非正式的传输协议，就是JSONP。JSONP的一个要点是允许客户端传一个callback参数给服务器，然后服务器返回数据时会用这个callback参数作为函数名，包裹住JSON数据，返回客户端，客户端执行返回函数。</p>
+<p>3.JSONP客户端具体实现<br>1)直接执行返回函数<br>本地服务器local.com下有个jsonp.html页面代码如下：</p>
+<pre><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;http://remote.com/remote.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>远程服务器remote.com下有个remote.js文件代码如下：</p>
+<pre><code>alert(&apos;我是远程文件&apos;);
+</code></pre><p>运行jsonp.html，会弹出”我是远程文件”，显示跨域调用成功。</p>
+<p>2)客户端执行回调函数<br>jsonp.html页面代码如下：</p>
+<pre><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+    var localHandler = function(data){
+        alert(&apos;我是本地函数，可以被跨域的remote.js文件调用，远程js带来的数据是：&apos; + data.result);
+    };
+    &lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;http://remoteserver.com/remote.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>remote.js文件代码如下：</p>
+<pre><code>localHandler({&quot;result&quot;:&quot;我是远程js带来的数据&quot;});
+</code></pre><p>运行jsonp.html，会弹出”我是远程js带来的数据”，显示跨域调用成功。</p>
+<p>3)客户端传递回调函数<br>jsonp.html页面代码如下：</p>
+<pre><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+    // 得到航班信息查询结果后的回调函数
+    var flightHandler = function(data){
+        alert(&apos;你查询的航班结果是：票价 &apos; + data.price + &apos; 元，&apos; + &apos;余票 &apos; + data.tickets + &apos; 张。&apos;);
+    };
+    // 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）
+    var url = &quot;http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&amp;callback=flightHandler&quot;;
+    // 创建script标签，设置其属性
+    var script = document.createElement(&apos;script&apos;);
+    script.setAttribute(&apos;src&apos;, url);
+    // 把script标签加入head，此时调用开始
+    document.getElementsByTagName(&apos;head&apos;)[0].appendChild(script); 
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>flightResult.aspx的页面生成了一段这样的代码提供给jsonp.html</p>
+<pre><code>flightHandler({
+    &quot;code&quot;: &quot;CA1998&quot;,
+    &quot;price&quot;: 1780,
+    &quot;tickets&quot;: 5
+});
+</code></pre><p>运行jsonp.html，成功弹出提示窗口。</p>
+<p>4)JSONP封装了3)中的代码，以方便客户端使用。<br>jsonp.html页面代码如下：</p>
+<pre><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+ &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; &gt;
+ &lt;head&gt;
+     &lt;title&gt;Untitled Page&lt;/title&gt;
+      &lt;script type=&quot;text/javascript&quot; src=jquery.min.js&quot;&gt;&lt;/script&gt;
+      &lt;script type=&quot;text/javascript&quot;&gt;
+     jQuery(document).ready(function(){ 
+        $.ajax({
+             type: &quot;get&quot;,
+             async: false,
+             url: &quot;http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&quot;,
+             dataType: &quot;jsonp&quot;,
+             jsonp: &quot;callback&quot;,//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+             jsonpCallback:&quot;flightHandler&quot;,//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写&quot;?&quot;，jQuery会自动为你处理数据
+             success: function(json){
+                 alert(&apos;您查询到航班信息：票价： &apos; + json.price + &apos; 元，余票： &apos; + json.tickets + &apos; 张。&apos;);
+             },
+             error: function(){
+                 alert(&apos;fail&apos;);
+             }
+         });
+     });
+     &lt;/script&gt;
+     &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+ &lt;/html&gt;
+</code></pre><p>示例中没有定义flightHandler函数，但代码成功运行了。<br>这是因为jquery自动把success属性方法作为了回调函数。</p>
+<p>4.JSONP总结<br>由上面的讲解可知，ajax和jsonp两种技术看起来很像，但实质上是完全不同。</p>
+<p>5.JSON格式数据优点补充<br>1)基于纯文本，跨平台传递简单<br>2)javascript原生支持，后台语言几乎全部支持<br>3)可读性强<br>4)容易编写和解析</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/10/03/JSONP详解/" data-title="JSONP详解" data-url="https://shijingjing07.github.io/2016/10/03/JSONP详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

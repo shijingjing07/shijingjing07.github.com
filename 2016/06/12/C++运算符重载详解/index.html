@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++运算符重载详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是运算符重载
+运算符重载是一种函数重载。
+运算符函数的格式：operatorop(argument-list)例如，operator+()重载+运算符。其中的op，必须是有效的C++运算符，如operator@()会报错，因为C++中没有@运算符。
+2.重载运算符的使用
+如下例所示：
+class Test
+{
+public:
+Test operator+(Test &amp;amp;test);">
+  
+  <meta name="description" content="1.什么是运算符重载
+运算符重载是一种函数重载。
+运算符函数的格式：operatorop(argument-list)例如，operator+()重载+运算符。其中的op，必须是有效的C++运算符，如operator@()会报错，因为C++中没有@运算符。
+2.重载运算符的使用
+如下例所示：
+class Test
+{
+public:
+Test operator+(Test &amp;amp;test);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++运算符重载详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/12/C++运算符重载详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是运算符重载
+运算符重载是一种函数重载。
+运算符函数的格式：operatorop(argument-list)例如，operator+()重载+运算符。其中的op，必须是有效的C++运算符，如operator@()会报错，因为C++中没有@运算符。
+2.重载运算符的使用
+如下例所示：
+class Test
+{
+public:
+Test operator+(Test &amp;amp;test);">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160612111008949-2115776626.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:37.229Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++运算符重载详解">
+<meta name="twitter:description" content="1.什么是运算符重载
+运算符重载是一种函数重载。
+运算符函数的格式：operatorop(argument-list)例如，operator+()重载+运算符。其中的op，必须是有效的C++运算符，如operator@()会报错，因为C++中没有@运算符。
+2.重载运算符的使用
+如下例所示：
+class Test
+{
+public:
+Test operator+(Test &amp;amp;test);">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160612111008949-2115776626.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/12/C++运算符重载详解/">
+  <time datetime="2016-06-11T19:12:00.000Z">
+    2016-06-12
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++运算符重载详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是运算符重载</strong></p>
+<p>运算符重载是一种函数重载。</p>
+<p>运算符函数的格式：<br>operatorop(argument-list)<br>例如，operator+()重载+运算符。<br>其中的op，必须是有效的C++运算符，如operator@()会报错，因为C++中没有@运算符。</p>
+<p><strong>2.重载运算符的使用</strong></p>
+<p>如下例所示：</p>
+<pre><code>class Test
+{
+public:
+Test operator+(Test &amp;test);
+}
+</code></pre><p>调用运算符函数的方式有两种：<br>Test t1;<br>Test t2;<br>1)普通函数调用<br>Test t3 = t1.operator+(t2);<br>2)运算符方式调用，实质上是调用的1)中的operator+()函数<br>Test t3 = t1+t2;</p>
+<p><strong>3.运算符重载示例</strong><br>示例代码如下，+运算符重载,计算时分相加。</p>
+<p>mytest.h</p>
+<pre><code>#pragma once
+class Time
+{
+private:
+    int hours;
+    int minutes;
+public:
+    Time();
+    Time(int h,int m=0);
+    Time operator+(const Time&amp;t) const;
+    void Show() const;
+};
+</code></pre><p>mytest.cpp</p>
+<pre><code>#include &quot;mytest.h&quot;
+#include&lt;iostream&gt;
+Time::Time()
+{
+    hours=minutes=0;
+}
+Time::Time(int h,int m)
+{
+    hours = h;
+    minutes = m;
+}
+Time Time::operator+(const Time &amp;t) const
+{
+    Time sum;
+    sum.minutes = minutes+t.minutes;
+    sum.hours = hours+t.hours+sum.minutes/60;
+    sum.minutes%=60;
+    return sum;
+}
+void Time::Show() const
+{
+    std::cout&lt;&lt;hours&lt;&lt;&quot; hours, &quot;&lt;&lt;minutes&lt;&lt;&quot; minutes&quot;&lt;&lt;std::endl;
+}
+</code></pre><p>test.cpp</p>
+<pre><code>#include &quot;mytest.h&quot;
+#include &lt;iostream&gt;
+int main()
+{
+    Time planning;
+    Time coding(2,40);
+    Time fixing(5,55);
+    Time total;
+
+    total = coding+fixing;
+
+    std::cout&lt;&lt;&quot;coding+fixing = &quot;;
+    total.Show();
+
+    total = coding.operator+(fixing);
+    std::cout&lt;&lt;&quot;coding.operator+(fixing) = &quot;;
+    total.Show();
+
+    total = coding+fixing+coding;
+    std::cout&lt;&lt;&quot;coding.operator+(fixing) = &quot;;
+    total.Show();
+
+    return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160612111008949-2115776626.png" alt=""></p>
+<p><strong>4.运算符重载的注意事项：</strong><br>1)重载的运算符必须是有效的C++运算符<br>2)运算符操作数至少有一个是用户定义类型<br>这是为了防止重载标准类型的运算符<br>如将减法运算符(-)重载为计算两个double的和，而不是差，是不被允许的。<br>3)不能违反运算符原有的规则<br>如求模运算符(%)，必须要有两个操作数。<br>4)部分运算符不允许重载<br>如：sizeof,::,:等</p>
+<p>参考资料：《C++ Primer.Plus》 pp.381-390</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/12/C++运算符重载详解/" data-title="C++运算符重载详解" data-url="https://shijingjing07.github.io/2016/06/12/C++运算符重载详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

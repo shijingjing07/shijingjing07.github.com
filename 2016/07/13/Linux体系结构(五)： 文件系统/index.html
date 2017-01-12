@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux体系结构(五)： 文件系统 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="上一节主要对Linux系统中的内核空间与用户空间做了简单的分析，在这一节里，将从内核空间和用户空间对Linux文件系统进行一定的剖析。
+谈及文件系统，很多Linux用户都会有一个比较模糊和神秘的概念，如果对文件系统的来龙去脉有一定的了解，相信大家就能走出迷雾，Linux文件系统的整体结构模型大概可以划分为以下层次：Hard Disk =&amp;gt; Disk Driver =&amp;gt; Filesyst">
+  
+  <meta name="description" content="上一节主要对Linux系统中的内核空间与用户空间做了简单的分析，在这一节里，将从内核空间和用户空间对Linux文件系统进行一定的剖析。
+谈及文件系统，很多Linux用户都会有一个比较模糊和神秘的概念，如果对文件系统的来龙去脉有一定的了解，相信大家就能走出迷雾，Linux文件系统的整体结构模型大概可以划分为以下层次：Hard Disk =&amp;gt; Disk Driver =&amp;gt; Filesyst">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux体系结构(五)： 文件系统">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/07/13/Linux体系结构(五)： 文件系统/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="上一节主要对Linux系统中的内核空间与用户空间做了简单的分析，在这一节里，将从内核空间和用户空间对Linux文件系统进行一定的剖析。
+谈及文件系统，很多Linux用户都会有一个比较模糊和神秘的概念，如果对文件系统的来龙去脉有一定的了解，相信大家就能走出迷雾，Linux文件系统的整体结构模型大概可以划分为以下层次：Hard Disk =&amp;gt; Disk Driver =&amp;gt; Filesyst">
+<meta property="og:image" content="http://blog.chinaunix.net/attachment/201204/7/26838492_1333808001bBLv.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:30.195Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux体系结构(五)： 文件系统">
+<meta name="twitter:description" content="上一节主要对Linux系统中的内核空间与用户空间做了简单的分析，在这一节里，将从内核空间和用户空间对Linux文件系统进行一定的剖析。
+谈及文件系统，很多Linux用户都会有一个比较模糊和神秘的概念，如果对文件系统的来龙去脉有一定的了解，相信大家就能走出迷雾，Linux文件系统的整体结构模型大概可以划分为以下层次：Hard Disk =&amp;gt; Disk Driver =&amp;gt; Filesyst">
+<meta name="twitter:image" content="http://blog.chinaunix.net/attachment/201204/7/26838492_1333808001bBLv.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/13/Linux体系结构(五)： 文件系统/">
+  <time datetime="2016-07-12T21:49:00.000Z">
+    2016-07-13
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux体系结构(五)： 文件系统</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>上一节主要对Linux系统中的内核空间与用户空间做了简单的分析，在这一节里，将从内核空间和用户空间对Linux文件系统进行一定的剖析。</p>
+<p>谈及文件系统，很多Linux用户都会有一个比较模糊和神秘的概念，如果对文件系统的来龙去脉有一定的了解，相信大家就能走出迷雾，Linux文件系统的整体结构模型大概可以划分为以下层次：<br>Hard Disk =&gt; Disk Driver =&gt; Filesystem(ext3,ext4,btrfs …) =&gt; User<br>Operation</p>
+<p>上面结构模型很简单，有一块物理硬盘，首先这块硬盘需要有硬盘驱动的支持，然后才能在这块硬盘上创建不同的文件系统，然后用户才能使用这块硬盘。但有下面两个问题需要思考：</p>
+<p>(1). 不同的物理硬盘，需要不同的驱动支持，而不同的驱动，所提供的IO操作接口是不一样的，那么，有没有一个统一的IO操作接口呢？</p>
+<p>(2). 不同的文件系统，如ext3, ext4,<br>btrfs等所提供的API也是不一样的，那么，有没有一个统一的东西来对这些不同的文件系统进行一个抽象，以提供一个统一的API接口呢？</p>
+<p>于是，上面的结构层次还可以细分为：</p>
+<p><a href="http://blog.chinaunix.net/attachment/201204/7/26838492_1333808001bBLv.png" target="_blank" rel="external"><img src="http://blog.chinaunix.net/attachment/201204/7/26838492_1333808001bBLv.png" alt=""></a></p>
+<p>上面的结构中，从硬盘驱动，文件系统，虚拟文件系统，以及系统调用，都属于内核空间，换言之，这些不同层次的实现，都是由内核来做的；而所谓用户空间的操作，也就是一些对磁盘的读写访问操作。</p>
+<p><strong>1. 硬盘驱动</strong><br>常见的硬盘类型有PATA,<br>SATA和AHCI等，在Linux系统中，对不同硬盘所提供的驱动模块一般都存放在内核目录树drivers/ata中，而对于一般通用的硬盘驱动，也许会直接被编译到内核中，而不会以模块的方式出现，可以通过查看/boot<br>/config-xxx.xxx文件来确认：  </p>
+<p>CONFIG_SATA_AHCI=y  </p>
+<hr>
+<p><strong>2. General Block Device Layer</strong><br>这一层的作用，正是解答了上面提出的第一个问题，不同的硬盘驱动，会提供不同的IO接口，内核认为这种杂乱的接口，不利于管理，需要把这些接口抽象一下，形成一个统一的对外接口，这样，不管你是什么硬盘，什么驱动，对外而言，它们所提供的IO接口没什么区别，都一视同仁的被看作块设备来处理。</p>
+<p>所以，如果在一层做的任何修改，将会直接影响到所有文件系统，不管是ext3,ext4还是其它文件系统，只要在这一层次做了某种修改，对它们都会产生影响。</p>
+<p><strong>3. 文件系统</strong><br>文件系统这一层相信大家都再熟悉不过了，目前大多Linux发行版本默认使用的文件系统一般是ext4，另外，新一代的btrfs也呼之欲出，不管什么样的文件系统，都是由一系列的mkfs.xxx命令来创建，如：  </p>
+<p>mkfs.ext4 /dev/sda</p>
+<p>mkfs.btrfs /dev/sdb  </p>
+<hr>
+<p>内核所支持的文件系统类型，可以通过内核目录树 fs 目录中的内容来查看。  </p>
+<p><strong>4. 虚拟文件系统(VFS)</strong><br>Virtual File<br>System这一层，正是用来解决上面提出的第二个问题，试想，当我们通过mkfs.xxx系列命令创建了很多不同的文件系统，但这些文件系统都有各自的API接口，而用户想要的是，不管你是什么API，他们只关心mount/umount，或open/close等操作。  </p>
+<p>所以，VFS就把这些不同的文件系统做一个抽象，提供统一的API访问接口，这样，用户空间就不用关心不同文件系统中不一样的API了。VFS所提供的这些统一的API，再经过System<br>Call包装一下，用户空间就可以经过SCI的系统调用来操作不同的文件系统。  </p>
+<p>VFS所提供的常用API有：<br>mount(), umount() …<br>open(),close() …<br>mkdir() …</p>
+<p>转自：<a href="http://blog.chinaunix.net/uid-26838492-id-3156661.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-26838492-id-3156661.html</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/07/13/Linux体系结构(五)： 文件系统/" data-title="Linux体系结构(五)： 文件系统" data-url="https://shijingjing07.github.io/2016/07/13/Linux体系结构(五)： 文件系统/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++内联函数详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.函数调用原理
+“编译过程的最终产品是可执行程序–由一组机器语言指令组成。运行程序时，操作系统将这些指令载入计算机内存中，因此每条指令都有特定的内存地址。计算机随后将逐步执行这些指令。有时（如有循环和分支语句时），将跳过一些指令，向前或向后跳到特定地址。常规函数调用也使程序跳到另一个地址（函数的地址），并在函数结束时返回。下面更详细地介绍这一过程的典型实现。执行到函数调用指令时，程序将在函数调用">
+  
+  <meta name="description" content="1.函数调用原理
+“编译过程的最终产品是可执行程序–由一组机器语言指令组成。运行程序时，操作系统将这些指令载入计算机内存中，因此每条指令都有特定的内存地址。计算机随后将逐步执行这些指令。有时（如有循环和分支语句时），将跳过一些指令，向前或向后跳到特定地址。常规函数调用也使程序跳到另一个地址（函数的地址），并在函数结束时返回。下面更详细地介绍这一过程的典型实现。执行到函数调用指令时，程序将在函数调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++内联函数详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/24/C++内联函数详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.函数调用原理
+“编译过程的最终产品是可执行程序–由一组机器语言指令组成。运行程序时，操作系统将这些指令载入计算机内存中，因此每条指令都有特定的内存地址。计算机随后将逐步执行这些指令。有时（如有循环和分支语句时），将跳过一些指令，向前或向后跳到特定地址。常规函数调用也使程序跳到另一个地址（函数的地址），并在函数结束时返回。下面更详细地介绍这一过程的典型实现。执行到函数调用指令时，程序将在函数调用">
+<meta property="og:updated_time" content="2017-01-12T01:35:41.011Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++内联函数详解">
+<meta name="twitter:description" content="1.函数调用原理
+“编译过程的最终产品是可执行程序–由一组机器语言指令组成。运行程序时，操作系统将这些指令载入计算机内存中，因此每条指令都有特定的内存地址。计算机随后将逐步执行这些指令。有时（如有循环和分支语句时），将跳过一些指令，向前或向后跳到特定地址。常规函数调用也使程序跳到另一个地址（函数的地址），并在函数结束时返回。下面更详细地介绍这一过程的典型实现。执行到函数调用指令时，程序将在函数调用">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/24/C++内联函数详解/">
+  <time datetime="2016-05-23T22:04:00.000Z">
+    2016-05-24
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++内联函数详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.函数调用原理</strong></p>
+<p><em>“编译过程的最终产品是可执行程序–<br>由一组机器语言指令组成。运行程序时，操作系统将这些指令载入计算机内存中，因此每条指令都有特定的内存地址。计算机随后将逐步执行这些指令。有时（如有循环和分支语句时），将跳过一些指令，向前或向后跳到特定地址。常规函数调用也使程序跳到另一个地址（函数的地址），并在函数结束时返回。下面更详细地介绍这一过程的典型实现。执行到函数调用指令时，程序将在函数调用后立即存储该指令的内存地址，并将函数参数复制到堆栈（为此保留的内存块），跳到标记函数起点的内存单元，执行函数代码（也许还需将返回值放入寄存器中），然后跳回到地址被保存的指令处（这与阅读文章时停下来看脚注，并在阅读完脚注后返回到以前阅读的地方类似）。来回跳跃并记录跳跃位置意味着以前使用函数时，需要一定的开销。”</em></p>
+<p><strong>2.内联函数</strong><br>内联函数提供了另一种选择。编译器将使用相应的函数代码替换函数调用。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。</p>
+<p><strong>3.内联函数的使用</strong><br>在函数声明前加上关键字inline;<br>在函数定义前加上关键字inline。<br>示例如下：</p>
+<pre><code>#include&lt;iostream&gt;
+inline double square(double x){return x*x;}
+int main()
+{
+    using namespace std;
+    double a,b;
+    double c = 13.0;
+    a = square(5.0);
+    b = square(4.5+7.5);
+    cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;&quot;,b=&quot;&lt;&lt;b&lt;&lt;endl;
+    cout&lt;&lt;&quot;c=&quot;&lt;&lt;c&lt;&lt;endl;
+    cout&lt;&lt;&quot;c squared=&quot;&lt;&lt;square(c++)&lt;&lt;endl;
+    cout&lt;&lt;&quot;now c=&quot;&lt;&lt;c&lt;&lt;endl;
+    return 0;
+}
+</code></pre><p>程序输出结果如下：<br>a=25,b=144<br>c=13<br>c square=169<br>now c=14</p>
+<p><strong>4.内联函数与宏定义的区别</strong><br>C语言使用预处理器语句#define来提供宏。如下例所示：  </p>
+<p>#define SQUARE(X) X<em>X<br>宏定义时通过文本替换开实现的–X是参数的符号标记。<br>a = square(5.0);-&gt;a=5.0</em>5.0;<br>b = square(4.5+7.5);-&gt;b=4.5+7.5<em>4.5+7.5<br>d = square(c++);-&gt;d=c++</em>c++<br>可以看出，对于b，需要使用括号才能正常运算。  </p>
+<p>#define SQUARE(X) ((X)*(X))<br>对于c,却仍递增了两次。<br>因此，宏定义和内联函数存在本质的区别，转换的时候应考虑是否转换后功能是否正常。</p>
+<p><strong>5.什么时候使用内联函数</strong><br>如果执行函数代码的时间比处理函数调用机制的时间长，则节省的时间占比很小。若代码执行时间很短，则内联函数就可以节省函数调用的时间。</p>
+<p>参考资料：《C++ Primer.Plus》 pp.253-255</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/24/C++内联函数详解/" data-title="C++内联函数详解" data-url="https://shijingjing07.github.io/2016/05/24/C++内联函数详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

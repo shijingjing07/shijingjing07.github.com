@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++泛型编程原理 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是泛型编程前面我们介绍的vector,list,map都是一种数据结构容器，容器本身的存储结构不同，各容器中存在的数据类型也可以不同。但我们在访问这些容器中数据时，拥有相同的方式。这种方式就叫做”泛型编程”，顾名思义，不同的类型采用相同的方式来操作。
+2.泛型编程的原理。我们先看下面的两个分别访问数组和链表中元素的示例。示例1，数组类型遍历
+void show(double* arr,in">
+  
+  <meta name="description" content="1.什么是泛型编程前面我们介绍的vector,list,map都是一种数据结构容器，容器本身的存储结构不同，各容器中存在的数据类型也可以不同。但我们在访问这些容器中数据时，拥有相同的方式。这种方式就叫做”泛型编程”，顾名思义，不同的类型采用相同的方式来操作。
+2.泛型编程的原理。我们先看下面的两个分别访问数组和链表中元素的示例。示例1，数组类型遍历
+void show(double* arr,in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++泛型编程原理">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/17/C++泛型编程原理/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是泛型编程前面我们介绍的vector,list,map都是一种数据结构容器，容器本身的存储结构不同，各容器中存在的数据类型也可以不同。但我们在访问这些容器中数据时，拥有相同的方式。这种方式就叫做”泛型编程”，顾名思义，不同的类型采用相同的方式来操作。
+2.泛型编程的原理。我们先看下面的两个分别访问数组和链表中元素的示例。示例1，数组类型遍历
+void show(double* arr,in">
+<meta property="og:updated_time" content="2017-01-12T01:35:35.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++泛型编程原理">
+<meta name="twitter:description" content="1.什么是泛型编程前面我们介绍的vector,list,map都是一种数据结构容器，容器本身的存储结构不同，各容器中存在的数据类型也可以不同。但我们在访问这些容器中数据时，拥有相同的方式。这种方式就叫做”泛型编程”，顾名思义，不同的类型采用相同的方式来操作。
+2.泛型编程的原理。我们先看下面的两个分别访问数组和链表中元素的示例。示例1，数组类型遍历
+void show(double* arr,in">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/17/C++泛型编程原理/">
+  <time datetime="2016-06-16T19:09:00.000Z">
+    2016-06-17
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++泛型编程原理</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是泛型编程</strong><br>前面我们介绍的vector,list,map都是一种数据结构容器，<br>容器本身的存储结构不同，各容器中存在的数据类型也可以不同。<br>但我们在访问这些容器中数据时，拥有相同的方式。<br>这种方式就叫做”泛型编程”，顾名思义，不同的类型采用相同的方式来操作。</p>
+<p><strong>2.泛型编程的原理。</strong><br>我们先看下面的两个分别访问数组和链表中元素的示例。<br>示例1，数组类型遍历</p>
+<pre><code>void show(double* arr,int n)
+{
+    for(int i=0;i&lt;n;i++)
+        cout&lt;&lt;arr[i]&lt;&lt;&quot; &quot;;
+}
+</code></pre><p>示例2，链表类型遍历</p>
+<pre><code>struct Node
+{
+    double item;
+    Node * p_next;
+};
+void show(Node* head)
+{
+    for(Node* start=head;start!=0;start=start-&gt;p_next)
+        cout&lt;&lt;start.item&lt;&lt;&quot; &quot;;
+}
+</code></pre><p>我们可以看到，数组和链表的访问方式是完全不同的。<br>那么，如何使用相同的方式去访问呢？<br>这两种数据结构的共同点是，它们都是一个顺序存储数据的容器，<br>所以我们可为每一种容器中定义一个相应的指针类p，在泛型编程中，叫做”迭代器类(iterator)”<br>该指针类中需要重载两个操作符，<br>1)<em>p，访问数据元素内容<br>2)p++，访问下一个数据元素<br>示例1，数组容器(double </em>本身具有*p,p++操作符)：</p>
+<pre><code>typedef double* iterator;
+void show(iterator head,int n)
+{
+    int i=0;
+    for(iterator start=head;i&lt;n;++start)
+    {
+        cout&lt;&lt;*start&lt;&lt;&quot; &quot;;
+        i++
+    }
+}
+</code></pre><p>示例2，链表容器：</p>
+<pre><code>struct Node
+{
+    double item;
+    Node * p_next;
+};
+class iterator
+{
+    Node *pt;
+public:
+    double operator*()
+    {
+        return pt-&gt;item;
+    }
+    iterator&amp; operator++()
+    {
+        pt=pt-&gt;p_next;
+        return *this;
+    }
+};
+void show(iterator head)
+{
+    for(iterator start=head;start!=0;++start)
+    {
+        cout&lt;&lt;*start&lt;&lt;&quot; &quot;;
+    }
+}
+</code></pre><p>我们看到这两种容器的show()方法已基本相同，唯一的区别是结束判断。<br>在数组中，根据数组长度来判断结尾。<br>在链表中，根据最后一个元素指向的下一个元素指针为空来判断。<br>链表比数组多出来一个指向null的指针。</p>
+<p>在泛型编程中，使用了”超尾”的概率来解决这个问题，<br>“超尾”是指在容器的最后一个元素后面，还有一个额外的元素，该元素表示结束。<br>这样数组和链表都有这个超尾指针。我们统一使用这个超尾指针来判断结尾。</p>
+<p><strong>3.泛型编程中迭代器的使用</strong><br>C++为每个容器类(vector,list,deque等)定义了相应的迭代器类型，<br>其begin()返回指向第一个元素的迭代器，end()返回指向超尾元素(额外添加的元素)的迭代器。<br>如下例所示：</p>
+<pre><code>vector&lt;double&gt;::iterator pr;
+for(pr=scores.begin();pr!=scores.end();pr++)
+    cout&lt;&lt;*pr&lt;&lt;endl;
+</code></pre><p>在C++11中，简化了迭代器类型的定义，使用auto自动类型</p>
+<pre><code>for(auto pr=scores.begin();pr!=scores.end();pr++)
+    cout&lt;&lt;*pr&lt;&lt;endl;
+</code></pre><p><strong>4.建议使用的遍历方式</strong><br>很多语言，如C#，并没有使用迭代器iterator，而是使用for,foreach等来遍历数据元素。<br>所以，C++中最好也避免直接使用迭代器，而尽可能使用for_each()。<br>C++11中，新增了for循环，如下例所示：</p>
+<pre><code>for(auto x:scores)
+    cout&lt;&lt;x&lt;&lt;endl;
+</code></pre><p>参考资料：《C++ Primer.Plus》 pp.685-688</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/17/C++泛型编程原理/" data-title="C++泛型编程原理" data-url="https://shijingjing07.github.io/2016/06/17/C++泛型编程原理/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

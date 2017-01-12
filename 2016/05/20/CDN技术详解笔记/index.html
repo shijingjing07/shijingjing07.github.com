@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>CDN技术详解笔记 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.影响网络传输的四个因素（1）”第一公里”：网站服务器接入互联网的链路所能提供的带宽。（2）”最后一公里”：用户接入带宽。（3）对等互联关口：不同网络之间的互联互通带宽。（4）长途骨干传输：首先是长距离传输时延问题，其次是骨干网拥塞问题
+2.用户通过浏览器访问网站的过程如下图所示：
+
+①用户在自己的浏览器中输入要访问的网站域名。
+②浏览器向本地DNS服务器请求对该域名的解析。
+③本地DNS服务器">
+  
+  <meta name="description" content="1.影响网络传输的四个因素（1）”第一公里”：网站服务器接入互联网的链路所能提供的带宽。（2）”最后一公里”：用户接入带宽。（3）对等互联关口：不同网络之间的互联互通带宽。（4）长途骨干传输：首先是长距离传输时延问题，其次是骨干网拥塞问题
+2.用户通过浏览器访问网站的过程如下图所示：
+
+①用户在自己的浏览器中输入要访问的网站域名。
+②浏览器向本地DNS服务器请求对该域名的解析。
+③本地DNS服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CDN技术详解笔记">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/20/CDN技术详解笔记/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.影响网络传输的四个因素（1）”第一公里”：网站服务器接入互联网的链路所能提供的带宽。（2）”最后一公里”：用户接入带宽。（3）对等互联关口：不同网络之间的互联互通带宽。（4）长途骨干传输：首先是长距离传输时延问题，其次是骨干网拥塞问题
+2.用户通过浏览器访问网站的过程如下图所示：
+
+①用户在自己的浏览器中输入要访问的网站域名。
+②浏览器向本地DNS服务器请求对该域名的解析。
+③本地DNS服务器">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201605/300946-20160520133722216-1539567662.png">
+<meta property="og:image" content="http://images.51cto.com/files/uploadimg/20120528/1230001.jpg">
+<meta property="og:image" content="http://images.51cto.com/files/uploadimg/20120528/123332551.jpg">
+<meta property="og:image" content="http://images.51cto.com/files/uploadimg/20120528/1235500.jpg">
+<meta property="og:image" content="http://images.51cto.com/files/uploadimg/20120528/1235501.jpg">
+<meta property="og:image" content="http://images.51cto.com/files/uploadimg/20120528/123808115.jpg">
+<meta property="og:updated_time" content="2017-01-12T01:35:41.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CDN技术详解笔记">
+<meta name="twitter:description" content="1.影响网络传输的四个因素（1）”第一公里”：网站服务器接入互联网的链路所能提供的带宽。（2）”最后一公里”：用户接入带宽。（3）对等互联关口：不同网络之间的互联互通带宽。（4）长途骨干传输：首先是长距离传输时延问题，其次是骨干网拥塞问题
+2.用户通过浏览器访问网站的过程如下图所示：
+
+①用户在自己的浏览器中输入要访问的网站域名。
+②浏览器向本地DNS服务器请求对该域名的解析。
+③本地DNS服务器">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201605/300946-20160520133722216-1539567662.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/20/CDN技术详解笔记/">
+  <time datetime="2016-05-19T23:48:00.000Z">
+    2016-05-20
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">CDN技术详解笔记</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.影响网络传输的四个因素<br>（1）”第一公里”：网站服务器接入互联网的链路所能提供的带宽。<br>（2）”最后一公里”：用户接入带宽。<br>（3）对等互联关口：不同网络之间的互联互通带宽。<br>（4）长途骨干传输：首先是长距离传输时延问题，其次是骨干网拥塞问题</p>
+<p>2.用户通过浏览器访问网站的过程如下图所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201605/300946-20160520133722216-1539567662.png" alt=""></p>
+<p>①用户在自己的浏览器中输入要访问的网站域名。</p>
+<p>②浏览器向本地DNS服务器请求对该域名的解析。</p>
+<p>③本地DNS服务器中如果缓存有这个域名的解析结果，则直接用户的解析请求。</p>
+<p>④本地DNS服务器中如果没有关于这个域名的解析结果的缓存，则以递归方式向整个DNS系统请求解析，获得应答后将结果反馈给浏览器。</p>
+<p>⑤浏览器得到域名解析结果，就是该域名相应的服务设备的IP地址。</p>
+<p>⑥浏览器向服务器请求内容。</p>
+<p>⑦服务器将用户请求内容传送给浏览器。</p>
+<p>3.引入CDN后的访问流程</p>
+<p><img src="http://images.51cto.com/files/uploadimg/20120528/1230001.jpg" alt=""></p>
+<p>①当用户点击网站页面上的内容URL，经过本地DNS系统解析，DNS会最终将域名的解析权交给CNAME指向的CDN专用DNS服务器。</p>
+<p>②CDN的DNS服务器将CDN的全局负载均衡设备IP地址返回用户。</p>
+<p>③用户向CDN的全局负载均衡设备发起内容URL访问请求。</p>
+<p>④CDN全局负载均衡设备根据用户IP地址，以及用户请求的内容URL，选择一台用户所属区域的区域负载均衡设备，告诉用户向这台设备发起请求。</p>
+<p>⑤区域负载均衡设备会为用户选择一台合适的缓存服务器提供服务。选择的依据包括:根据用户IP地址，判断哪一台服务器距离用户最近；根据用户请求的URL携带的内容名称，判断哪一台服务器上有用户所需内容；查询各个服务器当前的负载情况，判断哪一台服务器尚有服务能力。基于以上这些条件的综合分析后，区域负载均衡设备会向全局负载均衡设备返回一台缓存服务器的IP地址。</p>
+<p>⑥全局负载均衡设备把IP地址返回用户。</p>
+<p>⑦用户向缓存服务器发起请求，缓存服务器响应用户请求，将用户所需内容传送到用户终端。如果这台缓存服务器上并没有用户想要的内容，而区域负载均衡设备依然将它分配给了用户，那么这一台服务器要向它的上一级缓存服务器请求内容，直至追溯到网站的源服务器将内容拉到本地。</p>
+<p>4.CDN的系统架构</p>
+<p><img src="http://images.51cto.com/files/uploadimg/20120528/123332551.jpg" alt=""></p>
+<p>5.CDN部署架构</p>
+<p><img src="http://images.51cto.com/files/uploadimg/20120528/1235500.jpg" alt=""></p>
+<p>在一个节点中，Cache设备和本地负载均衡设备的连接方式有两种：一种是旁路方式，一种是穿越方式。</p>
+<p><img src="http://images.51cto.com/files/uploadimg/20120528/1235501.jpg" alt=""></p>
+<p>6.CDN系统分类</p>
+<p>（1）基于不同内容承载类型的分类</p>
+<ul>
+<li>网页加速</li>
+<li>流媒体加速</li>
+<li>文件传输加速</li>
+<li>应用协议加速：针对TCP/IP等传输协议的优化。</li>
+</ul>
+<p>（2）基于内容生成机制的分类</p>
+<p>主流的Web网站系统都能够在逻辑上分为三个层次，表现层、业务逻辑层、数据访问层。</p>
+<p>根据CDN完成的不同层面的Web转移功能，将CDN分为表示层复制（静态网站）和全站复制（动态网站）两类。</p>
+<p>7.CDN系统三维模型图</p>
+<p><img src="http://images.51cto.com/files/uploadimg/20120528/123808115.jpg" alt=""></p>
+<p>X轴方向是贯穿系统头端到终端的垂直系统，每一种业务能力都可以有自己的中心、区域、边缘层设备，有自己独立的管理系统、负载均衡系统、分发服务系统。<br>因此，在X轴方向上，每一个CDN服务能力都可以是一套相对独立的子系统。</p>
+<p>Y轴方向的分级划分是依据CDN逐级缓存、分级调度、分级服务的要求。<br>CDN的管理功能、调度功能、缓存功能、服务功能都是分级部署的，不同层级的相同功能实体之间相互配合。<br>从控制功能上看，往往下一级控制实体是上一级控制实体的执行者；<br>从缓存功能上看，上一级缓存是下一级缓存实体的内容提供者；<br>从 服务功能上看，上一级服务实体是下一级服务实体的能力补充和备份。</p>
+<p>Z轴方向上，管理层主要完成CDN网络管理和业务逻辑处理。<br>网络管理提供IP网络层面的配置管理、故障管理、网络性能管理以及网络安全管理等，负责对整个CDN系统的网络和设备资源进行抽象，提取其业务能力，提供给上层业务平台。<br>业务逻辑处理指CDN系统辅助其服务的业务平台完成部分应用层功能的实现，完成和其他系统之间的接口适配，负责系统的认证、计费、统计分析、系统管理、用户管理、SP管理等功能。<br>控制平面负责对整个CDN网络的内容分布情况进行管理，对内容分发和访问路由策略进行控制，它是整个内容分发系统内容数据流向的控制点。<br>数据平面承担实际的内容分发工作，根据Z轴方向与X轴、Y轴相交点的具体要求，数据平面设备具备不同的应用服务提供能力。</p>
+<p>参考资料：《CDN技术详解》 pp.1-29</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/20/CDN技术详解笔记/" data-title="CDN技术详解笔记" data-url="https://shijingjing07.github.io/2016/05/20/CDN技术详解笔记/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

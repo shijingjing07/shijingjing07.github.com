@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>posix多线程--条件变量 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="条件变量是用来通知共享数据状态信息的。
+1.条件变量初始化两种方式：（1）静态初始化pthread_cond_t cond = PTHREAD_COND_INITIALIZER;代码示例如下：
+#include &amp;lt;pthread.h&amp;gt;
+typedef struct my_struct_tag {
+    pthread_mutex_t     mutex;  /* Protects a">
+  
+  <meta name="description" content="条件变量是用来通知共享数据状态信息的。
+1.条件变量初始化两种方式：（1）静态初始化pthread_cond_t cond = PTHREAD_COND_INITIALIZER;代码示例如下：
+#include &amp;lt;pthread.h&amp;gt;
+typedef struct my_struct_tag {
+    pthread_mutex_t     mutex;  /* Protects a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="posix多线程--条件变量">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/13/posix多线程--条件变量/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="条件变量是用来通知共享数据状态信息的。
+1.条件变量初始化两种方式：（1）静态初始化pthread_cond_t cond = PTHREAD_COND_INITIALIZER;代码示例如下：
+#include &amp;lt;pthread.h&amp;gt;
+typedef struct my_struct_tag {
+    pthread_mutex_t     mutex;  /* Protects a">
+<meta property="og:updated_time" content="2017-01-12T01:35:46.245Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="posix多线程--条件变量">
+<meta name="twitter:description" content="条件变量是用来通知共享数据状态信息的。
+1.条件变量初始化两种方式：（1）静态初始化pthread_cond_t cond = PTHREAD_COND_INITIALIZER;代码示例如下：
+#include &amp;lt;pthread.h&amp;gt;
+typedef struct my_struct_tag {
+    pthread_mutex_t     mutex;  /* Protects a">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/13/posix多线程--条件变量/">
+  <time datetime="2016-04-12T19:16:00.000Z">
+    2016-04-13
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">posix多线程--条件变量</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>条件变量是用来通知共享数据状态信息的。</p>
+<p>1.条件变量初始化两种方式：<br>（1）静态初始化<br>pthread_cond_t cond = PTHREAD_COND_INITIALIZER;<br>代码示例如下：</p>
+<pre><code>#include &lt;pthread.h&gt;
+typedef struct my_struct_tag {
+    pthread_mutex_t     mutex;  /* Protects access to value */
+    pthread_cond_t      cond;   /* Signals change to value */
+    int                 value;  /* Access protected by mutex */
+} my_struct_t;
+
+my_struct_t data = {
+    PTHREAD_MUTEX_INITIALIZER, PTHREAD_COND_INITIALIZER, 0};
+
+int main (int argc, char *argv[])
+{
+    return 0;
+}
+</code></pre><p>（2）动态初始化<br>int pthread_cond_init(pthread_cond_t <em>cond,pthread_condattr_t </em>condattr);<br>int pthread_cond_destroy(pthread_cond_t *cond);<br>代码示例如下：</p>
+<pre><code>#include &lt;pthread.h&gt;
+
+typedef struct my_struct_tag {
+    pthread_mutex_t     mutex;  /* Protects access to value */
+    pthread_cond_t      cond;   /* Signals change to value */
+    int                 value;  /* Access protected by mutex */
+} my_struct_t;
+
+int main (int argc, char *argv[])
+{
+    my_struct_t *data;
+    int status;
+    data = malloc (sizeof (my_struct_t));
+    status = pthread_mutex_init (&amp;data-&gt;mutex, NULL);
+    status = pthread_cond_init (&amp;data-&gt;cond, NULL);
+    status = pthread_cond_destroy (&amp;data-&gt;cond);
+    status = pthread_mutex_destroy (&amp;data-&gt;mutex);
+    (void)free (data);
+    return status;
+}
+</code></pre><p>2.等待条件变量<br>int pthread_cond_wait(pthread_cond_t <em>cond,pthread_mutex_t </em>mutex);<br>int pthread_cond_timedwait(pthread_cond_t <em>cond,pthread_mutex_t </em>mutex,struct<br>timespec *expiration);<br>当线程等待条件变量时，它必须将相关互斥量锁住。在阻塞线程之前，条件变量等待操作将解锁互斥量，而在重新返回线程之前，会再次锁住互斥量。</p>
+<p>3.唤醒条件变量<br>int pthread_cond_signal(pthread_cond_t <em>cond);<br>int pthread_cond_broadcast(pthread_cond_t </em>cond);<br>在发送信号时也必须锁住互斥量，如果互斥量不被锁住，任何线程可以在被唤醒线程之前锁住互斥量。这将是一个产生被拦截唤醒的根源。例如，一个低优先级的线程可能锁住了互斥量，使高优先级的线程无法被其他线程唤醒，延迟了高优先级线程的调度。</p>
+<p>4.需要在等待条件变量线程被唤醒后，检测条件<br>（1）被拦截的唤醒：等待条件变量被唤醒并加锁相关互斥量，若一个其他线程获得了互斥量，它可能在等待之前先检查条件。由于条件为真，所以它不需等待，直接处理工作，当它解锁时，已经没有可做的工作了。我们的第一个等待条件变量线程加锁互斥量后，再次检测条件，很有必要。<br>（2）松散的条件：使用不确定的条件时，循环检测条件，代码会更加健壮。<br>（3）假唤醒：在某些多处理器系统，会发生假唤醒的情况。</p>
+<p>5.使用示例</p>
+<p>主线程等待条件信号2S，子线程睡眠1S，改变共享数据值，发送信号，主线程接收信号，继续运行。</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;pthread.h&gt;
+#include&lt;errno.h&gt;                                                                
+typedef struct cond_tag
+{
+        pthread_mutex_t mutex;
+        pthread_cond_t cond;
+        int valid;
+}cond_t;
+cond_t data = {
+        PTHREAD_MUTEX_INITIALIZER,
+        PTHREAD_COND_INITIALIZER,
+        0
+};
+void *thread_route(void *arg)
+{
+        sleep(1);
+        pthread_mutex_lock(&amp;data.mutex);
+        data.valid = 1;
+        pthread_cond_signal(&amp;data.cond);
+        pthread_mutex_unlock(&amp;data.mutex);
+        return NULL;
+}
+int main(void)
+{
+        int status;
+        pthread_t pid;
+        pthread_create(&amp;pid,NULL,thread_route,NULL);
+        struct timespec timeout;
+        timeout.tv_sec = time(NULL)+2;
+        timeout.tv_nsec = 0;
+        pthread_mutex_lock(&amp;data.mutex);
+        while(data.valid==0)
+        {
+                status = pthread_cond_timedwait(&amp;data.cond,&amp;data.mutex,&amp;timeout);
+                if(status==ETIMEDOUT)
+                {
+                        printf(&quot;wait timed out\n&quot;);
+                        break;
+                }
+        }
+        if(data.valid==1)
+        {
+                printf(&quot;cond is signaled\n&quot;);
+        }
+        pthread_mutex_unlock(&amp;data.mutex);
+
+        return 0;
+}  
+</code></pre><p>参考资料：《POSIX多线程程序设计》 pp.59-74</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/13/posix多线程--条件变量/" data-title="posix多线程--条件变量" data-url="https://shijingjing07.github.io/2016/04/13/posix多线程--条件变量/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>mysql--Ubuntu下设置MySQL字符集为utf8 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.mysql配置文件地址/etc/mysql/my.cnf
+2.在[mysqld]在下方添加以下代码[mysqld]init_connect=’SET collation_connection = utf8_unicode_ci’init_connect=’SET NAMES utf8’character-set-server=utf8collation-server=utf8_unicode_">
+  
+  <meta name="description" content="1.mysql配置文件地址/etc/mysql/my.cnf
+2.在[mysqld]在下方添加以下代码[mysqld]init_connect=’SET collation_connection = utf8_unicode_ci’init_connect=’SET NAMES utf8’character-set-server=utf8collation-server=utf8_unicode_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql--Ubuntu下设置MySQL字符集为utf8">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/01/mysql--Ubuntu下设置MySQL字符集为utf8/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.mysql配置文件地址/etc/mysql/my.cnf
+2.在[mysqld]在下方添加以下代码[mysqld]init_connect=’SET collation_connection = utf8_unicode_ci’init_connect=’SET NAMES utf8’character-set-server=utf8collation-server=utf8_unicode_">
+<meta property="og:updated_time" content="2017-01-12T01:35:46.706Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql--Ubuntu下设置MySQL字符集为utf8">
+<meta name="twitter:description" content="1.mysql配置文件地址/etc/mysql/my.cnf
+2.在[mysqld]在下方添加以下代码[mysqld]init_connect=’SET collation_connection = utf8_unicode_ci’init_connect=’SET NAMES utf8’character-set-server=utf8collation-server=utf8_unicode_">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/01/mysql--Ubuntu下设置MySQL字符集为utf8/">
+  <time datetime="2016-04-01T00:34:00.000Z">
+    2016-04-01
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">mysql--Ubuntu下设置MySQL字符集为utf8</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.mysql配置文件地址<br>/etc/mysql/my.cnf</p>
+<p>2.在[mysqld]在下方添加以下代码<br>[mysqld]<br>init_connect=’SET collation_connection = utf8_unicode_ci’<br>init_connect=’SET NAMES utf8’<br>character-set-server=utf8<br>collation-server=utf8_unicode_ci<br>skip-character-set-client-handshake</p>
+<p>3.重启mysql服务<br>sudo service mysql restart</p>
+<p>4.检测字符集是否更新成utf8.<br>进入mysql，mysql -u root -p,输入show variables like ‘%character%’ 查看字符集<br>+————————–+—————————-+<br>| Variable_name | Value |<br>+————————–+—————————-+<br>| character_set_client | utf8 |<br>| character_set_connection | utf8 |<br>| character_set_database | utf8 |<br>| character_set_filesystem | binary |<br>| character_set_results | utf8 |<br>| character_set_server | utf8 |<br>| character_set_system | utf8 |<br>| character_sets_dir | /usr/share/mysql/charsets/ |<br>+————————–+—————————-+</p>
+<p>注意事项：在修改字符集之前已经建立的数据库，character_set_database值不会发生改变，往数据库中插入中文数据仍然会显示乱码，所以最好在安装完MySQL后就将字符集改成utf8，否则后续修改会较麻烦。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/01/mysql--Ubuntu下设置MySQL字符集为utf8/" data-title="mysql--Ubuntu下设置MySQL字符集为utf8" data-url="https://shijingjing07.github.io/2016/04/01/mysql--Ubuntu下设置MySQL字符集为utf8/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

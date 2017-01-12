@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux Shell编程 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="一、什么是Shell在Linux中，系统会为每个用户运行一个shell(外壳)程序。shell程序是一个命令行解释器，交互式地解释和执行用户输入的命令。shell还是一种解释性的程序设计语言，定义了变量和函数，数组，程序控制结构等很多高级语言支持的特性。
+二、shell编程用在什么地方shell一般用于批量命令执行，用来管理，监控系统等。
+三、shell语法详解1.程序示例，输出”hello wo">
+  
+  <meta name="description" content="一、什么是Shell在Linux中，系统会为每个用户运行一个shell(外壳)程序。shell程序是一个命令行解释器，交互式地解释和执行用户输入的命令。shell还是一种解释性的程序设计语言，定义了变量和函数，数组，程序控制结构等很多高级语言支持的特性。
+二、shell编程用在什么地方shell一般用于批量命令执行，用来管理，监控系统等。
+三、shell语法详解1.程序示例，输出”hello wo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Shell编程">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/29/Linux Shell编程/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="一、什么是Shell在Linux中，系统会为每个用户运行一个shell(外壳)程序。shell程序是一个命令行解释器，交互式地解释和执行用户输入的命令。shell还是一种解释性的程序设计语言，定义了变量和函数，数组，程序控制结构等很多高级语言支持的特性。
+二、shell编程用在什么地方shell一般用于批量命令执行，用来管理，监控系统等。
+三、shell语法详解1.程序示例，输出”hello wo">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150427843-1821626791.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150522421-237667676.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150644781-2023272747.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150734281-2075603643.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150821046-256989018.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150919374-53766546.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150948984-14562658.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151036718-2078581139.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151122468-1904498454.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151200921-881466817.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151250546-138117983.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:32.582Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux Shell编程">
+<meta name="twitter:description" content="一、什么是Shell在Linux中，系统会为每个用户运行一个shell(外壳)程序。shell程序是一个命令行解释器，交互式地解释和执行用户输入的命令。shell还是一种解释性的程序设计语言，定义了变量和函数，数组，程序控制结构等很多高级语言支持的特性。
+二、shell编程用在什么地方shell一般用于批量命令执行，用来管理，监控系统等。
+三、shell语法详解1.程序示例，输出”hello wo">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150427843-1821626791.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/29/Linux Shell编程/">
+  <time datetime="2016-06-28T23:33:00.000Z">
+    2016-06-29
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux Shell编程</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>一、什么是Shell</strong><br>在Linux中，系统会为每个用户运行一个shell(外壳)程序。<br>shell程序是一个命令行解释器，交互式地解释和执行用户输入的命令。<br>shell还是一种解释性的程序设计语言，定义了变量和函数，数组，程序控制结构等很多高级语言支持的特性。</p>
+<p><strong>二、shell编程用在什么地方</strong><br>shell一般用于批量命令执行，用来管理，监控系统等。</p>
+<p><strong>三、shell语法详解</strong><br>1.程序示例，输出”hello world”<br>firstshell</p>
+<pre><code>#!/bin/bash
+echo &quot;hello world&quot;
+</code></pre><p>改变文件的访问权限，使其具有可执行属性<br>chmod +x firstshell</p>
+<p>输出结果:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150427843-1821626791.png" alt=""></p>
+<p>程序的第一行必须是 #!/bin/bash<br>指定系统用#!后的命令/bin/bash来运行此文件。</p>
+<p>2.变量<br>varname=值<br>需要注意的是：<br>1)”=”前后不能有空格<br>2)变量默认都是字符串格式的<br>3)使用变量，必须加上”$”符号，否则取到的是变量名本身<br>4)若变量名和其他字符串混淆在一起时，需要加上{}来区分变量名<br>如下例所示：<br>myshell</p>
+<pre><code>#!/bin/bash
+var1=1
+var2=2
+var3=$var1+$var2 #变量默认是字符串，所以输出为1+2
+var4 =4 #等号前后有空格，报错
+echo $var1
+echo $var2
+echo $var3
+echo $var4
+echo &quot;var1 is the ${var1}st&quot;
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150522421-237667676.png" alt=""></p>
+<p>那么，我们如何将var1,var2作为数值类型来相加呢？<br>方法一：使用C风格表示式，((表示式))<br>((var3=$var1+$var2))<br>或((var3=var1+var2))</p>
+<p>方法二：使用shell中的let命令<br>let ‘var3=var1+var2’ #注意不能加’$’符号，否则报错</p>
+<p>方法三：调用expr外部程序，效率较低，尽量少用<br>var3=$(expr $var1 + $var2) #expr函数需要三个参数,$var1,+,$var2</p>
+<p>3.流程控制<br>1)if语句<br>结构如下：</p>
+<pre><code>if
+then
+elif
+then
+else
+fi
+</code></pre><p>或者(then写在if的后面，但是要加分号;)</p>
+<pre><code>if ...;then
+elif...;then
+else
+fi
+</code></pre><p>示例如下：<br>myshell</p>
+<pre><code>#!/bin/bash
+var1=1
+var2=2
+if ((var1==var2))
+then
+    echo &quot;var1=var2&quot;
+elif ((var1&gt;var2))
+then
+    echo &quot;var1&gt;var2&quot;
+else
+    echo &quot;var1&lt;var2&quot;
+fi
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150644781-2023272747.png" alt=""></p>
+<p>bash中有一些常用的条件判断表达式，使用方法：[ 条件判断表达式 ]<br>-f “filename”:判断是否是文件<br>-x “/bin/ls”:判断/bin/ls是否存在并有可执行权限<br>-n “$var”:判断$var变量是否有值<br>“$a”==”$b”:判断$a和$b是否相等</p>
+<p>2)&amp;&amp;和||操作符<br>&amp;&amp;：逻辑与操作符<br>||: 逻辑或操作符</p>
+<p>3)case语句<br>case表达式用来匹配给定的字符串，和C中的switch…case匹配的是数字不同。</p>
+<pre><code>case ... in
+...) 
+    do something;;
+...)
+    do something;;
+esac
+</code></pre><p>下例中，我们写了一个程序，用来解压bzip2,gzip,zip类型的压缩文件。<br>代码如下：</p>
+<pre><code>#!/bin/bash
+ftype=$(file $1)
+echo &quot;$ftype&quot;
+case &quot;$ftype&quot; in
+&quot;$1: Zip archive&quot;*)
+    unzip &quot;$1&quot;;;
+&quot;$1: gzip compressed&quot;*)
+    gunzip &quot;$1&quot;;;
+&quot;$1: bzip2 compressed&quot;*)
+    bunzip2 &quot;$1&quot;;;
+*)
+    echo &quot;File $1 can not be unconpressed&quot;;;
+esac
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150734281-2075603643.png" alt=""></p>
+<p>其中$1表示输入的第一个参数</p>
+<p>4)select循环语句<br>select循环适合交互式的场合，格式如下：</p>
+<pre><code>select var in ...;do
+...
+done
+</code></pre><p>示例代码如下：</p>
+<pre><code>#!/bin/bash
+echo &quot;what is your favourite OS?&quot;
+select var in &quot;RedHat&quot; &quot;Ubuntu&quot; &quot;Free BSD&quot; &quot;Other&quot;;do
+    echo &quot;hello $var&quot;
+    break;
+done
+echo &quot;you have selected $var&quot;
+</code></pre><p>输出结果:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150821046-256989018.png" alt=""></p>
+<p>5)while/for循环<br>while循环</p>
+<pre><code>while...;do
+    ...
+done
+</code></pre><p>for循环</p>
+<pre><code>for var in ...;do
+    ...
+done
+</code></pre><p>示例代码如下：</p>
+<pre><code>#!/bin/bash
+for var in A B C;do
+    echo &quot;var is $var&quot;
+done
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150919374-53766546.png" alt=""></p>
+<p>4.shell里的一些特殊符号<br>1)*:表示通配符<br>双引号可以防止通配符但允许变量扩展<br>单引号(或转义字符\)的限制更严格，可防止任何变量扩展；<br>示例代码如下：</p>
+<pre><code>#!/bin/bash
+echo *.c
+echo &quot;*.c&quot;
+echo &apos;*.c&apos;
+echo \*.c
+
+echo $SHELL
+echo &quot;$SHELL&quot;
+echo &apos;$SHELL&apos;
+echo \$SHELL
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150948984-14562658.png" alt=""></p>
+<p>2)命令行参数<br>$1:命令行的第一个参数<br>$#:命令行参数的个数<br>$@:命令行的所有参数<br>$*:所有命令行参数作为一个参数<br>shift n:去掉前面的n个参数</p>
+<p>示例如下：</p>
+<pre><code>#!/bin/bash
+help()
+{
+cat &lt;&lt; HELP
+   本例程序用来获取命令行参数
+   使用了命令：myshell -l hello -f -- -somefile1 somefile2
+HELP
+   exit 0
+}
+while [ -n &quot;$1&quot; ]; do
+case &quot;$1&quot; in
+   -h) help;shift 1;; 
+   -f) opt_f=1;shift 1;; 
+   -l) opt_l=$2;shift 2;; 
+   --) shift;break;; 
+   -*) echo &quot;error: no such option $1. -h for help&quot;;exit 1;;
+   *) break;;
+esac
+done
+echo &quot;opt_f is $opt_f&quot;
+echo &quot;opt_l is $opt_l&quot;
+echo &quot;first arg is $1&quot;
+echo &quot;2nd arg is $2&quot;
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151036718-2078581139.png" alt=""></p>
+<p>3)输出段落<br>echo一次只能输出一行<br>如果是一段文字，该如何输出呢？<br>我们可以使用cat &lt;&lt;，后接一个字符串，段落的末尾再加上这个字符串来输出段落。</p>
+<pre><code>cat &lt;&lt; HELP
+...
+...
+HELP
+</code></pre><p>下例中，程序用来替换文件名，<br>有三个输入参数，第一个参数是待替换字符<br>第二个参数是替换字符<br>第三个参数是文件名。</p>
+<pre><code>#!/bin/bash
+if [ $# -lt 3 ];then
+cat &lt;&lt; HELP
+本例中，程序用来替换文件名，
+有三个输入参数，第一个参数是待替换字符
+第二个参数是替换字符
+第三个参数是文件名。
+HELP
+   exit 0
+fi
+OLD=&quot;$1&quot;
+NEW=&quot;$2&quot;
+# The shift command removes one argument from the list of
+# command line arguments.
+shift
+shift
+# $@ contains now all the files:
+for file in &quot;$@&quot;; do
+   if [ -f &quot;$file&quot; ]; then
+      newfile=`echo &quot;$file&quot; | sed &quot;s/${OLD}/${NEW}/g&quot;`
+      if [ -f &quot;$newfile&quot; ]; then
+　　　　   echo &quot;ERROR: $newfile exists already&quot;
+      else
+         echo &quot;renaming $file to $newfile ...&quot;
+         mv &quot;$file&quot; &quot;$newfile&quot;
+      fi
+   fi
+done
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151122468-1904498454.png" alt=""></p>
+<p>5.函数<br>格式如下：</p>
+<pre><code>函数名(){
+    #函数中$1,$2对应接收到的第一第二个参数
+}
+</code></pre><p>示例代码如下:</p>
+<pre><code>#!/bin/bash
+add()
+{
+
+    echo $(($1+$2))
+}
+var1=1
+var2=2
+add $var1 $var2
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151200921-881466817.png" alt=""></p>
+<p><strong>四、脚本调试</strong><br>最简单的方式是使用echo输出值。</p>
+<p><strong>五、Shell编程示例</strong><br>我们有一个日志文件，保存了系统的操作记录。过了一段时间后，这个文件可能会变得很大。<br>我们采取的做法是重命名该文件，然后生成一个新的文件供再次使用。<br>重命名的规则是，当前文件log.txt重名为log1.txt，在此之前，如果已经有log1.txt时，将log。txt命名为log2.txt，依次类推。<br>代码如下：</p>
+<pre><code>#!/bin/bash
+help()
+{
+   cat &lt;&lt; HELP
+重命名该文件，然后生成一个新的文件供再次使用。
+重命名的规则是，当前文件log.txt重名为log1.txt，在此之前，如果已经有log1.txt时，将log。txt命名为log2.txt，依次类推。
+HELP
+   exit 0
+}
+
+if [[ $1 == &apos;-h&apos; || $1 == &apos;&apos; ]]; then
+  help
+fi
+
+filename=$1
+
+# 我们先找到最大的数字再说。
+max=0
+while [ -f &quot;$filename.$((++max))&quot; ]; do
+  : # 什么都不用做，我们已经顺手用 ++max 自增了 max 了。
+done
+
+# 然后从最大的一路重命名下来。
+for ((i=max; i&gt;0; i--)); do
+  # 数字加个 1，好给前一个让位子。
+  if [ -f $filename.$i ];then 
+      mv &quot;$filename.$i&quot; &quot;$filename.$((i+1))&quot;
+  fi
+done
+
+# 最后我们点名要重命名的：
+if [ -f &quot;$filename&quot; ]; then
+   mv &quot;$filename&quot; &quot;$filename.1&quot;
+fi
+
+# 重新创建一下。
+: &gt; &quot;$filename&quot;
+</code></pre><p>运行程序，./myshell log.txt</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151250546-138117983.png" alt=""><br>我们会发现log.txt的日志文件的名称会加1，同时当前的log.txt文件会变成log.txt.1,<br>生成一个全新的log.txt文件，供程序再次使用。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/29/Linux Shell编程/" data-title="Linux Shell编程" data-url="https://shijingjing07.github.io/2016/06/29/Linux Shell编程/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

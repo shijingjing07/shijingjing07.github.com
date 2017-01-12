@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python--笨方法学python 习题52 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="笨方法学python是一本不错的python入门书籍。书的最后一节是一个web版的游戏程序，以下是程序代码：
+1.项目的目录结构如下所示：skeleton\　　　　app.py　　　　map.py　　　　templates\　　　　　　　　layout.html　　　　　　　　show_room.html　　　　　　　　you_died.html
+2.游戏地图结构 map.py其中Room类是游戏">
+  
+  <meta name="description" content="笨方法学python是一本不错的python入门书籍。书的最后一节是一个web版的游戏程序，以下是程序代码：
+1.项目的目录结构如下所示：skeleton\　　　　app.py　　　　map.py　　　　templates\　　　　　　　　layout.html　　　　　　　　show_room.html　　　　　　　　you_died.html
+2.游戏地图结构 map.py其中Room类是游戏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python--笨方法学python 习题52">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/03/31/python--笨方法学python 习题52/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="笨方法学python是一本不错的python入门书籍。书的最后一节是一个web版的游戏程序，以下是程序代码：
+1.项目的目录结构如下所示：skeleton\　　　　app.py　　　　map.py　　　　templates\　　　　　　　　layout.html　　　　　　　　show_room.html　　　　　　　　you_died.html
+2.游戏地图结构 map.py其中Room类是游戏">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172346129-267934389.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172410801-1185294461.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172428785-1970529617.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172445973-1703021698.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172459863-415540435.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:47.422Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python--笨方法学python 习题52">
+<meta name="twitter:description" content="笨方法学python是一本不错的python入门书籍。书的最后一节是一个web版的游戏程序，以下是程序代码：
+1.项目的目录结构如下所示：skeleton\　　　　app.py　　　　map.py　　　　templates\　　　　　　　　layout.html　　　　　　　　show_room.html　　　　　　　　you_died.html
+2.游戏地图结构 map.py其中Room类是游戏">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172346129-267934389.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/03/31/python--笨方法学python 习题52/">
+  <time datetime="2016-03-31T01:26:00.000Z">
+    2016-03-31
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python--笨方法学python 习题52</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>笨方法学python是一本不错的python入门书籍。<br>书的最后一节是一个web版的游戏程序，以下是程序代码：</p>
+<p>1.项目的目录结构如下所示：<br>skeleton\<br>　　　　app.py<br>　　　　map.py<br>　　　　templates\<br>　　　　　　　　layout.html<br>　　　　　　　　show_room.html<br>　　　　　　　　you_died.html</p>
+<p>2.游戏地图结构 map.py<br>其中Room类是游戏场景，包括场景名称 name，描述 description，通往下一场景的可能路径集合 paths。</p>
+<p>定义了游戏中设计到的7个场景。</p>
+<pre><code># -*- coding:utf-8 -*-                                                                                                                                  
+class Room(object):
+        def __init__(self, name, description): 
+                self.name = name 
+                self.description = description 
+                self.paths = {}  
+
+        def go(self, direction): 
+                return self.paths.get(direction, None) 
+
+        def add_paths(self, paths): 
+                self.paths.update(paths)
+
+central_corridor = Room(&quot;Central Corridor&quot;,
+&quot;&quot;&quot;
+#25外星战机入侵了你的飞船，并且摧毁了你的部队。你是最后一个幸存者，你的最终任务是从武器室拿到炸弹，将炸弹放在驾驶舱，跳进分离仓之后，炸掉飞船。
+你现在正在往武器室跑去，这时，一个外星人跳了出来，可怕的红色皮肤，暗淡肮脏的牙齿，丑陋的服装围绕着他那充满憎恶的身体。他正在关闭通往武器室的大门，并且掏
+出武器对准了你。
+&quot;&quot;&quot;
+)
+
+laser_weapon_armory=Room(&quot;Laser Weapon Armory&quot;,
+&quot;&quot;&quot;
+幸运的是你知道外星人是由意念组成的。
+你讲了一个你知道的外星笑话。
+&amp;$%@#$#%#@*&amp;^$%$@#^&amp;@%~$@%%!@~^^@#
+外星人停止了动作，试着不发出笑声，最终禁不住大笑起来，并且停不下来。
+当他笑的时候，你跑上前去，一枪命中他的眉心，将他放倒。然后跳进武器室。
+你一个前空翻进入武器室，仔细地检查武器室是否藏有更多的外星人。死一般的寂静，太安静了。
+你站起来，跑向武器室的角落，在盒子里找到了炸弹。盒子上有一个键盘，你需要输入密码才能将炸弹取出来。如果你输错10次，炸弹将永远被锁住无法取出。密码是4位数&gt;字。
+&quot;&quot;&quot;
+)
+
+the_bridge=Room(&quot;The Bridge&quot;,
+&quot;&quot;&quot;
+盒子咔哒一声打开了，密封破裂，毒气逸出。
+你一把抓起炸弹，尽可能快递跑向驾驶舱，你必须把炸弹安置在合适的地点。
+你闯入驾驶舱，手臂下夹着炸弹，惊奇地发现有5个外星人正在试图控制飞船。他们中的每一个都比上一个拥有更加丑陋的服装。他们没有拿出武器，因为他们看见了你手臂&gt;下的炸弹，并且不希望引爆它。
+&quot;&quot;&quot;
+)
+
+escape_pod=Room(&quot;Escape Pod&quot;,
+&quot;&quot;&quot;
+你拉出手臂下炸弹的导火线，外星人们举起手来，开始流汗。
+你缓慢地退向门口，打开门，然后小心翼翼地把炸弹放在地上，拉出导火线。然后跳出驾驶舱，按下关闭按钮，门锁住了，外星人们无法逃出去。
+现在炸弹已经安放好了，你跑向逃生通道。
+你不顾一切地冲过飞船，以确保在整个飞船爆炸之前到达分离仓。看起来没有外星人在船上了，所以几乎没有遇到任何阻碍。你成功到达分离仓，然后你需要选择一个。他们
+中的一些已经被摧毁了，但是你没有时间去检查。总共有5个分离仓，你将选择哪一个呢？
+&quot;&quot;&quot;
+)
+
+the_end_winner=Room(&quot;The End&quot;,
+&quot;&quot;&quot;
+你跳进了2号分离舱 ，按下发动按钮。分离舱很容易地向下方的地球滑去。当它飞向地球时，你往回看，发现你的飞船像一颗明亮的星星一样炸开了，同时炸掉了恶灵的飞船
+。你赢了！
+&quot;&quot;&quot;
+)
+
+the_end_loser=Room(&quot;The End&quot;,
+&quot;&quot;&quot;
+你随便跳进一个分离舱，按下发动按钮。分离舱逃向未知的空间，然后因为外壳破裂而爆炸，把你的身体压成肉酱。
+&quot;&quot;&quot;
+)
+escape_pod.add_paths({
+        &apos;2&apos;:the_end_winner,
+        &apos;*&apos;:the_end_loser
+})
+
+generic_death=Room(&quot;death&quot;,&quot;You died.&quot;)
+
+the_bridge.add_paths({
+        &apos;throw the bomb&apos;:generic_death,
+        &apos;slowly place the bomb&apos;:escape_pod
+})
+
+laser_weapon_armory.add_paths({
+        &apos;0132&apos;:the_bridge,
+        &apos;*&apos;:generic_death
+})
+
+central_corridor.add_paths({
+        &apos;shoot!&apos;:generic_death,
+        &apos;dodge!&apos;:generic_death,
+        &apos;tell a joke&apos;:laser_weapon_armory
+})
+
+START=central_corridor
+</code></pre><p>3.游戏引擎设计<br>游戏引擎，也就是我们的web应用程序入口，定义了起始场景。将场景作为参数传递给场景信息显示模板show_room.html，显示当前场景描述信息。玩家输入动作指令，提交表单后，根据当前场景以及输入的指令，确定下一场景并显示。因为Http协议的无状态性，当前场景可以通过两种方式传递：(1)通过web.py框架的session机制<br>(2)通过&lt;input type=”hidden” value=””&gt;隐藏域的方式。这里我们选择第一种方式。</p>
+<pre><code>import web                                                                                                                                              
+from map import *
+import pdb 
+urls=(
+        &apos;/game&apos;,&apos;GameEngine&apos;,
+        &apos;/&apos;,&apos;Index&apos;,
+)
+
+app=web.application(urls,globals())
+
+if web.config.get(&apos;_session&apos;) is None:
+        store = web.session.DiskStore(&apos;sessions&apos;)
+        session = web.session.Session(app,store,initializer={&apos;room&apos;:None,&apos;count&apos;:0})
+        web.config._session = session
+else:
+        session = web.config._session
+render = web.template.render(&apos;templates/&apos;,base=&quot;layout&quot;)
+
+class Index(object):
+        def GET(self):
+                session.room = START
+                #输入错误密码次数初始化
+                session.count = 0 
+                web.seeother(&quot;/game&quot;)
+
+class GameEngine(object):
+        def GET(self):
+            if session.room:
+                return render.show_room(room=session.room)
+            else:
+                #场景为None，则跳转到death界面
+                return render.you_died()
+
+        def POST(self):
+                form = web.input(action=None)
+                if session.room and form.action:
+                        result = session.room.go(form.action)
+#                       pdb.set_trace()
+                        #如果你输错10次，炸弹将永远被锁住无法取出
+                        if session.room.name==&apos;Laser Weapon Armory&apos; and (result==None or result.name==&apos;death&apos;) and session.count&lt;10:
+                                #输入错误密码次数累计
+                                session.count=session.count+1
+                        else:
+                                session.room = result
+                web.seeother(&quot;/game&quot;)
+
+if __name__==&quot;__main__&quot;:
+        app.run()
+</code></pre><p>4.接着创建模板页，模板放在templates文件夹下.<br>mkdir templates<br>首先创建一个基础模板页 layout.html</p>
+<pre><code>$def with (content)                                                                                                                                     
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Gothons From Planet Percal #25&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+$:content
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>场景信息显示页面  show_room.html</p>
+<pre><code>$def with (room)                                                                                                                                        
+&lt;h1&gt;$room.name&lt;/h1&gt;
+&lt;pre&gt;
+$room.description
+&lt;/pre&gt;
+$if room.name==&quot;death&quot;:
+        &lt;p&gt;&lt;a href=&quot;/&quot;&gt;Play Again?&lt;/a&gt;&lt;/p&gt;
+$else:
+        &lt;p&gt;
+        &lt;form action=&quot;/game&quot; method=&quot;POST&quot;&gt;
+        -&lt;input type=&quot;text&quot; name=&quot;action&quot;&gt;
+        &lt;input type=&quot;SUBMIT&quot;&gt;
+        &lt;/form&gt;
+        &lt;/p&gt;
+</code></pre><p>场景为None失败，提示界面 you_died.html</p>
+<pre><code>&lt;h1&gt;You Died!&lt;/h1&gt;                                                                                                                                      
+&lt;p&gt;Looks like you bit the dust&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/&quot;&gt;Play Again&lt;/a&gt;&lt;/p&gt;
+</code></pre><p>5.运行：python app.py</p>
+<p>6.结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172346129-267934389.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172410801-1185294461.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172428785-1970529617.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172445973-1703021698.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172459863-415540435.png" alt=""></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/03/31/python--笨方法学python 习题52/" data-title="python--笨方法学python 习题52" data-url="https://shijingjing07.github.io/2016/03/31/python--笨方法学python 习题52/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

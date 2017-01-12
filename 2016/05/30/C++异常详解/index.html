@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++异常详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.对异常的几种处理方式1)调用abort()abort()函数的原型位于头文件cstlib中，其实现是向标准错误流发送abnormal programtermination（程序异常终止），然后终止程序。示例如下:
+#inclide&amp;lt;iostream&amp;gt;
+#inclide&amp;lt;cstlib&amp;gt;
+double hmean(double x,double y)
+{
+    if(x=">
+  
+  <meta name="description" content="1.对异常的几种处理方式1)调用abort()abort()函数的原型位于头文件cstlib中，其实现是向标准错误流发送abnormal programtermination（程序异常终止），然后终止程序。示例如下:
+#inclide&amp;lt;iostream&amp;gt;
+#inclide&amp;lt;cstlib&amp;gt;
+double hmean(double x,double y)
+{
+    if(x=">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++异常详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/30/C++异常详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.对异常的几种处理方式1)调用abort()abort()函数的原型位于头文件cstlib中，其实现是向标准错误流发送abnormal programtermination（程序异常终止），然后终止程序。示例如下:
+#inclide&amp;lt;iostream&amp;gt;
+#inclide&amp;lt;cstlib&amp;gt;
+double hmean(double x,double y)
+{
+    if(x=">
+<meta property="og:updated_time" content="2017-01-12T01:35:39.770Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++异常详解">
+<meta name="twitter:description" content="1.对异常的几种处理方式1)调用abort()abort()函数的原型位于头文件cstlib中，其实现是向标准错误流发送abnormal programtermination（程序异常终止），然后终止程序。示例如下:
+#inclide&amp;lt;iostream&amp;gt;
+#inclide&amp;lt;cstlib&amp;gt;
+double hmean(double x,double y)
+{
+    if(x=">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/30/C++异常详解/">
+  <time datetime="2016-05-30T01:41:00.000Z">
+    2016-05-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++异常详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.对异常的几种处理方式</strong><br>1)调用abort()<br>abort()函数的原型位于头文件cstlib中，其实现是向标准错误流发送abnormal program<br>termination（程序异常终止），然后终止程序。<br>示例如下:</p>
+<pre><code>#inclide&lt;iostream&gt;
+#inclide&lt;cstlib&gt;
+double hmean(double x,double y)
+{
+    if(x==-y)
+    {
+        std::cout&lt;&lt;&quot;arguments are not valid\n&quot;;
+        std::abort();
+    }
+    return 2*x*y/(x+y);
+}
+int main()
+{
+    double x,y,z;
+    while(std::cin&gt;&gt;x&gt;&gt;y)
+    {
+        z=hmean(x,y);
+        std::cout&lt;&lt;&quot;result is &quot;&lt;&lt;z&lt;&lt;std::endl;
+        std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+    }
+    return 0;
+}
+</code></pre><p>2)返回错误码<br>使用一个bool值来标记，运行结果是成功，还是失败。<br>示例如下：</p>
+<pre><code>#inclide&lt;iostream&gt;
+bool hmean(double x,double y,double &amp;z)
+{
+    if(x==-y)
+    {
+        return false;
+    }
+    z= 2*x*y/(x+y);
+    return true;
+}
+int main()
+{
+    double x,y,z;
+    while(std::cin&gt;&gt;x&gt;&gt;y)
+    {
+        if(hmean(x,y,z))
+        {
+            std::cout&lt;&lt;&quot;result is false!&quot;&lt;&lt;std::endl;
+        }
+        else{
+            std::cout&lt;&lt;&quot;result is true!&quot;&lt;&lt;std::endl;
+            std::cout&lt;&lt;&quot;result is &quot;&lt;&lt;z&lt;&lt;std::endl;
+        }
+        std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+    }
+    return 0;
+}
+</code></pre><p>3)使用全局变量errno<br>出现异常时可以将全局变量errno设值，需要注意的是，要确保没有其他的函数同时在使用这个全局变量</p>
+<p><strong>2.异常机制</strong><br>涉及try,catch,throw关键字<br>示例代码如下：</p>
+<pre><code>#inclide&lt;iostream&gt;
+double hmean(double x,double y)
+{
+    if(x==-y)
+    {
+        throw &quot;arguments are not valid&quot;;
+    }
+    return 2*x*y/(x+y);
+}
+int main()
+{
+    double x,y,z;
+    while(std::cin&gt;&gt;x&gt;&gt;y)
+    {
+        try
+        {
+            z = hmean(x,y);
+        }
+        catch(const char* s)
+        {
+            std::cout&lt;&lt;s&lt;&lt;std::endl;
+            std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+            continue;
+        }
+        std::cout&lt;&lt;&quot;result is &quot;&lt;&lt;z&lt;&lt;std::endl;
+        std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+    }
+    return 0;
+}
+</code></pre><p><strong>3.上面的示例中，我们抛出的是字符串，通常情况，我们会为每个可能出现的异常，定义一个异常类，当出现异常时，抛出该异常对象，catch块对该异常对象进行捕获。</strong><br>示例代码如下：</p>
+<pre><code>#inclide&lt;iostream&gt;
+class bad_hmean
+{
+private:
+    double x;
+    double y;
+public:
+    bad_hmean(int a=0,int b=0):x(a),y(b){}
+    void mesg();
+};
+inline void bad_hmean::mesg()
+{
+    std::cout&lt;&lt;&quot;arguments are not valid &quot;&lt;&lt;x&lt;&lt;&quot; &quot;&lt;&lt;y&lt;&lt;std::endl;
+}
+double hmean(double x,double y)
+{
+    if(x==-y)
+    {
+        throw bad_mean(x,y);
+    }
+    return 2*x*y/(x+y);
+}
+int main()
+{
+    double x,y,z;
+    while(std::cin&gt;&gt;x&gt;&gt;y)
+    {
+        try
+        {
+            z = hmean(x,y);
+        }
+        catch(bad_hmean &amp;hg)
+        {
+            hg.mesg();
+            std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+            continue;
+        }
+        std::cout&lt;&lt;&quot;result is &quot;&lt;&lt;z&lt;&lt;std::endl;
+        std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+    }
+    return 0;
+}
+</code></pre><p><strong>4.异常规范</strong><br>我们看下面的两行代码<br>double hmean(int x,int y) throw(bad_thing)//可能抛出bad_thing异常<br>double hmean(int x,int y) throw()//不抛出异常<br>其中后面的throw()部分就是异常规范，指出该函数可能抛出的异常。<br>程序员来确定可能抛出的异常，这样并不好。<br>在C++11中，已经摒弃了该规范。</p>
+<p><strong>5.栈解退</strong></p>
+<p>栈解退是很重要的概念。为什么这么说呢，当抛出异常后，程序终止，或被catch块捕捉，我们必须要考虑内存的释放问题。</p>
+<p>我们先看一下，正常函数是如何处理内存释放的。<br>函数调用时，调用函数的指令的地址会放到栈中，函数的参数或局部变量也将被添加到栈中或堆中。<br>如果在其中又调用了函数，则执行同样的操作。<br>当函数结束以后，程序会跳到被调用时存储的地址处，栈顶的元素被释放，同时释放其自动变量。<br>如果自动变量时类对象，则类的析构函数将被调用。</p>
+<p>当函数出现异常时，程序也将不断释放栈，直到找到一个与该异常相对应的try块的返回地址。<br>随后，控制权将转到块尾的catch处理程序，而不是函数调用后面的第一条语句，这个过程称为栈解退。<br>和正常函数调用不同的是，函数返回将处理该函数放在栈中的对象，而函数异常则处理，try块和throw之间放在栈中的对象。<br>有了栈解退机制，引发异常后，也会释放调用中间函数时栈中的对象。</p>
+<p>我们看看下面的两个例子：</p>
+<pre><code>void test1()
+{
+    string mesg(&quot;hello&quot;);
+    if(false)
+        throw exception();
+    return;
+}
+
+void test2()
+{
+    double *ar = new double[n];
+    if(false)
+        throw exception();
+    delete [] ar;
+    return;
+}
+</code></pre><p>对于test1,函数异常后，会进行栈解退，string类析构函数会被调用，占用的内存将释放。<br>对于test2,栈解退时，将删除栈中变量ar，但ar指向的内存块未释放，并且不可访问，会造成内存泄漏的问题。此时要如何处理呢？<br>可以在引发异常的代码块中，捕获该异常，释放该内存块，然后重新引发异常。此时，内存块就被释放了。</p>
+<pre><code>void test2()
+{
+    double *ar = new double[n];
+    try
+    {
+        if(false)
+            throw exception();
+    }
+    catch(exception &amp;ex)
+    {
+        delete[] ar;
+        throw;
+    }
+    delete [] ar;
+    return;
+}
+</code></pre><p><strong>6.关于catch块</strong></p>
+<pre><code>try
+{}
+catch(exception &amp;ex)
+{}
+</code></pre><p>注意catch块中参数为引用类型。当throw异常向上抛出时，该异常对象会被释放，此时catch块接收的异常对象为原始异常对象的一个副本。<br>使用引用的目的是，基类引用可以执行派生类对象。若不使用引用，则只能调用基类的特性。</p>
+<p><strong>7.C++标准异常库</strong><br>标准异常类exception在头文件exception中定义，类含有一个名为what()的虚拟成员函数。从exception派生的类可以重新定义它。<br>C++库定义了很多基于exception的异常类型，此处不再详细介绍。</p>
+<p>参考资料：《C++ Primer.Plus》 pp.616-642</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/30/C++异常详解/" data-title="C++异常详解" data-url="https://shijingjing07.github.io/2016/05/30/C++异常详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Windows动态链接库DLL | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是DLLDLL，即动态链接库，是包含若干个函数的库文件，可供其他程序运行时调用。
+2.DLL的优缺点优点：代码重用，可供多个程序同时调用
+缺点：易发生版本冲突当新版本的动态链接库不兼容旧版本时，其他使用该DLL的程序可能无法正常工作。针对这一问题，我们需要在程序中加上一个manifest文件，指明该程序所使用的DLL版本号。此时，程序将根据manifest加载指定版本的DLL，否则按默认版">
+  
+  <meta name="description" content="1.什么是DLLDLL，即动态链接库，是包含若干个函数的库文件，可供其他程序运行时调用。
+2.DLL的优缺点优点：代码重用，可供多个程序同时调用
+缺点：易发生版本冲突当新版本的动态链接库不兼容旧版本时，其他使用该DLL的程序可能无法正常工作。针对这一问题，我们需要在程序中加上一个manifest文件，指明该程序所使用的DLL版本号。此时，程序将根据manifest加载指定版本的DLL，否则按默认版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows动态链接库DLL">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/22/Windows动态链接库DLL/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是DLLDLL，即动态链接库，是包含若干个函数的库文件，可供其他程序运行时调用。
+2.DLL的优缺点优点：代码重用，可供多个程序同时调用
+缺点：易发生版本冲突当新版本的动态链接库不兼容旧版本时，其他使用该DLL的程序可能无法正常工作。针对这一问题，我们需要在程序中加上一个manifest文件，指明该程序所使用的DLL版本号。此时，程序将根据manifest加载指定版本的DLL，否则按默认版">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160621180959975-426197335.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:34.712Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows动态链接库DLL">
+<meta name="twitter:description" content="1.什么是DLLDLL，即动态链接库，是包含若干个函数的库文件，可供其他程序运行时调用。
+2.DLL的优缺点优点：代码重用，可供多个程序同时调用
+缺点：易发生版本冲突当新版本的动态链接库不兼容旧版本时，其他使用该DLL的程序可能无法正常工作。针对这一问题，我们需要在程序中加上一个manifest文件，指明该程序所使用的DLL版本号。此时，程序将根据manifest加载指定版本的DLL，否则按默认版">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160621180959975-426197335.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/22/Windows动态链接库DLL/">
+  <time datetime="2016-06-21T22:08:00.000Z">
+    2016-06-22
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Windows动态链接库DLL</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是DLL</strong><br>DLL，即动态链接库，是包含若干个函数的库文件，可供其他程序运行时调用。</p>
+<p><strong>2.DLL的优缺点</strong><br>优点：代码重用，可供多个程序同时调用</p>
+<p>缺点：易发生版本冲突<br>当新版本的动态链接库不兼容旧版本时，其他使用该DLL的程序可能无法正常工作。<br>针对这一问题，我们需要在程序中加上一个manifest文件，指明该程序所使用的DLL版本号。<br>此时，程序将根据manifest加载指定版本的DLL，否则按默认版本加载。</p>
+<p><strong>3.关于LIB和DLL</strong><br>LIB，是静态链接库，分为静态lib和动态lib。<br>静态lib:包含函数代码声明和实现，编译后所有代码都嵌入到宿主程序中。不需要再另行调用DLL。<br>动态lib:相当于一个.h头文件，它是对实现部分（.DLL）的导出部分的声明。编译后宿主程序也只包括声明部分。运行时需调用相应的DLL文件。</p>
+<p><strong>4.DLL编写</strong><br>1)在vs中，选择”文件”-》”新建”-》”项目”，选择”Visual C++”-》”win32项目”，来创建DLL类库。<br>如下图所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160621180959975-426197335.png" alt=""></p>
+<p>2)添加头文件(.h)和源文件(.cpp)<br>mydll.h</p>
+<pre><code>extern &quot;C&quot; _declspec(dllexport) int add(int a, int b); 
+</code></pre><p>extern关键字：函数可以在本模块或其他模块中使用；<br>“C”：表明函数必须按C语言方式进行编译，因为C++支持函数的重载，编译时会对函数名进行更改（按照函数名+参数类型），<br>       所以需要声明”C”，以便链接时能正确找到相应的函数。<br>_declspec(dllexport)关键字：该函数可以从DLL中导出，程序引入DLL时，只有声明了该关键字的函数，才能导入使用</p>
+<p>mydll.cpp</p>
+<pre><code>#include &quot;mydll.h&quot; 
+int add(int a, int b) //该DLL需要导出的函数功能：加法 
+{ 
+     return a + b; 
+}
+</code></pre><p>编译后，我们可以在生成目录中找到相应的DLL文件和LIB文件。</p>
+<p>_mydll.dll，<em>mydll.lib</em><br>_</p>
+<p><strong>5.DLL调用</strong><br>调用DLL有两种方式。<br>1)显式链接（只使用DLL）</p>
+<p>特点：不需要使用相应的lib文件，可随时加载和卸载DLL，方便灵活。</p>
+<pre><code>void main(void)
+{
+    typedef int(*padd)(int a,int b);
+    HINSTANCE hDLL;
+    padd add;
+    HDLL=LoadLibrary(&quot;MyDll.dll&quot;);//加载动态链接库MyDll.dll文件；
+    add=(padd)GetProcAddress(hDLL,&quot;add&quot;);
+    int result=add(5,8);
+    Printf(&quot;计算的结果为%d\n&quot;，result);
+    FreeLibrary(hDLL);//卸载MyDll.dll文件；
+} 
+</code></pre><p>上例通过LoadLibray()将DLL加载到当前的应用程序，并返回当前DLL文件的句柄。<br>然后通过GetProcAddress()函数获取导入到应用程序中的函数指针，<br>函数调用完毕后，使用FreeLibrary()卸载DLL文件。</p>
+<p>2)隐式链接（使用LIB,DLL）<em>  
+</em></p>
+<p>特点：程序开始执行时将DLL文件加载到应用程序中，程序结束后，释放DLL。</p>
+<pre><code>#pragma comment(lib，&quot;MyDll.lib&quot;)
+extern &quot;C&quot;_declspec(dllimport) int add(int a,int b);
+void main()
+{
+    int a;
+    a=add(8,10)
+    printf(&quot;计算的结果为%d\n&quot;，a);
+}
+</code></pre><p>#pragma comment是预处理指令，使得链接器在链接库的时候去找”MyDll.lib”这个库。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/22/Windows动态链接库DLL/" data-title="Windows动态链接库DLL" data-url="https://shijingjing07.github.io/2016/06/22/Windows动态链接库DLL/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>重放攻击（Replay Attacks） | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="重放攻击（Replay Attacks）1.什么是重放攻击顾名思义，重复的会话请求就是重放攻击。可能是因为用户重复发起请求，也可能是因为请求被攻击者获取，然后重新发给服务器。  
+2.重放攻击的危害请求被攻击者获取，并重新发送给认证服务器，从而达到认证通过的目的。我们可以通过加密，签名的方式防止信息泄露，会话被劫持修改。但这种方式防止不了重放攻击。  
+3.重放攻击的防御1)时间戳验证请求时加上客">
+  
+  <meta name="description" content="重放攻击（Replay Attacks）1.什么是重放攻击顾名思义，重复的会话请求就是重放攻击。可能是因为用户重复发起请求，也可能是因为请求被攻击者获取，然后重新发给服务器。  
+2.重放攻击的危害请求被攻击者获取，并重新发送给认证服务器，从而达到认证通过的目的。我们可以通过加密，签名的方式防止信息泄露，会话被劫持修改。但这种方式防止不了重放攻击。  
+3.重放攻击的防御1)时间戳验证请求时加上客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重放攻击（Replay Attacks）">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/12/01/重放攻击（Replay Attacks）/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="重放攻击（Replay Attacks）1.什么是重放攻击顾名思义，重复的会话请求就是重放攻击。可能是因为用户重复发起请求，也可能是因为请求被攻击者获取，然后重新发给服务器。  
+2.重放攻击的危害请求被攻击者获取，并重新发送给认证服务器，从而达到认证通过的目的。我们可以通过加密，签名的方式防止信息泄露，会话被劫持修改。但这种方式防止不了重放攻击。  
+3.重放攻击的防御1)时间戳验证请求时加上客">
+<meta property="og:updated_time" content="2017-01-12T01:35:15.866Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="重放攻击（Replay Attacks）">
+<meta name="twitter:description" content="重放攻击（Replay Attacks）1.什么是重放攻击顾名思义，重复的会话请求就是重放攻击。可能是因为用户重复发起请求，也可能是因为请求被攻击者获取，然后重新发给服务器。  
+2.重放攻击的危害请求被攻击者获取，并重新发送给认证服务器，从而达到认证通过的目的。我们可以通过加密，签名的方式防止信息泄露，会话被劫持修改。但这种方式防止不了重放攻击。  
+3.重放攻击的防御1)时间戳验证请求时加上客">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/12/01/重放攻击（Replay Attacks）/">
+  <time datetime="2016-12-01T05:30:00.000Z">
+    2016-12-01
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">重放攻击（Replay Attacks）</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>重放攻击（Replay Attacks）<br>1.什么是重放攻击<br>顾名思义，重复的会话请求就是重放攻击。<br>可能是因为用户重复发起请求，也可能是因为请求被攻击者获取，然后重新发给服务器。  </p>
+<p>2.重放攻击的危害<br>请求被攻击者获取，并重新发送给认证服务器，从而达到认证通过的目的。<br>我们可以通过加密，签名的方式防止信息泄露，会话被劫持修改。但这种方式防止不了重放攻击。  </p>
+<p>3.重放攻击的防御<br>1)时间戳验证<br>请求时加上客户端当前时间戳，同时签名（签名是为了防止会话被劫持，时间戳被修改），服务端对请求时间戳进行判断，如超过5分钟，认定为重放攻击，请求无效。<br>时间戳无法完全防止重放攻击。  </p>
+<p>2)序号<br>顾名思义，在客户端和服务端通讯时，先定义一个初始序号，每次递增。这样，服务端就可以知道是否是重复发送的请求。  </p>
+<p>3)挑战与应答的方式<br>我们一般采用这种方式来防御重放攻击。<br>客户端请求服务器时，服务器会首先生成一个随机数，然后返回给客户端，客户端带上这个随机数，访问服务器，服务器比对客户端的这个参数，若相同，说明正确，不是重放攻击。<br>这种方式下，客户端每次请求时，服务端都会先生成一个挑战码，客户端带上应答码访问，服务端进行比对，若挑战码和应答码不对应，视为重放攻击。  </p>
+<p>4)Https防重放攻击<br>对于https，每个socket连接都会验证证书，交换密钥。攻击者截获请求，重新发送，因为socket不同，密钥也不同，后台解密后是一堆乱码，所以https本身就是防止重放攻击的，除非能复制socket，或者进行中间人攻击。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/12/01/重放攻击（Replay Attacks）/" data-title="重放攻击（Replay Attacks）" data-url="https://shijingjing07.github.io/2016/12/01/重放攻击（Replay Attacks）/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

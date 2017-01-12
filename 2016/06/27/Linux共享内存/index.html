@@ -1,0 +1,381 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux共享内存 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是共享内存在前面讲虚拟内存机制时，有讲到Linux的内存映射机制：初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。当共享访问时，一个进程的对该对象的修改会显示到其他进程。当私有访问时，修改时会产生保护故障，内核会拷贝这个私有对象，修改的是这个新对象，其他进程指向的是原来的对象。所以，共享内存是指不同进">
+  
+  <meta name="description" content="1.什么是共享内存在前面讲虚拟内存机制时，有讲到Linux的内存映射机制：初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。当共享访问时，一个进程的对该对象的修改会显示到其他进程。当私有访问时，修改时会产生保护故障，内核会拷贝这个私有对象，修改的是这个新对象，其他进程指向的是原来的对象。所以，共享内存是指不同进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux共享内存">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/27/Linux共享内存/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是共享内存在前面讲虚拟内存机制时，有讲到Linux的内存映射机制：初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。当共享访问时，一个进程的对该对象的修改会显示到其他进程。当私有访问时，修改时会产生保护故障，内核会拷贝这个私有对象，修改的是这个新对象，其他进程指向的是原来的对象。所以，共享内存是指不同进">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095232531-98650326.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095248421-314034952.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095259265-723118106.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:33.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux共享内存">
+<meta name="twitter:description" content="1.什么是共享内存在前面讲虚拟内存机制时，有讲到Linux的内存映射机制：初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。当共享访问时，一个进程的对该对象的修改会显示到其他进程。当私有访问时，修改时会产生保护故障，内核会拷贝这个私有对象，修改的是这个新对象，其他进程指向的是原来的对象。所以，共享内存是指不同进">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095232531-98650326.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/27/Linux共享内存/">
+  <time datetime="2016-06-26T17:57:00.000Z">
+    2016-06-27
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux共享内存</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是共享内存</strong><br>在前面讲<a href="http://www.cnblogs.com/shijingjing07/p/5611579.html" target="_blank" rel="external">虚拟内存机制</a>时，有讲到Linux的内存映射机制：<br>初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。<br>由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。<br>当共享访问时，一个进程的对该对象的修改会显示到其他进程。<br>当私有访问时，修改时会产生保护故障，内核会拷贝这个私有对象，修改的是这个新对象，其他进程指向的是原来的对象。<br>所以，共享内存是指不同进程访问同一个逻辑内存。</p>
+<p><strong>2.共享内存的使用</strong><br>Linux提供了一组共享内存API，声明在头文件sys/shm.h中。<br>1)shmget函数：新建共享内存<br>int shmget(key_t key,size_t size,int shmflg);<br>key:共享内存键值，可以理解为共享内存的唯一性标记。<br>size：共享内存大小<br>shmflag：创建进程和其他进程的读写权限标识。<br>返回值：相应的共享内存标识符，失败返回-1</p>
+<p>2)shmat函数：连接共享内存到当前进程的地址空间<br>void <em>shmat(int shm_id,const void </em>shm_addr,int shmflg);<br>shm_id：共享内存标识符<br>shm_addr：指定共享内存连接到当前进程的地址，通常为0，表示由系统来选择。<br>shmflg：通常为0<br>返回值：指向共享内存第一个字节的指针，失败返回-1</p>
+<p>3)shmdt函数：当前进程分离共享内存<br>int shmdt(const void *shmaddr);</p>
+<p>4)shmctl函数<br>和信号量的semctl函数类似，控制共享内存<br>int shmctl(int shm_id,int command,struct shmid_ds *buf);<br>shm_id：共享内存标识符<br>command: 有三个值<br>　　　　　　IPC_STAT:获取共享内存的状态，把共享内存的shmid_ds结构复制到buf中。<br>　　　　　　IPC_SET:设置共享内存的状态，把buf复制到共享内存的shmid_ds结构。<br>　　　　　　IPC_RMID:删除共享内存<br>buf：共享内存管理结构体。具体结构可参考定义。</p>
+<p><strong>3.共享内存需要注意的问题</strong><br>共享内存没有同步机制，当多个进程同时向共享内存读写数据时，我们需要使用互斥锁，读写锁，信号量，条件变量等来确保数据的一致性。</p>
+<p><strong>4.共享内存使用示例</strong></p>
+<p>我们编写了两个程序shmread.c,shmwrite.c分别对共享内存读和写。<br>需要做到可写，然后可读，然后可写，然后可读，循环下去，直到写入的是”end”，结束写读进程。<br>我们使用了前面讲的<a href="http://www.cnblogs.com/shijingjing07/p/5615084.html" target="_blank" rel="external">信号量</a>来处理读写同步的问题。<br>示例代码如下：</p>
+<p>shm_data.h</p>
+<pre><code>#pragma once                                                                    
+#define TEXT_SZ 2048
+struct shared_use_st
+{
+        char text[TEXT_SZ];
+};
+</code></pre><p>shmread.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;sys/shm.h&gt;
+#include&lt;sys/sem.h&gt;
+#include&quot;shmdata.h&quot;
+union semun  
+{  
+    int val;  
+    struct semid_ds *buf;  
+    unsigned short *arry;  
+}; 
+int sem_id;
+int set_semvalue()  
+{  
+    //用于初始化信号量，在使用信号量前必须这样做  
+    union semun sem_union;  
+
+    sem_union.val = 1;  
+    if(semctl(sem_id, 0, SETVAL, sem_union) == -1)  
+        return 0;  
+    return 1;  
+}  
+
+void del_semvalue()  
+{  
+    //删除信号量  
+    union semun sem_union;  
+
+    if(semctl(sem_id, 0, IPC_RMID, sem_union) == -1)  
+        fprintf(stderr, &quot;Failed to delete semaphore\n&quot;);  
+}  
+int semaphore_p()
+{
+    struct sembuf sem_b;  
+    sem_b.sem_num = 0;  
+    sem_b.sem_op = -1;//P()  
+    sem_b.sem_flg = SEM_UNDO;  
+    if(semop(sem_id, &amp;sem_b, 1) == -1)  
+    {  
+        fprintf(stderr, &quot;semaphore_p failed\n&quot;);  
+        return 0;  
+    }  
+    return 1;   
+}
+int semaphore_v()
+{
+    struct sembuf sem_b;  
+    sem_b.sem_num = 0;  
+    sem_b.sem_op = 1;//V()  
+    sem_b.sem_flg = SEM_UNDO;  
+    if(semop(sem_id, &amp;sem_b, 1) == -1)  
+    {  
+        fprintf(stderr, &quot;semaphore_v failed\n&quot;);  
+        return 0;  
+    }  
+    return 1;  
+}
+int main()
+{
+    void *shm=NULL;
+    struct shared_use_st *shared;
+    int shmid;//共享内存标识符
+    //创建共享内存
+    shmid = shmget((key_t)1234,sizeof(struct shared_use_st),0666|IPC_CREAT);
+    if(shmid==-1)
+    {
+        fprintf(stderr,&quot;shmget failed\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    //将共享内存连接到当前进程的地址空间
+    shm = shmat(shmid,0,0);
+    if(shm==(void*)-1)
+    {
+        fprintf(stderr,&quot;shmat failed\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    printf(&quot;memory attached at %x\n&quot;,(int)shm);
+    //设置共享内存
+    shared = (struct shared_use_st*)shm;
+
+    //新建信号量
+    sem_id = semget((key_t)1234,1,0666|IPC_CREAT);
+
+    //信号量初始化
+    if(!set_semvalue())
+    {
+        fprintf(stderr,&quot;init failed.\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    while(1)
+    {
+        if(!semaphore_p())
+            exit(EXIT_FAILURE);
+        fflush(stdout);
+        printf(&quot;you wrote:%s&quot;,shared-&gt;text);
+        if(!semaphore_v())
+            exit(EXIT_FAILURE);
+        if(strncmp(shared-&gt;text,&quot;end&quot;,3)==0)
+            break;
+        sleep(1);
+    }
+
+     //删除信号量
+    del_semvalue();
+
+    //把共享内存从当前进程中分离
+    if(shmdt(shm)==-1)
+    {
+        fprintf(stderr,&quot;shmdt failed\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    //删除共享内存
+    if(shmctl(shmid,IPC_RMID,0)==-1)
+    {
+        fprintf(stderr,&quot;shmctl(IPC_RMID) failed&quot;);
+        exit(EXIT_FAILURE);
+    }
+    exit(EXIT_SUCCESS);
+}
+</code></pre><p>shmwrite.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;sys/shm.h&gt;
+#include&lt;sys/sem.h&gt;
+#include&lt;string.h&gt;
+#include&quot;shmdata.h&quot;
+int sem_id;
+int semaphore_p()
+{
+    //对信号量做减1操作，即等待P（sv）  
+    struct sembuf sem_b;  
+    sem_b.sem_num = 0;  
+    sem_b.sem_op = -1;//P()  
+    sem_b.sem_flg = SEM_UNDO;  
+    if(semop(sem_id, &amp;sem_b, 1) == -1)  
+    {  
+        fprintf(stderr, &quot;semaphore_p failed\n&quot;);  
+        return 0;  
+    }  
+    return 1;  
+}  
+int semaphore_v()  
+{  
+    //这是一个释放操作，它使信号量变为可用，即发送信号V（sv）  
+    struct sembuf sem_b;  
+    sem_b.sem_num = 0;  
+    sem_b.sem_op = 1;//V()  
+    sem_b.sem_flg = SEM_UNDO;  
+    if(semop(sem_id, &amp;sem_b, 1) == -1)  
+    {  
+        fprintf(stderr, &quot;semaphore_v failed\n&quot;);  
+        return 0;  
+    }  
+    return 1;  
+}  
+int main()
+{
+    sem_id = semget((key_t)1234,1,0666|IPC_CREAT);
+
+    void *shm = NULL;
+    struct shared_use_st *shared = NULL;
+    char buffer[200];
+    int shmid;
+
+    //创建共享内存
+    shmid = shmget((key_t)1234,sizeof(struct shared_use_st),0666|IPC_CREAT);
+    if(shm==-1)
+    {
+        fprintf(stderr,&quot;shmget failed\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    //将共享内存连接到当前进程的地址空间
+    shm = shmat(shmid,(void*)0,0);
+    if(shm == (void*)-1)
+    {
+        fprintf(stderr,&quot;shmat failed\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    printf(&quot;memory attached at %x\n&quot;,(int)shm);
+    //设置共享内存
+    shared = (struct shared_use_st*)shm;
+    while(1)
+    {
+        if(!semaphore_p())
+            exit(EXIT_FAILURE);
+        //向共享内存中写入数据
+        fflush(stdout);
+        printf(&quot;Enter some text...\n&quot;);
+        fgets(buffer,200,stdin);
+        strncpy(shared-&gt;text,buffer,TEXT_SZ);
+        if(!semaphore_v())
+            exit(EXIT_FAILURE);
+        if(strncmp(shared-&gt;text,&quot;end&quot;,3)==0)
+            break;
+        sleep(1);
+    }
+    //把共享内存从当前进程中分离
+    if(shmdt(shm)==-1)
+    {
+        fprintf(stderr,&quot;shmdt failed\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    sleep(2);
+    exit(EXIT_SUCCESS);
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095232531-98650326.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095248421-314034952.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095259265-723118106.png" alt=""></p>
+<p><strong>5.共享内存的优缺点</strong><br>1)进程间通信方便，快速。<br>2)没有提供同步机制，我们需要使用互斥锁，读写锁，信号量，条件变量等来确保数据的一致性。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/27/Linux共享内存/" data-title="Linux共享内存" data-url="https://shijingjing07.github.io/2016/06/27/Linux共享内存/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

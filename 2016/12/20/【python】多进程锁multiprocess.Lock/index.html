@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>【python】多进程锁multiprocess.Lock | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="#【python】多进程锁multiprocess.Lock
+2013-09-13 13:48 11613人阅读评论(2) 收藏举报
+ 分类：
+Python（38） 
+同步的方法基本与多线程相同。
+1) Lock
+当多个进程需要访问共享资源的时候，Lock可以用来避免访问的冲突。
+[python] view plain copy
+
+import multiprocessing  
+import s">
+  
+  <meta name="description" content="#【python】多进程锁multiprocess.Lock
+2013-09-13 13:48 11613人阅读评论(2) 收藏举报
+ 分类：
+Python（38） 
+同步的方法基本与多线程相同。
+1) Lock
+当多个进程需要访问共享资源的时候，Lock可以用来避免访问的冲突。
+[python] view plain copy
+
+import multiprocessing  
+import s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【python】多进程锁multiprocess.Lock">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/12/20/【python】多进程锁multiprocess.Lock/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="#【python】多进程锁multiprocess.Lock
+2013-09-13 13:48 11613人阅读评论(2) 收藏举报
+ 分类：
+Python（38） 
+同步的方法基本与多线程相同。
+1) Lock
+当多个进程需要访问共享资源的时候，Lock可以用来避免访问的冲突。
+[python] view plain copy
+
+import multiprocessing  
+import s">
+<meta property="og:image" content="http://static.blog.csdn.net/images/category_icon.jpg">
+<meta property="og:image" content="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg">
+<meta property="og:updated_time" content="2017-01-12T01:35:15.023Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【python】多进程锁multiprocess.Lock">
+<meta name="twitter:description" content="#【python】多进程锁multiprocess.Lock
+2013-09-13 13:48 11613人阅读评论(2) 收藏举报
+ 分类：
+Python（38） 
+同步的方法基本与多线程相同。
+1) Lock
+当多个进程需要访问共享资源的时候，Lock可以用来避免访问的冲突。
+[python] view plain copy
+
+import multiprocessing  
+import s">
+<meta name="twitter:image" content="http://static.blog.csdn.net/images/category_icon.jpg">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/12/20/【python】多进程锁multiprocess.Lock/">
+  <time datetime="2016-12-20T05:42:00.000Z">
+    2016-12-20
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">【python】多进程锁multiprocess.Lock</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>#<br><a href="http://blog.csdn.net/moxiaomomo/article/details/11640439" target="_blank" rel="external">【python】多进程锁multiprocess.Lock</a></p>
+<p>2013-09-13 13:48 11613人阅读<br><a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#comments" target="_blank" rel="external">评论</a>(2) 收藏<br><a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#report" title="举报" target="_blank" rel="external">举报</a></p>
+<p><img src="http://static.blog.csdn.net/images/category_icon.jpg" alt=""> 分类：</p>
+<p>Python（38） <img src="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg" alt=""></p>
+<p>同步的方法基本与多线程相同。</p>
+<p>1) Lock</p>
+<p>当多个进程需要访问共享资源的时候，Lock可以用来避免访问的冲突。</p>
+<p><strong>[python]</strong> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>import multiprocessing  </li>
+<li>import sys  </li>
+<li></li>
+<li>def worker_with(lock, f):  </li>
+<li>with lock:  </li>
+<li>fs = open(f,”a+”)  </li>
+<li>fs.write(‘Lock acquired via with\n’)  </li>
+<li>fs.close()  </li>
+<li></li>
+<li>def worker_no_with(lock, f):  </li>
+<li>lock.acquire()  </li>
+<li>try:  </li>
+<li>fs = open(f,”a+”)  </li>
+<li>fs.write(‘Lock acquired directly\n’)  </li>
+<li>fs.close()  </li>
+<li>finally:  </li>
+<li>lock.release()  </li>
+<li></li>
+<li>if <strong>name</strong> == “<strong>main</strong>“:  </li>
+<li></li>
+<li>f = “file.txt”  </li>
+<li></li>
+<li>lock = multiprocessing.Lock()  </li>
+<li>w = multiprocessing.Process(target=worker_with, args=(lock, f))  </li>
+<li>nw = multiprocessing.Process(target=worker_no_with, args=(lock, f))  </li>
+<li></li>
+<li>w.start()  </li>
+<li>nw.start()  </li>
+<li></li>
+<li>w.join()  </li>
+<li>nw.join()  </li>
+</ol>
+<p>在上面的例子中，如果两个进程没有使用lock来同步,则他们对同一个文件的写操作可能会出现混乱。</p>
+<p>2）Semaphore</p>
+<p>Semaphore用来控制对共享资源的访问数量，例如池的最大连接数。</p>
+<p><strong>[python]</strong> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>import multiprocessing  </li>
+<li>import time   </li>
+<li></li>
+<li>def worker(s,i):  </li>
+<li>s.acquire()  </li>
+<li>print(multiprocessing.current_process().name + “ acquire”)  </li>
+<li>time.sleep(i)  </li>
+<li>print(multiprocessing.current_process().name + “ release”)  </li>
+<li>s.release()  </li>
+<li></li>
+<li>if <strong>name</strong> == “<strong>main</strong>“:  </li>
+<li></li>
+<li>s = multiprocessing.Semaphore(2)  </li>
+<li>for i in range(5):  </li>
+<li>p = multiprocessing.Process(target=worker, args=(s,i*2))  </li>
+<li>p.start()  </li>
+</ol>
+<p>上面的实例中使用semaphore限制了最多有2个进程同时执行。</p>
+<p>3）Event</p>
+<p>Event用来实现进程间同步通信。</p>
+<p><strong>[python]</strong> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>import multiprocessing  </li>
+<li>import time  </li>
+<li></li>
+<li>def wait_for_event(e):  </li>
+<li>“””Wait for the event to be set before doing anything”””  </li>
+<li>print (‘wait_for_event: starting’)  </li>
+<li>e.wait()  </li>
+<li>print (‘wait_for_event: e.is_set()-&gt;’ + str(e.is_set()))  </li>
+<li></li>
+<li>def wait_for_event_timeout(e, t):  </li>
+<li>“””Wait t seconds and then timeout”””  </li>
+<li>print (‘wait_for_event_timeout: starting’)  </li>
+<li>e.wait(t)  </li>
+<li>print (‘wait_for_event_timeout: e.is_set()-&gt;’ + str(e.is_set()))  </li>
+<li></li>
+<li></li>
+<li>if <strong>name</strong> == ‘<strong>main</strong>‘:  </li>
+<li>e = multiprocessing.Event()  </li>
+<li>w1 = multiprocessing.Process(name=’block’,   </li>
+<li>target=wait_for_event,  </li>
+<li>args=(e,))  </li>
+<li>w1.start()  </li>
+<li></li>
+<li>w2 = multiprocessing.Process(name=’non-block’,   </li>
+<li>target=wait_for_event_timeout,   </li>
+<li>args=(e, 2))  </li>
+<li>w2.start()  </li>
+<li></li>
+<li>time.sleep(3)  </li>
+<li>e.set()  </li>
+<li>print (‘main: event is set’)  </li>
+</ol>
+<p>#the output is:  </p>
+<p>#wait_for_event_timeout: starting  </p>
+<p>#wait_for_event: starting  </p>
+<p>#wait_for_event_timeout: e.is_set()-&gt;False  </p>
+<p>#main: event is set  </p>
+<p>#wait_for_event: e.is_set()-&gt;True</p>
+<p> 转自：<a href="http://blog.csdn.net/moxiaomomo/article/details/11640439" target="_blank" rel="external">http://blog.csdn.net/moxiaomomo/article/details/11640439</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/12/20/【python】多进程锁multiprocess.Lock/" data-title="【python】多进程锁multiprocess.Lock" data-url="https://shijingjing07.github.io/2016/12/20/【python】多进程锁multiprocess.Lock/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

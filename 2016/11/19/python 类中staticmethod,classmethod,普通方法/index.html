@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python 类中staticmethod,classmethod,普通方法 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.staticmethod:静态方法和全局函数类似，但是通过类和对象调用。
+2.classmethod:类方法和类相关的方法，第一个参数是class对象（不是实例对象）。在python中class也是一个真实存在于内存中的对象，不同于其他语言只存在于编译期间。
+3.普通方法和实例相关的方法，通过类实例调用。
+4.代码示例
+#coding:utf-8
+&amp;apos;&amp;apos;&amp;apos;
+Crea">
+  
+  <meta name="description" content="1.staticmethod:静态方法和全局函数类似，但是通过类和对象调用。
+2.classmethod:类方法和类相关的方法，第一个参数是class对象（不是实例对象）。在python中class也是一个真实存在于内存中的对象，不同于其他语言只存在于编译期间。
+3.普通方法和实例相关的方法，通过类实例调用。
+4.代码示例
+#coding:utf-8
+&amp;apos;&amp;apos;&amp;apos;
+Crea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 类中staticmethod,classmethod,普通方法">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/11/19/python 类中staticmethod,classmethod,普通方法/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.staticmethod:静态方法和全局函数类似，但是通过类和对象调用。
+2.classmethod:类方法和类相关的方法，第一个参数是class对象（不是实例对象）。在python中class也是一个真实存在于内存中的对象，不同于其他语言只存在于编译期间。
+3.普通方法和实例相关的方法，通过类实例调用。
+4.代码示例
+#coding:utf-8
+&amp;apos;&amp;apos;&amp;apos;
+Crea">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119102339467-2036845135.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:16.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 类中staticmethod,classmethod,普通方法">
+<meta name="twitter:description" content="1.staticmethod:静态方法和全局函数类似，但是通过类和对象调用。
+2.classmethod:类方法和类相关的方法，第一个参数是class对象（不是实例对象）。在python中class也是一个真实存在于内存中的对象，不同于其他语言只存在于编译期间。
+3.普通方法和实例相关的方法，通过类实例调用。
+4.代码示例
+#coding:utf-8
+&amp;apos;&amp;apos;&amp;apos;
+Crea">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119102339467-2036845135.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/11/19/python 类中staticmethod,classmethod,普通方法/">
+  <time datetime="2016-11-18T18:24:00.000Z">
+    2016-11-19
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python 类中staticmethod,classmethod,普通方法</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.staticmethod:静态方法<br>和全局函数类似，但是通过类和对象调用。</p>
+<p>2.classmethod:类方法<br>和类相关的方法，第一个参数是class对象（不是实例对象）。<br>在python中class也是一个真实存在于内存中的对象，不同于其他语言只存在于编译期间。</p>
+<p>3.普通方法<br>和实例相关的方法，通过类实例调用。</p>
+<p>4.代码示例</p>
+<pre><code>#coding:utf-8
+&apos;&apos;&apos;
+Created on 2015年5月29日
+@author: canx
+&apos;&apos;&apos;
+
+class Person:
+    def __init__(self):
+        print &quot;init&quot;
+
+    @staticmethod
+    def sayHello(hello):
+        print &quot;sayHell %s&quot;%(hello)
+
+    @classmethod
+    def introduce(cls,hello):
+        print &quot;introduce %s&quot;%(hello)
+
+    def hello(self,hello):
+        print &quot;hello %s&quot;%(hello)
+
+def main():
+    Person.sayHello(&quot;test&quot;)
+    Person.introduce(&quot;test&quot;)
+    p=Person()
+    p.hello(&quot;test&quot;)
+
+if __name__==&apos;__main__&apos;:
+    main()
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119102339467-2036845135.png" alt=""></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/11/19/python 类中staticmethod,classmethod,普通方法/" data-title="python 类中staticmethod,classmethod,普通方法" data-url="https://shijingjing07.github.io/2016/11/19/python 类中staticmethod,classmethod,普通方法/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

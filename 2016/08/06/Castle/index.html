@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Castle | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="[Castle AOP系列(一)：对类方法调用的拦截（有源码）](http://blog.csdn.net/liuweitoo/article/details/8166976)
+标签：aopAOPCastle对类方法调用的拦截
+2012-11-09 16:51 4207人阅读评论(1) 收藏举报
+ 分类：
+OO（17） 
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+目录(?)[+]
+Ca">
+  
+  <meta name="description" content="[Castle AOP系列(一)：对类方法调用的拦截（有源码）](http://blog.csdn.net/liuweitoo/article/details/8166976)
+标签：aopAOPCastle对类方法调用的拦截
+2012-11-09 16:51 4207人阅读评论(1) 收藏举报
+ 分类：
+OO（17） 
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+目录(?)[+]
+Ca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Castle">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/08/06/Castle/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="[Castle AOP系列(一)：对类方法调用的拦截（有源码）](http://blog.csdn.net/liuweitoo/article/details/8166976)
+标签：aopAOPCastle对类方法调用的拦截
+2012-11-09 16:51 4207人阅读评论(1) 收藏举报
+ 分类：
+OO（17） 
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+目录(?)[+]
+Ca">
+<meta property="og:image" content="http://static.blog.csdn.net/images/category_icon.jpg">
+<meta property="og:image" content="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201211/09/1352451202_8669.jpg">
+<meta property="og:updated_time" content="2017-01-12T01:35:29.083Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Castle">
+<meta name="twitter:description" content="[Castle AOP系列(一)：对类方法调用的拦截（有源码）](http://blog.csdn.net/liuweitoo/article/details/8166976)
+标签：aopAOPCastle对类方法调用的拦截
+2012-11-09 16:51 4207人阅读评论(1) 收藏举报
+ 分类：
+OO（17） 
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+目录(?)[+]
+Ca">
+<meta name="twitter:image" content="http://static.blog.csdn.net/images/category_icon.jpg">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/06/Castle/">
+  <time datetime="2016-08-06T15:50:00.000Z">
+    2016-08-06
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Castle</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id="Castle-AOP"><a href="#Castle-AOP" class="headerlink" title="[Castle AOP"></a>[Castle AOP</h1><p>系列(一)：对类方法调用的拦截（有源码）](<a href="http://blog.csdn.net/liuweitoo/article/details/8166976" target="_blank" rel="external">http://blog.csdn.net/liuweitoo/article/details/8166976</a>)</p>
+<p>标签：<br><a href="http://www.csdn.net/tag/aop" target="_blank" rel="external">aop</a><a href="http://www.csdn.net/tag/AOP" target="_blank" rel="external">AOP</a><a href="http://www.csdn.net/tag/Castle" target="_blank" rel="external">Castle</a><a href="http://www.csdn.net/tag/%e5%af%b9%e7%b1%bb%e6%96%b9%e6%b3%95%e8%b0%83%e7%94%a8%e7%9a%84%e6%8b%a6%e6%88%aa" target="_blank" rel="external">对类方法调用的拦截</a></p>
+<p>2012-11-09 16:51 4207人阅读<br><a href="http://blog.csdn.net/liuweitoo/article/details/8166976#comments" target="_blank" rel="external">评论</a>(1) 收藏<br><a href="http://blog.csdn.net/liuweitoo/article/details/8166976#report" title="举报" target="_blank" rel="external">举报</a></p>
+<p><img src="http://static.blog.csdn.net/images/category_icon.jpg" alt=""> 分类：</p>
+<p>OO（17） <img src="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg" alt=""></p>
+<p>版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+<p>目录<a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="系统根据文章中H1到H6标签自动生成文章目录" target="_blank" rel="external">(?)</a><a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="展开" target="_blank" rel="external">[+]</a></p>
+<p>Castle的相关网站：</p>
+<p><a href="http://www.castleproject.org/" target="_blank" rel="external">http://www.castleproject.org/</a><br><a href="http://www.castleproject.org/projects/dynamicproxy/" target="_blank" rel="external">http://www.castleproject.org/projects/dynamicproxy/</a><br><a href="http://sourceforge.net/projects/castleproject/" target="_blank" rel="external">http://sourceforge.net/projects/castleproject/</a></p>
+<h2 id="在Castle的2-5以上版本，已经将-Castle-DynamicProxy2-dll-里有内容，集成到-Castle-Core-dll-中。"><a href="#在Castle的2-5以上版本，已经将-Castle-DynamicProxy2-dll-里有内容，集成到-Castle-Core-dll-中。" class="headerlink" title="在Castle的2.5以上版本，已经将 Castle.DynamicProxy2.dll 里有内容，集成到 Castle.Core.dll 中。"></a>在Castle的2.5以上版本，已经将 Castle.DynamicProxy2.dll 里有内容，集成到 Castle.Core.dll 中。</h2><p>所以，朋友们，不需要再去哪里找Castle.DynamicProxy2.dll了。</p>
+<p>当然，除非你使用低于2.5的版本。</p>
+<p>本文使用的Castle.Core.dll是3.1版本。</p>
+<p><strong>由于方法的拦载是动态构建类型，所以我们在拦截类方法时，可以采取用动态构造类的方式，从该类继承一个子类，重载并改写类中需要拦截的方法。</strong></p>
+<p><strong>因此，我们不难理解，为什么在Castle 的 AOP中实现对类方法的拦截，都需要该类中的可被拦载的方法都是能够被子类重载的(override)。</strong></p>
+<h2 id="CastleAOPTest-Lib-Person的代码"><a href="#CastleAOPTest-Lib-Person的代码" class="headerlink" title="CastleAOPTest.Lib.Person的代码"></a>CastleAOPTest.Lib.Person的代码</h2><p><strong>[csharp]</strong> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>using System;  </li>
+<li>using System.Collections.Generic;  </li>
+<li>using System.Linq;  </li>
+<li>using System.Text;  </li>
+<li></li>
+<li>namespace CastleAOPTest.Lib  </li>
+<li>{  </li>
+<li>public class Person  </li>
+<li>{  </li>
+<li>public virtual void SayHello()  </li>
+<li>{  </li>
+<li>Console.WriteLine(“您好！”);  </li>
+<li>}  </li>
+<li></li>
+<li>public virtual void SayName(string pHometown)  </li>
+<li>{  </li>
+<li>Console.WriteLine(“我是天涯人，我来自：{0}。”, pHometown);  </li>
+<li>}  </li>
+<li></li>
+<li>public void SayOther()  </li>
+<li>{  </li>
+<li>Console.WriteLine(“是的，我是中国人。”);  </li>
+<li>}  </li>
+<li></li>
+<li>}  </li>
+<li>}  </li>
+</ol>
+<p>这个类型没什么好说的，只是输出一些字符串而以。</p>
+<p>惟一需要注意的是：前两个方法都是虚方法，而”SayOther”不是虚方法，即是说”SayOther”不可以用一般的方式重载。</p>
+<h2 id="方法拦载器CastleAOPTest-Lib-AOP-SimpleInterceptor的代码："><a href="#方法拦载器CastleAOPTest-Lib-AOP-SimpleInterceptor的代码：" class="headerlink" title="方法拦载器CastleAOPTest.Lib.AOP.SimpleInterceptor的代码："></a>方法拦载器CastleAOPTest.Lib.AOP.SimpleInterceptor的代码：</h2><p><strong>[csharp]</strong> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>using System;  </li>
+<li>using System.Collections.Generic;  </li>
+<li>using System.Linq;  </li>
+<li>using System.Text;  </li>
+<li></li>
+<li>using CastleAOPTest.Lib;  </li>
+<li>using Castle.DynamicProxy;  </li>
+<li></li>
+<li>namespace CastleAOPTest.Lib.AOP  </li>
+<li>{  </li>
+<li>public class SimpleInterceptor : StandardInterceptor  </li>
+<li>{  </li>
+<li>protected override void PreProceed(IInvocation invocation)  </li>
+<li>{  </li>
+<li>Console.WriteLine(“调用前的拦截器，方法名是：{0}。”, invocation.Method.Name);  </li>
+<li>base.PreProceed(invocation);  </li>
+<li></li>
+<li>}  </li>
+<li></li>
+<li>protected override void PerformProceed(IInvocation invocation)  </li>
+<li>{  </li>
+<li>Console.WriteLine(“拦截的方法返回时调用的拦截器，方法名是：{0}。”, invocation.Method.Name);  </li>
+<li>base.PerformProceed(invocation);  </li>
+<li></li>
+<li>}  </li>
+<li></li>
+<li></li>
+<li>protected override void PostProceed(IInvocation invocation)  </li>
+<li>{  </li>
+<li>Console.WriteLine(“调用后的拦截器，方法名是：{0}。”, invocation.Method.Name);  </li>
+<li>base.PostProceed(invocation);  </li>
+<li></li>
+<li>}  </li>
+<li>}  </li>
+<li>}  </li>
+</ol>
+<p>Castle DynamicProxy提供了一个标准的方法拦截器，在一般的情况下，从这个标准的拦截器继承便可以完成大部分方法拦载上面的需求。</p>
+<p>StandardInterceptor中提供了三个可重载的方法：</p>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><p>1.PreProcced，在进入拦截的方法之前调用。</p>
+<h3 id="2-PerformProceed，在拦截的方法返回时调用。"><a href="#2-PerformProceed，在拦截的方法返回时调用。" class="headerlink" title="2.PerformProceed，在拦截的方法返回时调用。"></a>2.PerformProceed，在拦截的方法返回时调用。</h3><h3 id="3-PostProcced，在拦截的方法运行完成后调用。"><a href="#3-PostProcced，在拦截的方法运行完成后调用。" class="headerlink" title="3.PostProcced，在拦截的方法运行完成后调用。"></a>3.PostProcced，在拦截的方法运行完成后调用。</h3><h2 id="如何使用这个写好的拦截器"><a href="#如何使用这个写好的拦截器" class="headerlink" title="如何使用这个写好的拦截器"></a>如何使用这个写好的拦截器</h2><p><strong>[csharp]</strong> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>using System;  </li>
+<li>using System.Collections.Generic;  </li>
+<li>using System.Linq;  </li>
+<li>using System.Text;  </li>
+<li></li>
+<li>using Castle.DynamicProxy;  </li>
+<li>using CastleAOPTest.Lib;  </li>
+<li>using CastleAOPTest.Lib.AOP;   </li>
+<li></li>
+<li>namespace CastleAOPTest.Run  </li>
+<li>{  </li>
+<li>class Program  </li>
+<li>{  </li>
+<li>static void Main(string[] args)  </li>
+<li>{  </li>
+<li>ProxyGenerator generator = new ProxyGenerator();//实例化【代理类生成器】  </li>
+<li>SimpleInterceptor interceptor = new SimpleInterceptor();//实例化【拦截器】  </li>
+<li></li>
+<li>//使用【代理类生成器】创建Person对象，而不是使用new关键字来实例化  </li>
+<li>Person person = generator.CreateClassProxy&lt;Person&gt;(interceptor);  </li>
+<li></li>
+<li></li>
+<li>Console.WriteLine(“当前类型:{0},父类型:{1}”,person.GetType(), person.GetType().BaseType);  </li>
+<li>Console.WriteLine();  </li>
+<li></li>
+<li></li>
+<li>person.SayHello();//跟普通调用没有两样吧？  </li>
+<li>Console.WriteLine();  </li>
+<li></li>
+<li>person.SayName(“福建”);//跟普通调用没有两样吧？  </li>
+<li>Console.WriteLine();  </li>
+<li></li>
+<li>person.SayOther();//它不是虚方法，无法拦截。待会检测输出情况就知道了。     </li>
+<li></li>
+<li></li>
+<li></li>
+<li>Console.ReadLine();     </li>
+<li></li>
+<li>}  </li>
+<li>}  </li>
+<li>}  </li>
+</ol>
+<p>ProxyGenerator其实是一个动态的类型构造器，它依据Person类型，并加入相应的拦载器构造出了一个新的类型，我们来查看一下运行输出：</p>
+<p><img src="http://img.my.csdn.net/uploads/201211/09/1352451202_8669.jpg" alt=""></p>
+<p>根据输出的第一行，我们可以知道，ProxyGenerator构造了一个新的类型，这个类型继承自Person。</p>
+<p>由于这个类型的SayOther方法不可以被子类重载，所以这个方法无法被拦截。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/08/06/Castle/" data-title="Castle" data-url="https://shijingjing07.github.io/2016/08/06/Castle/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

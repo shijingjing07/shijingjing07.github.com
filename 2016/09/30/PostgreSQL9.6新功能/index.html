@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>PostgreSQL9.6新功能 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功能。
+纵向扩展的并行查询9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内">
+  
+  <meta name="description" content="PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功能。
+纵向扩展的并行查询9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL9.6新功能">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/09/30/PostgreSQL9.6新功能/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功能。
+纵向扩展的并行查询9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内">
+<meta property="og:updated_time" content="2017-01-12T01:35:17.458Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PostgreSQL9.6新功能">
+<meta name="twitter:description" content="PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功能。
+纵向扩展的并行查询9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/09/30/PostgreSQL9.6新功能/">
+  <time datetime="2016-09-29T21:20:00.000Z">
+    2016-09-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">PostgreSQL9.6新功能</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-<br>up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、<br>性能和易用性方面的改进，并提供了其他许多方面的功能。</p>
+<h3 id="纵向扩展的并行查询"><a href="#纵向扩展的并行查询" class="headerlink" title="纵向扩展的并行查询"></a>纵向扩展的并行查询</h3><p>9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内核来进行运算，这样返回查询结果更快。<br>此版本的并行功能包括并行顺序表扫描、聚合和联接。根据详细信息和可用内核，并行性可以加快大数据查询，最快时可高达32倍。</p>
+<p>Synthetic Genomics的首席数据库架构师Mike Sofen表示， “我们将我们整个基因组数据平台-<br>250亿行旧的MySQL数据迁移到一个Postgres数据库， 利用了 JSONB 数据类型的行压缩功能，以及优秀的GIN,BRIN和B-Tree索引模式。<br>期待在9.6版本中，利用并行查询功能，在我们查询大表数据时，拥有更强劲的伸缩性，更优的查询性能”</p>
+<h3 id="横向扩展的同步复制与postgres-fdw"><a href="#横向扩展的同步复制与postgres-fdw" class="headerlink" title="横向扩展的同步复制与postgres_fdw"></a>横向扩展的同步复制与postgres_fdw</h3><p>PostgreSQL的同步复制功能,添加了两个选项，使它能够用于数据库集群一致读取维护。 首先，它现在允许配置一组的同步的复制数据库。<br>第二，”remote_apply”模式创建多个跨数据节点的一致的读视图。 这些功能使用内置的复制来维护一组的”相同的”节点实现，可以用于数据库的读负载均衡。</p>
+<p>postgres_fdw(PostgreSQL-to-PostgreSQL数据外部表驱动程序)提供了新的功能， 支持在远程服务器上执行操作。<br>通过”下推”(Push Down)排序(sort),Join联接，批量数据更新(update)任务,<br>用户可以调度多个PostgreSQL服务器来完成数据查询。 这些功能很快会添加到其他fdw模块中。</p>
+<p>Equnix商务解决方案主管Julyanto Sutandang表示， “fdw支持远程联接，更新和删除的功能，是当下其他数据库和<br>PostgreSQL共享数据的完整解决方案。 比如，PostgreSQL可以实现所录入的数据保存到两个或多个不同类型的数据库的功能”</p>
+<h3 id="更好的文本短语搜索"><a href="#更好的文本短语搜索" class="headerlink" title="更好的文本短语搜索"></a>更好的文本短语搜索</h3><p>PostgreSQL的全文搜索功能,现在支持短语搜索。 这允许用户搜索精确的短语，或是搜索有一定相似性的短语，<br>使用快速的GIN索引中的单词，结合可精细调整的文本搜索选项的新功能， PostgreSQL是”混合搜索”的超优选择，集成了关系表，JSON和全文的搜索支持。</p>
+<h3 id="更畅、更快和更易使用"><a href="#更畅、更快和更易使用" class="headerlink" title="更畅、更快和更易使用"></a>更畅、更快和更易使用</h3><p>感谢大批PostgreSQL 用户使用他们的包含大量数据生产数据库来进行PostgreSQL的反馈和测试，<br>这个版本包括了大量有关性能提升和可用性等方面的内容。复制、聚合、索引、 排序和存储过程变得更加高效，<br>在新的Linux内核上，PostgreSQL现在可以可以更好的利用资源，降低了大型表查询和复杂查询的系统负载， 尤其是VACUUM的改进。</p>
+<h3 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h3><p>9.6版本累计近一年来的很多新特性，主要包括︰</p>
+<ul>
+<li><p>新的系统视图和函数:pg_stat_wal_receiver，pg_visbility，pg_config，pg_blocking_pids，pg_notification_queue_usage</p>
+</li>
+<li><p>支持命令执行进度状态报告</p>
+</li>
+<li><p>支持级联操作(需安装扩展模块实现)</p>
+</li>
+<li><p>支持pg_basebackup的并发</p>
+</li>
+<li><p>逻辑复制插槽</p>
+</li>
+<li><p>等待事件支持</p>
+</li>
+<li><p>在psql中编辑视图和crosstabs</p>
+</li>
+<li><p>用户定义旧快照过期</p>
+</li>
+<li><p>只扫描局部索引</p>
+</li>
+</ul>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/09/30/PostgreSQL9.6新功能/" data-title="PostgreSQL9.6新功能" data-url="https://shijingjing07.github.io/2016/09/30/PostgreSQL9.6新功能/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

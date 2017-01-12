@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python--flask使用 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="Flask是一个使用 Python 编写的轻量级 Web 应用框架。下面我将使用Flask框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：exweb\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.html                 index.html
+2.创建网站根目录exwebmkd">
+  
+  <meta name="description" content="Flask是一个使用 Python 编写的轻量级 Web 应用框架。下面我将使用Flask框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：exweb\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.html                 index.html
+2.创建网站根目录exwebmkd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python--flask使用">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/03/29/python--flask使用/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="Flask是一个使用 Python 编写的轻量级 Web 应用框架。下面我将使用Flask框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：exweb\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.html                 index.html
+2.创建网站根目录exwebmkd">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330095956098-476888447.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330095846504-570096275.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330100036348-1915660279.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330100106379-1591817480.png">
+<meta property="og:updated_time" content="2017-01-12T02:00:12.379Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python--flask使用">
+<meta name="twitter:description" content="Flask是一个使用 Python 编写的轻量级 Web 应用框架。下面我将使用Flask框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：exweb\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.html                 index.html
+2.创建网站根目录exwebmkd">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330095956098-476888447.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/03/29/python--flask使用/">
+  <time datetime="2016-03-28T21:47:00.000Z">
+    2016-03-29
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python--flask使用</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>Flask是一个使用 Python 编写的轻量级 Web 应用框架。<br>下面我将使用Flask框架，创建一个简单的html页面示例。</p>
+<p>1.项目的目录结构如下所示：<br>exweb\<br>  uniqueenv\<br>  app.py<br>  templates\</p>
+<p>　　　　　　base.html</p>
+<p>　　　　　　hello_form.html<br>                 index.html</p>
+<p>2.创建网站根目录exweb<br>mkdir exweb</p>
+<p>3.在网站根目录下创建一个虚拟环境，虚拟环境是主python的一份拷贝，好处是你可以只安装flask包到该虚拟目录，你的主python不会受到影响，另一个好处是你不需要再有root权限<br>cd exweb<br>virtualenv uniqueenv</p>
+<p>4.安装flask<br>uniqueenv/bin/pip install flask</p>
+<p>5.flask使用，app.py代码如下</p>
+<pre><code>#-*- coding: UTF-8 -*-                                                                                                                                  
+from flask import Flask,render_template,request
+from flask.ext.wtf import Form
+from wtforms import TextField, BooleanField, TextAreaField
+from wtforms.validators import Required, Length
+
+app = Flask(__name__)
+
+#CSRF_ENABLED 配置是为了激活 跨站点请求伪造 保护
+app.config[&apos;CSRF_ENABLED&apos;]=True
+app.config[&apos;SECRET_KEY&apos;]=&apos;xxx&apos;
+
+#form表单类
+class HelloForm(Form):
+    name = TextField(&apos;name&apos;,validators = [Required()])
+    greet=TextField(&apos;greet&apos;,validators=[Required()])
+
+
+@app.route(&apos;/&apos;,methods=[&apos;GET&apos;,&apos;POST&apos;])
+def index():
+        #get方式提交，若url参数不为空,直接跳转到显示界面
+        name = request.args.get(&apos;name&apos;)
+        greet = request.args.get(&apos;greet&apos;)
+        if name!=&apos;&apos; and name!=None and greet!=&apos;&apos; and greet!=None:
+                greeting=&quot;%s,%s&quot;%(name,greet)
+                return render_template(&apos;index.html&apos;,
+                        title=u&apos;显示信息&apos;,
+                        greeting = greeting)
+
+
+        #否则为post方式提交表单,跳转到输入信息界面
+        form = HelloForm()
+        if form.validate_on_submit():
+                greeting=&quot;%s,%s&quot;%(form.name.data,form.greet.data)
+                return render_template(&apos;index.html&apos;,
+                        title=u&apos;显示信息&apos;,
+                        greeting = greeting)
+        return render_template(&apos;hello_form.html&apos;,
+                title=u&apos;输入信息&apos;,
+                form = form)
+
+app.run(debug=True)
+</code></pre><p>6.上一步我们从 Flask 框架中导入一个名为 render_template 的新函数，在内部，render_template 调用了 Jinja2<br>模板引擎，Jinja2 会把模板参数提供的相应的值替换。<br>模板放在templates文件夹下.<br>mkdir templates</p>
+<p>首先创建一个基础模板页 base.html</p>
+<pre><code>&lt;html&gt;                                                                                                                 
+         &lt;head&gt;
+                &lt;title&gt;{{title}}&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+                {% block content %}{% endblock %}
+            
+    
+
+
+
+输入信息页 hello_form.html
+
+    
+    
+    {% extends "base.html" %}                                                                                                 
+    
+    {% block content %}
+    <h1>Fill out this form</h1>    
+    <form action="" method="POST">
+    {{form.hidden_tag()}}
+    A Greeting:
+    {{form.greet(size=30,maxlength=140)}}
+    <br>
+    Your Name:
+    {{form.name(size=30,maxlength=140)}}
+    <br>
+    <input type="submit">
+    </form>
+    {% endblock %}
+</code></pre><p>显示信息页 index.html</p>
+<pre><code>{% extends "base.html" %}                                                                                                                            
+
+{% block content %}
+    {%if greeting:%}
+     I just wanted to say <em style="color:green;font-size:2em;">{{greeting}}</em>
+    {%endif%}
+    {% endblock %}
+</code></pre><p>7.运行：uniqueenv/bin/python app.py</p>
+<p>注意运行的时候要使用虚拟目录中的python解释器</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330095956098-476888447.png" alt=""></p>
+<p>8.结果：</p>
+<p>(1)Get方式</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330095846504-570096275.png" alt=""></p>
+<p>(2)Post方式</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330100036348-1915660279.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330100106379-1591817480.png" alt=""></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/03/29/python--flask使用/" data-title="python--flask使用" data-url="https://shijingjing07.github.io/2016/03/29/python--flask使用/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

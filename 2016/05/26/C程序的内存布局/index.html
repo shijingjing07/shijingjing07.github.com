@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C程序的内存布局 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.代码段(code或text)：
+通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读。 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等，但一般都是放在只读数据段中。
+2.数据段(data segment)：通常是指用来存放程序中已初始化的全局变量和静态变量的一块内存区域。数据段属">
+  
+  <meta name="description" content="1.代码段(code或text)：
+通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读。 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等，但一般都是放在只读数据段中。
+2.数据段(data segment)：通常是指用来存放程序中已初始化的全局变量和静态变量的一块内存区域。数据段属">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C程序的内存布局">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/26/C程序的内存布局/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.代码段(code或text)：
+通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读。 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等，但一般都是放在只读数据段中。
+2.数据段(data segment)：通常是指用来存放程序中已初始化的全局变量和静态变量的一块内存区域。数据段属">
+<meta property="og:updated_time" content="2017-01-12T01:35:40.207Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C程序的内存布局">
+<meta name="twitter:description" content="1.代码段(code或text)：
+通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读。 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等，但一般都是放在只读数据段中。
+2.数据段(data segment)：通常是指用来存放程序中已初始化的全局变量和静态变量的一块内存区域。数据段属">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/26/C程序的内存布局/">
+  <time datetime="2016-05-25T19:16:00.000Z">
+    2016-05-26
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C程序的内存布局</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong> 1.代码段(code或text)：</strong></p>
+<p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读。 某些架构也允许代码段为可写，即允许修改程序。<br>在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等，但一般都是放在只读数据段中。</p>
+<p><strong>2.数据段(data segment)：</strong><br>通常是指用来存放程序中已初始化的全局变量和静态变量的一块内存区域。<br>数据段属于静态内存分配，可以分为只读数据段和读写数据段。<br>字符串常量等，但一般都是放在只读数据段中。</p>
+<p><strong>3.BSS段(bss)：</strong><br>通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。<br>BSS节不包含任何数据，只是简单的维护开始和结束的地址，即总大小，以便内存区能在运行时分配并被有效地清零。<br>BSS节在应用程序的二进制映象文件中并不存在，即不占用磁盘空间而只在运行的时候占用内存空间，<br>所以如果全局变量和静态变量未初始化那么其可执行文件要小很多。BSS段属于静态内存分配。<br>这里注意一个问题：一般的书上都会说全局变量和静态变量是会自动初始化的，那么哪来的未初始化的变量呢？<br>变量的初始化可以分为显示初始化和隐式初始化，全局变量和静态变量如果程序员自己不初始化的话的确也会被初始化，<br>那就是不管什么类型都初始化为0，这种没有显示初始化的就是我们这里所说的未初始化。<br>既然都是0那么就没必要把每个0都存储起来，从而节省磁盘空间，这是BSS的主要作用。</p>
+<p><strong>4.堆（heap）：</strong><br>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。<br>当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；<br>当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
+<p><strong>5.栈(stack)：</strong><br>栈又称堆栈，<br>是用户存放程序临时创建的局部变量，也就是说我们函数括弧”{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。<br>除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。<br>由于栈的后进先出特点，所以栈特别方便用来保存/恢复调用现场。<br>从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
+<p>简单示例如下：</p>
+<pre><code>const char ro[ ] = {&quot;this is read onlydata&quot;};                  //只读数据区   
+static char rw_1[ ] ={&quot;this is globalread write data&quot;};        //已初始化读写数据段   
+char BSS_1[ 100];                                              //未初始化数据段   
+const char *ptrconst =&quot;constantdata&quot;;                          //字符串放在只读取数据段   
+int main()   
+{   
+      short b;                                                 //在栈上，占用2个字节   
+      char a[100];                                             //在栈上开辟100个字节，工的值是其首地址   
+      char s[ ]=&quot;abcdefg&quot;;                                     //s在栈上，占用4个字节   
+                                                               //&quot;abcdefg&quot;本身放置在只读数据存储区，占8个字节   
+      char *p1;                                                //p1在栈上，占用4个字节                 
+      char *p2=&quot;123456&quot;;                                       //p2 在栈上，p2指向的内容不能改，   
+                                                               //&quot;123456&quot;在只读数据区        
+
+      static char rw_2[ ]={&quot;this is local read write data&quot;};   //局部已初始化读写数据段   
+      static char BSS_2[100];                                  //局部未初始化数据段   
+      static int c = 0;                                        //全局（静态）初始化区   
+       p1=(char *)malloc(10 * sizeof(char ) );                 //分配内存区域在堆区   
+       strcpy(p1,&quot;xxxx&quot;);                                      //&quot;XXXX&quot;放在只读数据区，占5个字节   
+      free(p1);                                                //使用free释放p1所指向的内存   
+
+  return 0;   
+}  
+</code></pre><p> 我们再看一下以下的代码：</p>
+<pre><code>#include &lt;stdio.h&gt;
+const int a = 10; ////全部常量a
+int main()
+{
+    const int b = 20; //局部常量b
+    int* pa = (int*)&amp;a;//报错，因为全部常量放在只读数据段
+    int* pb = (int*)&amp;b;//修改成功，因为局部常量放在栈上
+    *pa = 30;
+    *pb = 30;
+    return 0;
+}
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/26/C程序的内存布局/" data-title="C程序的内存布局" data-url="https://shijingjing07.github.io/2016/05/26/C程序的内存布局/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

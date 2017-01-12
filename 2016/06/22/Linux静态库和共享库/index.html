@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux静态库和共享库 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是静态库静态库类似windows中的静态lib
+关于windows中的静态lib，可参考Windows动态链接库DLL
+特点：包含函数代码声明和实现，链接后所有代码都嵌入到宿主程序中。只在编译时使用，执行时不再需要该静态库。
+2.静态库编写示例如下：addvec.c
+void addvec(int* x, int* y, int*z, int n)  
+{  
+     int i=0;">
+  
+  <meta name="description" content="1.什么是静态库静态库类似windows中的静态lib
+关于windows中的静态lib，可参考Windows动态链接库DLL
+特点：包含函数代码声明和实现，链接后所有代码都嵌入到宿主程序中。只在编译时使用，执行时不再需要该静态库。
+2.静态库编写示例如下：addvec.c
+void addvec(int* x, int* y, int*z, int n)  
+{  
+     int i=0;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux静态库和共享库">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/22/Linux静态库和共享库/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是静态库静态库类似windows中的静态lib
+关于windows中的静态lib，可参考Windows动态链接库DLL
+特点：包含函数代码声明和实现，链接后所有代码都嵌入到宿主程序中。只在编译时使用，执行时不再需要该静态库。
+2.静态库编写示例如下：addvec.c
+void addvec(int* x, int* y, int*z, int n)  
+{  
+     int i=0;">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175529406-1385482834.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175600813-1259104162.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175642485-1797416922.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175741203-318389061.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:34.532Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux静态库和共享库">
+<meta name="twitter:description" content="1.什么是静态库静态库类似windows中的静态lib
+关于windows中的静态lib，可参考Windows动态链接库DLL
+特点：包含函数代码声明和实现，链接后所有代码都嵌入到宿主程序中。只在编译时使用，执行时不再需要该静态库。
+2.静态库编写示例如下：addvec.c
+void addvec(int* x, int* y, int*z, int n)  
+{  
+     int i=0;">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175529406-1385482834.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/22/Linux静态库和共享库/">
+  <time datetime="2016-06-22T02:07:00.000Z">
+    2016-06-22
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux静态库和共享库</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是静态库</strong><br>静态库类似windows中的静态lib</p>
+<p>关于windows中的静态lib，可参考<br><a href="http://www.cnblogs.com/shijingjing07/p/5606930.html" target="_blank" rel="external">Windows动态链接库DLL</a></p>
+<p>特点：包含函数代码声明和实现，链接后所有代码都嵌入到宿主程序中。<br>只在编译时使用，执行时不再需要该静态库。</p>
+<p><strong>2.静态库编写</strong><br>示例如下：<br>addvec.c</p>
+<pre><code>void addvec(int* x, int* y, int*z, int n)  
+{  
+     int i=0;  
+     for(; i&lt; n;++i)  
+          z[i] = x[i] + y[i];  
+}  
+</code></pre><p>multvec.c</p>
+<pre><code>void multvec(int*x, int* y, int*  z, int n)  
+{  
+     int i = 0;  
+     for(; i &lt; n; ++i)  
+          z[i] = x[i] * y[i];  
+}
+</code></pre><p>使用AR工具创建静态库文件：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175529406-1385482834.png" alt=""></p>
+<p><strong>3.静态库使用</strong><br>示例如下：<br>test2.c</p>
+<pre><code>#include &lt;stdio.h&gt;    
+int x[2] = {1, 2};  
+int y[2] = {3, 4};  
+int z[2]={0};   
+int main()  
+{  
+    addvec(x, y, z, 2);  
+    printf(&quot;z = [%d %d]\n&quot;, z[0], z[1]);  
+    return 0;  
+}
+</code></pre><p>编译-链接-运行程序</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175600813-1259104162.png" alt=""></p>
+<p>1)-static参数，表明是静态链接，编译出的是完整的可执行目标文件。<br>2)当链接器进行链接时，会判断main函数里调用了addvec.o中的addvec函数，<br>没有调用multvec.o中的任何函数，所以，链接器只会拷贝addvec.o到可执行文件。</p>
+<p><strong>4.什么是共享库</strong><br>共享库类似windows中的动态链接库dll</p>
+<p>特点：包含函数代码声明和实现。<br>只在运行时使用，由动态链接器链接和加载。  </p>
+<p>根据链接和加载共享库的时机可分为以下两类：<br>1)自身加载型共享库。<br>2)运行时加载型共享库</p>
+<p><strong>5.自身加载型共享库。</strong><br>类似windows中的隐式链接<br>链接时，将共享库的声明信息链接到可执行文件，<br>应用程序加载时，动态链接库解析声明信息，加载共享库的实现到存储器，重定位应用程序中声明信息到实际地址。</p>
+<p><strong>6.自身加载型共享库使用示例</strong><br>使用-shared参数，指示编译器创建一个共享库。<br>如下所示，我们创建了一个共享库，并通过自身加载型来使用该共享库。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175642485-1797416922.png" alt=""></p>
+<p>1)-fPIC参数，指示编译器生成代码无关的代码<br>2)在链接时，没有拷贝共享库libvec.so的实现，只拷贝了一些重定位和符号表信息<br>3)程序加载时，动态链接器会解析共享库libvec.so中代码和数据的引用，重定位完成链接任务。<br>重定位libvec.so的文本和数据到存储器段<br>重定位p2中引用的libvec.so到以上存储器段<br>最后链接器将控制传递给程序，此时，共享库的位置就固定了。</p>
+<p><strong>7.运行时加载型共享库</strong><br>类似windows中的显式链接<br>无需编译时链接，可在运行过程中加载和卸载共享库。</p>
+<p><strong>8.运行时加载型共享库使用示例</strong><br>Linux提供了一组运行过程中加载和卸载共享库的API，如下所示：  </p>
+<p>#include&lt;dlfcn.h&gt;</p>
+<pre><code>/* 加载和链接共享库 filename 
+    filename：共享库的名字 
+    flag有：RTLD_LAZY, RTLD_NOW,二者均可以和RTLD_GLOBAL表示取或 
+*/  
+void *dlopen(const char *filename, int flag); // 若成功则返回执行句柄的指针，否则返回NULL  
+
+/*根据共享库操作句柄与符号，返回符号对应的地址 
+    handle:共享库操作句柄 
+    symbol：需要引用的符号名字 
+*/  
+void *dlsym(void *handle, char *symbol); // 若成功则返回执行符号的指针（即地址），若出错则返回NULL  
+
+/* 如果没有程序正在使用这个共享库，卸载该共享库 */  
+int dlclose(void *handle); // 若卸载成功，则返回0，否则返回-1  
+
+/* 捕捉最近发生的错误 */  
+const char *dlerror(void); // 若前面对dlopen，dlsym或dlclose调用失败，则返回错误消息，否则返回NULL  
+</code></pre><p>根据以上API，我们可以方便地加载和卸载共享库，如下所示：</p>
+<pre><code>#include &lt;stdio.h&gt;  
+#include &lt;stdlib.h&gt;  
+#include &lt;dlfcn.h&gt;  
+
+int x[2] = {1, 2};  
+int y[2] = {3, 4};  
+int z[2] ={0};  
+
+int main()  
+{  
+    void *handle;  
+    void (*addvec)(int *, int *, int *,int);  
+    char *error;  
+
+    handle = dlopen(&quot;./libvector.so&quot;, RTLD_LAZY);  
+    if(!handle){  
+        fprintf(stderr, &quot;%s\n&quot;, dlerror());  
+        exit(1);  
+    }  
+
+    addvec = dlsym(handle, &quot;addvec&quot;);  
+    if((error = dlerror()) != NULL){  
+        fprintf(stderr, &quot;%s\n&quot;, dlerror());  
+        exit(1);  
+    }  
+
+    addvec(x, y, z, 2);  
+    printf(&quot;z = [%d %d]\n&quot;, z[0], z[1]);  
+
+    if(dlclose(handle) &lt; 0){  
+        fprintf(stderr, &quot;%s\n&quot;, dlerror());  
+        exit(1);  
+    }  
+
+    return 0;  
+}  
+</code></pre><p>运行程序：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175741203-318389061.png" alt=""></p>
+<p>其中，-ldl参数，表示程序运行时需要用到共享库</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/22/Linux静态库和共享库/" data-title="Linux静态库和共享库" data-url="https://shijingjing07.github.io/2016/06/22/Linux静态库和共享库/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux硬链接和软链接 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.硬链接：文件别名通过前面讲的Linuxext2文件系统，我们知道在目录文件的block中，存放着目录下文件的文件名和对应的inode。可以将多个文件名对应到同一个inode，新建一条文件名链接到某inode号，这就是硬链接。
+可以看出，硬链接只是新建了一个文件名，关联到一个已存在的文件。此时，目录下的block多写了一个文件名/inode的数据所以，硬链接没有增加inode和block的耗用。">
+  
+  <meta name="description" content="1.硬链接：文件别名通过前面讲的Linuxext2文件系统，我们知道在目录文件的block中，存放着目录下文件的文件名和对应的inode。可以将多个文件名对应到同一个inode，新建一条文件名链接到某inode号，这就是硬链接。
+可以看出，硬链接只是新建了一个文件名，关联到一个已存在的文件。此时，目录下的block多写了一个文件名/inode的数据所以，硬链接没有增加inode和block的耗用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux硬链接和软链接">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/30/Linux硬链接和软链接/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.硬链接：文件别名通过前面讲的Linuxext2文件系统，我们知道在目录文件的block中，存放着目录下文件的文件名和对应的inode。可以将多个文件名对应到同一个inode，新建一条文件名链接到某inode号，这就是硬链接。
+可以看出，硬链接只是新建了一个文件名，关联到一个已存在的文件。此时，目录下的block多写了一个文件名/inode的数据所以，硬链接没有增加inode和block的耗用。">
+<meta property="og:updated_time" content="2017-01-12T01:35:31.562Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux硬链接和软链接">
+<meta name="twitter:description" content="1.硬链接：文件别名通过前面讲的Linuxext2文件系统，我们知道在目录文件的block中，存放着目录下文件的文件名和对应的inode。可以将多个文件名对应到同一个inode，新建一条文件名链接到某inode号，这就是硬链接。
+可以看出，硬链接只是新建了一个文件名，关联到一个已存在的文件。此时，目录下的block多写了一个文件名/inode的数据所以，硬链接没有增加inode和block的耗用。">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/30/Linux硬链接和软链接/">
+  <time datetime="2016-06-30T05:18:00.000Z">
+    2016-06-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux硬链接和软链接</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.硬链接：文件别名</strong><br>通过前面讲的<a href="http://www.cnblogs.com/shijingjing07/p/5630747.html" target="_blank" rel="external">Linux<br>ext2文件系统</a>，我们知道在目录文件的block中，存放着目录下文件的文件名和对应的inode。<br>可以将多个文件名对应到同一个inode，<br>新建一条文件名链接到某inode号，这就是硬链接。</p>
+<p>可以看出，硬链接只是新建了一个文件名，关联到一个已存在的文件。<br>此时，目录下的block多写了一个文件名/inode的数据<br>所以，硬链接没有增加inode和block的耗用。</p>
+<p><strong>2.软链接：类似windows中的快捷方式</strong><br>软链接的实质是，创建了一个独立的文件，而读取这个文件时，会指向它链接的那个文件的文件名。类似于重定向的功能。</p>
+<p>软链接新建了文件，所以是要耗用inode和block的。</p>
+<p><strong>3.硬链接和软链接的比较</strong></p>
+<p>1)硬链接比较安全，多个文件名对应一个inode时，若删除文件，只要还有其他的文件名对应着这个inode文件，文件就不会删除，<br>此时，只是将文件的连接数减1,当连接数为0时，文件真正删除。</p>
+<p>硬链接不会耗用inode和block</p>
+<p>硬链接不能链接到目录。</p>
+<p>2)软链接<br>软链接比较灵活，可以链接到文件和目录。<br>但是会耗用inode和block，不过这点空间不算什么。<br>若目标文件删除，则读取链接文件会失败。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/30/Linux硬链接和软链接/" data-title="Linux硬链接和软链接" data-url="https://shijingjing07.github.io/2016/06/30/Linux硬链接和软链接/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

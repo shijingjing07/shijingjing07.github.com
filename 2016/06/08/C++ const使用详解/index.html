@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++ const使用详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.const常量和宏常量const int max=100;  
+#define max 100;const常量相对宏常量有两个有点：1)有类型安全检查2)占用内存空间少
+2.const变量在内存中的位置我们在C程序的内存布局中，已经通过示例进行了说明
+#include &amp;lt;stdio.h&amp;gt;
+const int a = 10; ////全部常量a
+int main()
+{
+    co">
+  
+  <meta name="description" content="1.const常量和宏常量const int max=100;  
+#define max 100;const常量相对宏常量有两个有点：1)有类型安全检查2)占用内存空间少
+2.const变量在内存中的位置我们在C程序的内存布局中，已经通过示例进行了说明
+#include &amp;lt;stdio.h&amp;gt;
+const int a = 10; ////全部常量a
+int main()
+{
+    co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ const使用详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/08/C++ const使用详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.const常量和宏常量const int max=100;  
+#define max 100;const常量相对宏常量有两个有点：1)有类型安全检查2)占用内存空间少
+2.const变量在内存中的位置我们在C程序的内存布局中，已经通过示例进行了说明
+#include &amp;lt;stdio.h&amp;gt;
+const int a = 10; ////全部常量a
+int main()
+{
+    co">
+<meta property="og:updated_time" content="2017-01-12T01:35:37.669Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ const使用详解">
+<meta name="twitter:description" content="1.const常量和宏常量const int max=100;  
+#define max 100;const常量相对宏常量有两个有点：1)有类型安全检查2)占用内存空间少
+2.const变量在内存中的位置我们在C程序的内存布局中，已经通过示例进行了说明
+#include &amp;lt;stdio.h&amp;gt;
+const int a = 10; ////全部常量a
+int main()
+{
+    co">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/08/C++ const使用详解/">
+  <time datetime="2016-06-07T22:28:00.000Z">
+    2016-06-08
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++ const使用详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.const常量和宏常量</strong><br>const int max=100;  </p>
+<p>#define max 100;<br>const常量相对宏常量有两个有点：<br>1)有类型安全检查<br>2)占用内存空间少</p>
+<p><strong>2.const变量在内存中的位置</strong><br>我们在C程序的内存布局中，已经通过示例进行了说明</p>
+<pre><code>#include &lt;stdio.h&gt;
+const int a = 10; ////全部常量a
+int main()
+{
+    const int b = 20; //局部常量b
+    int* pa = (int*)&amp;a;//报错，因为全部常量放在只读数据段
+    int* pb = (int*)&amp;b;//修改成功，因为局部常量放在栈上
+    *pa = 30;
+    *pb = 30;
+    return 0;
+}
+</code></pre><p><strong>3.const常成员变量的初始化</strong><br>在某个对象生存期内是常量。</p>
+<pre><code>class Test
+{
+public:
+    const int a;
+    Test(int i):a(i){}
+}
+</code></pre><p>const常量只能通过初始化列表的方式进行初始化。</p>
+<p><strong>4.const修饰对象</strong><br>该对象不能修改。只能访问成员变量，不能修改。只能调用常成员函数。<br>关于常成员函数，我们在后面介绍。<br>如下例所示:</p>
+<pre><code>#include&lt;iostream&gt;
+class Test
+{
+public:
+    int a;
+    void fun0(){}
+    void fun1() const{}
+};
+int main()
+{
+    Test test;
+    const Test&amp; a_test = test;
+    std::cout&lt;&lt;a_test.a&lt;&lt;std::endl;//正常，访问公共成员a
+    a_test.fun0();//报错，对象包含与成员函数不兼容的类型限定符
+    a_test.fun1();//正常
+    return 0;
+}
+</code></pre><p><strong>5.const修饰指针</strong><br>我们看一下下面四种写法：</p>
+<pre><code>1) const int* a = 10;
+2) int const *a = 10;
+3) int* const a = 10;
+4) const int* const a = 10;
+</code></pre><p>我们需要知道的是，<br>const在<em>左，表示指针指向的内容为常量，这也是我们平时说的常量指针<br>const在</em>右，表示指针本身为常量，这也是我们平时说的指针常量<br>因此，1),2)表示指针a指向的内容不能修改<br>3)表示指针a本身不能修改<br>4)表示指针a和a指向的内容都不能修改</p>
+<p><strong>6.const修饰成员函数,函数参数，返回值</strong><br>1)修饰成员函数</p>
+<pre><code>void fun1() const;
+</code></pre><p>成员函数名后加上const，即表明该函数为常成员函数。<br>常成员函数的const隐式修饰this指针，即对象不可修改,<br>所以，常成员函数只能访问成员变量，而不能修改。只能调用其他常成员函数。<br>如下例所示:</p>
+<pre><code>int g_a;
+void g_fun(){}
+class Test
+{
+public:
+    void fun0(){}
+    void fun1() const{} 
+    void fun2() const
+    {
+        a = 10;//报错，&quot;必须是可修改的左值&quot;
+        fun0();//报错，对象包含与成员函数不兼容的类型限定符
+        fun1();//正常，可调用其他常成员函数
+
+        g_a = 10;//正常
+        g_fun();//正常
+    }
+private:
+    int a;
+}
+</code></pre><p>2)修饰函数参数</p>
+<pre><code>void fun0(const Test* p_test);
+void fun1(const Test&amp; test);
+</code></pre><p>在传入的参数前，加上const，表明传入的参数不可修改。</p>
+<p>3)修饰函数返回值</p>
+<pre><code>const Test fun0();
+const Test* fun1();
+</code></pre><p>当使用const Test* fun1();返回指针时，该返回值只能赋给const修饰的同类型指针。<br>如下例所示：</p>
+<pre><code>class Test
+{
+public:
+    void fun0(){}
+    const Test fun1(){
+        return *this;
+    }
+    const Test* fun2(){
+        return this;
+    }
+};
+int main()
+{
+    Test test;
+    Test r = test.fun1();
+    const Test* rp = test.fun2();
+}
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/08/C++ const使用详解/" data-title="C++ const使用详解" data-url="https://shijingjing07.github.io/2016/06/08/C++ const使用详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

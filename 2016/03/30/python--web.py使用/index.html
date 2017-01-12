@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python--web.py使用 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="web.py 是一个轻量级Python web框架。
+下面我将使用web.py框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：
+exweb2\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.html                 index.html
+2.创建网站根目录exweb2mkdir">
+  
+  <meta name="description" content="web.py 是一个轻量级Python web框架。
+下面我将使用web.py框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：
+exweb2\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.html                 index.html
+2.创建网站根目录exweb2mkdir">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python--web.py使用">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/03/30/python--web.py使用/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="web.py 是一个轻量级Python web框架。
+下面我将使用web.py框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：
+exweb2\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.html                 index.html
+2.创建网站根目录exweb2mkdir">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134039535-1709829164.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134104035-42679323.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134340254-2054116773.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134351738-986870576.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:47.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python--web.py使用">
+<meta name="twitter:description" content="web.py 是一个轻量级Python web框架。
+下面我将使用web.py框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：
+exweb2\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.html                 index.html
+2.创建网站根目录exweb2mkdir">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134039535-1709829164.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/03/30/python--web.py使用/">
+  <time datetime="2016-03-29T21:45:00.000Z">
+    2016-03-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python--web.py使用</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>web.py 是一个轻量级Python web框架。</p>
+<p>下面我将使用web.py框架，创建一个简单的html页面示例。</p>
+<p>1.项目的目录结构如下所示：</p>
+<p>exweb2\<br>  uniqueenv\<br>  app.py<br>  templates\</p>
+<p>　　　　　　base.html</p>
+<p>　　　　　　hello_form.html<br>                 index.html</p>
+<p>2.创建网站根目录exweb2<br>mkdir exweb2</p>
+<p>3.在网站根目录下创建一个虚拟环境<br>cd exweb2<br>virtualenv uniqueenv</p>
+<p>4.安装flask<br>uniqueenv/bin/pip install lpthw.web</p>
+<p>5.web.py使用，app.py代码如下</p>
+<pre><code>#-*- coding: UTF-8 -*-                                                           
+import web 
+
+urls =(
+        &apos;/&apos;,&apos;Index&apos;
+)
+
+app = web.application(urls,globals())
+ #base为基础模板页
+render = web.template.render(&apos;templates/&apos;,base=&quot;base&quot;)
+
+class Index(object):
+         #get方式提交，若url参数不为空,直接跳转到显示界面,否则跳转到输入信息界面
+        def GET(self):
+                form = web.input(name=&quot;&quot;,greet=&quot;&quot;)
+                if form.greet!=&quot;&quot; and form.name!=&quot;&quot;:
+                        greeting=&quot;%s,%s&quot;%(form.greet,form.name)
+                        return render.index(greeting=greeting)
+                return render.hello_form()
+        #post方式提交表单,
+        def POST(self):
+                form = web.input(name=&quot;Nobody&quot;,greet=&quot;Hello&quot;)
+                greeting=&quot;%s,%s&quot;%(form.greet,form.name)
+                return render.index(greeting=greeting)
+if __name__ == &quot;__main__&quot;:
+        app.run() 
+</code></pre><p>6.接着创建模板页，模板放在templates文件夹下.</p>
+<p><strong>mkdir templates</strong></p>
+<p>首先创建一个基础模板页 base.html</p>
+<pre><code>$def with (content)                                                              
+&lt;html&gt;                                                                               
+        &lt;head&gt;
+                &lt;title&gt;
+                &lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+                $:content
+        &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>输入信息页 hello_form.html</p>
+<pre><code>&lt;h1&gt;Fill out this form&lt;/h1&gt;                                                      
+&lt;form action=&quot;/&quot; method=&quot;POST&quot;&gt;
+A Greeting:&lt;input type=&quot;text&quot; name=&quot;greet&quot;&gt;
+&lt;br/&gt;
+Your Name:&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;
+&lt;br/&gt;
+&lt;input type=&quot;submit&quot;&gt;
+&lt;/form&gt;
+</code></pre><p>显示信息页 index.html</p>
+<pre><code>$def with (greeting)                                                             
+
+$if greeting: 
+        I just wanted to say &lt;em style=&quot;color: green; font-size: 2em;&quot;&gt;$greeting&lt;/em&gt;. 
+$else: 
+        &lt;em&gt;Hello&lt;/em&gt;, world!
+</code></pre><p> <em>7.运行：uniqueenv/bin/python app.py</em></p>
+<p>注意运行的时候要使用虚拟目录中的python解释器</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134039535-1709829164.png" alt=""></p>
+<p>8.结果：</p>
+<p>(1)Get方式</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134104035-42679323.png" alt=""></p>
+<p>(2)Post方式</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134340254-2054116773.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134351738-986870576.png" alt=""></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/03/30/python--web.py使用/" data-title="python--web.py使用" data-url="https://shijingjing07.github.io/2016/03/30/python--web.py使用/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

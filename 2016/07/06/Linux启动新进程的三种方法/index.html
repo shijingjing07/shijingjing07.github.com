@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux启动新进程的三种方法 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="程序中，我们有时需要启动一个新的进程，来完成其他的工作。下面介绍了三种实现方法，以及这三种方法之间的区别。
+1.system函数-调用shell进程，开启新进程system函数，是通过启动shell进程，然后执行shell命令进程。原型：
+int system(const char *string);
+string:shell命令字符串返回值：成功返回命令退出码，无法启动shell，返回127错误">
+  
+  <meta name="description" content="程序中，我们有时需要启动一个新的进程，来完成其他的工作。下面介绍了三种实现方法，以及这三种方法之间的区别。
+1.system函数-调用shell进程，开启新进程system函数，是通过启动shell进程，然后执行shell命令进程。原型：
+int system(const char *string);
+string:shell命令字符串返回值：成功返回命令退出码，无法启动shell，返回127错误">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux启动新进程的三种方法">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/07/06/Linux启动新进程的三种方法/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="程序中，我们有时需要启动一个新的进程，来完成其他的工作。下面介绍了三种实现方法，以及这三种方法之间的区别。
+1.system函数-调用shell进程，开启新进程system函数，是通过启动shell进程，然后执行shell命令进程。原型：
+int system(const char *string);
+string:shell命令字符串返回值：成功返回命令退出码，无法启动shell，返回127错误">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706182806983-198256886.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706182941139-216208758.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183035311-1079184377.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183153561-1567285869.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183236639-933066854.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:31.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux启动新进程的三种方法">
+<meta name="twitter:description" content="程序中，我们有时需要启动一个新的进程，来完成其他的工作。下面介绍了三种实现方法，以及这三种方法之间的区别。
+1.system函数-调用shell进程，开启新进程system函数，是通过启动shell进程，然后执行shell命令进程。原型：
+int system(const char *string);
+string:shell命令字符串返回值：成功返回命令退出码，无法启动shell，返回127错误">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706182806983-198256886.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/06/Linux启动新进程的三种方法/">
+  <time datetime="2016-07-06T02:37:00.000Z">
+    2016-07-06
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux启动新进程的三种方法</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>程序中，我们有时需要启动一个新的进程，来完成其他的工作。<br>下面介绍了三种实现方法，以及这三种方法之间的区别。</p>
+<p><strong>1.system函数-调用shell进程，开启新进程</strong><br>system函数，是通过启动shell进程，然后执行shell命令进程。<br>原型：</p>
+<pre><code>int system(const char *string);
+</code></pre><p>string:shell命令字符串<br>返回值：成功返回命令退出码，无法启动shell，返回127错误码，其他错误，返回-1。</p>
+<p>代码示例如下：<br>process_system.c</p>
+<pre><code>#include&lt;stdlib.h&gt;                                                              
+#include&lt;stdio.h&gt;
+int main()
+{
+        printf(&quot;Running ps with system\n&quot;);
+        int code = system(&quot;ps au&quot;);//新进程结束后，system函数才返回
+        //int code = system(&quot;ps au&quot;);//system函数立即返回
+        printf(&quot;%d\n&quot;,code);
+        printf(&quot;ps Done\n&quot;);
+        exit(0);
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706182806983-198256886.png" alt=""></p>
+<p>system函数，在启动新进程时，必须先启动shell进程，因此使用system函数的效率不高。</p>
+<p><strong>2.exec系列函数-替换进程映像</strong><br>exec系列函数调用时，启动新进程，替换掉当前进程。即程序不会再返回到原进程，<br>除非exec调用失败。<br>exec启动的新进程继承了原进程的许多特性，如在原进程中打开的文件描述符在新进程中仍保持打开。<br>需要注意的是，在原进程中打开的文件流在新进程中将关闭。原因在于，我们在前面讲过<a href="http://www.cnblogs.com/shijingjing07/p/5620646.html" target="_blank" rel="external">进程间通信</a>的方式，进程之间需要管道才能通信。</p>
+<p>原型：</p>
+<pre><code>int execl(const char *path,const char *arg0,...,(char*)0);
+int execlp(const char *file,const char *arg0,...,(char*)0);
+int execle(const char *path,const char *arg0,...,(char*)0,char *const envp[]);
+
+int execv(cosnt char *path,char *const argv[]);
+int execvp(cosnt char *file,char *const argv[]);
+int execve(cosnt char *path,char *const argv[],char *const envp[]);
+</code></pre><p>path/file：进程命令路径/进程命令名<br>argc:命令参数列表<br>envp:新进程的环境变量<br>代码示例如下：<br>process_exec.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+    printf(&quot;Running ps with execlp\n&quot;);
+    execlp(&quot;ps&quot;,&quot;ps&quot;,&quot;au&quot;,(char*)0);
+    printf(&quot;ps done&quot;);
+    exit(0);
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706182941139-216208758.png" alt=""></p>
+<p>可以看出，调用execlp函数后，原进程被新进程替换，原进程中printf(“ps done”);没有被执行到。</p>
+<p><strong>3.fork函数-复制进程映像</strong><br>1)fork函数的使用<br>fork和exec的替换不同，调用fork函数，可复制一个和父进程一模一样的子进程。<br>执行的代码也完全相同，但子进程有自己的数据空间，环境和文件描述符。<br>原型：</p>
+<pre><code>pid_t fork();
+</code></pre><p>父进程执行时，返回子进程的PID<br>子进程执行时，返回0</p>
+<p>代码示例如下：<br>process_fork.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;sys/types.h&gt;
+int main()
+{
+    pid_t pid = fork();
+    switch(pid)
+    {
+        case -1:
+            perror(&quot;fork failed&quot;);
+            exit(1);
+            break;
+        case 0:
+            printf(&quot;\n&quot;);
+            execlp(&quot;ps&quot;,&quot;ps&quot;,&quot;au&quot;,0);
+            break;
+        default:
+            printf(&quot;parent,ps done\n&quot;);
+            break;
+    }
+    exit(0);
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183035311-1079184377.png" alt=""></p>
+<p>调用fork函数后，新建了一个子进程，拷贝父进程的代码，数据等到子进程的内存空间。父进程和子进程执行互不影响。使用fork函数的返回值，来区分执行的是父进程，还是子进程。</p>
+<p>2)僵尸进程<br>子进程退出后，内核会将子进程置为僵尸状态。此时，子进程只保留了最小的一些内核数据结构，如退出码，以便父进程查询子进程的退出状态。这时，子进程就是一个僵尸进程。</p>
+<p>在父进程中调用wait或waitpid函数，查询子进程的退出状态，可以避免僵尸进程。<br>原型：</p>
+<pre><code>pid_t wait(int *stat_loc);
+pid_t waitpid(pid_t pid,int *stat_loc,int options);
+</code></pre><p>stat_loc:若不是空指针，则子进程的状态码会被写入该指针指向的位置。<br>pid:等待的子进程的进程号pid<br>options:标记阻塞或非阻塞模式<br>返回值：成功返回子进程的pid，若子进程没有结束或意外终止，返回0</p>
+<p>wait：阻塞模式(使用了信号量)，父进程调用wait时，会暂停执行，等待子进程的结束。<br>wait调用返回后，子进程会彻底销毁。</p>
+<p>waitpid:与wait不同的是，<br>a.可以表示四种不同的子进程类型<br>     pid==-1 等待任何一个子进程，此时waitpid的作用与wait相同<br>　　pid &gt;0 等待进程ID与pid值相同的子进程<br>　　pid==0 等待与调用者进程组ID相同的任意子进程<br>　　pid&lt;-1 等待进程组ID与pid绝对值相等的任意子进程<br>b.当options的值为WNOHANG时，为非阻塞模式，即waitpid会立即返回<br>此时，可以循环查询子进程的状态，若子进程未结束，waitpid返回，做其他工作。<br>这样提高了程序的效率。</p>
+<p>wait函数使用示例如下：<br>process_fork3.c</p>
+<pre><code>#include&lt;wait.h&gt;
+#include&lt;stdio.h&gt;
+#include&lt;sys/types.h&gt;
+int main()
+{
+    pid_t pid = fork();
+    int stat = 0;
+    switch(pid)
+    {
+        case -1:
+            perror(&quot;fork failed&quot;);
+            exit(1);
+            break;
+        case 0:
+            printf(&quot;\n&quot;);
+            exit(0);
+            break;
+        default:
+            pid = wait(&amp;stat);
+            printf(&quot;Child has finished:PID=%d\n&quot;,pid);
+            printf(&quot;parent,ps done\n&quot;);
+            break;
+    }
+    exit(0);
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183153561-1567285869.png" alt=""></p>
+<p>waitpid函数使用示例如下：<br>process_fork2.c</p>
+<pre><code>#include&lt;wait.h&gt;
+#include&lt;stdio.h&gt;
+#include&lt;sys/types.h&gt;
+int main()
+{
+    pid_t pid = fork();
+    int stat = 0;
+    switch(pid)
+    {
+        case -1:
+            perror(&quot;fork failed&quot;);
+            exit(1);
+            break;
+        case 0:
+            printf(&quot;\n&quot;);
+            execlp(&quot;ps&quot;,&quot;ps&quot;,&quot;au&quot;,0);
+            break;
+        default:
+            do
+            {
+                pid = waitpid(pid,&amp;stat,WNOHANG);
+                if(pid==0)
+                {
+                    printf(&quot;parent do something else.\n&quot;);
+                    sleep(1);
+                }
+            }while(pid==0);
+            printf(&quot;Child has finished:PID=%d\n&quot;,pid);
+            printf(&quot;parent,ps done\n&quot;);
+            break;
+    }
+    exit(0);
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183236639-933066854.png" alt=""></p>
+<p><strong>4.启动新进程三种方法的比较</strong><br>1)system函数最简单，启动shell进程，并在shell进程中执行新的进程。<br>效率不高，system函数必须等待子进程返回才能接着执行。</p>
+<p>2)exec系列函数用新进程替换掉原进程，但不会返回到原进程，除非调用失败。<br>该函数继承了许多原进程的特性，效率也较高。</p>
+<p>3)fork函数，复制一个子进程，和父进程一模一样，但是拥有自己的内存空间。父子进程执行互不影响。需要注意僵尸子进程的问题。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/07/06/Linux启动新进程的三种方法/" data-title="Linux启动新进程的三种方法" data-url="https://shijingjing07.github.io/2016/07/06/Linux启动新进程的三种方法/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Python--类定义 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="转自：http://kanwoerzi.iteye.com/blog/1304466
+Python笔记—-类定义
+一、类定义：
+class &amp;lt;类名&amp;gt;:
+&amp;lt;语句&amp;gt;
+类实例化后，可以使用其属性，实际上，创建一个类之后，可以通过类名访问其属性
+如果直接使用类名修改其属性，那么将直接影响到已经实例化的对象
+类的私有属性：
+__private_attrs 两个下划线开头，声明该属性为">
+  
+  <meta name="description" content="转自：http://kanwoerzi.iteye.com/blog/1304466
+Python笔记—-类定义
+一、类定义：
+class &amp;lt;类名&amp;gt;:
+&amp;lt;语句&amp;gt;
+类实例化后，可以使用其属性，实际上，创建一个类之后，可以通过类名访问其属性
+如果直接使用类名修改其属性，那么将直接影响到已经实例化的对象
+类的私有属性：
+__private_attrs 两个下划线开头，声明该属性为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python--类定义">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/03/25/Python--类定义/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="转自：http://kanwoerzi.iteye.com/blog/1304466
+Python笔记—-类定义
+一、类定义：
+class &amp;lt;类名&amp;gt;:
+&amp;lt;语句&amp;gt;
+类实例化后，可以使用其属性，实际上，创建一个类之后，可以通过类名访问其属性
+如果直接使用类名修改其属性，那么将直接影响到已经实例化的对象
+类的私有属性：
+__private_attrs 两个下划线开头，声明该属性为">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160325210542370-292640845.jpg">
+<meta property="og:updated_time" content="2017-01-12T01:35:48.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python--类定义">
+<meta name="twitter:description" content="转自：http://kanwoerzi.iteye.com/blog/1304466
+Python笔记—-类定义
+一、类定义：
+class &amp;lt;类名&amp;gt;:
+&amp;lt;语句&amp;gt;
+类实例化后，可以使用其属性，实际上，创建一个类之后，可以通过类名访问其属性
+如果直接使用类名修改其属性，那么将直接影响到已经实例化的对象
+类的私有属性：
+__private_attrs 两个下划线开头，声明该属性为">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201603/300946-20160325210542370-292640845.jpg">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/03/25/Python--类定义/">
+  <time datetime="2016-03-25T05:06:00.000Z">
+    2016-03-25
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Python--类定义</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>转自：<a href="http://kanwoerzi.iteye.com/blog/1304466" target="_blank" rel="external">http://kanwoerzi.iteye.com/blog/1304466</a></p>
+<p>Python笔记—-类定义</p>
+<p>一、类定义：</p>
+<p>class &lt;类名&gt;:</p>
+<p>&lt;语句&gt;</p>
+<p>类实例化后，可以使用其属性，实际上，创建一个类之后，可以通过类名访问其属性</p>
+<p>如果直接使用类名修改其属性，那么将直接影响到已经实例化的对象</p>
+<p>类的私有属性：</p>
+<p>__private_attrs 两个下划线开头，声明该属性为私有，不能在类地外部被使用或直接访问</p>
+<p>在类内部的方法中使用时 self.__private_attrs</p>
+<p>类的方法</p>
+<p>在类地内部，使用def关键字可以为类定义一个方法，与一般函数定义不同，类方法必须包含参数self,且为第一个参数</p>
+<p>私有的类方法</p>
+<p>__private_method 两个下划线开头，声明该方法为私有方法，不能在类地外部调用</p>
+<p>在类的内部调用slef.__private_methods</p>
+<p>类的专有方法：</p>
+<p><strong>init</strong> 构造函数，在生成对象时调用</p>
+<p><strong>del</strong> 析构函数，释放对象时使用</p>
+<p><strong>repr</strong> 打印，转换</p>
+<p><strong>setitem</strong>按照索引赋值</p>
+<p><strong>getitem</strong>按照索引获取值</p>
+<p><strong>len</strong>获得长度</p>
+<p><strong>cmp</strong>比较运算</p>
+<p><strong>call</strong>函数调用</p>
+<p><strong>add</strong>加运算</p>
+<p><strong>sub</strong>减运算</p>
+<p><strong>mul</strong>乘运算</p>
+<p><strong>div</strong>除运算</p>
+<p><strong>mod</strong>求余运算</p>
+<p><strong>pow</strong>称方</p>
+<p>示例:</p>
+<pre><code>class people:  
+    #定义基本属性  
+    name = &apos;&apos;  
+    age = 0  
+    #定义私有属性,私有属性在类外部无法直接进行访问  
+    __weight = 0  
+    #定义构造方法  
+    def __init__(self,n,a,w):  
+        self.name = n  
+        self.age = a  
+        self.__weight = w  
+    def speak(self):  
+        print(&quot;%s is speaking: I am %d years old&quot; %(self.name,self.age))  
+
+
+p = people(&apos;tom&apos;,10,30)  
+p.speak()  
+</code></pre><p>二、继承类定义：</p>
+<p>1.单继承</p>
+<p>class &lt;类名&gt;(父类名)</p>
+<p>&lt;语句&gt;</p>
+<p>eg.</p>
+<p>class childbook(book)</p>
+<p>age = 10</p>
+<pre><code>#单继承示例  
+class student(people):  
+    grade = &apos;&apos;  
+    def __init__(self,n,a,w,g):  
+        #调用父类的构函  
+        people.__init__(self,n,a,w)  
+        self.grade = g  
+    #覆写父类的方法  
+    def speak(self):  
+        print(&quot;%s is speaking: I am %d years old,and I am in grade %d&quot;%(self.name,self.age,self.grade))  
+
+
+
+s = student(&apos;ken&apos;,20,60,3)  
+s.speak()  
+</code></pre><p>2.类的多重继承</p>
+<p>class 类名(父类1,父类2,….,父类n)</p>
+<p>&lt;语句1&gt;</p>
+<p>需要注意圆括号中父类的顺序，若是父类中有相同的方法名，而在子类使用时未指定，python从左至右搜索</p>
+<p>即方法在子类中未找到时，从左到右查找父类中是否包含方法</p>
+<pre><code>#另一个类，多重继承之前的准备  
+class speaker():  
+    topic = &apos;&apos;  
+    name = &apos;&apos;  
+    def __init__(self,n,t):  
+        self.name = n  
+        self.topic = t  
+    def speak(self):  
+        print(&quot;I am %s,I am a speaker!My topic is %s&quot;%(self.name,self.topic))  
+
+#多重继承  
+class sample(speaker,student):  
+    a =&apos;&apos;  
+    def __init__(self,n,a,w,g,t):  
+        student.__init__(self,n,a,w,g)  
+        speaker.__init__(self,n,t)  
+
+test = sample(&quot;Tim&quot;,25,80,4,&quot;Python&quot;)  
+test.speak()#方法名同，默认调用的是在括号中排前地父类的方法  
+</code></pre><p>类方法的覆写—-子类覆盖掉父类的方法</p>
+<p>def 方法名与父类一致</p>
+<p>若是在方法中要使用到父类方法 父类名.方法名</p>
+<p>若是将类放到了模块中</p>
+<p>使用时</p>
+<p>import A</p>
+<p>l = A.类()</p>
+<p>以上三段程序的执行结果:</p>
+<p>类方法的覆写—-子类覆盖掉父类的方法</p>
+<p>def 方法名与父类一致</p>
+<p>若是在方法中要使用到父类方法 父类名.方法名</p>
+<p>若是将类放到了模块中</p>
+<p>使用时</p>
+<p>import A</p>
+<p>l = A.类()</p>
+<p>以上三段程序的执行结果:</p>
+<p>类方法的覆写—-子类覆盖掉父类的方法</p>
+<p>def 方法名与父类一致</p>
+<p>若是在方法中要使用到父类方法 父类名.方法名</p>
+<p>若是将类放到了模块中</p>
+<p>使用时</p>
+<p>import A</p>
+<p>l = A.类()</p>
+<p>以上三段程序的执行结果:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160325210542370-292640845.jpg" alt=""></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/03/25/Python--类定义/" data-title="Python--类定义" data-url="https://shijingjing07.github.io/2016/03/25/Python--类定义/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

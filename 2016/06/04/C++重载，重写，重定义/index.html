@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++重载，重写，重定义 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.重载：重载是在一个类中，函数名一样，参数类型或参数个数不同的一系列函数需要注意的是，与返回类型无关。
+class Test
+{
+public:
+    void show();
+    void show(int a);
+    void show(double a);
+    void show(int a,int b);
+    void show(int a,double b);
+};">
+  
+  <meta name="description" content="1.重载：重载是在一个类中，函数名一样，参数类型或参数个数不同的一系列函数需要注意的是，与返回类型无关。
+class Test
+{
+public:
+    void show();
+    void show(int a);
+    void show(double a);
+    void show(int a,int b);
+    void show(int a,double b);
+};">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++重载，重写，重定义">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/04/C++重载，重写，重定义/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.重载：重载是在一个类中，函数名一样，参数类型或参数个数不同的一系列函数需要注意的是，与返回类型无关。
+class Test
+{
+public:
+    void show();
+    void show(int a);
+    void show(double a);
+    void show(int a,int b);
+    void show(int a,double b);
+};">
+<meta property="og:updated_time" content="2017-01-12T01:35:38.516Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++重载，重写，重定义">
+<meta name="twitter:description" content="1.重载：重载是在一个类中，函数名一样，参数类型或参数个数不同的一系列函数需要注意的是，与返回类型无关。
+class Test
+{
+public:
+    void show();
+    void show(int a);
+    void show(double a);
+    void show(int a,int b);
+    void show(int a,double b);
+};">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/04/C++重载，重写，重定义/">
+  <time datetime="2016-06-04T11:59:00.000Z">
+    2016-06-04
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++重载，重写，重定义</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.重载：</strong><br>重载是在一个类中，函数名一样，参数类型或参数个数不同的一系列函数<br>需要注意的是，与返回类型无关。</p>
+<pre><code>class Test
+{
+public:
+    void show();
+    void show(int a);
+    void show(double a);
+    void show(int a,int b);
+    void show(int a,double b);
+};
+</code></pre><p><strong>2.重写</strong><br>我们比较熟悉的另一个词是”覆盖”<br>用在继承中，子类若没有重新定义父类的虚方法，则子类对象调用该方法时，使用的仍是父类的方法；<br>否则，子类覆盖了父类的虚方法，调用时使用的是重新定义的方法。</p>
+<pre><code>class Test
+{
+public:
+    virtual void show()
+    {
+        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
+    }
+};
+class SubTest:public Test
+{
+public:
+    virtual void show()
+    {
+        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
+    }
+};
+int main()
+{
+    Test *p = new SubTest;
+    p-&gt;show();
+    return 0;
+}
+</code></pre><p>输出结果：<br>SubTest::show()  </p>
+<p><strong>3.重定义</strong><br>我们比较熟悉的另一个词是”隐藏”<br>子类重新定义父类中有相同名称的非虚函数，则对象调用该非虚方法时，使用的对象本身定义的方法。</p>
+<pre><code>class Test
+{
+public:
+        void show()
+    {
+        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
+    }
+};
+class SubTest:public Test
+{
+public:
+    void show()
+    {
+        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
+    }
+};
+int main()
+{
+    Test *p = new SubTest;
+    p-&gt;show();
+    return 0;
+}
+</code></pre><p>输出结果：<br>Test::show()  </p>
+<p>关于重写与重定义，如果了解了虚函数表的原理，就很容易理解了，<br>关于虚函数表，可参考<a href="http://www.cnblogs.com/shijingjing07/p/5559989.html" target="_blank" rel="external">C++虚函数表与虚析构函数</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/04/C++重载，重写，重定义/" data-title="C++重载，重写，重定义" data-url="https://shijingjing07.github.io/2016/06/04/C++重载，重写，重定义/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

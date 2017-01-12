@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Ubuntu 14.04 配置 Java SE jdk-7u55 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="JDK  目前最新版为jdk-8u5，这次没有选择安装最新的jdk8，而是要安装jdk7的最高版jdk-7u55 。
+首先，去官网下载jdk-7u55，地址：&amp;lt;http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html&amp;gt;
+
+选择Accept License Agreement 后">
+  
+  <meta name="description" content="JDK  目前最新版为jdk-8u5，这次没有选择安装最新的jdk8，而是要安装jdk7的最高版jdk-7u55 。
+首先，去官网下载jdk-7u55，地址：&amp;lt;http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html&amp;gt;
+
+选择Accept License Agreement 后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 14.04 配置 Java SE jdk-7u55">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/14/Ubuntu 14.04 配置 Java SE jdk-7u55/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="JDK  目前最新版为jdk-8u5，这次没有选择安装最新的jdk8，而是要安装jdk7的最高版jdk-7u55 。
+首先，去官网下载jdk-7u55，地址：&amp;lt;http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html&amp;gt;
+
+选择Accept License Agreement 后">
+<meta property="og:image" content="http://img.blog.csdn.net/20140430145901406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20140430160007265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20140430160545531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20140430161349421?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2017-01-12T01:35:42.292Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu 14.04 配置 Java SE jdk-7u55">
+<meta name="twitter:description" content="JDK  目前最新版为jdk-8u5，这次没有选择安装最新的jdk8，而是要安装jdk7的最高版jdk-7u55 。
+首先，去官网下载jdk-7u55，地址：&amp;lt;http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html&amp;gt;
+
+选择Accept License Agreement 后">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20140430145901406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/14/Ubuntu 14.04 配置 Java SE jdk-7u55/">
+  <time datetime="2016-05-14T11:19:00.000Z">
+    2016-05-14
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Ubuntu 14.04 配置 Java SE jdk-7u55</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>JDK  目前最新版为jdk-8u5，这次没有选择安装最新的jdk8，而是要安装jdk7的最高版jdk-7u55 。</p>
+<pre><code>首先，去官网下载jdk-7u55，地址：&lt;http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html&gt;
+</code></pre><p><img src="http://img.blog.csdn.net/20140430145901406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<p>选择Accept License Agreement 后，选择对应版本下载，Ubuntu 选择tar.gz的压缩包，64位选x64，32位选i586。</p>
+<p>下完后得到压缩包：jdk-7u55-linux-x64.tar.gz，解压再配置 下就可以使用了，不需要安装。我解压到家目录下，终端执行：tar -zxvf<br>jdk-7u55-linux-x64.tar.gz  -C ~/， -C 后是要解压到的目录。得到文件夹：jdk1.7.0_55</p>
+<p>接下来设置环境变量，终端执行：sudo gedit /etc/environment</p>
+<p><img src="http://img.blog.csdn.net/20140430160007265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
+<p>在已有的PATH变量后添加jdk的bin目录，注意用冒号与已有变量隔开</p>
+<p>再添加CALSSPATH和JAVA_HOME变量</p>
+<p>我的情况如下：</p>
+<p>PATH=”/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/tecn/jdk1.7.0_55/bin”<br>CLASSPATH=”/home/tecn/jdk1.7.0_55/lib:.”       注意后面有个点<br>JAVA_HOME=”/home/tecn/jdk1.7.0_55/“  </p>
+<p>设置好后，注销或重启使环境变量生效！</p>
+<p>查看是否生效，终端执行：<a href="http://lib.csdn.net/base/17" title="Java EE知识库" target="_blank" rel="external">Java</a> -version<br>，就可以看到版本就是刚配置的7u55 。</p>
+<p><img src="http://img.blog.csdn.net/20140430160545531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
+<p>到此就配置完成了，可以写个helloworld测试下。</p>
+<p><img src="http://img.blog.csdn.net/20140430161349421?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
+<p>已经装有openjdk启用官方jdk的方法：</p>
+<p>依次终端执行：</p>
+<p>sudo update-alternatives –install /usr/bin/java java<br>/home/tecn/jdk1.7.0_55/bin/java 445<br>sudo update-alternatives –install /usr/bin/javac javac<br>/home/tecn/jdk1.7.0_55/bin/javac 445<br>sudo update-alternatives –config java  </p>
+<p>将会提示，要维持当前值[*]请按回车键，或者输入选择的编号：</p>
+<p>输入优先级为 445 的那项的编号，回车即可。</p>
+<p>-——————————————————————————-</p>
+<p>转自：<a href="http://blog.csdn.net/tecn14/article/details/24797545" target="_blank" rel="external">http://blog.csdn.net/tecn14/article/details/24797545</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/14/Ubuntu 14.04 配置 Java SE jdk-7u55/" data-title="Ubuntu 14.04 配置 Java SE jdk-7u55" data-url="https://shijingjing07.github.io/2016/05/14/Ubuntu 14.04 配置 Java SE jdk-7u55/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

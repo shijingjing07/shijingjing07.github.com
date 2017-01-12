@@ -1,0 +1,1203 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+  <meta name="description" content="路过秋天">
+<meta property="og:type" content="website">
+<meta property="og:title" content="迪米特">
+<meta property="og:url" content="https://shijingjing07.github.io/page/10/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="路过秋天">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="迪米特">
+<meta name="twitter:description" content="路过秋天">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content">
+
+
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/31/C++类的构造函数详解/">
+  <time datetime="2016-05-30T23:30:00.000Z">
+    2016-05-31
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/31/C++类的构造函数详解/">C++类的构造函数详解</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.默认构造函数</strong><br>1) 当没有定义任何构造函数时，编译器会提供默认构造函数，可以直接使用。<br>2) 如果定义了带参数的构造函数，又需要使用默认构造函数，此时，必须显式定义无参构造函数，这和C#中有很大的不同。例如有一个蔬菜类Veg：<br>Veg(const char* name,int num,double price);//声明了带三个参数的构造函数<br>要初始化Veg对象，可使用<br>Veg veg(“tomato”,15,3.5);</p>
+<p>3) 定义了带参数的构造函数的同时，又需要使用Veg veg;若带参数的构造函数，参数全部用默认值，如：</p>
+<p>Veg(const char* name=”NONE”,int num=0,double price=0.0);<br>则可成功初始化对象，否则将报错，<br>若要使用默认构造函数，必须显式声明<br>Veg veg();//声明了默认构造函数</p>
+<p><strong>2.创建并初始化对象的几种方式</strong><br>1)Veg veg(“tomato”,15,3.5);<br>在栈中，创建一个名为veg的Veg对象，并调用构造函数初始化<br>2)Veg veg=Veg(“tomato”,15,3.5);<br>和方法一原理一样<br>3)Veg veg;<br>无参构造函数或参数全部有默认值的构造函数的初始化</p>
+<p>以上三种方式创建的对象，是放在栈中的，当作用域结束时，析构函数将被隐式调用，对象将被释放。</p>
+<p>4)Veg *p = new veg(“tomato”,15,3.5);<br>在堆中，创建一个Veg对象，并调用构造函数初始化，并返回指向该对象的指针p<br>关于new的详细介绍，可参考 <a href="http://www.cnblogs.com/shijingjing07/p/5519153.html" target="_blank" rel="external">C++<br>new操作符详解</a></p>
+<p>堆中创建的对象，在不需要使用时，要使用delete关键字，删除指针，此时析构函数会立即被隐式调用，指针指向的对象将被释放，<br>否则的话，将造成内存泄漏。</p>
+<p><strong>3.对象赋值</strong><br>Veg veg1=Veg(“tomato”,15,3.5);<br>Veg veg2 = veg2;<br>属于值传递，对象中每个数据成员的值都将复制到目标对象相应的数据成员。</p>
+<p><strong>4.关于只带一个参数的构造函数</strong></p>
+<p>只有一个惨的构造函数初始化时，可以将对象初始化为该参数，语法如下：<br>Classname object= value;</p>
+<p>编程时，我们使用了很多此种初始化方式，简洁明了，如：<br>int a(10)=&gt;int a = 10;<br>string a(“hello”)=&gt;string a= “hello”;</p>
+<p>然而，很多时候，此种初始化方式，是不对的。如：<br>针对构造函数Veg(const char<em> name);我们可以直接初始化为：<br>Veg veg = name;<br>显然，Veg对象并不是一个char</em>类型的字符串，那么如何避免误用此种初始化方式呢？<br>可在构造函数声明时，加上explicit关键字，如：explicit Veg(const char* name);<br>explicit关键字的详细介绍，可参考 <a href="http://www.cnblogs.com/shijingjing07/p/5525800.html" target="_blank" rel="external">C++ explicit关键字
+</a></p>
+<p>5.构造函数使用示例</p>
+<p>如下例所示，定义了一个蔬菜类Veg，main函数中演示了几种构造函数初始化方式。</p>
+<p>Veg.h</p>
+<pre><code>#pragma once
+#include&lt;iostream&gt;
+#include&lt;string&gt;
+class Veg
+{
+private:
+    std::string name;
+    int num;
+    double price;
+    double total;
+    void set_tot(){total = num*price;}
+public:
+    Veg();
+    Veg(const std::string &amp;name);
+    Veg(const std::string &amp;name,int num=0,double price = 0.0);
+    ~Veg();
+    void show();
+};
+</code></pre><p>Veg.cpp</p>
+<pre><code>#include &quot;Veg.h&quot;
+Veg::Veg()
+{
+    name=&quot;NONE&quot;;
+    num = 0;
+    price = 0.0;
+    total = 0.0;
+}
+Veg::Veg(const std::string &amp;name)
+{
+    this-&gt;name=name;
+}
+Veg::Veg(const std::string &amp;name,int num,double price)
+{
+    this-&gt;name = name;
+    this-&gt;num = num;
+    this-&gt;price  = price;
+    set_tot();
+}
+Veg::~Veg()
+{
+    std::cout&lt;&lt;&quot;~Veg()&quot;&lt;&lt;std::endl;
+}
+void Veg::show()
+{
+    std::cout&lt;&lt;&quot;name:&quot;&lt;&lt;name&lt;&lt;&quot; num:&quot;&lt;&lt;num&lt;&lt;&quot; price:&quot;&lt;&lt;price&lt;&lt;&quot; total:&quot;&lt;&lt;total&lt;&lt;std::endl;
+}
+</code></pre><p>useveg.cpp</p>
+<pre><code>#include &quot;Veg.h&quot;
+int main()
+{
+    Veg veg1;
+    Veg veg2(&quot;tomato&quot;,15,3.5);
+    Veg veg3=Veg(&quot;potato&quot;,8,2.0);
+    Veg *p=new Veg(&quot;tomato&quot;,15,3.5);
+    veg1.show();
+    veg2.show();
+    veg3.show();
+    veg2 = veg3;
+    veg2.show();
+    veg3.show();
+    delete p;
+    p=NULL;
+    return 0;
+}
+</code></pre><p>运行结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201605/300946-20160531152939571-1620287468.png" alt=""></p>
+<p>参考资料：《C++ Primer.Plus》 pp.352-363</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/30/C++异常详解/">
+  <time datetime="2016-05-30T01:41:00.000Z">
+    2016-05-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/30/C++异常详解/">C++异常详解</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.对异常的几种处理方式</strong><br>1)调用abort()<br>abort()函数的原型位于头文件cstlib中，其实现是向标准错误流发送abnormal program<br>termination（程序异常终止），然后终止程序。<br>示例如下:</p>
+<pre><code>#inclide&lt;iostream&gt;
+#inclide&lt;cstlib&gt;
+double hmean(double x,double y)
+{
+    if(x==-y)
+    {
+        std::cout&lt;&lt;&quot;arguments are not valid\n&quot;;
+        std::abort();
+    }
+    return 2*x*y/(x+y);
+}
+int main()
+{
+    double x,y,z;
+    while(std::cin&gt;&gt;x&gt;&gt;y)
+    {
+        z=hmean(x,y);
+        std::cout&lt;&lt;&quot;result is &quot;&lt;&lt;z&lt;&lt;std::endl;
+        std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+    }
+    return 0;
+}
+</code></pre><p>2)返回错误码<br>使用一个bool值来标记，运行结果是成功，还是失败。<br>示例如下：</p>
+<pre><code>#inclide&lt;iostream&gt;
+bool hmean(double x,double y,double &amp;z)
+{
+    if(x==-y)
+    {
+        return false;
+    }
+    z= 2*x*y/(x+y);
+    return true;
+}
+int main()
+{
+    double x,y,z;
+    while(std::cin&gt;&gt;x&gt;&gt;y)
+    {
+        if(hmean(x,y,z))
+        {
+            std::cout&lt;&lt;&quot;result is false!&quot;&lt;&lt;std::endl;
+        }
+        else{
+            std::cout&lt;&lt;&quot;result is true!&quot;&lt;&lt;std::endl;
+            std::cout&lt;&lt;&quot;result is &quot;&lt;&lt;z&lt;&lt;std::endl;
+        }
+        std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+    }
+    return 0;
+}
+</code></pre><p>3)使用全局变量errno<br>出现异常时可以将全局变量errno设值，需要注意的是，要确保没有其他的函数同时在使用这个全局变量</p>
+<p><strong>2.异常机制</strong><br>涉及try,catch,throw关键字<br>示例代码如下：</p>
+<pre><code>#inclide&lt;iostream&gt;
+double hmean(double x,double y)
+{
+    if(x==-y)
+    {
+        throw &quot;arguments are not valid&quot;;
+    }
+    return 2*x*y/(x+y);
+}
+int main()
+{
+    double x,y,z;
+    while(std::cin&gt;&gt;x&gt;&gt;y)
+    {
+        try
+        {
+            z = hmean(x,y);
+        }
+        catch(const char* s)
+        {
+            std::cout&lt;&lt;s&lt;&lt;std::endl;
+            std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+            continue;
+        }
+        std::cout&lt;&lt;&quot;result is &quot;&lt;&lt;z&lt;&lt;std::endl;
+        std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+    }
+    return 0;
+}
+</code></pre><p><strong>3.上面的示例中，我们抛出的是字符串，通常情况，我们会为每个可能出现的异常，定义一个异常类，当出现异常时，抛出该异常对象，catch块对该异常对象进行捕获。</strong><br>示例代码如下：</p>
+<pre><code>#inclide&lt;iostream&gt;
+class bad_hmean
+{
+private:
+    double x;
+    double y;
+public:
+    bad_hmean(int a=0,int b=0):x(a),y(b){}
+    void mesg();
+};
+inline void bad_hmean::mesg()
+{
+    std::cout&lt;&lt;&quot;arguments are not valid &quot;&lt;&lt;x&lt;&lt;&quot; &quot;&lt;&lt;y&lt;&lt;std::endl;
+}
+double hmean(double x,double y)
+{
+    if(x==-y)
+    {
+        throw bad_mean(x,y);
+    }
+    return 2*x*y/(x+y);
+}
+int main()
+{
+    double x,y,z;
+    while(std::cin&gt;&gt;x&gt;&gt;y)
+    {
+        try
+        {
+            z = hmean(x,y);
+        }
+        catch(bad_hmean &amp;hg)
+        {
+            hg.mesg();
+            std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+            continue;
+        }
+        std::cout&lt;&lt;&quot;result is &quot;&lt;&lt;z&lt;&lt;std::endl;
+        std::cout&lt;&lt;&quot;next loop &quot;&lt;&lt;std::endl;
+    }
+    return 0;
+}
+</code></pre><p><strong>4.异常规范</strong><br>我们看下面的两行代码<br>double hmean(int x,int y) throw(bad_thing)//可能抛出bad_thing异常<br>double hmean(int x,int y) throw()//不抛出异常<br>其中后面的throw()部分就是异常规范，指出该函数可能抛出的异常。<br>程序员来确定可能抛出的异常，这样并不好。<br>在C++11中，已经摒弃了该规范。</p>
+<p><strong>5.栈解退</strong></p>
+<p>栈解退是很重要的概念。为什么这么说呢，当抛出异常后，程序终止，或被catch块捕捉，我们必须要考虑内存的释放问题。</p>
+<p>我们先看一下，正常函数是如何处理内存释放的。<br>函数调用时，调用函数的指令的地址会放到栈中，函数的参数或局部变量也将被添加到栈中或堆中。<br>如果在其中又调用了函数，则执行同样的操作。<br>当函数结束以后，程序会跳到被调用时存储的地址处，栈顶的元素被释放，同时释放其自动变量。<br>如果自动变量时类对象，则类的析构函数将被调用。</p>
+<p>当函数出现异常时，程序也将不断释放栈，直到找到一个与该异常相对应的try块的返回地址。<br>随后，控制权将转到块尾的catch处理程序，而不是函数调用后面的第一条语句，这个过程称为栈解退。<br>和正常函数调用不同的是，函数返回将处理该函数放在栈中的对象，而函数异常则处理，try块和throw之间放在栈中的对象。<br>有了栈解退机制，引发异常后，也会释放调用中间函数时栈中的对象。</p>
+<p>我们看看下面的两个例子：</p>
+<pre><code>void test1()
+{
+    string mesg(&quot;hello&quot;);
+    if(false)
+        throw exception();
+    return;
+}
+
+void test2()
+{
+    double *ar = new double[n];
+    if(false)
+        throw exception();
+    delete [] ar;
+    return;
+}
+</code></pre><p>对于test1,函数异常后，会进行栈解退，string类析构函数会被调用，占用的内存将释放。<br>对于test2,栈解退时，将删除栈中变量ar，但ar指向的内存块未释放，并且不可访问，会造成内存泄漏的问题。此时要如何处理呢？<br>可以在引发异常的代码块中，捕获该异常，释放该内存块，然后重新引发异常。此时，内存块就被释放了。</p>
+<pre><code>void test2()
+{
+    double *ar = new double[n];
+    try
+    {
+        if(false)
+            throw exception();
+    }
+    catch(exception &amp;ex)
+    {
+        delete[] ar;
+        throw;
+    }
+    delete [] ar;
+    return;
+}
+</code></pre><p><strong>6.关于catch块</strong></p>
+<pre><code>try
+{}
+catch(exception &amp;ex)
+{}
+</code></pre><p>注意catch块中参数为引用类型。当throw异常向上抛出时，该异常对象会被释放，此时catch块接收的异常对象为原始异常对象的一个副本。<br>使用引用的目的是，基类引用可以执行派生类对象。若不使用引用，则只能调用基类的特性。</p>
+<p><strong>7.C++标准异常库</strong><br>标准异常类exception在头文件exception中定义，类含有一个名为what()的虚拟成员函数。从exception派生的类可以重新定义它。<br>C++库定义了很多基于exception的异常类型，此处不再详细介绍。</p>
+<p>参考资料：《C++ Primer.Plus》 pp.616-642</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/27/C++程序文件链接/">
+  <time datetime="2016-05-26T18:26:00.000Z">
+    2016-05-27
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/27/C++程序文件链接/">C++程序文件链接</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是转换单元</strong><br>程序中的每个.cpp文件和它包含的所有头文件称为一个转换单元。<br>编译器处理每个转换单元，生成二进制对象文件，用扩展名.obj来标识。<br>链接器将对象文件组合起来，生成一个可执行文件，用扩展名.exe来标识。</p>
+<p><strong>2.作用域</strong><br>使用{}来限定变量的作用域</p>
+<p>内部作用域可以定义一个和外部作用域相同的名称，此时，内部作用域中定义的名称，将隐藏外部作用域中的名称，</p>
+<p>若要访问外层作用域中的名称，可使用解析运算符::，解析运算符的介绍，可参考 <a href="http://www.cnblogs.com/shijingjing07/p/5531419.html" target="_blank" rel="external">C++范围解析运算符::的使用
+</a></p>
+<pre><code>int main()
+{
+const int limit =10;
+std::cout&lt;&lt;&quot;limit 1 is &quot;&lt;&lt;limit&lt;&lt;std::endl;
+{
+const int limit = 5;
+std::cout&lt;&lt;&quot;limit 2 is &quot;&lt;&lt;limit&lt;&lt;std::endl;
+std::cout&lt;&lt;&quot;limit 3 is &quot;&lt;&lt;::limit&lt;&lt;std::endl;
+}
+std::cout&lt;&lt;&quot;limit 4 is &quot;&lt;&lt;limit&lt;std::endl;
+}
+</code></pre><p>输出结果：<br>limit 1 is 10<br>limit 2 is 5<br>limit 3 is 10<br>limit 4 is 10</p>
+<p><strong>3.转换单元的全局名称属性linkage</strong><br>每个转换单元中的全局名称，都有一个属性linkage，该属性指明该全局名称可以在程序代码的什么地方使用。<br>内部链接属性：该名称只能在同一转换单元的任何地方访问。比如全局const变量。<br>外部链接属性：该名称除了在同一转换单元访问外，还可在其他的转换单元中访问。除了全局const变量，其他的全局名称都是外部链接属性的。</p>
+<p>局部名称没有链接属性。</p>
+<p><strong>4.什么是”一个定义”规则</strong><br>在所有的转换单元中，外部链接属性的全局名称，如变量、函数、类类型、枚举类型、模板都只能定义一次。<br>内联函数除外，内联函数的定义必须出现在调用该函数的每个转换单元中。</p>
+<p>内部链接属性的名称可以在多个转换单元中同时定义。</p>
+<p><strong>5.如何访问另一转换单元中定义的变量</strong><br>对于函数来说，如果函数的调用和定义不在同一个转换单元，编译器会把这个函数调用标记为外部的，让链接程序去处理它。</p>
+<p>对于变量来说，是不同的。必须使用extern关键字来声明该变量。表示该变量的定义在另一个转换单元中。</p>
+<p>示例代码如下：</p>
+<pre><code>myextern.cpp
+int limit = 15;
+
+mymain.cpp
+int main()
+{
+    extern int limit;
+    std::cout&lt;&lt;&quot;Extern limit is &quot;&lt;&lt;limit&lt;&lt;std::endl;
+    return 0;
+}
+</code></pre><p>由链接属性linkage的介绍，我们知道const变量是内部链接属性的，只能在转换单元内部访问。</p>
+<p>而定义一个const变量，希望其他的转换单元都可以使用的情况是常见的，如圆周率PI，const double pi=3.14159265，</p>
+<p>那么，怎么才能让const变量也具有外部链接属性呢。<br>我们只需要在定义const变量时，也加上extern关键字就可以了。</p>
+<p>示例代码如下：</p>
+<pre><code>myextern.cpp
+extern const double pi=3.14159265；
+
+mymain.cpp
+int main()
+{
+    extern const double pi;
+    std::cout&lt;&lt;&quot;Extern pi is &quot;&lt;&lt;pi&lt;&lt;std::endl;
+    return 0;
+}
+</code></pre><p>另外需要说明的是，extern变量声明的位置，决定了该外部变量的作用域。</p>
+<p>参考资料：《C++入门经典 第三版》 pp.309-318</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/26/C程序的内存布局/">
+  <time datetime="2016-05-25T19:16:00.000Z">
+    2016-05-26
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/26/C程序的内存布局/">C程序的内存布局</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong> 1.代码段(code或text)：</strong></p>
+<p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读。 某些架构也允许代码段为可写，即允许修改程序。<br>在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等，但一般都是放在只读数据段中。</p>
+<p><strong>2.数据段(data segment)：</strong><br>通常是指用来存放程序中已初始化的全局变量和静态变量的一块内存区域。<br>数据段属于静态内存分配，可以分为只读数据段和读写数据段。<br>字符串常量等，但一般都是放在只读数据段中。</p>
+<p><strong>3.BSS段(bss)：</strong><br>通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。<br>BSS节不包含任何数据，只是简单的维护开始和结束的地址，即总大小，以便内存区能在运行时分配并被有效地清零。<br>BSS节在应用程序的二进制映象文件中并不存在，即不占用磁盘空间而只在运行的时候占用内存空间，<br>所以如果全局变量和静态变量未初始化那么其可执行文件要小很多。BSS段属于静态内存分配。<br>这里注意一个问题：一般的书上都会说全局变量和静态变量是会自动初始化的，那么哪来的未初始化的变量呢？<br>变量的初始化可以分为显示初始化和隐式初始化，全局变量和静态变量如果程序员自己不初始化的话的确也会被初始化，<br>那就是不管什么类型都初始化为0，这种没有显示初始化的就是我们这里所说的未初始化。<br>既然都是0那么就没必要把每个0都存储起来，从而节省磁盘空间，这是BSS的主要作用。</p>
+<p><strong>4.堆（heap）：</strong><br>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。<br>当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；<br>当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
+<p><strong>5.栈(stack)：</strong><br>栈又称堆栈，<br>是用户存放程序临时创建的局部变量，也就是说我们函数括弧”{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。<br>除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。<br>由于栈的后进先出特点，所以栈特别方便用来保存/恢复调用现场。<br>从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
+<p>简单示例如下：</p>
+<pre><code>const char ro[ ] = {&quot;this is read onlydata&quot;};                  //只读数据区   
+static char rw_1[ ] ={&quot;this is globalread write data&quot;};        //已初始化读写数据段   
+char BSS_1[ 100];                                              //未初始化数据段   
+const char *ptrconst =&quot;constantdata&quot;;                          //字符串放在只读取数据段   
+int main()   
+{   
+      short b;                                                 //在栈上，占用2个字节   
+      char a[100];                                             //在栈上开辟100个字节，工的值是其首地址   
+      char s[ ]=&quot;abcdefg&quot;;                                     //s在栈上，占用4个字节   
+                                                               //&quot;abcdefg&quot;本身放置在只读数据存储区，占8个字节   
+      char *p1;                                                //p1在栈上，占用4个字节                 
+      char *p2=&quot;123456&quot;;                                       //p2 在栈上，p2指向的内容不能改，   
+                                                               //&quot;123456&quot;在只读数据区        
+
+      static char rw_2[ ]={&quot;this is local read write data&quot;};   //局部已初始化读写数据段   
+      static char BSS_2[100];                                  //局部未初始化数据段   
+      static int c = 0;                                        //全局（静态）初始化区   
+       p1=(char *)malloc(10 * sizeof(char ) );                 //分配内存区域在堆区   
+       strcpy(p1,&quot;xxxx&quot;);                                      //&quot;XXXX&quot;放在只读数据区，占5个字节   
+      free(p1);                                                //使用free释放p1所指向的内存   
+
+  return 0;   
+}  
+</code></pre><p> 我们再看一下以下的代码：</p>
+<pre><code>#include &lt;stdio.h&gt;
+const int a = 10; ////全部常量a
+int main()
+{
+    const int b = 20; //局部常量b
+    int* pa = (int*)&amp;a;//报错，因为全部常量放在只读数据段
+    int* pb = (int*)&amp;b;//修改成功，因为局部常量放在栈上
+    *pa = 30;
+    *pb = 30;
+    return 0;
+}
+</code></pre>
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/26/ARM中LDR伪指令与LDR加载指令/">
+  <time datetime="2016-05-25T17:35:00.000Z">
+    2016-05-26
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/26/ARM中LDR伪指令与LDR加载指令/">ARM中LDR伪指令与LDR加载指令</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>ARM指令集中，LDR通常都是作加载指令的，但是它也可以作伪指令。</p>
+<p>LDR伪指令的形式是”LDR Rn,=expr”。下面举一个例子来说明它的用法。</p>
+<p>COUNT EQU       0x40003100</p>
+<p>……</p>
+<p>LDR       R1,=COUNT</p>
+<p>MOV      R0,#0</p>
+<p>STR       R0,[R1]</p>
+<p>COUNT是我们定义的一个变量，地址为0x40003100。这中定义方法在汇编语言中是很常见的，如果使用过单片机的话，应该都熟悉这种用法。</p>
+<p>LDR       R1,=COUNT是将COUNT这个变量的地址，也就是0x40003100放到R1中。</p>
+<p>MOV      R0,#0是将立即数0放到R0中。最后一句STR<br>R0,[R1]是一个典型的存储指令，将R0中的值放到以R1中的值为地址的存储单元去。实际就是将0放到地址为0x40003100的存储单元中去。可<br>见这三条指令是为了完成对变量COUNT赋值。用三条指令来完成对一个变量的赋值，看起来有点不太舒服。这可能跟ARM的采用RISC有关。</p>
+<p>下面还有一个例子</p>
+<p>；将COUNT的值赋给R0</p>
+<p>LDR       R1,=COUNT</p>
+<p>LDR       R0,[R1]</p>
+<p>LDR<br>R1,=COUNT这条伪指令，是怎样完成将COUNT的地址赋给R1，有兴趣的可以看它编译后的结果。这条指令实际上会编译成一条LDR指令和一条DCD伪指令。</p>
+<p>LDR 的两种用法</p>
+<p>1）LDR pc, =MyHandleIRQ 表示将MyHandleIRQ符号放入pc寄存器中</p>
+<p>2）LDR PC，MyHandleIRQ 表示将读取存储器中MyHandleIRQ符号所表示的地址中的值，及需要多读一次存储器。</p>
+<p>在代码中：</p>
+<p>start:<br>        ldr pc,=MyHandleReset   @jump to HandleReset<br>        ldr pc,=MyHandleUndef   @jump to HandleUndef<br>        ldr pc,=MyHandleSWI     @jump to HandleSWI<br>        ldr pc,=MyHandleIabort  @jump to HandleIabort<br>        ldr pc,=MyHandleDabort  @jump to HandleDabort<br>        nop<br>        ldr pc,=MyHandleIRQ     @jump to HandleIRQ             &lt;=之前出错的一行<br>        ldr pc,=MyHandleFIQ     @jump to HandleFIQ</p>
+<p>@MyHandleIRQ:   .word OS_CPU_IRQ_ISR<br>MyHandleIRQ:<br>        sub lr, lr, #4          @ to calculate the return address<br>        stmdb sp!, {r0-r12,lr}<br>        ldr lr, =int_return     @ restore the return address<br>        ldr pc, =int_handle     @ call for the interrupt handler</p>
+<p>在”之前出错的一行”处，如果改成”ldr pc,MyHandleIRQ”当中断来临时，无法进行中断处理。</p>
+<p>另一种情况是正确的，注意体会：</p>
+<p>start:<br>        ldr pc,=MyHandleReset   @jump to HandleReset<br>        ldr pc,=MyHandleUndef   @jump to HandleUndef<br>        ldr pc,=MyHandleSWI     @jump to HandleSWI<br>        ldr pc,=MyHandleIabort  @jump to HandleIabort<br>        ldr pc,=MyHandleDabort  @jump to HandleDabort<br>        nop<br>        ldr pc,MyHandleIRQ     @jump to HandleIRQ             &lt;=之前出错的一行<br>        ldr pc,=MyHandleFIQ     @jump to HandleFIQ</p>
+<p>MyHandleIRQ:   .word OS_CPU_IRQ_ISR<br>@MyHandleIRQ:<br>@        sub lr, lr, #4          @ to calculate the return address<br>@        stmdb sp!, {r0-r12,lr}<br>@        ldr lr, =int_return     @ restore the return address<br>@        ldr pc, =int_handle     @ call for the interrupt handler</p>
+<p>因为当中断来临时，还需要去MyHandleIRQ处把OS_CPU_IRQ_ISR取出，即多取一次存储器。</p>
+<h1 id="这篇文章针对用法1进行了详细的说明"><a href="#这篇文章针对用法1进行了详细的说明" class="headerlink" title="这篇文章针对用法1进行了详细的说明"></a>这篇文章针对用法1进行了详细的说明</h1><h1 id="说说ARM汇编的LDR伪指令"><a href="#说说ARM汇编的LDR伪指令" class="headerlink" title="说说ARM汇编的LDR伪指令"></a>说说ARM汇编的LDR伪指令</h1><p><strong><a href="http://my.chinaunix.net/link.php?url=http://blog.csdn.net%2Faxx1611%2Farchive%2F2008%2F04%2F27%2F2335410.aspx" target="_blank" rel="external">http://blog.csdn.net/axx1611/archive/2008/04/27/2335410.aspx</a></strong></p>
+<p>转自：<a href="http://www.cnblogs.com/hnrainll/archive/2011/06/14/2080241.html" target="_blank" rel="external">http://www.cnblogs.com/hnrainll/archive/2011/06/14/2080241.html</a></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/25/每天一个linux命令(12)：more命令/">
+  <time datetime="2016-05-25T00:40:00.000Z">
+    2016-05-25
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/25/每天一个linux命令(12)：more命令/">每天一个linux命令(12)：more命令</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>more命令，功能类似 cat ，cat命令是整个文件的内容从上到下显示在屏幕上。<br>more会以一页一页的显示方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b<br>键就会往回（back）一页显示，而且还有搜寻字串的功能 。more命令从前向后读取文件，因此在启动时就加载整个文件。</p>
+<p><strong>1．命令格式：</strong></p>
+<p>more [-dlfpcsu ] [-num ] [+/ pattern] [+ linenum] [file … ]</p>
+<p><strong>2．命令功能：</strong></p>
+<p>more命令和cat的功能一样都是查看文件里的内容，但有所不同的是more可以按页来查看文件的内容，还支持直接跳转行等功能。</p>
+<p><strong>3．命令参数：</strong></p>
+<p>+n      从笫n行开始显示</p>
+<p>-n       定义屏幕大小为n行</p>
+<p>+/pattern 在每个档案显示前搜寻该字串（pattern），然后从该字串前两行之后开始显示  </p>
+<p>-c       从顶部清屏，然后显示</p>
+<p>-d       提示”Press space to continue，’q’ to quit（按空格键继续，按q键退出）”，禁用响铃功能</p>
+<p>-l        忽略Ctrl+l（换页）字符</p>
+<p>-p       通过清除窗口而不是滚屏来对文件进行换页，与-c选项相似</p>
+<p>-s       把连续的多个空行显示为一行</p>
+<p>-u       把文件内容中的下画线去掉</p>
+<p><strong>4．常用操作命令：</strong></p>
+<p>Enter    向下n行，需要定义。默认为1行</p>
+<p>Ctrl+F   向下滚动一屏</p>
+<p>空格键  向下滚动一屏</p>
+<p>Ctrl+B  返回上一屏</p>
+<p>=       输出当前行的行号</p>
+<p>：f     输出文件名和当前行的行号</p>
+<p>V      调用vi编辑器</p>
+<p>!命令   调用Shell，并执行命令</p>
+<p>q       退出more</p>
+<p><strong>5．命令实例：</strong></p>
+<p>实例1：显示文件中从第3行起的内容</p>
+<p>命令：</p>
+<p>more +3 log2012.log</p>
+<p>输出：</p>
+<p>[root@localhost test]# cat log2012.log</p>
+<p>2012-01</p>
+<p>2012-02</p>
+<p>2012-03</p>
+<p>2012-04-day1</p>
+<p>2012-04-day2</p>
+<p>2012-04-day3</p>
+<p>======[root@localhost test]# more +3 log2012.log</p>
+<p>2012-03</p>
+<p>2012-04-day1</p>
+<p>2012-04-day2</p>
+<p>2012-04-day3</p>
+<p>======[root@localhost test]#</p>
+<p>实例2：从文件中查找第一个出现”day3”字符串的行，并从该处前两行开始显示输出</p>
+<p>命令：</p>
+<p> more +/day3 log2012.log</p>
+<p>输出：</p>
+<p>[root@localhost test]# more +/day3 log2012.log</p>
+<p>…skipping</p>
+<p>2012-04-day1</p>
+<p>2012-04-day2</p>
+<p>2012-04-day3</p>
+<p>2012-05</p>
+<p>2012-05-day1</p>
+<p>======[root@localhost test]#</p>
+<p>实例3：设定每屏显示行数</p>
+<p>命令：</p>
+<p>more -5 log2012.log</p>
+<p>输出：</p>
+<p>[root@localhost test]# more -5 log2012.log</p>
+<p>2012-01</p>
+<p>2012-02</p>
+<p>2012-03</p>
+<p>2012-04-day1</p>
+<p>2012-04-day2</p>
+<p>说明：</p>
+<p>当前屏展示的内容占文件总行数的比例，按 Ctrl+F 或者 空格键 将会显示下一屏5条内容，百分比也会跟着变化。</p>
+<p>实例4：列一个目录下的文件，由于内容太多，我们应该学会用more来分页显示。这得和管道 | 结合起来</p>
+<p>命令：</p>
+<p>ls -l  | more -5</p>
+<p>输出：</p>
+<p>[root@localhost test]#  ls -l  | more -5</p>
+<p>总计 36</p>
+<p>-rw-r–r– 1 root root  308 11-01 16:49 log2012.log</p>
+<p>-rw-r–r– 1 root root   33 10-28 16:54 log2013.log</p>
+<p>-rw-r–r– 1 root root  127 10-28 16:51 log2014.log</p>
+<p>lrwxrwxrwx 1 root root    7 10-28 15:18 log_link.log -&gt; log.log</p>
+<p>-rw-r–r– 1 root root   25 10-28 17:02 log.log</p>
+<p>-rw-r–r– 1 root root   37 10-28 17:07 log.txt</p>
+<p>drwxr-xr-x 6 root root 4096 10-27 01:58 scf</p>
+<p>drwxrwxrwx 2 root root 4096 10-28 14:47 test3</p>
+<p>drwxrwxrwx 2 root root 4096 10-28 14:47 test4</p>
+<p>说明：</p>
+<p>每页显示5个文件信息，按 Ctrl+F 或者 空格键 将会显示下5条文件信息。</p>
+<p>转自：<a href="http://www.cnblogs.com/peida/archive/2012/11/02/2750588.html" target="_blank" rel="external">http://www.cnblogs.com/peida/archive/2012/11/02/2750588.html</a></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/25/C++ explicit关键字/">
+  <time datetime="2016-05-24T17:13:00.000Z">
+    2016-05-25
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/25/C++ explicit关键字/">C++ explicit关键字</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>按照默认规定，只有一个参数的构造函数也定义了一个隐式转换，将该构造函数对应数据类型的数据转换为该类对象，如下面所示：</strong></p>
+<p>class String {</p>
+<p>String ( const char* p ); // 用C风格的字符串p作为初始化值</p>
+<p>//…</p>
+<p>}</p>
+<p>String s1 = “hello”; //OK 隐式转换，等价于String s1 = String（”hello”）;</p>
+<p><strong>但是有的时候可能会不需要这种隐式转换，如下：</strong></p>
+<p>class String {</p>
+<pre><code>String ( int n ); //本意是预先分配n个字节给字符串
+</code></pre><p>String ( const char* p ); // 用C风格的字符串p作为初始化值</p>
+<p>//…</p>
+<p>}</p>
+<p>下面两种写法比较正常：</p>
+<p>String s2 ( 10 );   //OK 分配10个字节的空字符串</p>
+<p>String s3 = String ( 10 ); //OK 分配10个字节的空字符串</p>
+<p>下面两种写法就比较疑惑了：</p>
+<p>String s4 = 10; //编译通过，也是分配10个字节的空字符串</p>
+<p>String s5 = ‘a’; //编译通过，分配int（’a’）个字节的空字符串</p>
+<p>s4 和s5 分别把一个int型和char型，隐式转换成了分配若干字节的空字符串，容易令人误解。</p>
+<p>为了避免这种错误的发生，我们可以声明显示的转换，使用<strong>explicit</strong> 关键字：</p>
+<p>class String {</p>
+<pre><code>**explicit** String ( int n ); //本意是预先分配n个字节给字符串
+</code></pre><p>String ( const char* p ); // 用C风格的字符串p作为初始化值</p>
+<p>//…</p>
+<p>}</p>
+<p>加上<strong>explicit**</strong>，**就抑制了String ( int n )的隐式转换，</p>
+<p>下面两种写法仍然正确：</p>
+<p>String s2 ( 10 );   //OK 分配10个字节的空字符串</p>
+<p>String s3 = String ( 10 ); //OK 分配10个字节的空字符串</p>
+<p>下面两种写法就不允许了：</p>
+<p>String s4 = 10; //编译不通过，不允许隐式的转换</p>
+<p>String s5 = ‘a’; //编译不通过，不允许隐式的转换</p>
+<p>因此，某些时候，<strong>explicit</strong> 可以有效得防止构造函数的隐式转换带来的错误或者误解  </p>
+<p>-———————————————————<br>explicit   只对构造函数起作用，用来抑制隐式转换。如：<br>  class   A   {<br>          A(int   a);<br>  };<br>  int   Function(A   a);  </p>
+<p>  当调用   Function(2)   的时候，2   会隐式转换为   A   类型。这种情况常常不是程序员想要的结果，所以，要避免之，就可以这样写：  </p>
+<p>  class   A   {<br>          explicit   A(int   a);<br>  };<br>  int   Function(A   a);  </p>
+<p>  这样，当调用   Function(2)   的时候，编译器会给出错误信息（除非   Function   有个以   int<br>为参数的重载形式），这就避免了在程序员毫不知情的情况下出现错误。  </p>
+<p>总结：explicit   只对构造函数起作用，用来抑制隐式转换。  </p>
+<p>参考：<br><a href="http://blog.csdn.net/smilelance/archive/2007/03/14/1528737.aspx" target="_blank" rel="external">http://blog.csdn.net/smilelance/archive/2007/03/14/1528737.aspx</a><br><a href="http://topic.csdn.net/t/20040509/15/3046021.html" target="_blank" rel="external">http://topic.csdn.net/t/20040509/15/3046021.html</a></p>
+<p>转自：<a href="http://www.cnblogs.com/cutepig/archive/2009/01/14/1375917.html" target="_blank" rel="external">http://www.cnblogs.com/cutepig/archive/2009/01/14/1375917.html</a></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/24/C++内联函数详解/">
+  <time datetime="2016-05-23T22:04:00.000Z">
+    2016-05-24
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/24/C++内联函数详解/">C++内联函数详解</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.函数调用原理</strong></p>
+<p><em>“编译过程的最终产品是可执行程序–<br>由一组机器语言指令组成。运行程序时，操作系统将这些指令载入计算机内存中，因此每条指令都有特定的内存地址。计算机随后将逐步执行这些指令。有时（如有循环和分支语句时），将跳过一些指令，向前或向后跳到特定地址。常规函数调用也使程序跳到另一个地址（函数的地址），并在函数结束时返回。下面更详细地介绍这一过程的典型实现。执行到函数调用指令时，程序将在函数调用后立即存储该指令的内存地址，并将函数参数复制到堆栈（为此保留的内存块），跳到标记函数起点的内存单元，执行函数代码（也许还需将返回值放入寄存器中），然后跳回到地址被保存的指令处（这与阅读文章时停下来看脚注，并在阅读完脚注后返回到以前阅读的地方类似）。来回跳跃并记录跳跃位置意味着以前使用函数时，需要一定的开销。”</em></p>
+<p><strong>2.内联函数</strong><br>内联函数提供了另一种选择。编译器将使用相应的函数代码替换函数调用。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。</p>
+<p><strong>3.内联函数的使用</strong><br>在函数声明前加上关键字inline;<br>在函数定义前加上关键字inline。<br>示例如下：</p>
+<pre><code>#include&lt;iostream&gt;
+inline double square(double x){return x*x;}
+int main()
+{
+    using namespace std;
+    double a,b;
+    double c = 13.0;
+    a = square(5.0);
+    b = square(4.5+7.5);
+    cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;&quot;,b=&quot;&lt;&lt;b&lt;&lt;endl;
+    cout&lt;&lt;&quot;c=&quot;&lt;&lt;c&lt;&lt;endl;
+    cout&lt;&lt;&quot;c squared=&quot;&lt;&lt;square(c++)&lt;&lt;endl;
+    cout&lt;&lt;&quot;now c=&quot;&lt;&lt;c&lt;&lt;endl;
+    return 0;
+}
+</code></pre><p>程序输出结果如下：<br>a=25,b=144<br>c=13<br>c square=169<br>now c=14</p>
+<p><strong>4.内联函数与宏定义的区别</strong><br>C语言使用预处理器语句#define来提供宏。如下例所示：  </p>
+<p>#define SQUARE(X) X<em>X<br>宏定义时通过文本替换开实现的–X是参数的符号标记。<br>a = square(5.0);-&gt;a=5.0</em>5.0;<br>b = square(4.5+7.5);-&gt;b=4.5+7.5<em>4.5+7.5<br>d = square(c++);-&gt;d=c++</em>c++<br>可以看出，对于b，需要使用括号才能正常运算。  </p>
+<p>#define SQUARE(X) ((X)*(X))<br>对于c,却仍递增了两次。<br>因此，宏定义和内联函数存在本质的区别，转换的时候应考虑是否转换后功能是否正常。</p>
+<p><strong>5.什么时候使用内联函数</strong><br>如果执行函数代码的时间比处理函数调用机制的时间长，则节省的时间占比很小。若代码执行时间很短，则内联函数就可以节省函数调用的时间。</p>
+<p>参考资料：《C++ Primer.Plus》 pp.253-255</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/24/C++友元详解/">
+  <time datetime="2016-05-23T19:10:00.000Z">
+    2016-05-24
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/24/C++友元详解/">C++友元详解</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是友元</strong><br>在一个类A中，将类B声明为友元类，则类B可以访问类A的私有成员和保护成员。另外，也可以将函数声明为友元函数。</p>
+<p><strong>2.什么时候用到友元</strong><br>若不同的类之间某些共享数据成员，可以使用友元，简化类的设计。</p>
+<p><strong>3.友元类</strong><br>友元类的声明：friend class 类名<br>示例如下：<br>对于电视和遥控器来说，都共享频道数据成员和开关操作，这时可以将遥控器声明为电视的友元类，则遥控器可以直接访问电视的数据成员,且一个遥控器可以控制多台电视，这则例子很好的体现了友元的特点。</p>
+<p>tv.h</p>
+<pre><code>#ifndef TV_H_
+#define TV_H_
+class Tv
+{
+public :
+    friend class Remote;
+    enum State{off,on};
+
+    Tv(int s=off,int mc=125):state(s),maxchannel(mc),channel(2){}
+
+    void onoff(){state=(state==on)?off:on;}
+    void chanup();
+    void chandown();
+    void settings() const;
+private:
+    int state;
+    int maxchannel;
+    int channel;
+};
+class Remote{
+public:
+    Remote(){};
+    void onoff(Tv &amp;t){t.onoff();};
+    void chanup(Tv &amp;t){t.chanup();};
+    void chandown(Tv &amp;t){t.chandown();};
+    void set_chan(Tv &amp;t,int c){t.channel=c;};
+};
+</code></pre><p>tv.cpp</p>
+<pre><code>#include&lt;iostream&gt;
+#include &quot;tv.h&quot;
+void Tv::chanup()
+{
+    if(channel&lt;maxchannel){
+        channel++;
+    }
+    else{
+        channel = 1;
+    }
+}
+void Tv::chandown()
+{
+    if(channel&gt;1){
+        channel--;
+    }
+    else{
+        channel = maxchannel;
+    }
+}
+void Tv::settings() const
+{
+    using std::cout;
+    using std::endl;
+    cout&lt;&lt;&quot;Tv is &quot;&lt;&lt;(state==on?&quot;on&quot;:&quot;off&quot;)&lt;&lt;endl;
+    if(state==on)
+    {
+        cout&lt;&lt;&quot;channel:&quot;&lt;&lt;channel&lt;&lt;endl;    
+    }
+}
+</code></pre><p>use_tv.cpp 可使用同一个遥控器控制多台不同的电视</p>
+<pre><code>#include&lt;iostream&gt;
+#include &quot;tv.h&quot;
+int main()
+{
+    using std::cout;
+    using std::endl;
+    Tv s42;
+    cout&lt;&lt;&quot;Initing Tv s42......&quot;&lt;&lt;endl;
+    s42.settings();
+    s42.onoff();
+    s42.chanup();
+    cout&lt;&lt;&quot;adjusted Tv s42.....&quot;&lt;&lt;endl;
+    s42.settings();
+
+    Remote control;
+    control.set_chan(s42,10);
+    control.volup(s42);
+    cout&lt;&lt;&quot;settings after using remote......&quot;&lt;&lt;endl;
+    s42.settings();
+    getchar();
+    return 0;
+}
+</code></pre><p>示例可以看出，若不使用友元，则必须将Tv类的私有部分设置为共有的，或者创建一个大型类来包含电视和遥控器。这种解决方法也无法反应，一个遥控器可以用于多台电视。</p>
+<p><strong>4.友元函数</strong><br>从上例可以看出，Remote类只有set_chan方法使用到了Tv类的私有成员，因此我们可以让Remote::set_chan()成为Tv类的友元函数，而不必让整个类成为友元。</p>
+<p>tvfm.h</p>
+<pre><code>#ifndef TV_H_
+#define TV_H_
+class Tv;
+class Remote{
+public :
+    enum State{off,on};
+private:
+    int mode;
+public:
+    Remote(){};
+    void onoff(Tv &amp;t);
+    void chanup(Tv &amp;t);
+    void chandown(Tv &amp;t);
+    void set_chan(Tv &amp;t,int c);
+};
+class Tv
+{
+public :
+    friend void Remote::set_chan(Tv &amp;t,int c);
+    enum State{off,on};
+
+    Tv(int s=off,int mc=125):state(s),maxchannel(mc),channel(2){}
+
+    void onoff(){state=(state==on)?off:on;}
+    void chanup();
+    void chandown();
+    void settings() const;
+private:
+    int state;
+    int maxchannel;
+    int channel;
+};
+
+inline void Remote::onoff(Tv &amp;t){t.onoff();}
+inline void Remote::chanup(Tv &amp;t){t.chanup();}
+inline void Remote::chandown(Tv &amp;t){t.chandown();}
+inline void Remote::set_chan(Tv &amp;t,int c){t.channel=c;}
+#endif
+</code></pre><p><strong>5.共同的友元</strong><br>多个类需要访问同一个函数，则可以在这些类中将这个函数声明为友元函数。例如：有一个计数器函数counter,两个类A和B同时调用这个函数，则可以在类A和B中将函数counter声明为友元函数。</p>
+<pre><code>void counter()
+{
+    //....
+}
+class A
+{
+    friend int counter();
+}
+class B
+{
+    friend int counter();
+}
+</code></pre><p><strong>6.使用友元类时注意：</strong><br>1) 友元关系不能被继承。<br>2)友元关系是单向的，不具有交换性。若类B是类A的友元，类A不一定是类B的友元。<br>3) 友元关系不具有传递性。若类B是类A的友元，类C是B的友元，类C不一定是类A的友元</p>
+<p>参考资料：《C++ Primer.Plus》 pp.602-610</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/23/C++ new操作符详解/">
+  <time datetime="2016-05-22T18:58:00.000Z">
+    2016-05-23
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/05/23/C++ new操作符详解/">C++ new操作符详解</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>一.new操作符的概念</p>
+<p>我们通常讲的new是指的是new operator，其实还有另外两个概念，operator new 和 placement new。</p>
+<p>1、new operator  </p>
+<p>我们在使用new operator的时候，实际上是执行了三个步骤:</p>
+<p>1）调用operator new分配内存 ；2）调用构造函数生成类对象；3）返回相应指针。</p>
+<p>2、operator new</p>
+<p>所以说operator new做的事情是new operator的一部分。</p>
+<p>operator new的原型是</p>
+<p>Void* operator new(size_t size);</p>
+<p>参数size指定待分配的内存大小，函数内部调用malloc初始化内存，返回指向这个内存的指针。</p>
+<p>你可以重载这个函数(注意是重载operator new，而不能重载new operator)。operator<br>new默认情况下首先调用分配内存的代码，尝试得到一段堆上的空间，如果成功就返回，如果失败，则转而去调用一个new_hander(异常处理函数)，若没有定义new_hander，则抛出异常，否则执行new_hander，然后继续重复前面过程。你可以在重载的时候加上额外的参数，但是第一个参数类型必须是size_t.例如：</p>
+<pre><code>class A
+{
+public:
+   void* operator new(size_t size)
+   {
+       printf(&quot;operator new calledn&quot;);
+       return ::operator new(size);
+   }
+};
+A* a = new A();
+</code></pre><p>这里通过::operator new调用了原有的全局的new，实现了在分配内存之前输出一句话。全局的operator<br>new也是可以重载的，但这样一来就不能再递归的使用new来分配内存，而只能使用malloc了：</p>
+<pre><code>void* operator new(size_t size)
+{
+   printf(&quot;global newn&quot;);
+   return malloc(size);
+}
+</code></pre><p>相应的，delete也有delete operator和operator delete之分，后者也是可以重载的。并且，如果重载了operator<br>new，就应该也相应的重载operator delete，这是良好的编程习惯。</p>
+<p>3、placement new</p>
+<p>placement new是用来实现定位构造的，因此可以实现new operator三步操作中的第二步。</p>
+<p>其实它也只是operator<br>new的一个重载的版本，只是我们很少用到它。如果你想在已经分配的内存中创建一个对象，使用new时行不通的。也就是说placement<br>new允许你在一个已经分配好的内存中（栈或者堆中）构造一个新的对象。原型中void*p实际上就是指向一个已经分配好的内存缓冲区的的首地址。</p>
+<p>我 们知道使用new操作符分配内存需要在堆中查找足够大的剩余空间，这个操作速度是很慢的，而且有可能出现无法分配内存的异常（空间不够）。 placement<br>new就可以解决这个问题。我们构造对象都是在一个预先准备好了的内存缓冲区中进行，不需要查找内存，内存分配的时间是常数；而且不会出现在程序运行中途<br>出现内存不足的异常。所以，placement new非常适合那些对时间要求比较高，长时间运行不希望被打断的应用程序。</p>
+<p>使用方法如下：<br>1. 缓冲区提前分配<br>可以使用堆的空间，也可以使用栈的空间，所以分配方式有如下两种：</p>
+<pre><code>class MyClass {…};
+char *buf=new char[N*sizeof(MyClass)+sizeof(int)];或者char buf[N*sizeof(MyClass)+sizeof(int)];
+</code></pre><p>2. 对象的构造</p>
+<pre><code>MyClass * pClass=new(buf) MyClass;
+</code></pre><p>3. 对象的销毁<br>一旦这个对象使用完毕，你必须显式的调用类的析构函数进行销毁对象。但此时内存空间不会被释放，以便其他的对象的构造。</p>
+<pre><code>pClass-&gt;~MyClass();
+</code></pre><p>4. 内存的释放<br>如果缓冲区在堆中，那么调用delete[] buf;进行内存的释放；如果在栈中，那么在其作用域内有效，跳出作用域，内存自动释放。</p>
+<p>注意：</p>
+<pre><code>* 在C++标准中，对于placement operator new []有如下的说明： placement operator new[] needs implementation-defined amount of additional storage to save a size of array. 所以我们必须申请比原始对象大小多出sizeof(int)个字节来存放对象的个数，或者说数组的大小。
+* 使用方法第二步中的new才是placement new，其实是没有申请内存的，只是调用了构造函数，返回一个指向已经分配好的内存的一个指针，所以对象销毁的时候不需要调用delete释放空间，但必须调用析构函数销毁对象。
+</code></pre><p>placement new 是重载operator new 的一个标准、全局的版本，它不能够被自定义的版本代替（不像普通版本的operator new 和<br>operator delete能够被替换）。<br>void <em>operator new( size_t, void </em>p ) throw()     { return p; }<br>placement new的执行忽略了size_t参数，只使用第二个参数。其结果是允许用户把一个对象放到一个特定的地方，达到调用构造函数的效果。<br>和其他普通的new不同的是，它在括号里多了另外一个参数。比如：<br>Widget * p = new Widget; - - - - - - - - - //ordinary new<br>pi = new (ptr) int; pi = new (ptr) int;     //placement new  </p>
+<p>括号里的参数ptr是一个指针，它指向一个内存缓冲器，placement new将在这个缓冲器上分配一个对象。Placement<br>new的返回值是这个被构造对象的地址(比如括号中的传递参数)。placement<br>new主要适用于：在对时间要求非常高的应用程序中，因为这些程序分配的时间是确定的；长时间运行而不被打断的程序；</p>
+<p>三、处理内存分配异常</p>
+<p>正如前面所说，operator<br>new的默认行为是请求分配内存，如果成功就返回，如果失败，则转而去调用一个new_hander(异常处理函数)，若没有定义new_hander，则抛出异常，否则执行new_hander，然后继续重复前面过程。于是，想要从operator<br>new的执行过程中返回，则必然需要满足下列条件之一：</p>
+<p>1）分配内存成功</p>
+<p>2）new_handler中抛出bad_alloc异常</p>
+<p>3）new_handler中调用exit()或类似的函数，使程序结束</p>
+<p>于是，我们可以假设默认情况下operator new的行为是这样的：</p>
+<pre><code>void* operator new(size_t size)  
+{  
+   void* p = null  
+   while(!(p = malloc(size)))  
+   {  
+       if(null == new_handler)  
+          throw bad_alloc();  
+       try  
+       {  
+          new_handler();  
+       }  
+       catch(bad_alloc e)  
+       {  
+          throw e;  
+       }  
+       catch(…)  
+       {}  
+   }  
+   return p;  
+}  
+</code></pre><p>当operator new不能满足一个内存分配请求的时候，默认会抛出一个异常，我们可以通过设置new_handler定义处置策略。</p>
+<p>new_handler的模型为：void (*new_handler)()</p>
+<p>可以通过”void set_new_handler( void(*new_handler)())<br>throw();”设置这个处理函数（new_handler），它定义在&lt;new&gt;标准函数库中：</p>
+<pre><code>namespace std
+{
+    void (*new_handler)();
+    void set_new_handler( new_handler )throw();
+}
+
+
+//error-handling function
+void MemErrorHandling()
+{
+    std::cerr &lt;&lt; &quot;Failed to allocate memory.\n&quot;;
+    std::abort();
+}
+... ...
+std::set_new_handler(MemErrorHandling);
+</code></pre><p>现在我们知道了new操作失败后，系统地大概处理流程，以及怎么设置用户自定义处理函数，但是我们究竟可以在new_handler中做些什么处理呢？</p>
+<p>1、删除其它无用的内存，使系统具有可以更多的内存可以使用，为下一步的内存申请作准备。<br>2、设置另外一个new_handler。如果当前的new_handler不能够做到更多的内存申请操作，或者它知道另外一个new_handler可<br>以做到，则可以调用set_new_handler函数设置另外一个new_handler，这样在operator<br>new下一次调用的时候，可以使用这个新的new_handler。<br>3、卸载new_handler（通过set_new_handler(0)），使operator<br>new在下一次调用的时候，因为new_handler为空抛出内存申请异常。<br>4、抛出自定义异常。<br>5、不再返回，调用abort或者exit退出程序。</p>
+<p>参考：<br>1、<a href="http://www.bc-cn.net/Article/kfyy/cjj/jszl/200604/4002.html" target="_blank" rel="external">http://www.bc-cn.net/Article/kfyy/cjj/jszl/200604/4002.html</a></p>
+<p>2、<a href="http://blog.csdn.net/youdianmengxiangba/article/details/8233651" target="_blank" rel="external">http://blog.csdn.net/youdianmengxiangba/article/details/8233651</a></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/page/9/" class="prev">Prev</a>
+  
+  
+    <a href="/page/11/" class="next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

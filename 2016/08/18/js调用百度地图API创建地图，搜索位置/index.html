@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>js调用百度地图API创建地图，搜索位置 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="实现代码：
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+    &amp;lt;meta http-equiv=&amp;quot;Cache-Control&amp;quot; content=&amp;quot;no-store&amp;quot; /&amp;gt;
+    &amp;lt;meta http-">
+  
+  <meta name="description" content="实现代码：
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+    &amp;lt;meta http-equiv=&amp;quot;Cache-Control&amp;quot; content=&amp;quot;no-store&amp;quot; /&amp;gt;
+    &amp;lt;meta http-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js调用百度地图API创建地图，搜索位置">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/08/18/js调用百度地图API创建地图，搜索位置/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="实现代码：
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+    &amp;lt;meta http-equiv=&amp;quot;Cache-Control&amp;quot; content=&amp;quot;no-store&amp;quot; /&amp;gt;
+    &amp;lt;meta http-">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818090005093-64399963.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:21.938Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js调用百度地图API创建地图，搜索位置">
+<meta name="twitter:description" content="实现代码：
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+    &amp;lt;meta http-equiv=&amp;quot;Cache-Control&amp;quot; content=&amp;quot;no-store&amp;quot; /&amp;gt;
+    &amp;lt;meta http-">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818090005093-64399963.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/18/js调用百度地图API创建地图，搜索位置/">
+  <time datetime="2016-08-17T17:01:00.000Z">
+    2016-08-18
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">js调用百度地图API创建地图，搜索位置</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>实现代码：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;Cache-Control&quot; content=&quot;no-store&quot; /&gt;
+    &lt;meta http-equiv=&quot;Pragma&quot; content=&quot;no-cache&quot; /&gt;
+    &lt;meta http-equiv=&quot;Expires&quot; content=&quot;0&quot; /&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;http://api.map.baidu.com/api?v=2.0&amp;ak=e3ZohdqyB0RL98hFOiC29xqh&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+            function initMap(){
+                createMap();//创建地图
+                setMapEvent();//设置地图事件
+            }
+            //创建地图函数：
+            function createMap(){
+                var map = new BMap.Map(&quot;BaiduDitu&quot;);//在百度地图容器中创建一个地图
+                map.centerAndZoom(&apos;上海&apos;,11);//设定地图的中心点和坐标并将地图显示在地图容器中
+                window.map = map;//将map变量存储在全局
+            }
+            //地图事件设置函数：
+            function setMapEvent(){
+                map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+                map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+                map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+                map.enableKeyboard();//启用键盘上下左右键移动地图
+            }
+            $(function(){
+                initMap();//创建和初始化地图
+                createSearch();
+                createAutocomlete();
+                $(&quot;#s_p_search_btn&quot;).click(function () {
+                    searchPlace($(&quot;#searchplace&quot;).val());
+                });
+            });
+            function createSearch() {
+                var map = window.map;
+                var local = new BMap.LocalSearch(map,
+                    {
+                        renderOptions: { map: map, panel: &quot;searchlist&quot; }
+                    });
+                window.local = local;
+            }
+            //搜索
+            function searchPlace(value) {
+                window.local.search(value);
+            }
+            function createAutocomlete() {
+                var map = window.map;
+                var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+                    {
+                        &quot;input&quot;: &quot;searchplace&quot;,
+                        &quot;location&quot;: map
+                    });
+                ac.addEventListener(&quot;onconfirm&quot;, function (e) {    //鼠标点击下拉列表后的事件
+                    var _value = e.item.value;
+                    var addr =_value.business+ _value.province + _value.city + _value.district + _value.street + _value.streetNumber ;
+                    searchPlace(addr);
+                });
+            }
+        &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class=&quot;easyui-layout&quot;&gt;
+     &lt;div class=&quot;Ditumap&quot;&gt;  
+        &lt;div style=&quot;margin-bottom:10px;&quot;&gt;
+            &lt;input id=&quot;searchplace&quot; style=&quot;width: 550px;&quot; class=&quot;easyui-textbox-simple&quot; placeholder=&quot;输入搜索关键字&quot; /&gt;
+            &lt;a id=&quot;s_p_search_btn&quot; href=&quot;#&quot; class=&quot;easyui-linkbutton&quot; style=&quot;width: 80px;&quot; iconcls=&quot;icon-search&quot;&gt;搜索&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;searchlist&quot; style=&quot;width: 350px; height: 460px; margin-right:10px; float:left;&quot;&gt;&lt;/div&gt;
+        &lt;div style=&quot;width:600px;height:460px;border:none; float:left;&quot; id=&quot;BaiduDitu&quot;&gt;&lt;/div&gt;
+        &lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>浏览器显示结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818090005093-64399963.png" alt=""></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/08/18/js调用百度地图API创建地图，搜索位置/" data-title="js调用百度地图API创建地图，搜索位置" data-url="https://shijingjing07.github.io/2016/08/18/js调用百度地图API创建地图，搜索位置/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

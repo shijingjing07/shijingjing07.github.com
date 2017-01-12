@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python datetime | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="不管何时何地，只要我们编程时遇到了跟时间有关的问题，都要想到 datetime 和 time标准库模块，今天我们就用它内部的方法，详解python操作日期和时间的方法。1.将字符串的时间转换为时间戳  
+
+复制代码代码如下:
+方法:a = “2013-10-10 23:40:00”  
+#将其转换为时间数组import timetimeArray = time.strptime(a, “%Y-%m">
+  
+  <meta name="description" content="不管何时何地，只要我们编程时遇到了跟时间有关的问题，都要想到 datetime 和 time标准库模块，今天我们就用它内部的方法，详解python操作日期和时间的方法。1.将字符串的时间转换为时间戳  
+
+复制代码代码如下:
+方法:a = “2013-10-10 23:40:00”  
+#将其转换为时间数组import timetimeArray = time.strptime(a, “%Y-%m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python datetime">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/10/14/python datetime/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="不管何时何地，只要我们编程时遇到了跟时间有关的问题，都要想到 datetime 和 time标准库模块，今天我们就用它内部的方法，详解python操作日期和时间的方法。1.将字符串的时间转换为时间戳  
+
+复制代码代码如下:
+方法:a = “2013-10-10 23:40:00”  
+#将其转换为时间数组import timetimeArray = time.strptime(a, “%Y-%m">
+<meta property="og:updated_time" content="2017-01-12T01:35:16.914Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python datetime">
+<meta name="twitter:description" content="不管何时何地，只要我们编程时遇到了跟时间有关的问题，都要想到 datetime 和 time标准库模块，今天我们就用它内部的方法，详解python操作日期和时间的方法。1.将字符串的时间转换为时间戳  
+
+复制代码代码如下:
+方法:a = “2013-10-10 23:40:00”  
+#将其转换为时间数组import timetimeArray = time.strptime(a, “%Y-%m">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/10/14/python datetime/">
+  <time datetime="2016-10-14T00:56:00.000Z">
+    2016-10-14
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python datetime</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>不管何时何地，只要我们编程时遇到了跟时间有关的问题，都要想到 datetime 和 time<br>标准库模块，今天我们就用它内部的方法，详解python操作日期和时间的方法。<br><strong>1.将字符串的时间转换为时间戳  
+</strong></p>
+<p>复制代码代码如下:</p>
+<p>方法:<br>a = “2013-10-10 23:40:00”  </p>
+<p>#将其转换为时间数组<br>import time<br>timeArray = time.strptime(a, “%Y-%m-%d %H:%M:%S”)  </p>
+<p>#转换为时间戳:<br>timeStamp = int(time.mktime(timeArray))<br>timeStamp == 1381419600</p>
+<p><strong>2.格式更改</strong><br>如a = “2013-10-10 23:40:00”,想改为 a = “2013/10/10 23:40:00”<br>方法:先转换为时间数组,然后转换为其他格式</p>
+<p>复制代码代码如下:</p>
+<p>timeArray = time.strptime(a, “%Y-%m-%d %H:%M:%S”)<br>otherStyleTime = time.strftime(“%Y/%m/%d %H:%M:%S”, timeArray)</p>
+<p><strong>3.时间戳转换为指定格式日期</strong><br>方法一:利用localtime()转换为时间数组,然后格式化为需要的格式,如：</p>
+<p>复制代码代码如下:</p>
+<p>timeStamp = 1381419600<br>timeArray = time.localtime(timeStamp)<br>otherStyleTime = time.strftime(“%Y-%m-%d %H:%M:%S”, timeArray)<br>otherStyletime == “2013-10-10 23:40:00”</p>
+<p>方法二:</p>
+<p>复制代码代码如下:</p>
+<p>import datetime<br>timeStamp = 1381419600<br>dateArray = datetime.datetime.utcfromtimestamp(timeStamp)<br>otherStyleTime = dateArray.strftime(“%Y-%m-%d %H:%M:%S”)<br>otherStyletime == “2013-10-10 23:40:00”</p>
+<p><strong>4.获取当前时间并转换为指定日期格式  
+</strong>方法一:</p>
+<p>复制代码代码如下:</p>
+<p>import time  </p>
+<p>#获得当前时间时间戳<br>now = int(time.time())  -&gt;这是时间戳  </p>
+<p>#转换为其他日期格式,如:”%Y-%m-%d %H:%M:%S”<br>timeArray = time.localtime(timeStamp)<br>otherStyleTime = time.strftime(“%Y-%m-%d %H:%M:%S”, timeArray)</p>
+<p>方法二:</p>
+<p>复制代码代码如下:</p>
+<p>import datetime  </p>
+<p>#获得当前时间<br>now = datetime.datetime.now()  -&gt;这是时间数组格式  </p>
+<p>#转换为指定的格式:<br>otherStyleTime = now.strftime(“%Y-%m-%d %H:%M:%S”)</p>
+<p><strong>5.获得三天前的时间的方法</strong></p>
+<p>复制代码代码如下:</p>
+<p>import time<br>import datetime  </p>
+<p>#先获得时间数组格式的日期<br>threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 3))  </p>
+<p>#转换为时间戳:<br>timeStamp = int(time.mktime(threeDayAgo.timetuple()))  </p>
+<p>#转换为其他字符串格式:<br>otherStyleTime = threeDayAgo.strftime(“%Y-%m-%d %H:%M:%S”)<br>注:timedelta()的参数有:days,hours,seconds,microseconds</p>
+<p><strong>6.给定时间戳,计算该时间的几天前时间</strong></p>
+<p>复制代码代码如下:</p>
+<p>timeStamp = 1381419600  </p>
+<p>#先转换为datetime<br>import datetime<br>import time<br>dateArray = datetime.datetime.utcfromtimestamp(timeStamp)<br>threeDayAgo = dateArray - datetime.timedelta(days = 3)  </p>
+<p>#参考5,可以转换为其他的任意格式了</p>
+<p><strong>7、用Python计算昨天和明天的日期</strong></p>
+<p>复制代码代码如下:</p>
+<p>&gt;&gt;&gt; import datetime #导入日期时间模块<br>&gt;&gt;&gt; today = datetime.date.today() #获得今天的日期<br>&gt;&gt;&gt; print today #输出今天日期<br>2014-01-04<br>&gt;&gt;&gt; yesterday = today - datetime.timedelta(days=1)</p>
+<p>#用今天日期减掉时间差，参数为1天，获得昨天的日期<br>&gt;&gt;&gt; print yesterday<br>2014-01-03<br>&gt;&gt;&gt; tomorrow = today + datetime.timedelta(days=1)</p>
+<p>#用今天日期加上时间差，参数为1天，获得明天的日期<br>&gt;&gt;&gt; print tomorrow<br>2014-01-05<br>&gt;&gt;&gt;<br>&gt;&gt;&gt; print “昨天:%s， 今天:%s， 明天：%s” % (yesterday, today, tomorrow)</p>
+<p>#字符串拼接在一起输出，这3天的日期</p>
+<p>昨天:2014-01-03， 今天:2014-01-04， 明天：2014-01-05<br><strong>8、python里使用time模块来获取当前的时间</strong></p>
+<p>复制代码代码如下:</p>
+<p>#!/usr/bin/python<br>import time<br>print (time.strftime(“%H:%M:%S”))  </p>
+<h2 id="12-hour-format"><a href="#12-hour-format" class="headerlink" title="12 hour format"></a>12 hour format</h2><p>print (time.strftime(“%I:%M:%S”))  </p>
+<p>#：输出  </p>
+<p>#18:11:30  </p>
+<p>#6：11:30</p>
+<p><strong>9、打印出当前的日期的python程序  
+</strong></p>
+<p>复制代码代码如下:</p>
+<p>!/usr/bin/python</p>
+<p>import time  </p>
+<h2 id="dd-mm-yyyy格式"><a href="#dd-mm-yyyy格式" class="headerlink" title="dd/mm/yyyy格式"></a>dd/mm/yyyy格式</h2><p>print (time.strftime(“%d/%m/%Y”))</p>
+<p>#输出：<br>11/03/2014</p>
+<p><strong>10、使用datetime模块来获取当前的日期和时间  
+</strong></p>
+<p>复制代码代码如下:</p>
+<p>#!/usr/bin/python<br>import datetime<br>i = datetime.datetime.now()<br>print (“当前的日期和时间是 %s” % i)<br>print (“ISO格式的日期和时间是 %s” % i.isoformat() )<br>print (“当前的年份是 %s” %i.year)<br>print (“当前的月份是 %s” %i.month)<br>print (“当前的日期是  %s” %i.day)<br>print (“dd/mm/yyyy 格式是  %s/%s/%s” % (i.day, i.month, i.year) )<br>print (“当前小时是 %s” %i.hour)<br>print (“当前分钟是 %s” %i.minute)<br>print (“当前秒是  %s” %i.second)</p>
+<p><strong>附：日期和时间的格式化参数</strong></p>
+<p>复制代码代码如下:</p>
+<p>%a 星期几的简写<br>%A 星期几的全称<br>%b 月分的简写<br>%B 月份的全称<br>%c 标准的日期的时间串<br>%C 年份的后两位数字<br>%d 十进制表示的每月的第几天<br>%D 月/天/年<br>%e 在两字符域中，十进制表示的每月的第几天<br>%F 年-月-日<br>%g 年份的后两位数字，使用基于周的年<br>%G 年分，使用基于周的年<br>%h 简写的月份名<br>%H 24小时制的小时<br>%I 12小时制的小时<br>%j 十进制表示的每年的第几天<br>%m 十进制表示的月份<br>%M 十时制表示的分钟数<br>%n 新行符<br>%p 本地的AM或PM的等价显示<br>%r 12小时的时间<br>%R 显示小时和分钟：hh:mm<br>%S 十进制的秒数<br>%t 水平制表符<br>%T 显示时分秒：hh:mm:ss<br>%u 每周的第几天，星期一为第一天 （值从0到6，星期一为0）<br>%U 第年的第几周，把星期日做为第一天（值从0到53）<br>%V 每年的第几周，使用基于周的年<br>%w 十进制表示的星期几（值从0到6，星期天为0）<br>%W 每年的第几周，把星期一做为第一天（值从0到53）<br>%x 标准的日期串<br>%X 标准的时间串<br>%y 不带世纪的十进制年份（值从0到99）<br>%Y 带世纪部分的十制年份<br>%z，%Z 时区名称，如果不能得到时区名称则返回空字符。<br>%% 百分号</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/10/14/python datetime/" data-title="python datetime" data-url="https://shijingjing07.github.io/2016/10/14/python datetime/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

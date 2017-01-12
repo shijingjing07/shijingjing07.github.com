@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>posix多线程--线程私有数据 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.当多个线程共享一个变量时，将该变量定义为静态或外部变量，使用互斥量确保共享变量的安全访问。如果每个线程都需要一个私有变量值，则该值成为线程的私有数据。程序创建一个键，每个线程独立地设定或得到自己的键值，各线程间私有数据互不影响。
+2.建立线程私有数据int pthread_key_create(pthread_key_t key,void (destructor)(void ));int pt">
+  
+  <meta name="description" content="1.当多个线程共享一个变量时，将该变量定义为静态或外部变量，使用互斥量确保共享变量的安全访问。如果每个线程都需要一个私有变量值，则该值成为线程的私有数据。程序创建一个键，每个线程独立地设定或得到自己的键值，各线程间私有数据互不影响。
+2.建立线程私有数据int pthread_key_create(pthread_key_t key,void (destructor)(void ));int pt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="posix多线程--线程私有数据">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/18/posix多线程--线程私有数据/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.当多个线程共享一个变量时，将该变量定义为静态或外部变量，使用互斥量确保共享变量的安全访问。如果每个线程都需要一个私有变量值，则该值成为线程的私有数据。程序创建一个键，每个线程独立地设定或得到自己的键值，各线程间私有数据互不影响。
+2.建立线程私有数据int pthread_key_create(pthread_key_t key,void (destructor)(void ));int pt">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:updated_time" content="2017-01-12T01:35:44.727Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="posix多线程--线程私有数据">
+<meta name="twitter:description" content="1.当多个线程共享一个变量时，将该变量定义为静态或外部变量，使用互斥量确保共享变量的安全访问。如果每个线程都需要一个私有变量值，则该值成为线程的私有数据。程序创建一个键，每个线程独立地设定或得到自己的键值，各线程间私有数据互不影响。
+2.建立线程私有数据int pthread_key_create(pthread_key_t key,void (destructor)(void ));int pt">
+<meta name="twitter:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/18/posix多线程--线程私有数据/">
+  <time datetime="2016-04-18T00:41:00.000Z">
+    2016-04-18
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">posix多线程--线程私有数据</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.当多个线程共享一个变量时，将该变量定义为静态或外部变量，使用互斥量确保共享变量的安全访问。<br>如果每个线程都需要一个私有变量值，则该值成为线程的私有数据。程序创建一个键，每个线程独立地设定或得到自己的键值，各线程间私有数据互不影响。</p>
+<p>2.建立线程私有数据<br>int pthread_key_create(pthread_key_t <em>key,void (</em>destructor)(void <em>));<br>int pthread_key_delete(pthread_key_t key);<br>int pthread_setspecific(pthread_key_t key,void </em>value);<br>void *pthread_getspecific(pthread_key_t key);</p>
+<p>私有数据键，若多次创建，会覆盖掉前面创建的键，对应的键值也将永远丢失。</p>
+<p>使用pthread_key_delete释放一个私有数据键时，必须保证所有线程都不在持有该键的值。<br>更好的做法是不释放线程私有数据键，因为线程私有数据键最多可达128个，很少有程序需要这么多的树木，没有必要手动释放。</p>
+<p>代码示例如下：<br>创建数据键，设置键值，获取键值</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+typedef struct tsd_tag
+{
+        pthread_t tid;
+        char *string;
+}tsd_t;
+pthread_key_t tsd_key;
+pthread_once_t key_once = PTHREAD_ONCE_INIT;
+void one_routine(void)
+{
+        pthread_key_create(&amp;tsd_key,NULL);;
+}
+void *thread_routine(void *arg)
+{
+        pthread_once(&amp;key_once,one_routine);
+        tsd_t *value;
+        value = (tsd_t*)malloc(sizeof(tsd_t));
+        pthread_setspecific(tsd_key,value);
+        value-&gt;tid = pthread_self();
+        value-&gt;string = (char*)arg;
+        value=(tsd_t*)pthread_getspecific(tsd_key);
+        sleep(2);
+        value=(tsd_t*)pthread_getspecific(tsd_key);
+        printf(&quot;%s done...\n&quot;,value-&gt;string);
+}
+int main(void)
+{
+        pthread_t tid1,tid2;
+        pthread_create(&amp;tid1,NULL,thread_routine,&quot;thread 1&quot;);
+        pthread_create(&amp;tid2,NULL,thread_routine,&quot;thread 2&quot;);
+        pthread_exit(NULL);
+}         
+</code></pre><p>View Code</p>
+<p>3.destructor函数<br>destructor函数仅仅当线程终止时被调用。当线程终止时，pthreads调用键的destructor函数前，将线程私有数据置为NULL,所以若线程私有数据值是堆存储的地址，并且想在destructor函数中释放，必须使用传递给destructor的参数，而不是pthread_getspecific的参数。可以自定义destructor函数。</p>
+<p>键值为NULL意味着线程对应该键值不再有值，而不是赋空值。否则若随后调用pthread_key_create建立该键，线程将会收到旧值。</p>
+<p>线程私有数据键的destructor函数在键值替换的时候不会被调用。即，如果在堆中将一个结构的指针作为键值，又分配一个新结构，并将新结构指针赋给相同数据键，则指向旧结构的指针不会调用destructor函数。</p>
+<p>代码示例如下：</p>
+<p>三个线程的私有变量数据，自定义destructor函数，在线程结束后，释放堆存储，在所有线程结束后，销毁私有数据键。</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+typedef struct private_tag
+{
+        pthread_t tid;
+        char *string;
+}private_t;
+pthread_key_t key;
+pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
+long counter = 0;
+void key_destructor(void *value)
+{
+        private_t *private = (private_t*)value;
+        printf(&quot;thread \&quot;%s\&quot; exiting...\n&quot;,private-&gt;string);
+        free(value);
+        pthread_mutex_lock(&amp;mutex);
+        counter--;
+        if(counter&lt;=0)
+        {
+                pthread_key_delete(key);
+                printf(&quot;key deleted...\n&quot;);
+        }
+        pthread_mutex_unlock(&amp;mutex);
+}
+void *key_get(void)
+{
+        void *value;
+        value = pthread_getspecific(key);
+        if(value==NULL)
+        {
+printf(&quot;malloc\n&quot;);
+value = malloc(sizeof(private_t));
+                pthread_setspecific(key,(void*)value);
+        }
+        return value;
+}
+void *thread_routine(void *arg)
+{
+        private_t *value;
+        value = (private_t*)key_get();
+        value-&gt;tid = pthread_self();
+        value-&gt;string = (char*)arg;
+        printf(&quot;thread \&quot;%s\&quot; starting...\n&quot;,value-&gt;string);
+        sleep(2);
+        return NULL;
+}
+int main(void)
+{
+        pthread_t tid1,tid2;
+        private_t *value;
+        pthread_key_create(&amp;key,key_destructor);
+        counter = 3;
+        value = (private_t *)key_get();
+        value-&gt;tid = pthread_self();
+        value-&gt;string = &quot;Main thread&quot;;
+        pthread_create(&amp;tid1,NULL,thread_routine,&quot;Thread 1&quot;);
+        pthread_create(&amp;tid2,NULL,thread_routine,&quot;Thread 2&quot;);
+        printf(&quot;exiting\n&quot;);
+        pthread_exit(NULL);
+}                        
+</code></pre><p>View Code</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/18/posix多线程--线程私有数据/" data-title="posix多线程--线程私有数据" data-url="https://shijingjing07.github.io/2016/04/18/posix多线程--线程私有数据/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

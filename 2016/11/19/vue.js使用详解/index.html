@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>vue.js使用详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是vue.jsvue.js是一款数据驱动型的js框架。何为数据驱动型？html视图层定义模板，vue定义数据。html和vue数据，通过标签id关联。
+2.vue.js引入&amp;lt;script src=”https://unpkg.com/vue/dist/vue.js&amp;quot;&amp;gt;&amp;lt;/script&amp;amp;gt;
+3.使用示例1)声明式渲染
+&amp;lt;script src=&amp;q">
+  
+  <meta name="description" content="1.什么是vue.jsvue.js是一款数据驱动型的js框架。何为数据驱动型？html视图层定义模板，vue定义数据。html和vue数据，通过标签id关联。
+2.vue.js引入&amp;lt;script src=”https://unpkg.com/vue/dist/vue.js&amp;quot;&amp;gt;&amp;lt;/script&amp;amp;gt;
+3.使用示例1)声明式渲染
+&amp;lt;script src=&amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue.js使用详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/11/19/vue.js使用详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是vue.jsvue.js是一款数据驱动型的js框架。何为数据驱动型？html视图层定义模板，vue定义数据。html和vue数据，通过标签id关联。
+2.vue.js引入&amp;lt;script src=”https://unpkg.com/vue/dist/vue.js&amp;quot;&amp;gt;&amp;lt;/script&amp;amp;gt;
+3.使用示例1)声明式渲染
+&amp;lt;script src=&amp;q">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174130482-998803872.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174215842-1944546714.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174251670-2022701270.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174331310-1906400836.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174405810-1399612477.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:16.176Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue.js使用详解">
+<meta name="twitter:description" content="1.什么是vue.jsvue.js是一款数据驱动型的js框架。何为数据驱动型？html视图层定义模板，vue定义数据。html和vue数据，通过标签id关联。
+2.vue.js引入&amp;lt;script src=”https://unpkg.com/vue/dist/vue.js&amp;quot;&amp;gt;&amp;lt;/script&amp;amp;gt;
+3.使用示例1)声明式渲染
+&amp;lt;script src=&amp;q">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174130482-998803872.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/11/19/vue.js使用详解/">
+  <time datetime="2016-11-19T01:45:00.000Z">
+    2016-11-19
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">vue.js使用详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.什么是vue.js<br>vue.js是一款数据驱动型的js框架。何为数据驱动型？html视图层定义模板，vue定义数据。html和vue数据，通过标签id关联。</p>
+<p>2.vue.js引入<br>&lt;script src=”<a href="https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&amp;gt" target="_blank" rel="external">https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&amp;gt</a>;</p>
+<p>3.使用示例<br>1)声明式渲染</p>
+<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;app&quot;&gt;
+{{message}}
+&lt;/div&gt;
+
+var app=new Vue({
+    el:&apos;#app&apos;,
+    data:{
+        message:&apos;Hello Vue!&apos;
+    }
+})
+</code></pre><p>运行结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174130482-998803872.png" alt=""></p>
+<p>2)条件判断</p>
+<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;app-3&quot;&gt;
+  &lt;p v-if=&quot;seen&quot;&gt;Now you see me&lt;/p&gt;
+&lt;/div&gt;
+
+var app3 = new Vue({
+  el: &apos;#app-3&apos;,
+  data: {
+    seen: true
+  }
+})
+</code></pre><p>运行结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174215842-1944546714.png" alt=""></p>
+<p>3)循环</p>
+<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;app-4&quot;&gt;
+    &lt;ol&gt;
+        &lt;li v-for=&quot;todo in todos&quot;&gt;
+            {{ todo.text }}
+        &lt;/li&gt;
+    &lt;/ol&gt;
+&lt;/div&gt;
+
+var app4 = new Vue({
+    el: &apos;#app-4&apos;,
+    data: {
+        todos: [
+          { text: &apos;Learn JavaScript&apos; },
+          { text: &apos;Learn Vue&apos; },
+          { text: &apos;Build something awesome&apos; }
+        ]
+    }
+})
+</code></pre><p>运行结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174251670-2022701270.png" alt=""></p>
+<p>4)客户端交互</p>
+<p>vue.js和浏览器可实现双向通信，即浏览器中绑定值改变后，js中会同时改变，反之亦然。</p>
+<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;app-5&quot;&gt;
+  &lt;p&gt;{{ message }}&lt;/p&gt;
+  &lt;button v-on:click=&quot;reverseMessage&quot;&gt;Reverse Message&lt;/button&gt;
+&lt;/div&gt;
+
+var app5 = new Vue({
+  el: &apos;#app-5&apos;,
+  data: {
+    message: &apos;Hello Vue.js!&apos;
+  },
+  methods: {
+    reverseMessage: function () {
+      this.message = this.message.split(&apos;&apos;).reverse().join(&apos;&apos;)
+    }
+  }
+})
+</code></pre><p>运行结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174331310-1906400836.png" alt=""></p>
+<p>4.组件<br>组件可以理解为在js中定义了一个html模板和一个vue.js，前台html可以直接使用这个模板，同时会被vue.js渲染。<br>需要注意的是，组件必须要有vue.js数据渲染才能显示。<br>如下例所示：</p>
+<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;app-7&quot;&gt;
+  &lt;ol&gt;
+    &lt;todo-item v-for=&quot;item in groceryList&quot; v-bind:todo=&quot;item&quot;&gt;&lt;/todo-item&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+Vue.component(&apos;todo-item&apos;, {
+  props: [&apos;todo&apos;],
+  template: &apos;&lt;li&gt;{{ todo.text }}&lt;/li&gt;&apos;
+})
+var app7 = new Vue({
+  el: &apos;#app-7&apos;,
+  data: {
+    groceryList: [
+      { text: &apos;Vegetables&apos; },
+      { text: &apos;Cheese&apos; },
+      { text: &apos;Whatever else humans are supposed to eat&apos; }
+    ]
+  }
+})
+</code></pre><p>运行结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174405810-1399612477.png" alt=""></p>
+<p>我们在模板中增加了一个”props”字段，来接收数据，在html页面中将这个字段绑定到vue.js中的数据。<br>完成数据绑定。</p>
+<p>5.使用场景</p>
+<p>个人觉得适合数据量大，前端html页面模块重复复杂的情况。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/11/19/vue.js使用详解/" data-title="vue.js使用详解" data-url="https://shijingjing07.github.io/2016/11/19/vue.js使用详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

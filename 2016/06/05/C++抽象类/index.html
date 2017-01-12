@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++抽象类 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.为什么要有抽象类
+我们举一个例子，程序有两个类，椭圆Ellipse类，圆Circle类。我们知道椭圆是包括圆的，那么我们可以使用继承：
+class Ellipse
+{};
+class Circle:public Ellipse
+{};
+然而，我们在定义各自的成员变量和成员函数时，发现两个类的成员有很大的不同，比如Ellipse类需要长短轴半径，中心坐标，方向角才能确定位置，另外还包括移动椭圆，">
+  
+  <meta name="description" content="1.为什么要有抽象类
+我们举一个例子，程序有两个类，椭圆Ellipse类，圆Circle类。我们知道椭圆是包括圆的，那么我们可以使用继承：
+class Ellipse
+{};
+class Circle:public Ellipse
+{};
+然而，我们在定义各自的成员变量和成员函数时，发现两个类的成员有很大的不同，比如Ellipse类需要长短轴半径，中心坐标，方向角才能确定位置，另外还包括移动椭圆，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++抽象类">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/05/C++抽象类/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.为什么要有抽象类
+我们举一个例子，程序有两个类，椭圆Ellipse类，圆Circle类。我们知道椭圆是包括圆的，那么我们可以使用继承：
+class Ellipse
+{};
+class Circle:public Ellipse
+{};
+然而，我们在定义各自的成员变量和成员函数时，发现两个类的成员有很大的不同，比如Ellipse类需要长短轴半径，中心坐标，方向角才能确定位置，另外还包括移动椭圆，">
+<meta property="og:updated_time" content="2017-01-12T01:35:38.382Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++抽象类">
+<meta name="twitter:description" content="1.为什么要有抽象类
+我们举一个例子，程序有两个类，椭圆Ellipse类，圆Circle类。我们知道椭圆是包括圆的，那么我们可以使用继承：
+class Ellipse
+{};
+class Circle:public Ellipse
+{};
+然而，我们在定义各自的成员变量和成员函数时，发现两个类的成员有很大的不同，比如Ellipse类需要长短轴半径，中心坐标，方向角才能确定位置，另外还包括移动椭圆，">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/05/C++抽象类/">
+  <time datetime="2016-06-05T07:52:00.000Z">
+    2016-06-05
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++抽象类</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.为什么要有抽象类</strong></p>
+<p>我们举一个例子，程序有两个类，椭圆Ellipse类，圆Circle类。<br>我们知道椭圆是包括圆的，那么我们可以使用继承：</p>
+<pre><code>class Ellipse
+{};
+class Circle:public Ellipse
+{};
+</code></pre><p>然而，我们在定义各自的成员变量和成员函数时，发现两个类的成员有很大的不同，<br>比如Ellipse类需要长短轴半径，中心坐标，方向角才能确定位置，另外还包括移动椭圆，返回椭圆面积，旋转椭圆的方法。<br>而Circle类只需要半径，中心坐标，就能确定位置，旋转方法对圆来说也是没有意义的。<br>可以看出，若简单使Circle继承Ellipse，将使简单的问题复杂化。</p>
+<p><strong>2.什么是抽象类</strong></p>
+<p>解决的方法是，我们可以抽象出Ellipse类，Circle类的公共部分</p>
+<pre><code>class BaseEllipse
+{
+private:
+    double x;
+    double y;
+public:
+    BaseEllipse(double a,double b):x(a),y(b){}
+    virtual ~BaseEllipse(){}
+    void Move(int a,int b){x=a;y=b;}
+    virtual double Area() const=0;//纯虚函数
+};
+</code></pre><p>当类声明中有纯虚函数，比如virtual double Area()=0;时，该类就是抽象类。<br>抽象类不能实例化，子类继承抽象类时，必须定义纯虚函数。</p>
+<pre><code>class Ellipse:public BaseEllipse
+{
+public:
+    virtual double Area() const
+    {
+        std::cout&lt;&lt;&quot;Ellipse::Area()&quot;&lt;&lt;std::endl;
+    }
+};
+class Circle:publi BaseEllipse
+{
+public:    
+    virtual double Area() const
+    {
+        std::cout&lt;&lt;&quot;Circle::Area()&quot;&lt;&lt;std::endl;
+    }
+};
+</code></pre><p><strong>3.抽象类与普通基类</strong><br>由上面的讲解，可看出，抽象类与普通基类的区别是，<br>普通基类表现的是一种父子关系，比如人和学生的关系。<br>抽象类更像是一种接口规则的约定，<br>比如规定了一些公共的move()方式，对人来说，移动的方式是”走”，对鸟来说，是”飞”，对鱼来说，是”游”<br>该约定类不能实例化，所有继承自抽象类的子类都必须覆盖其纯虚函数，迫使派生类遵循接口规则。  </p>
+<p> 参考资料：《C++ Primer.Plus》 pp.508-516</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/05/C++抽象类/" data-title="C++抽象类" data-url="https://shijingjing07.github.io/2016/06/05/C++抽象类/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

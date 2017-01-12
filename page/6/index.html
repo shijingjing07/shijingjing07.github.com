@@ -1,0 +1,1487 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+  <meta name="description" content="路过秋天">
+<meta property="og:type" content="website">
+<meta property="og:title" content="迪米特">
+<meta property="og:url" content="https://shijingjing07.github.io/page/6/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="路过秋天">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="迪米特">
+<meta name="twitter:description" content="路过秋天">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content">
+
+
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/09/python时间处理之datetime/">
+  <time datetime="2016-08-08T22:43:00.000Z">
+    2016-08-09
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/08/09/python时间处理之datetime/">python时间处理之datetime</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>#<br><a href="http://blog.csdn.net/wirelessqa/article/details/7973121" target="_blank" rel="external">python时间处理之datetime</a></p>
+<p>标签：<br><a href="http://www.csdn.net/tag/python" target="_blank" rel="external">python</a><a href="http://www.csdn.net/tag/date" target="_blank" rel="external">date</a><a href="http://www.csdn.net/tag/import" target="_blank" rel="external">import</a><a href="http://www.csdn.net/tag/string" target="_blank" rel="external">string</a><a href="http://www.csdn.net/tag/c" target="_blank" rel="external">c</a></p>
+<p>2012-09-12 23:21 20910人阅读<br><a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#comments" target="_blank" rel="external">评论</a>(0) 收藏<br><a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#report" title="举报" target="_blank" rel="external">举报</a></p>
+<p><img src="http://static.blog.csdn.net/images/category_icon.jpg" alt=""> 分类：</p>
+<p>Python系列（12）<br><img src="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg" alt=""></p>
+<p>版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+<p>目录<a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="系统根据文章中H1到H6标签自动生成文章目录" target="_blank" rel="external">(?)</a><a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="展开" target="_blank" rel="external">[+]</a></p>
+<h1 id="运行环境-Python3-4"><a href="#运行环境-Python3-4" class="headerlink" title="运行环境:Python3.4"></a>运行环境:Python3.4</h1><p><strong>[python]</strong> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li><h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1></li>
+<li></li>
+<li></li>
+<li>#datetime类  </li>
+<li>#datetime是date与time的结合体，包括date与time的所有信息。  </li>
+<li>#它的构造函数如下：  </li>
+<li>#datetime. datetime (year, month, day[ , hour[ , minute[ , second[ , microsecond[ , tzinfo] ] ] ] ] )  </li>
+<li>#各参数的含义与date、time的构造函数中的一样，要注意参数值的范围。  </li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li><h1 id="1-datetime类定义的类属性与方法："><a href="#1-datetime类定义的类属性与方法：" class="headerlink" title="1. datetime类定义的类属性与方法："></a>1. datetime类定义的类属性与方法：</h1></li>
+<li>#datetime.min、datetime.max：datetime所能表示的最小值与最大值；  </li>
+<li>#print: datetime.max: 9999-12-31 23:59:59.999999  </li>
+<li>#print: datetime.min: 0001-01-01 00:00:00  </li>
+<li>from  datetime  import  *   </li>
+<li>import time  </li>
+<li>print   (‘datetime.max:’ +str(datetime.max ))   </li>
+<li>print   (‘datetime.min:’ +str(datetime.min))    </li>
+<li>#datetime.resolution：datetime最小单位；  </li>
+<li>#print: datetime.resolution: 0:00:00.000001  </li>
+<li>print   (‘datetime.resolution:’ + str(datetime.resolution ))  </li>
+<li>#datetime.today()：返回一个表示当前本地时间的datetime对象；  </li>
+<li>#print: today(): 2012-09-12 19:37:50.721000  </li>
+<li>print   (‘today():’ +str(datetime.today() ))  </li>
+<li>#datetime.now([tz])：返回一个表示当前本地时间的datetime对象，如果提供了参数tz，则获取tz参数所指时区的本地时间；  </li>
+<li>#print: now(): 2012-09-12 19:37:50.738000  </li>
+<li>print   (‘now():’+str( datetime.now() ))  </li>
+<li>#datetime.utcnow()：返回一个当前utc时间的datetime对象；  </li>
+<li>#print: 2012-09-12 11:37:50.739000  </li>
+<li>print   (‘utcnow():’ +str(datetime.utcnow() ))   </li>
+<li>#datetime.fromtimestamp(timestamp[, tz])：根据时间戮创建一个datetime对象，参数tz指定时区信息；  </li>
+<li>#print: fromtimestamp(tmstmp): 2012-09-12 19:37:50.741000  </li>
+<li>print   (‘fromtimestamp(tmstmp):’ +str(datetime.fromtimestamp(time.time()) ))  </li>
+<li>#datetime.utcfromtimestamp(timestamp)：根据时间戮创建一个datetime对象；  </li>
+<li>#print: utcfromtimestamp(tmstmp): 2012-09-12 11:37:50.742000  </li>
+<li>print   (‘utcfromtimestamp(tmstmp):’ +str(datetime.utcfromtimestamp(time.time())) )  </li>
+<li>#datetime.combine(date, time)：根据date和time，创建一个datetime对象；  </li>
+<li>#print: datetime.combine(date,time):  2012-09-12 19:46:05  </li>
+<li>d = date(2012,9,12)  </li>
+<li>from  datetime  import  *   </li>
+<li>t = time(19,46,5)  </li>
+<li>print (‘datetime.combine(date,time): ‘+str(datetime.combine(d,t)))  </li>
+<li>#datetime.strptime(date_string, format)：将格式字符串转换为datetime对象；  </li>
+<li>#print: 2007-03-04 21:08:12  </li>
+<li>print (datetime.strptime(“2007-03-04 21:08:12”, “%Y-%m-%d %H:%M:%S”))  </li>
+<li></li>
+<li></li>
+<li>#2. datetime类提供的实例方法与属性  </li>
+<li>dt = datetime.strptime(“2012-09-12 21:08:12”, “%Y-%m-%d %H:%M:%S”)  </li>
+<li>#print: 2012 9 12 21 8 12 0 None  </li>
+<li>print (dt.year)  </li>
+<li>print(dt.month)  </li>
+<li>print(dt.day)  </li>
+<li>print(dt.hour)  </li>
+<li>print(dt.minute)  </li>
+<li>print(dt.second)  </li>
+<li>print(dt.microsecond)  </li>
+<li>print(dt.tzinfo)  </li>
+<li>print (dt.date())  </li>
+<li>print (dt.time())  </li>
+<li>print (dt.replace(year = 2013))  </li>
+<li>print (dt.timetuple())  </li>
+<li>print (dt.utctimetuple())  </li>
+<li>print (dt.toordinal())  </li>
+<li>print (dt.weekday())  </li>
+<li>print (dt.isocalendar())  </li>
+<li>#print dt.isoformat([sep])  </li>
+<li>#datetime. ctime ()：返回一个日期时间的C格式字符串，等效于time.ctime(time.mktime(dt.timetuple()))；  </li>
+<li></li>
+<li></li>
+<li>#3. 格式字符串  </li>
+<li><h1 id="datetime-strftime-format"><a href="#datetime-strftime-format" class="headerlink" title="datetime. strftime (format)"></a>datetime. strftime (format)</h1></li>
+<li><h1 id="a-星期的简写。如-星期三为Web"><a href="#a-星期的简写。如-星期三为Web" class="headerlink" title="%a 星期的简写。如 星期三为Web"></a>%a 星期的简写。如 星期三为Web</h1></li>
+<li><h1 id="A-星期的全写。如-星期三为Wednesday"><a href="#A-星期的全写。如-星期三为Wednesday" class="headerlink" title="%A 星期的全写。如 星期三为Wednesday"></a>%A 星期的全写。如 星期三为Wednesday</h1></li>
+<li><h1 id="b-月份的简写。如4月份为Apr"><a href="#b-月份的简写。如4月份为Apr" class="headerlink" title="%b 月份的简写。如4月份为Apr"></a>%b 月份的简写。如4月份为Apr</h1></li>
+<li><h1 id="B月份的全写。如4月份为April"><a href="#B月份的全写。如4月份为April" class="headerlink" title="%B月份的全写。如4月份为April"></a>%B月份的全写。如4月份为April</h1></li>
+<li><h1 id="c-日期时间的字符串表示。（如：-04-07-10-10-43-39）"><a href="#c-日期时间的字符串表示。（如：-04-07-10-10-43-39）" class="headerlink" title="%c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）"></a>%c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）</h1></li>
+<li><h1 id="d-日在这个月中的天数（是这个月的第几天）"><a href="#d-日在这个月中的天数（是这个月的第几天）" class="headerlink" title="%d:  日在这个月中的天数（是这个月的第几天）"></a>%d:  日在这个月中的天数（是这个月的第几天）</h1></li>
+<li><h1 id="f-微秒（范围-0-999999-）"><a href="#f-微秒（范围-0-999999-）" class="headerlink" title="%f:  微秒（范围[0,999999]）"></a>%f:  微秒（范围[0,999999]）</h1></li>
+<li><h1 id="H-小时（24小时制，-0-23-）"><a href="#H-小时（24小时制，-0-23-）" class="headerlink" title="%H:  小时（24小时制，[0, 23]）"></a>%H:  小时（24小时制，[0, 23]）</h1></li>
+<li><h1 id="I-小时（12小时制，-0-11-）"><a href="#I-小时（12小时制，-0-11-）" class="headerlink" title="%I:  小时（12小时制，[0, 11]）"></a>%I:  小时（12小时制，[0, 11]）</h1></li>
+<li><h1 id="j-日在年中的天数-001-366-（是当年的第几天）"><a href="#j-日在年中的天数-001-366-（是当年的第几天）" class="headerlink" title="%j:  日在年中的天数 [001,366]（是当年的第几天）"></a>%j:  日在年中的天数 [001,366]（是当年的第几天）</h1></li>
+<li><h1 id="m-月份（-01-12-）"><a href="#m-月份（-01-12-）" class="headerlink" title="%m:  月份（[01,12]）"></a>%m:  月份（[01,12]）</h1></li>
+<li><h1 id="M-分钟（-00-59-）"><a href="#M-分钟（-00-59-）" class="headerlink" title="%M:  分钟（[00,59]）"></a>%M:  分钟（[00,59]）</h1></li>
+<li><h1 id="p-AM或者PM"><a href="#p-AM或者PM" class="headerlink" title="%p:  AM或者PM"></a>%p:  AM或者PM</h1></li>
+<li><h1 id="S-秒（范围为-00-61-，为什么不是-00-59-，参考python手册-）"><a href="#S-秒（范围为-00-61-，为什么不是-00-59-，参考python手册-）" class="headerlink" title="%S:  秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）"></a>%S:  秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）</h1></li>
+<li><h1 id="U-周在当年的周数当年的第几周），星期天作为周的第一天"><a href="#U-周在当年的周数当年的第几周），星期天作为周的第一天" class="headerlink" title="%U:  周在当年的周数当年的第几周），星期天作为周的第一天"></a>%U:  周在当年的周数当年的第几周），星期天作为周的第一天</h1></li>
+<li><h1 id="w-今天在这周的天数，范围为-0-6-，6表示星期天"><a href="#w-今天在这周的天数，范围为-0-6-，6表示星期天" class="headerlink" title="%w:  今天在这周的天数，范围为[0, 6]，6表示星期天"></a>%w:  今天在这周的天数，范围为[0, 6]，6表示星期天</h1></li>
+<li><h1 id="W-周在当年的周数（是当年的第几周），星期一作为周的第一天"><a href="#W-周在当年的周数（是当年的第几周），星期一作为周的第一天" class="headerlink" title="%W:  周在当年的周数（是当年的第几周），星期一作为周的第一天"></a>%W:  周在当年的周数（是当年的第几周），星期一作为周的第一天</h1></li>
+<li><h1 id="x-日期字符串（如：04-07-10）"><a href="#x-日期字符串（如：04-07-10）" class="headerlink" title="%x:  日期字符串（如：04/07/10）"></a>%x:  日期字符串（如：04/07/10）</h1></li>
+<li><h1 id="X-时间字符串（如：10-43-39）"><a href="#X-时间字符串（如：10-43-39）" class="headerlink" title="%X:  时间字符串（如：10:43:39）"></a>%X:  时间字符串（如：10:43:39）</h1></li>
+<li><h1 id="y-2个数字表示的年份"><a href="#y-2个数字表示的年份" class="headerlink" title="%y:  2个数字表示的年份"></a>%y:  2个数字表示的年份</h1></li>
+<li><h1 id="Y-4个数字表示的年份"><a href="#Y-4个数字表示的年份" class="headerlink" title="%Y:  4个数字表示的年份"></a>%Y:  4个数字表示的年份</h1></li>
+<li><h1 id="z-与utc时间的间隔-（如果是本地时间，返回空字符串）"><a href="#z-与utc时间的间隔-（如果是本地时间，返回空字符串）" class="headerlink" title="%z:  与utc时间的间隔 （如果是本地时间，返回空字符串）"></a>%z:  与utc时间的间隔 （如果是本地时间，返回空字符串）</h1></li>
+<li><h1 id="Z-时区名称（如果是本地时间，返回空字符串）"><a href="#Z-时区名称（如果是本地时间，返回空字符串）" class="headerlink" title="%Z:  时区名称（如果是本地时间，返回空字符串）"></a>%Z:  时区名称（如果是本地时间，返回空字符串）</h1></li>
+<li><h1 id="gt"><a href="#gt" class="headerlink" title="%%:  %% =&gt; %"></a>%%:  %% =&gt; %</h1></li>
+<li></li>
+<li></li>
+<li>dt = datetime.now()  </li>
+<li>#print: (%Y-%m-%d %H:%M:%S %f):  2012-09-12 23:04:27 145000  </li>
+<li>print (‘(%Y-%m-%d %H:%M:%S %f): ‘+ str(dt.strftime(‘%Y-%m-%d %H:%M:%S %f’)))  </li>
+<li>#print: (%Y-%m-%d %H:%M:%S %p):  12-09-12 11:04:27 PM  </li>
+<li>print (‘(%Y-%m-%d %H:%M:%S %p): ‘+str(dt.strftime(‘%y-%m-%d %I:%M:%S %p’)))  </li>
+<li></li>
+<li>#print: %a: Wed   </li>
+<li>print (‘%%a: %s ‘ % dt.strftime(‘%a’))  </li>
+<li>#print: %A: Wednesday  </li>
+<li>print (‘%%A: %s ‘ % dt.strftime(‘%A’))  </li>
+<li>#print: %b: Sep   </li>
+<li>print (‘%%b: %s ‘ % dt.strftime(‘%b’))  </li>
+<li>#print: %B: September  </li>
+<li>print (‘%%B: %s ‘ % dt.strftime(‘%B’))  </li>
+<li>#print: 日期时间%c: 09/12/12 23:04:27  </li>
+<li>print (‘日期时间%%c: %s ‘ % dt.strftime(‘%c’))  </li>
+<li>#print: 日期%x：09/12/12  </li>
+<li>print (‘日期%%x：%s ‘ % dt.strftime(‘%x’))  </li>
+<li>#print: 时间%X：23:04:27  </li>
+<li>print (‘时间%%X：%s ‘ % dt.strftime(‘%X’))  </li>
+<li>#print: 今天是这周的第3天  </li>
+<li>print (‘今天是这周的第%s天 ‘ % dt.strftime(‘%w’))  </li>
+<li>#print: 今天是今年的第256天   </li>
+<li>print (‘今天是今年的第%s天 ‘ % dt.strftime(‘%j’))  </li>
+<li>#print: 今周是今年的第37周  </li>
+<li>print (‘今周是今年的第%s周 ‘ % dt.strftime(‘%U’))  </li>
+</ol>
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><strong>[python]</strong> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>atetime.max:9999-12-31 23:59:59.999999  </li>
+<li>datetime.min:0001-01-01 00:00:00  </li>
+<li>datetime.resolution:0:00:00.000001  </li>
+<li>today():2014-05-04 15:58:18.141186  </li>
+<li>now():2014-05-04 15:58:18.193146  </li>
+<li>utcnow():2014-05-04 07:58:18.243958  </li>
+<li>fromtimestamp(tmstmp):2014-05-04 15:58:18.291558  </li>
+<li>utcfromtimestamp(tmstmp):2014-05-04 07:58:18.342550  </li>
+<li>datetime.combine(date,time): 2012-09-12 19:46:05  </li>
+<li>2007-03-04 21:08:12  </li>
+<li>2012  </li>
+<li>9  </li>
+<li>12  </li>
+<li>21  </li>
+<li>8  </li>
+<li>12  </li>
+<li>0  </li>
+<li>None  </li>
+<li>2012-09-12  </li>
+<li>21:08:12  </li>
+<li>2013-09-12 21:08:12  </li>
+<li>time.struct_time(tm_year=2012, tm_mon=9, tm_mday=12, tm_hour=21, tm_min=8, tm_sec=12, tm_wday=2, tm_yday=256, tm_isdst=-1)  </li>
+<li>time.struct_time(tm_year=2012, tm_mon=9, tm_mday=12, tm_hour=21, tm_min=8, tm_sec=12, tm_wday=2, tm_yday=256, tm_isdst=0)  </li>
+<li>734758  </li>
+<li>2  </li>
+<li>(2012, 37, 3)  </li>
+<li>(%Y-%m-%d %H:%M:%S %f): 2014-05-04 15:58:19 326295  </li>
+<li>(%Y-%m-%d %H:%M:%S %p): 14-05-04 03:58:19 PM  </li>
+<li>%a: Sun   </li>
+<li>%A: Sunday   </li>
+<li>%b: May   </li>
+<li>%B: May   </li>
+<li>日期时间%c: Sun May  4 15:58:19 2014   </li>
+<li>日期%x：05/04/14   </li>
+<li>时间%X：15:58:19   </li>
+<li>今天是这周的第0天   </li>
+<li>今天是今年的第124天   </li>
+<li>今周是今年的第18周   </li>
+</ol>
+<h1 id="运行环境-Python2-x"><a href="#运行环境-Python2-x" class="headerlink" title="运行环境:Python2.x"></a>运行环境:Python2.x</h1><p><strong>[python]</strong> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li><h1 id="coding-utf-8-1"><a href="#coding-utf-8-1" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1></li>
+<li></li>
+<li></li>
+<li>#datetime类  </li>
+<li>#datetime是date与time的结合体，包括date与time的所有信息。  </li>
+<li>#它的构造函数如下：  </li>
+<li>#datetime. datetime (year, month, day[ , hour[ , minute[ , second[ , microsecond[ , tzinfo] ] ] ] ] )  </li>
+<li>#各参数的含义与date、time的构造函数中的一样，要注意参数值的范围。  </li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li><h1 id="1-datetime类定义的类属性与方法：-1"><a href="#1-datetime类定义的类属性与方法：-1" class="headerlink" title="1. datetime类定义的类属性与方法："></a>1. datetime类定义的类属性与方法：</h1></li>
+<li>#datetime.min、datetime.max：datetime所能表示的最小值与最大值；  </li>
+<li>#print: datetime.max: 9999-12-31 23:59:59.999999  </li>
+<li>#print: datetime.min: 0001-01-01 00:00:00  </li>
+<li>from  datetime  import  *   </li>
+<li>import time  </li>
+<li>print   ‘datetime.max:’ , datetime.max    </li>
+<li>print   ‘datetime.min:’ , datetime.min    </li>
+<li>#datetime.resolution：datetime最小单位；  </li>
+<li>#print: datetime.resolution: 0:00:00.000001  </li>
+<li>print   ‘datetime.resolution:’ , datetime.resolution   </li>
+<li>#datetime.today()：返回一个表示当前本地时间的datetime对象；  </li>
+<li>#print: today(): 2012-09-12 19:37:50.721000  </li>
+<li>print   ‘today():’ , datetime.today()   </li>
+<li>#datetime.now([tz])：返回一个表示当前本地时间的datetime对象，如果提供了参数tz，则获取tz参数所指时区的本地时间；  </li>
+<li>#print: now(): 2012-09-12 19:37:50.738000  </li>
+<li>print   ‘now():’ , datetime.now()   </li>
+<li>#datetime.utcnow()：返回一个当前utc时间的datetime对象；  </li>
+<li>#print: 2012-09-12 11:37:50.739000  </li>
+<li>print   ‘utcnow():’ , datetime.utcnow()    </li>
+<li>#datetime.fromtimestamp(timestamp[, tz])：根据时间戮创建一个datetime对象，参数tz指定时区信息；  </li>
+<li>#print: fromtimestamp(tmstmp): 2012-09-12 19:37:50.741000  </li>
+<li>print   ‘fromtimestamp(tmstmp):’ , datetime.fromtimestamp(time.time())   </li>
+<li>#datetime.utcfromtimestamp(timestamp)：根据时间戮创建一个datetime对象；  </li>
+<li>#print: utcfromtimestamp(tmstmp): 2012-09-12 11:37:50.742000  </li>
+<li>print   ‘utcfromtimestamp(tmstmp):’ , datetime.utcfromtimestamp(time.time())   </li>
+<li>#datetime.combine(date, time)：根据date和time，创建一个datetime对象；  </li>
+<li>#print: datetime.combine(date,time):  2012-09-12 19:46:05  </li>
+<li>d = date(2012,9,12)  </li>
+<li>from  datetime  import  *   </li>
+<li>t = time(19,46,5)  </li>
+<li>print ‘datetime.combine(date,time): ‘,datetime.combine(d,t)  </li>
+<li>#datetime.strptime(date_string, format)：将格式字符串转换为datetime对象；  </li>
+<li>#print: 2007-03-04 21:08:12  </li>
+<li>print datetime.strptime(“2007-03-04 21:08:12”, “%Y-%m-%d %H:%M:%S”)  </li>
+<li></li>
+<li></li>
+<li>#2. datetime类提供的实例方法与属性  </li>
+<li>dt = datetime.strptime(“2012-09-12 21:08:12”, “%Y-%m-%d %H:%M:%S”)  </li>
+<li>#print: 2012 9 12 21 8 12 0 None  </li>
+<li>print dt.year,dt.month,dt.day,dt.hour,dt.minute,dt.second,dt.microsecond,dt.tzinfo  </li>
+<li>print dt.date()  </li>
+<li>print dt.time()  </li>
+<li>print dt.replace(year = 2013)  </li>
+<li>print dt.timetuple()  </li>
+<li>print dt.utctimetuple()  </li>
+<li>print dt.toordinal()  </li>
+<li>print dt.weekday()  </li>
+<li>print dt.isocalendar()  </li>
+<li>#print dt.isoformat([sep])  </li>
+<li>#datetime. ctime ()：返回一个日期时间的C格式字符串，等效于time.ctime(time.mktime(dt.timetuple()))；  </li>
+<li></li>
+<li></li>
+<li>#3. 格式字符串  </li>
+<li><h1 id="datetime-strftime-format-1"><a href="#datetime-strftime-format-1" class="headerlink" title="datetime. strftime (format)"></a>datetime. strftime (format)</h1></li>
+<li><h1 id="a-星期的简写。如-星期三为Web-1"><a href="#a-星期的简写。如-星期三为Web-1" class="headerlink" title="%a 星期的简写。如 星期三为Web"></a>%a 星期的简写。如 星期三为Web</h1></li>
+<li><h1 id="A-星期的全写。如-星期三为Wednesday-1"><a href="#A-星期的全写。如-星期三为Wednesday-1" class="headerlink" title="%A 星期的全写。如 星期三为Wednesday"></a>%A 星期的全写。如 星期三为Wednesday</h1></li>
+<li><h1 id="b-月份的简写。如4月份为Apr-1"><a href="#b-月份的简写。如4月份为Apr-1" class="headerlink" title="%b 月份的简写。如4月份为Apr"></a>%b 月份的简写。如4月份为Apr</h1></li>
+<li><h1 id="B月份的全写。如4月份为April-1"><a href="#B月份的全写。如4月份为April-1" class="headerlink" title="%B月份的全写。如4月份为April"></a>%B月份的全写。如4月份为April</h1></li>
+<li><h1 id="c-日期时间的字符串表示。（如：-04-07-10-10-43-39）-1"><a href="#c-日期时间的字符串表示。（如：-04-07-10-10-43-39）-1" class="headerlink" title="%c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）"></a>%c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）</h1></li>
+<li><h1 id="d-日在这个月中的天数（是这个月的第几天）-1"><a href="#d-日在这个月中的天数（是这个月的第几天）-1" class="headerlink" title="%d:  日在这个月中的天数（是这个月的第几天）"></a>%d:  日在这个月中的天数（是这个月的第几天）</h1></li>
+<li><h1 id="f-微秒（范围-0-999999-）-1"><a href="#f-微秒（范围-0-999999-）-1" class="headerlink" title="%f:  微秒（范围[0,999999]）"></a>%f:  微秒（范围[0,999999]）</h1></li>
+<li><h1 id="H-小时（24小时制，-0-23-）-1"><a href="#H-小时（24小时制，-0-23-）-1" class="headerlink" title="%H:  小时（24小时制，[0, 23]）"></a>%H:  小时（24小时制，[0, 23]）</h1></li>
+<li><h1 id="I-小时（12小时制，-0-11-）-1"><a href="#I-小时（12小时制，-0-11-）-1" class="headerlink" title="%I:  小时（12小时制，[0, 11]）"></a>%I:  小时（12小时制，[0, 11]）</h1></li>
+<li><h1 id="j-日在年中的天数-001-366-（是当年的第几天）-1"><a href="#j-日在年中的天数-001-366-（是当年的第几天）-1" class="headerlink" title="%j:  日在年中的天数 [001,366]（是当年的第几天）"></a>%j:  日在年中的天数 [001,366]（是当年的第几天）</h1></li>
+<li><h1 id="m-月份（-01-12-）-1"><a href="#m-月份（-01-12-）-1" class="headerlink" title="%m:  月份（[01,12]）"></a>%m:  月份（[01,12]）</h1></li>
+<li><h1 id="M-分钟（-00-59-）-1"><a href="#M-分钟（-00-59-）-1" class="headerlink" title="%M:  分钟（[00,59]）"></a>%M:  分钟（[00,59]）</h1></li>
+<li><h1 id="p-AM或者PM-1"><a href="#p-AM或者PM-1" class="headerlink" title="%p:  AM或者PM"></a>%p:  AM或者PM</h1></li>
+<li><h1 id="S-秒（范围为-00-61-，为什么不是-00-59-，参考python手册-）-1"><a href="#S-秒（范围为-00-61-，为什么不是-00-59-，参考python手册-）-1" class="headerlink" title="%S:  秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）"></a>%S:  秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）</h1></li>
+<li><h1 id="U-周在当年的周数当年的第几周），星期天作为周的第一天-1"><a href="#U-周在当年的周数当年的第几周），星期天作为周的第一天-1" class="headerlink" title="%U:  周在当年的周数当年的第几周），星期天作为周的第一天"></a>%U:  周在当年的周数当年的第几周），星期天作为周的第一天</h1></li>
+<li><h1 id="w-今天在这周的天数，范围为-0-6-，6表示星期天-1"><a href="#w-今天在这周的天数，范围为-0-6-，6表示星期天-1" class="headerlink" title="%w:  今天在这周的天数，范围为[0, 6]，6表示星期天"></a>%w:  今天在这周的天数，范围为[0, 6]，6表示星期天</h1></li>
+<li><h1 id="W-周在当年的周数（是当年的第几周），星期一作为周的第一天-1"><a href="#W-周在当年的周数（是当年的第几周），星期一作为周的第一天-1" class="headerlink" title="%W:  周在当年的周数（是当年的第几周），星期一作为周的第一天"></a>%W:  周在当年的周数（是当年的第几周），星期一作为周的第一天</h1></li>
+<li><h1 id="x-日期字符串（如：04-07-10）-1"><a href="#x-日期字符串（如：04-07-10）-1" class="headerlink" title="%x:  日期字符串（如：04/07/10）"></a>%x:  日期字符串（如：04/07/10）</h1></li>
+<li><h1 id="X-时间字符串（如：10-43-39）-1"><a href="#X-时间字符串（如：10-43-39）-1" class="headerlink" title="%X:  时间字符串（如：10:43:39）"></a>%X:  时间字符串（如：10:43:39）</h1></li>
+<li><h1 id="y-2个数字表示的年份-1"><a href="#y-2个数字表示的年份-1" class="headerlink" title="%y:  2个数字表示的年份"></a>%y:  2个数字表示的年份</h1></li>
+<li><h1 id="Y-4个数字表示的年份-1"><a href="#Y-4个数字表示的年份-1" class="headerlink" title="%Y:  4个数字表示的年份"></a>%Y:  4个数字表示的年份</h1></li>
+<li><h1 id="z-与utc时间的间隔-（如果是本地时间，返回空字符串）-1"><a href="#z-与utc时间的间隔-（如果是本地时间，返回空字符串）-1" class="headerlink" title="%z:  与utc时间的间隔 （如果是本地时间，返回空字符串）"></a>%z:  与utc时间的间隔 （如果是本地时间，返回空字符串）</h1></li>
+<li><h1 id="Z-时区名称（如果是本地时间，返回空字符串）-1"><a href="#Z-时区名称（如果是本地时间，返回空字符串）-1" class="headerlink" title="%Z:  时区名称（如果是本地时间，返回空字符串）"></a>%Z:  时区名称（如果是本地时间，返回空字符串）</h1></li>
+<li><h1 id="gt-1"><a href="#gt-1" class="headerlink" title="%%:  %% =&gt; %"></a>%%:  %% =&gt; %</h1></li>
+<li></li>
+<li></li>
+<li>dt = datetime.now()  </li>
+<li>#print: (%Y-%m-%d %H:%M:%S %f):  2012-09-12 23:04:27 145000  </li>
+<li>print ‘(%Y-%m-%d %H:%M:%S %f): ‘, dt.strftime(‘%Y-%m-%d %H:%M:%S %f’)  </li>
+<li>#print: (%Y-%m-%d %H:%M:%S %p):  12-09-12 11:04:27 PM  </li>
+<li>print ‘(%Y-%m-%d %H:%M:%S %p): ‘, dt.strftime(‘%y-%m-%d %I:%M:%S %p’)  </li>
+<li>#print: %a: Wed   </li>
+<li>print ‘%%a: %s ‘ % dt.strftime(‘%a’)  </li>
+<li>#print: %A: Wednesday  </li>
+<li>print ‘%%A: %s ‘ % dt.strftime(‘%A’)  </li>
+<li>#print: %b: Sep   </li>
+<li>print ‘%%b: %s ‘ % dt.strftime(‘%b’)  </li>
+<li>#print: %B: September  </li>
+<li>print ‘%%B: %s ‘ % dt.strftime(‘%B’)  </li>
+<li>#print: 日期时间%c: 09/12/12 23:04:27  </li>
+<li>print ‘日期时间%%c: %s ‘ % dt.strftime(‘%c’)  </li>
+<li>#print: 日期%x：09/12/12  </li>
+<li>print ‘日期%%x：%s ‘ % dt.strftime(‘%x’)  </li>
+<li>#print: 时间%X：23:04:27  </li>
+<li>print ‘时间%%X：%s ‘ % dt.strftime(‘%X’)  </li>
+<li>#print: 今天是这周的第3天  </li>
+<li>print ‘今天是这周的第%s天 ‘ % dt.strftime(‘%w’)  </li>
+<li>#print: 今天是今年的第256天   </li>
+<li>print ‘今天是今年的第%s天 ‘ % dt.strftime(‘%j’)  </li>
+<li>#print: 今周是今年的第37周  </li>
+<li>print ‘今周是今年的第%s周 ‘ % dt.strftime(‘%U’)  </li>
+</ol>
+<p>顶</p>
+<pre><code>0
+</code></pre><p>踩</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/09/PostgreSQL连接Python/">
+  <time datetime="2016-08-08T21:45:00.000Z">
+    2016-08-09
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/08/09/PostgreSQL连接Python/">PostgreSQL连接Python</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>PostgreSQL可以用Python psycopg2模块集成。 sycopg2是Python编程语言的PostgreSQL数据库的适配器。<br>其程序代码少，速度快，稳定。不需要单独安装这个模块，因为它默认情况下被运往随着Python版本在2.5.x一起的。如果不把它安装在机器上，然后可<br>以使用pip命令安装它，如下所示：</p>
+<pre><code>$sudo pip install psycopg2
+ www.yiibai.com 
+</code></pre><p>要使用psycopg2的模块，首先必须创建一个Connection对象，它表示数据库然后再可以选择创建游标对象，这将帮助执行的所有SQL语句。<br>www.yiibai.com</p>
+<h2 id="Python-psycopg2-模块APIs"><a href="#Python-psycopg2-模块APIs" class="headerlink" title="Python psycopg2 模块APIs"></a>Python psycopg2 模块APIs</h2><p>以下是psycopg2的重要的的模块例程可以满足Python程序与PostgreSQL数据库的工作。如果寻找一个更复杂的应用程序，那么可以看看Python<br>psycopg2的模块的官方文档。 www.yiibai.com</p>
+<table>
+<thead>
+<tr>
+<th>S.N.</th>
+<th>API &amp; 描述  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>**psycopg2.connect(database=”testdb”, user=”postgres”,</td>
+</tr>
+</tbody>
+</table>
+<p>password=”cohondob”, host=”127.0.0.1”, port=”5432”)**  </p>
+<p>这个API打开一个连接到PostgreSQL数据库。如果成功打开数据库时，它返回一个连接对象。 www.yiibai.com  </p>
+<p>2 |  <strong>connection.cursor()</strong>  </p>
+<p>该程序创建一个光标将用于整个数据库使用Python编程。 yiibai.com  </p>
+<p>3 |  <strong>cursor.execute(sql [, optional parameters])</strong>  </p>
+<p>此例程执行SQL语句。可被参数化的SQL语句（即占位符，而不是SQL文字）。 psycopg2的模块支持占位符用％s标志 yiibai.com</p>
+<p>例如：cursor.execute(“insert into people values (%s, %s)”, (who, age))</p>
+<p>4 |  <strong>curosr.executemany(sql, seq_of_parameters)</strong>  </p>
+<p>该程序执行SQL命令对所有参数序列或序列中的sql映射。 www.yiibai.com  </p>
+<p>5 |  <strong>curosr.callproc(procname[, parameters])</strong>  </p>
+<p>这个程序执行的存储数据库程序给定的名称。该程序预计为每一个参数，参数的顺序必须包含一个条目。</p>
+<p>6 |  <strong>cursor.rowcount</strong>  </p>
+<p>这个只读属性，它返回数据库中的行的总数已修改，插入或删除最后 execute*().</p>
+<p>7 |  <strong>connection.commit()</strong>  </p>
+<p>此方法提交当前事务。如果不调用这个方法，无论做了什么修改，自从上次调用commit()是不可见的，从其他的数据库连接。</p>
+<p>8 |  <strong>connection.rollback()</strong>  </p>
+<p>此方法会回滚任何更改数据库自上次调用commit（）方法。</p>
+<p>9 |  <strong>connection.close()</strong>  </p>
+<p>此方法关闭数据库连接。请注意，这并不自动调用commit（）。如果你只是关闭数据库连接而不调用commit（）方法首先，那么所有更改将会丢失！<br>www.yiibai.com  </p>
+<p>10 |  <strong>cursor.fetchone()</strong>  </p>
+<p>这种方法提取的查询结果集的下一行，返回一个序列，或者无当没有更多的数据是可用的。</p>
+<p>11 |  <strong>cursor.fetchmany([size=cursor.arraysize])</strong>  </p>
+<p>这个例程中取出下一个组的查询结果的行数，返回一个列表。当没有找到记录，返回空列表。该方法试图获取尽可能多的行所显示的大小参数。</p>
+<p>12 |  <strong>cursor.fetchall()</strong>  </p>
+<p>这个例程获取所有查询结果（剩余）行，返回一个列表。空行时则返回空列表。 www.yiibai.com  </p>
+<h2 id="连接到数据库"><a href="#连接到数据库" class="headerlink" title="连接到数据库"></a>连接到数据库</h2><p>Python代码显示了如何连接到一个现有的数据库。如果数据库不存在，那么它就会被创建，最终将返回一个数据库对象。 yiibai.com</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+
+print &quot;Opened database successfully&quot;  
+</code></pre><p>在这里，也可以提供数据库testdb的名称，如果数据库成功打开，那么它会给下面的消息：</p>
+<pre><code>Open database successfully
+</code></pre><h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><p>以下Python程序将使用以前创建的数据库中创建一个表：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+cur.execute(&apos;&apos;&apos;CREATE TABLE COMPANY
+       (ID INT PRIMARY KEY     NOT NULL,
+       NAME           TEXT    NOT NULL,
+       AGE            INT     NOT NULL,
+       ADDRESS        CHAR(50),
+       SALARY         REAL);&apos;&apos;&apos;)
+print &quot;Table created successfully&quot;
+
+conn.commit()
+conn.close()  
+</code></pre><p>上述程序执行时，它会创建表COMPANY 在数据库test.db中，它会显示以下消息：</p>
+<pre><code>Opened database successfully
+Table created successfully
+</code></pre><h2 id="INSERT-操作"><a href="#INSERT-操作" class="headerlink" title="INSERT 操作"></a>INSERT 操作</h2><p>Python程序显示了我们如何创建表COMPANY 在上面的例子中创建表中的记录：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+
+cur.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (1, &apos;Paul&apos;, 32, &apos;California&apos;, 20000.00 )&quot;);
+
+cur.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (2, &apos;Allen&apos;, 25, &apos;Texas&apos;, 15000.00 )&quot;);
+
+cur.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (3, &apos;Teddy&apos;, 23, &apos;Norway&apos;, 20000.00 )&quot;);
+
+cur.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (4, &apos;Mark&apos;, 25, &apos;Rich-Mond &apos;, 65000.00 )&quot;);
+
+conn.commit()
+print &quot;Records created successfully&quot;;
+conn.close() yiibai.com 
+</code></pre><p>上述程序执行时，它会创建COMPANY表中的记录，并显示以下两行：</p>
+<pre><code>Opened database successfully
+Records created successfully
+ yiibai.com 
+</code></pre><h2 id="SELECT-操作"><a href="#SELECT-操作" class="headerlink" title="SELECT 操作"></a>SELECT 操作</h2><p>Python程序，显示如何获取并显示COMPANY 表在上面的例子中创建的记录：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+
+cur.execute(&quot;SELECT id, name, address, salary  from COMPANY&quot;)
+rows = cur.fetchall()
+for row in rows:
+   print &quot;ID = &quot;, row[0]
+   print &quot;NAME = &quot;, row[1]
+   print &quot;ADDRESS = &quot;, row[2]
+   print &quot;SALARY = &quot;, row[3], &quot;\n&quot;
+
+print &quot;Operation done successfully&quot;;
+conn.close()  
+</code></pre><p>当上述程序执行时，它会产生以下结果：</p>
+<pre><code>Opened database successfully
+ID =  1
+NAME =  Paul
+ADDRESS =  California
+SALARY =  20000.0
+
+ID =  2
+NAME =  Allen
+ADDRESS =  Texas
+SALARY =  15000.0
+
+ID =  3
+NAME =  Teddy
+ADDRESS =  Norway
+SALARY =  20000.0
+
+ID =  4
+NAME =  Mark
+ADDRESS =  Rich-Mond
+SALARY =  65000.0
+
+Operation done successfully
+</code></pre><h2 id="UPDATE-操作"><a href="#UPDATE-操作" class="headerlink" title="UPDATE 操作"></a>UPDATE 操作</h2><p>Python代码显示如何，我们可以使用UPDATE语句来更新记录，然后从COMPANY表获取并显示更新的记录：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+
+cur.execute(&quot;UPDATE COMPANY set SALARY = 25000.00 where ID=1&quot;)
+conn.commit
+print &quot;Total number of rows updated :&quot;, cur.rowcount
+
+cur.execute(&quot;SELECT id, name, address, salary  from COMPANY&quot;)
+rows = cur.fetchall()
+for row in rows:
+   print &quot;ID = &quot;, row[0]
+   print &quot;NAME = &quot;, row[1]
+   print &quot;ADDRESS = &quot;, row[2]
+   print &quot;SALARY = &quot;, row[3], &quot;\n&quot;
+
+print &quot;Operation done successfully&quot;;
+conn.close()  
+</code></pre><p>当上述程序执行时，它会产生以下结果：</p>
+<pre><code>Opened database successfully
+Total number of rows updated : 1
+ID =  1
+NAME =  Paul
+ADDRESS =  California
+SALARY =  25000.0
+
+ID =  2
+NAME =  Allen
+ADDRESS =  Texas
+SALARY =  15000.0
+
+ID =  3
+NAME =  Teddy
+ADDRESS =  Norway
+SALARY =  20000.0
+
+ID =  4
+NAME =  Mark
+ADDRESS =  Rich-Mond
+SALARY =  65000.0
+
+Operation done successfully
+</code></pre><h2 id="DELETE-操作"><a href="#DELETE-操作" class="headerlink" title="DELETE 操作"></a>DELETE 操作</h2><p>Python代码显示了如何我们可以使用DELETE语句删除记录，然后获取并显示COMPANY 表剩余的记录：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+
+cur.execute(&quot;DELETE from COMPANY where ID=2;&quot;)
+conn.commit
+print &quot;Total number of rows deleted :&quot;, cur.rowcount
+
+cur.execute(&quot;SELECT id, name, address, salary  from COMPANY&quot;)
+rows = cur.fetchall()
+for row in rows:
+   print &quot;ID = &quot;, row[0]
+   print &quot;NAME = &quot;, row[1]
+   print &quot;ADDRESS = &quot;, row[2]
+   print &quot;SALARY = &quot;, row[3], &quot;\n&quot;
+
+print &quot;Operation done successfully&quot;;
+conn.close()  
+</code></pre><p>当上述程序执行时，它会产生以Opened database successfully</p>
+<pre><code>_Total number of rows deleted : 1
+ID =  1
+NAME =  Paul
+ADDRESS =  California
+SALARY =  20000.0
+
+ID =  3
+NAME =  Teddy
+ADDRESS =  Norway
+SALARY =  20000.0
+
+ID =  4
+NAME =  Mark
+ADDRESS =  Rich-Mond
+SALARY =  65000.0
+
+Operation done successfully   
+
+_转自：&lt;http://www.yiibai.com/html/postgresql/2013/080998.html&gt;_  
+www.yiibai.c  
+
+转子_
+</code></pre>
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/06/Castle/">
+  <time datetime="2016-08-06T15:50:00.000Z">
+    2016-08-06
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/08/06/Castle/">Castle</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id="Castle-AOP"><a href="#Castle-AOP" class="headerlink" title="[Castle AOP"></a>[Castle AOP</h1><p>系列(一)：对类方法调用的拦截（有源码）](<a href="http://blog.csdn.net/liuweitoo/article/details/8166976" target="_blank" rel="external">http://blog.csdn.net/liuweitoo/article/details/8166976</a>)</p>
+<p>标签：<br><a href="http://www.csdn.net/tag/aop" target="_blank" rel="external">aop</a><a href="http://www.csdn.net/tag/AOP" target="_blank" rel="external">AOP</a><a href="http://www.csdn.net/tag/Castle" target="_blank" rel="external">Castle</a><a href="http://www.csdn.net/tag/%e5%af%b9%e7%b1%bb%e6%96%b9%e6%b3%95%e8%b0%83%e7%94%a8%e7%9a%84%e6%8b%a6%e6%88%aa" target="_blank" rel="external">对类方法调用的拦截</a></p>
+<p>2012-11-09 16:51 4207人阅读<br><a href="http://blog.csdn.net/liuweitoo/article/details/8166976#comments" target="_blank" rel="external">评论</a>(1) 收藏<br><a href="http://blog.csdn.net/liuweitoo/article/details/8166976#report" title="举报" target="_blank" rel="external">举报</a></p>
+<p><img src="http://static.blog.csdn.net/images/category_icon.jpg" alt=""> 分类：</p>
+<p>OO（17） <img src="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg" alt=""></p>
+<p>版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+<p>目录<a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="系统根据文章中H1到H6标签自动生成文章目录" target="_blank" rel="external">(?)</a><a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="展开" target="_blank" rel="external">[+]</a></p>
+<p>Castle的相关网站：</p>
+<p><a href="http://www.castleproject.org/" target="_blank" rel="external">http://www.castleproject.org/</a><br><a href="http://www.castleproject.org/projects/dynamicproxy/" target="_blank" rel="external">http://www.castleproject.org/projects/dynamicproxy/</a><br><a href="http://sourceforge.net/projects/castleproject/" target="_blank" rel="external">http://sourceforge.net/projects/castleproject/</a></p>
+<h2 id="在Castle的2-5以上版本，已经将-Castle-DynamicProxy2-dll-里有内容，集成到-Castle-Core-dll-中。"><a href="#在Castle的2-5以上版本，已经将-Castle-DynamicProxy2-dll-里有内容，集成到-Castle-Core-dll-中。" class="headerlink" title="在Castle的2.5以上版本，已经将 Castle.DynamicProxy2.dll 里有内容，集成到 Castle.Core.dll 中。"></a>在Castle的2.5以上版本，已经将 Castle.DynamicProxy2.dll 里有内容，集成到 Castle.Core.dll 中。</h2><p>所以，朋友们，不需要再去哪里找Castle.DynamicProxy2.dll了。</p>
+<p>当然，除非你使用低于2.5的版本。</p>
+<p>本文使用的Castle.Core.dll是3.1版本。</p>
+<p><strong>由于方法的拦载是动态构建类型，所以我们在拦截类方法时，可以采取用动态构造类的方式，从该类继承一个子类，重载并改写类中需要拦截的方法。</strong></p>
+<p><strong>因此，我们不难理解，为什么在Castle 的 AOP中实现对类方法的拦截，都需要该类中的可被拦载的方法都是能够被子类重载的(override)。</strong></p>
+<h2 id="CastleAOPTest-Lib-Person的代码"><a href="#CastleAOPTest-Lib-Person的代码" class="headerlink" title="CastleAOPTest.Lib.Person的代码"></a>CastleAOPTest.Lib.Person的代码</h2><p><strong>[csharp]</strong> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>using System;  </li>
+<li>using System.Collections.Generic;  </li>
+<li>using System.Linq;  </li>
+<li>using System.Text;  </li>
+<li></li>
+<li>namespace CastleAOPTest.Lib  </li>
+<li>{  </li>
+<li>public class Person  </li>
+<li>{  </li>
+<li>public virtual void SayHello()  </li>
+<li>{  </li>
+<li>Console.WriteLine(“您好！”);  </li>
+<li>}  </li>
+<li></li>
+<li>public virtual void SayName(string pHometown)  </li>
+<li>{  </li>
+<li>Console.WriteLine(“我是天涯人，我来自：{0}。”, pHometown);  </li>
+<li>}  </li>
+<li></li>
+<li>public void SayOther()  </li>
+<li>{  </li>
+<li>Console.WriteLine(“是的，我是中国人。”);  </li>
+<li>}  </li>
+<li></li>
+<li>}  </li>
+<li>}  </li>
+</ol>
+<p>这个类型没什么好说的，只是输出一些字符串而以。</p>
+<p>惟一需要注意的是：前两个方法都是虚方法，而”SayOther”不是虚方法，即是说”SayOther”不可以用一般的方式重载。</p>
+<h2 id="方法拦载器CastleAOPTest-Lib-AOP-SimpleInterceptor的代码："><a href="#方法拦载器CastleAOPTest-Lib-AOP-SimpleInterceptor的代码：" class="headerlink" title="方法拦载器CastleAOPTest.Lib.AOP.SimpleInterceptor的代码："></a>方法拦载器CastleAOPTest.Lib.AOP.SimpleInterceptor的代码：</h2><p><strong>[csharp]</strong> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>using System;  </li>
+<li>using System.Collections.Generic;  </li>
+<li>using System.Linq;  </li>
+<li>using System.Text;  </li>
+<li></li>
+<li>using CastleAOPTest.Lib;  </li>
+<li>using Castle.DynamicProxy;  </li>
+<li></li>
+<li>namespace CastleAOPTest.Lib.AOP  </li>
+<li>{  </li>
+<li>public class SimpleInterceptor : StandardInterceptor  </li>
+<li>{  </li>
+<li>protected override void PreProceed(IInvocation invocation)  </li>
+<li>{  </li>
+<li>Console.WriteLine(“调用前的拦截器，方法名是：{0}。”, invocation.Method.Name);  </li>
+<li>base.PreProceed(invocation);  </li>
+<li></li>
+<li>}  </li>
+<li></li>
+<li>protected override void PerformProceed(IInvocation invocation)  </li>
+<li>{  </li>
+<li>Console.WriteLine(“拦截的方法返回时调用的拦截器，方法名是：{0}。”, invocation.Method.Name);  </li>
+<li>base.PerformProceed(invocation);  </li>
+<li></li>
+<li>}  </li>
+<li></li>
+<li></li>
+<li>protected override void PostProceed(IInvocation invocation)  </li>
+<li>{  </li>
+<li>Console.WriteLine(“调用后的拦截器，方法名是：{0}。”, invocation.Method.Name);  </li>
+<li>base.PostProceed(invocation);  </li>
+<li></li>
+<li>}  </li>
+<li>}  </li>
+<li>}  </li>
+</ol>
+<p>Castle DynamicProxy提供了一个标准的方法拦截器，在一般的情况下，从这个标准的拦截器继承便可以完成大部分方法拦载上面的需求。</p>
+<p>StandardInterceptor中提供了三个可重载的方法：</p>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><p>1.PreProcced，在进入拦截的方法之前调用。</p>
+<h3 id="2-PerformProceed，在拦截的方法返回时调用。"><a href="#2-PerformProceed，在拦截的方法返回时调用。" class="headerlink" title="2.PerformProceed，在拦截的方法返回时调用。"></a>2.PerformProceed，在拦截的方法返回时调用。</h3><h3 id="3-PostProcced，在拦截的方法运行完成后调用。"><a href="#3-PostProcced，在拦截的方法运行完成后调用。" class="headerlink" title="3.PostProcced，在拦截的方法运行完成后调用。"></a>3.PostProcced，在拦截的方法运行完成后调用。</h3><h2 id="如何使用这个写好的拦截器"><a href="#如何使用这个写好的拦截器" class="headerlink" title="如何使用这个写好的拦截器"></a>如何使用这个写好的拦截器</h2><p><strong>[csharp]</strong> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/liuweitoo/article/details/8166976#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>using System;  </li>
+<li>using System.Collections.Generic;  </li>
+<li>using System.Linq;  </li>
+<li>using System.Text;  </li>
+<li></li>
+<li>using Castle.DynamicProxy;  </li>
+<li>using CastleAOPTest.Lib;  </li>
+<li>using CastleAOPTest.Lib.AOP;   </li>
+<li></li>
+<li>namespace CastleAOPTest.Run  </li>
+<li>{  </li>
+<li>class Program  </li>
+<li>{  </li>
+<li>static void Main(string[] args)  </li>
+<li>{  </li>
+<li>ProxyGenerator generator = new ProxyGenerator();//实例化【代理类生成器】  </li>
+<li>SimpleInterceptor interceptor = new SimpleInterceptor();//实例化【拦截器】  </li>
+<li></li>
+<li>//使用【代理类生成器】创建Person对象，而不是使用new关键字来实例化  </li>
+<li>Person person = generator.CreateClassProxy&lt;Person&gt;(interceptor);  </li>
+<li></li>
+<li></li>
+<li>Console.WriteLine(“当前类型:{0},父类型:{1}”,person.GetType(), person.GetType().BaseType);  </li>
+<li>Console.WriteLine();  </li>
+<li></li>
+<li></li>
+<li>person.SayHello();//跟普通调用没有两样吧？  </li>
+<li>Console.WriteLine();  </li>
+<li></li>
+<li>person.SayName(“福建”);//跟普通调用没有两样吧？  </li>
+<li>Console.WriteLine();  </li>
+<li></li>
+<li>person.SayOther();//它不是虚方法，无法拦截。待会检测输出情况就知道了。     </li>
+<li></li>
+<li></li>
+<li></li>
+<li>Console.ReadLine();     </li>
+<li></li>
+<li>}  </li>
+<li>}  </li>
+<li>}  </li>
+</ol>
+<p>ProxyGenerator其实是一个动态的类型构造器，它依据Person类型，并加入相应的拦载器构造出了一个新的类型，我们来查看一下运行输出：</p>
+<p><img src="http://img.my.csdn.net/uploads/201211/09/1352451202_8669.jpg" alt=""></p>
+<p>根据输出的第一行，我们可以知道，ProxyGenerator构造了一个新的类型，这个类型继承自Person。</p>
+<p>由于这个类型的SayOther方法不可以被子类重载，所以这个方法无法被拦截。</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/30/timestamp 与 rowversion/">
+  <time datetime="2016-07-29T20:40:00.000Z">
+    2016-07-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/07/30/timestamp 与 rowversion/">timestamp 与 rowversion</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>联机丛书：</p>
+<p>timestamp</p>
+<p>timestamp 这种数据类型表现自动生成的二进制数，确保这些数在数据库中是唯一的。timestamp 一般用作给表行加版本戳的机制。存储大小为 8<br>字节。</p>
+<p>注释</p>
+<p>Transact-SQL timestamp 数据类型与在 SQL-92 标准中定义的 timestamp 数据类型不同。SQL-92 timestamp<br>数据类型等价于 Transact-SQL datetime 数据类型。</p>
+<p>Microsoft® SQL Server™ 将来的版本可能会修改 Transact-SQL timestamp<br>数据类型的行为，使它与在标准中定义的行为一致。到那时，当前的 timestamp 数据类型将用 rowversion 数据类型替换。</p>
+<p>Microsoft® SQL Server™ 2000 引入了 timestamp 数据类型的 rowversion 同义词。在 DDL 语句中尽可能使用<br>rowversion 而不使用 timestamp。rowversion 受数据类型同义词行为的制约。有关更多信息，请参见数据类型同义词。</p>
+<p>在 CREATE TABLE 或 ALTER TABLE 语句中，不必为 timestamp 数据类型提供列名：</p>
+<p>CREATE TABLE ExampleTable (PriKey int PRIMARY KEY, timestamp)</p>
+<p>如果没有提供列名，SQL Server 将生成 timestamp 的列名。rowversion 数据类型同义词不具有这样的行为。指定 rowversion<br>时必须提供列名。</p>
+<p>一个表只能有一个 timestamp 列。每次插入或更新包含 timestamp 列的行时，timestamp 列中的值均会更新。这一属性使<br>timestamp 列不适合作为键使用，尤其是不能作为主键使用。对行的任何更新都会更改 timestamp<br>值，从而更改键值。如果该列属于主键，那么旧的键值将无效，进而引用该旧值的外键也将不再有效。如果该表在动态游标中引用，则所有更新均会更改游标中行的位置。如果该列属于索引键，则对数据行的所有更新还将导致索引更新。</p>
+<p>不可为空的 timestamp 列在语义上等价于 binary(8) 列。可为空的 timestamp 列在语义上等价于 varbinary(8) 列。</p>
+<pre><code>IF OBJECT_ID(&apos;test_timestamp&apos;) IS NOT NULL  
+BEGIN  
+    DROP TABLE test_timestamp  
+END  
+GO  
+CREATE TABLE test_timestamp  
+(  
+    id INT PRIMARY KEY IDENTITY(1,1),  
+    tname NVARCHAR(20),  
+    [rowversion] TIMESTAMP    
+)  
+GO  
+INSERT INTO test_timestamp (tname)  
+SELECT &apos;t1&apos; UNION  
+SELECT &apos;t2&apos; UNION  
+SELECT &apos;t3&apos; UNION  
+SELECT &apos;t4&apos;  
+
+SELECT * FROM test_timestamp tt  
+
+UPDATE test_timestamp  
+SET tname = &apos;t1_update&apos;  
+WHERE id=1  
+--1. 仅仅获取已更新的行  
+--   但之前的最大的那个 rowversion 要另外记录  
+SELECT * FROM test_timestamp tt WHERE tt.rowversion&gt;0x00000000000007DC  
+
+--2. 在两人同时修改同一条数据时，避免 先取出/后保存 覆盖前面的记录  
+DECLARE @rowversion TIMESTAMP  
+SELECT @rowversion = rowversion FROM test_timestamp tt WHERE tt.id=1;  
+--过了 5 秒后再修改, 在这 5　秒之内如果有其它update语句修改过此行则此修改无效了.  
+waitfor delay &apos;00:00:05&apos;  
+update test_timestamp set tname=&apos;t1_u01&apos; where id=1 AND rowversion=@rowversion  
+
+SELECT * FROM test_timestamp tt WHERE tt.id=1  
+</code></pre><p>转自：<a href="http://blog.csdn.net/yenange/article/details/14450691" target="_blank" rel="external">http://blog.csdn.net/yenange/article/details/14450691</a></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/19/Font Awesome字体图标/">
+  <time datetime="2016-07-18T22:42:00.000Z">
+    2016-07-19
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/07/19/Font Awesome字体图标/">Font Awesome字体图标</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是字体图标</strong><br>字体图标是一个包含许多图标的字体库。<br>可以理解为一种特殊的字体，只不过里面包含的都是图标。</p>
+<p><strong>2.Font Awesome图标字体库</strong><br>Font Awesome是目前最受欢迎最全面的图标字体库。<br>主要特点如下：<br>1)是一种字体，包含605个图标(截止4.5.0版本)<br>2)纯CSS控制，能够轻松定义图标的颜色、大小、阴影及任何CSS能够实现的效果。<br>3)无限缩放，矢量图标在任何尺寸下都一模一样<br>4)免费使用，包括商业和非商业项目<br>5)兼容多浏览器版本</p>
+<p>下图是Font Awesome图标字体库种的部分图标，完整图标可访问官网查看：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160719143444841-1251219123.png" alt=""></p>
+<p><strong>3.Font Awesome使用示例</strong><br>1)首先将整个字体库文件夹font-awesome放到工程项目中<br>2)在html页面的头部把font-awesome.min.css引进来</p>
+<pre><code>&lt;link ref=&quot;stylesheet&quot; href=&quot;font-awesome/css/font-awesome.min.css&quot;&gt;
+</code></pre><p>3)可在页面的任何地方使用&lt;i&gt;标签来使用Font Awesome字体图标。<br>方法为fa前缀+图标名字<br>如使用微信图标：</p>
+<pre><code>&lt;i class=&quot;fa fa-weixin&quot;&gt;&lt;/i&gt;
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160719143502341-754968919.png" alt=""></p>
+<p><strong>4.font-awesome/css/font-awesome.css文件</strong><br>文件的开头是这么一段语句：</p>
+<pre><code>@font-face {
+font-family: &apos;FontAwesome&apos;;
+src: url(&apos;../fonts/fontawesome-webfont.eot?v=4.6.3&apos;);
+src: url(&apos;../fonts/fontawesome-webfont.eot?#iefix&amp;v=4.6.3&apos;) format(&apos;embedded-opentype&apos;), url(&apos;../fonts/fontawesome-webfont.woff2?v=4.6.3&apos;) format(&apos;woff2&apos;), url(&apos;../fonts/fontawesome-webfont.woff?v=4.6.3&apos;) format(&apos;woff&apos;), url(&apos;../fonts/fontawesome-webfont.ttf?v=4.6.3&apos;) format(&apos;truetype&apos;), url(&apos;../fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular&apos;) format(&apos;svg&apos;);
+font-weight: normal;
+font-style: normal;
+}
+</code></pre><p>@font-face是CSS3中的一个模块，作用是把自定义的字体嵌入到你的网页。<br>该功能兼容多浏览器版本。</p>
+<p>@font-face的语法如下：</p>
+<pre><code>@font-face {
+      font-family: &lt;YourWebFontName&gt;;
+      src: &lt;source&gt; [&lt;format&gt;][,&lt;source&gt; [&lt;format&gt;]]*;
+      [font-weight: &lt;weight&gt;];
+      [font-style: &lt;style&gt;];
+    }
+</code></pre><p>font-family：自定义字体的名称，将被引入到相应元素的font-family<br>src: source:自定义字体的存放路径;format：自定义字体的格式，是为了兼容不同浏览器的识别。<br>font-weight：字体是否为粗体<br>font-style：字体是否为斜体</p>
+<p><strong>5.Font Awesome使用详解</strong><br>1)放大图标尺寸<br>使用fa-lg, fa-2x, fa-3x, fa-4x, fa-5x 样式可以让图标相对于内容，尺寸增大33%，变成2倍，3倍，4倍，5倍。</p>
+<pre><code>&lt;i class=&quot;fa fa-weixin fa-lg&quot;&gt;&lt;/i&gt;微信&amp;nbsp;&amp;nbsp;
+&lt;i class=&quot;fa fa-weixin fa-2x&quot;&gt;&lt;/i&gt;微信&amp;nbsp;&amp;nbsp;
+&lt;i class=&quot;fa fa-weixin fa-3x&quot;&gt;&lt;/i&gt;微信&amp;nbsp;&amp;nbsp;
+&lt;i class=&quot;fa fa-weixin fa-4x&quot;&gt;&lt;/i&gt;微信&amp;nbsp;&amp;nbsp;
+&lt;i class=&quot;fa fa-weixin fa-5x&quot;&gt;&lt;/i&gt;微信&amp;nbsp;&amp;nbsp;
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160719143547732-1635169775.png" alt=""></p>
+<p>2)固定宽度图标<br>使用 fa-fw 可以固定图标宽度</p>
+<pre><code>&lt;i class=&quot;fa fa-weixin fa-fw&quot;&gt;&lt;/i&gt;
+</code></pre><p>3)列表图标<br>使用fa-ul和fa-li可以方便地替换list列表默认图标<br>如下所示：</p>
+<pre><code>&lt;ul class=&quot;fa-ul&quot;&gt;
+&lt;li&gt;&lt;i class=&quot;fa-li fa fa-weixin&quot;&gt;&lt;/i&gt;微信&lt;/li&gt;
+&lt;li&gt;&lt;i class=&quot;fa-li fa fa-weixin&quot;&gt;&lt;/i&gt;微信&lt;/li&gt;
+&lt;li&gt;&lt;i class=&quot;fa-li fa fa-weixin&quot;&gt;&lt;/i&gt;微信&lt;/li&gt;
+&lt;li&gt;&lt;i class=&quot;fa-li fa fa-weixin&quot;&gt;&lt;/i&gt;微信&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160719143610263-117370486.png" alt=""></p>
+<p>4)有边框且漂浮的图标<br>使用fa-border与fa-pull-right或fa-pull-left组合使用，<br>可以方便地实现引用或文章图标。<br>如下所示：</p>
+<pre><code>&lt;i class=&quot;fa fa-weixin fa-3x pull-left fa-border&quot;&gt;&lt;/i&gt;
+微信是一款很火的社交软件，腾讯公司的产品，基于内容分享。
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160719143627513-429802996.png" alt=""></p>
+<p>5)图标旋转动画<br>使用fa-spin可以让图标匀速旋转，使用fa-pulse可以让图标只按8个角度旋转。<br>如下所示：</p>
+<pre><code>&lt;i class=&quot;fa fa-weixin fa-spin&quot;&gt;&lt;/i&gt;&amp;nbsp;
+&lt;i class=&quot;fa fa-weixin fa-pulse&quot;&gt;&lt;/i&gt;
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160719143644935-1284561854.png" alt=""></p>
+<p>6)旋转，翻转图标<br>使用fa-rotate-<em>和fa-flip-</em>可以分别实现图标的旋转和翻转<br>如下所示：</p>
+<pre><code>&lt;i class=&quot;fa fa-weixin fa-rotate-90&quot;&gt;&lt;/i&gt;&amp;nbsp;
+&lt;i class=&quot;fa fa-weixin fa-rotate-180&quot;&gt;&lt;/i&gt;&amp;nbsp;
+&lt;i class=&quot;fa fa-weixin fa-rotate-270&quot;&gt;&lt;/i&gt;&amp;nbsp;
+&lt;i class=&quot;fa fa-weixin fa-flip-horizontal&quot;&gt;&lt;/i&gt;
+&lt;i class=&quot;fa fa-weixin fa-flip-vertical&quot;&gt;&lt;/i&gt;
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160719143700622-1496640132.png" alt=""></p>
+<p>7)叠加图标<br>要叠加多个图标，使用fa-stack设置容器。fa-stack-1x表示正常大小，<br>fa-stack-2x表示更大的图标，fa-inverse表示让图标反色。<br>如下所示：</p>
+<pre><code>&lt;span class=&quot;fa-stack fa-1g&quot;&gt;
+&lt;i class=&quot;fa fa-square-o fa-stack-2x&quot;&gt;&lt;/i&gt;
+&lt;i class=&quot;fa fa-weixin fa-stack-1x&quot;&gt;&lt;/i&gt;
+&lt;/span&gt;
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160719143716529-181575294.png" alt=""></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/15/Linux进程间通信-信号/">
+  <time datetime="2016-07-14T18:44:00.000Z">
+    2016-07-15
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/07/15/Linux进程间通信-信号/">Linux进程间通信-信号</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.什么是信号<br>信号是Linux系统响应某些条件而产生的一个事件，接收到该信号的进程会执行相应的操作。</p>
+<p>2.信号的产生<br>1)由硬件产生，如从键盘输入Ctrl+C可以终止当前进程<br>2)由其他进程发送，如可在shell进程下，使用命令 kill -信号标号 PID，向指定进程发送信号。<br>3)异常，进程异常时会发送信号</p>
+<p>3.信号的处理<br>信号是由操作系统来处理的，说明信号的处理在内核态。<br>信号不一定会立即被处理，此时会储存在信号的信号表中。<br>处理过程示意图：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715103955623-338884053.png" alt=""></p>
+<p>由上图中可看出信号有三种处理方式：<br>1)忽略<br>2)默认处理方式：操作系统设定的默认处理方式<br>3)自定义信号处理方式：可自定义信号处理函数</p>
+<p>4.自定义信号处理方式<br>1)signal函数<br>原型：<br>void (<em>signal(int sig, void (</em>func)(int)))(int);<br>sig:信号值<br>func:信号处理函数指针，参数为信号值<br>代码示例如下：</p>
+<pre><code>#include &lt;signal.h&gt;
+#include &lt;stdio.h&gt;
+void ouch(int sig)
+{
+    printf(&quot;\nOUCH! - I got signal %d\n&quot;, sig);
+    //恢复终端中断信号SIGINT的默认行为
+    (void) signal(SIGINT, SIG_DFL);
+}
+int main()
+{
+    //改变终端中断信号SIGINT的默认行为，使之执行ouch函数
+    //而不是终止程序的执行
+    (void) signal(SIGINT, ouch);
+    while(1)
+    {
+        printf(&quot;Hello World!\n&quot;);
+        sleep(1);
+    }
+    return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104046451-1452925081.png" alt=""></p>
+<p>2)sigaction函数<br>原型：<br>int sigaction(int sig,const struct sigaction <em>act,struct sigaction </em>oact);<br>sig:信号值<br>act:指定信号的动作<br>oact:保存原信号的动作</p>
+<p>sigaction结构体的定义如下：<br>void (*)(int) sa_handler;处理函数指针，相当于signal函数的func参数。<br>sigset_t sa_mask;处理过程中，屏蔽对sa_mask信号集的处理，sa_mask可以消除信号间的竞态。<br>int sa_flags;信号处理修改器：处理函数执行完后，信号处理方式修改。如SA_RESETHAND，将信号处理方式重置为SIG_DFL<br>代码示例如下：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+void ouch(int sig)
+{
+    printf(&quot;\nOUCH! - I got signal %d\n&quot;, sig);
+}
+int main()
+{
+    struct sigaction act;
+    act.sa_handler = ouch;
+    //创建空的信号屏蔽字，即不屏蔽任何信息
+    sigemptyset(&amp;act.sa_mask);
+    //使sigaction函数重置为默认行为
+    act.sa_flags = SA_RESETHAND;
+    sigaction(SIGINT, &amp;act, 0);
+    while(1)
+    {
+        printf(&quot;Hello World!\n&quot;);
+        sleep(1);
+    }
+    return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104126107-306829576.png" alt=""></p>
+<p>4.信号的发送<br>1)kill函数<br>int kill(pid_t pid,int signo);<br>pid:进程ID<br>signo:信号值</p>
+<p>2)raise函数:只能向当前进程发信号<br>int raise(int signo);<br>signo:信号值</p>
+<p>3)abort函数:发送SIGABRT信号，可以让进程异常终止<br>void abort(void);</p>
+<p>4)alarm函数：发送SIGALRM闹钟信号<br>unsigned int alarm(unsigned int seconds);</p>
+<p>5.信号的阻塞<br>阻塞是阻止进程收到该信号，此时信号处于未决状态，放入进程的未决信号表中，<br>当解除对该信号的阻塞时，未决信号会被进程接收。</p>
+<p>1)阻塞信号<br>原型：<br>int sigprocmask(int how,const sigset_t <em>set,sigset_t </em>oset);<br>how:设置block阻塞表的方式<br>a.SIG_BLOCK:将信号集添加到block表中<br>b.SIG_UNBLOCK:将信号集从block表中删除<br>c.SIG_SETMASK：将信号集设置为block表<br>set:要设置的集合<br>oset:设置前保存之前block表信息</p>
+<p>2)获取未决信号<br>前面已经讲过，阻塞的信号处于未决的状态，会放入进程的未决信号表。<br>原型：<br>int sigpending(sigset_t *set);<br>set:out型参数，会将获得的当前进程的pending未决表中的信号集传入。</p>
+<p>代码示例如下：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;sys/signal.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;signal.h&gt;
+void func(int num)
+{
+  printf(&quot;catch signal number is %d&quot;,num);
+}
+void printfpendingsignal(sigset_t *set)
+{
+  int i;
+  for(i=1;i&lt;32;++i)
+  {
+    if(sigismember(set,i))
+    {
+      printf(&quot;1&quot;);
+    }
+    else
+    {
+      printf(&quot;0&quot;);
+    }
+  }
+  printf(&quot;\n&quot;);
+}
+int main()
+{ 
+  sigset_t s,p,o;
+  signal(SIGINT,func);
+  sigemptyset(&amp;s);
+  sigemptyset(&amp;p);
+  sigemptyset(&amp;o);
+  sigaddset(&amp;s,SIGINT);
+  sigprocmask(SIG_SETMASK,&amp;s,&amp;o);
+  int count=0;
+  while(1)
+  {
+    sigpending(&amp;p);
+    printfpendingsignal(&amp;p);
+    sleep(1);
+    if(count++==10)
+    {
+      printf(&quot;recover!\n&quot;);
+      sigprocmask(SIG_SETMASK,&amp;o,NULL);
+    }
+  }
+  return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104211076-1829126528.png" alt=""></p>
+<p>6.信号处理函数的安全问题<br>如果信号处理过程中被中断，再次调用，然后返回到第一次调用时，要保证操作的正确性。<br>这就要求信号处理函数必须是可重入的。<br>可重入函数表如下：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104227389-1017398124.png" alt=""></p>
+<p>7.一些常见的信号</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104254889-1228036479.png" alt=""></p>
+<p>如果进程接收到上面的这些信号，又没有安排捕获它，进程就会终止。</p>
+<p>其他的一些信号如下：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160715104314889-1220362811.png" alt=""></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/13/Linux体系结构(二)： Linux系统层次/">
+  <time datetime="2016-07-12T21:52:00.000Z">
+    2016-07-13
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/07/13/Linux体系结构(二)： Linux系统层次/">Linux体系结构(二)： Linux系统层次</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>前一节内容大概介绍了一下Linux的历史由来，各大Linux发行厂商都是基于GNU项目下的所有开源软件，来构建各自己的Linux发行版本，一个完整的Linux发行版本大概可以分为以下四个层次结构:</p>
+<p>Base System =&gt; X Protocol =&gt; Windows Manager =&gt; Application</p>
+<p><strong>1. Base System</strong><br>所谓Base System，也就是一个最小的基本系统，需要包含一些系统必备的开源组件，比如：kernel, filesystem, glibc,<br>bash等。</p>
+<p>这个最小系统最终能达到的层次就是能够启动我们的命令行字符控制终端，也就是一个bash环境，这样一个最小系统可以精简、控制在几十M的大小以内。</p>
+<p><strong>2. X Protocol</strong><br>当我们构建完了最小的基本系统以后，这样一个系统只支持命令行字符终端模式，而无法支持图形化界面，如果想要使我们的Linux系统能够支持图形化界面，必须要有X<br>Protocol的支持，基于这样的一个X协议，就可以在最小系统的层次上，构建Linux的窗口管理器。</p>
+<p>X<br>Protocol仅仅只是一个协议，对于这样一个协议，具体是由什么来实现的呢？在Linux早期的时候，是通过XFree86来实现X协议，经过多年的发展，XFree86已经更替为今天的X.Org项目。</p>
+<p>不管是XFree86, 还是现在的X.Org，在实现X协议的时候，都是基于C/S架构，也就是X Server 和 X Client 的交互模式。关于X<br>Server 和 X Client<br>之间的关系，在接下来的一节中将详细介绍。在这里大家只需明确：如果我们需要支持图形化界面，就需要有X相关的组件来作为一个沟通的桥梁。</p>
+<p>当然，X 并不是唯一的桥梁，有像Wayland这样的新生替代品也已经面世，只是目前尚不成熟，也许在未来的某一天，Wayland将会全面代替现在的 X。</p>
+<p><strong>3. Windows Manager</strong><br>有了X层的支持以后，广大开源软件开发者或开发组织，就可以基于这样的一个接口，来开发上层的图形化窗口管理器，即Windows Manager,<br>比如我们熟知的KDE，Gnome， Xfce， Openbox等，这些图形化的桌面环境也就是对上面提到的X Client的一个具体实现，来和 X<br>Server进行交互通信。</p>
+<p>在一下章节中，将具体讲解X Server, X Client， Xlib， QT， GTK， KDE， Gnome之间的关系。</p>
+<p><strong>4. Application</strong><br>Application也就是指我们的上层图形化应用程序，比如 Liberoffice办公套件，Firefox，Thunderbird，Pidgin等。</p>
+<p>Linux系统中的大多数图形化应用程序都是基于QT或GTK+这两个开发套件来开发的，当然也有像Java， Python等编写的应用程序。</p>
+<p>综上，Linux发行厂商组合上面所描述的四个层次的GNU项目组件，最终提供给用户一个完整的Linux操作系统，下面还是以一张结构图来展示这一节所阐述的Linux层次：</p>
+<p><a href="http://blog.chinaunix.net/attachment/201203/31/26838492_1333183782GtzC.png" target="_blank" rel="external"><img src="http://blog.chinaunix.net/attachment/201203/31/26838492_1333183782GtzC.png" alt=""></a></p>
+<p>转自：<a href="http://blog.chinaunix.net/uid-26838492-id-3156661.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-26838492-id-3156661.html</a></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/13/Linux体系结构(五)： 文件系统/">
+  <time datetime="2016-07-12T21:49:00.000Z">
+    2016-07-13
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/07/13/Linux体系结构(五)： 文件系统/">Linux体系结构(五)： 文件系统</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>上一节主要对Linux系统中的内核空间与用户空间做了简单的分析，在这一节里，将从内核空间和用户空间对Linux文件系统进行一定的剖析。</p>
+<p>谈及文件系统，很多Linux用户都会有一个比较模糊和神秘的概念，如果对文件系统的来龙去脉有一定的了解，相信大家就能走出迷雾，Linux文件系统的整体结构模型大概可以划分为以下层次：<br>Hard Disk =&gt; Disk Driver =&gt; Filesystem(ext3,ext4,btrfs …) =&gt; User<br>Operation</p>
+<p>上面结构模型很简单，有一块物理硬盘，首先这块硬盘需要有硬盘驱动的支持，然后才能在这块硬盘上创建不同的文件系统，然后用户才能使用这块硬盘。但有下面两个问题需要思考：</p>
+<p>(1). 不同的物理硬盘，需要不同的驱动支持，而不同的驱动，所提供的IO操作接口是不一样的，那么，有没有一个统一的IO操作接口呢？</p>
+<p>(2). 不同的文件系统，如ext3, ext4,<br>btrfs等所提供的API也是不一样的，那么，有没有一个统一的东西来对这些不同的文件系统进行一个抽象，以提供一个统一的API接口呢？</p>
+<p>于是，上面的结构层次还可以细分为：</p>
+<p><a href="http://blog.chinaunix.net/attachment/201204/7/26838492_1333808001bBLv.png" target="_blank" rel="external"><img src="http://blog.chinaunix.net/attachment/201204/7/26838492_1333808001bBLv.png" alt=""></a></p>
+<p>上面的结构中，从硬盘驱动，文件系统，虚拟文件系统，以及系统调用，都属于内核空间，换言之，这些不同层次的实现，都是由内核来做的；而所谓用户空间的操作，也就是一些对磁盘的读写访问操作。</p>
+<p><strong>1. 硬盘驱动</strong><br>常见的硬盘类型有PATA,<br>SATA和AHCI等，在Linux系统中，对不同硬盘所提供的驱动模块一般都存放在内核目录树drivers/ata中，而对于一般通用的硬盘驱动，也许会直接被编译到内核中，而不会以模块的方式出现，可以通过查看/boot<br>/config-xxx.xxx文件来确认：  </p>
+<p>CONFIG_SATA_AHCI=y  </p>
+<hr>
+<p><strong>2. General Block Device Layer</strong><br>这一层的作用，正是解答了上面提出的第一个问题，不同的硬盘驱动，会提供不同的IO接口，内核认为这种杂乱的接口，不利于管理，需要把这些接口抽象一下，形成一个统一的对外接口，这样，不管你是什么硬盘，什么驱动，对外而言，它们所提供的IO接口没什么区别，都一视同仁的被看作块设备来处理。</p>
+<p>所以，如果在一层做的任何修改，将会直接影响到所有文件系统，不管是ext3,ext4还是其它文件系统，只要在这一层次做了某种修改，对它们都会产生影响。</p>
+<p><strong>3. 文件系统</strong><br>文件系统这一层相信大家都再熟悉不过了，目前大多Linux发行版本默认使用的文件系统一般是ext4，另外，新一代的btrfs也呼之欲出，不管什么样的文件系统，都是由一系列的mkfs.xxx命令来创建，如：  </p>
+<p>mkfs.ext4 /dev/sda</p>
+<p>mkfs.btrfs /dev/sdb  </p>
+<hr>
+<p>内核所支持的文件系统类型，可以通过内核目录树 fs 目录中的内容来查看。  </p>
+<p><strong>4. 虚拟文件系统(VFS)</strong><br>Virtual File<br>System这一层，正是用来解决上面提出的第二个问题，试想，当我们通过mkfs.xxx系列命令创建了很多不同的文件系统，但这些文件系统都有各自的API接口，而用户想要的是，不管你是什么API，他们只关心mount/umount，或open/close等操作。  </p>
+<p>所以，VFS就把这些不同的文件系统做一个抽象，提供统一的API访问接口，这样，用户空间就不用关心不同文件系统中不一样的API了。VFS所提供的这些统一的API，再经过System<br>Call包装一下，用户空间就可以经过SCI的系统调用来操作不同的文件系统。  </p>
+<p>VFS所提供的常用API有：<br>mount(), umount() …<br>open(),close() …<br>mkdir() …</p>
+<p>转自：<a href="http://blog.chinaunix.net/uid-26838492-id-3156661.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-26838492-id-3156661.html</a></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/13/Linux 用户态和内核态/">
+  <time datetime="2016-07-12T21:34:00.000Z">
+    2016-07-13
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/07/13/Linux 用户态和内核态/">Linux 用户态和内核态</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.特权级</strong><br>特权级用来管理和控制程序执行。<br>如Intel x86架构的CPU，有0~3四个特权级，0级最高，3级最低。<br>硬件在执行每条指令时都会检查指令具有的特权级。<br>硬件提供了特权级使用机制，对操作系统来说，负责确定指令的特权级。<br>如Linux中，只使用了0和3级特权级，工作在0级特权级的指令具有CPU提供的最高权力，<br>而三级特权级指令只具有CPU提供的最基本权力。</p>
+<p><strong>2.用户态和内核态的区别</strong><br>当程序运行在3级特权级时，称为运行在用户态，普通的用户进程一般运行在用户态。<br>当程序运行在0级特权级时，称为运行在内核态。</p>
+<p>用户态和内核态最主要的差别在于特权级的不同。运行在用户态的程序不能直接访问操作系统内核。</p>
+<p>我们通过以下示例来分析用户态和内核态：</p>
+<pre><code>void testfork(){
+    if(0==fork()){
+        printf(&quot;create new process success&quot;);
+    }
+}
+</code></pre><p>当程序调用fork()时，最终会调用sys_fork()函数来创建一个子进程。<br>testfork()函数中不能直接调用sys_fork(),因为前者是用户态程序，而sys_fork()工作在内核态。此时，进程会在操作系统的帮助下，由用户态切换到内核态。</p>
+<p><strong>3.用户态和内核态切换的三种方式</strong><br>1)系统调用<br>用户态进程主动要求切换到内核态。<br>用户态进程通过系统调用申请使用操作系统提供的服务程序完成工作。<br>如上例的sys_fork()<br>2)异常<br>当CPU在执行运行在用户态下的程序时，发生某些异常后，会触发当前运行进程切换到异常的内核相关程序中，也就转到了内核态，如缺页异常。<br>3)外围设备的中断<br>当外围设备完成用户请求的操作后，会向CPU发送相应的中断信号，这时CPU会暂停执行下一条即将要执行的指令转而去执行与中断信号对应的处理程序，如果先前知心的指令时用户态下的程序，那么这个转换也就是由用户态到内核态的切换。如硬盘读写操作完成，系统会切换到硬盘读写的中断处理程序中执行后续操作。</p>
+<p><strong>4.用户态和内核态切换的原理</strong><br>用户态和内核态的切换，是系统调用了中断机制，执行了一个中断响应的过程。<br>步骤主要包括：<br>1)从当前进程的描述符中提取其内核栈的ss0及esp0信息。<br>2)使用sso和esp0执行的内核栈将当前进程的cs,eip,eflags,ss,esp信息保存起来，这个过程完成了由用户栈到内核栈的切换过程，同时保存了被暂停执行程序的下一条指令。<br>3)将先前由中断向量检索得到的中断处理程序的cs,eip信息装入相应的寄存器，执行中断处理程序，这时就转到了内核态的程序执行了。</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/07/指针函数和函数指针的区别/">
+  <time datetime="2016-07-07T08:19:00.000Z">
+    2016-07-07
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2016/07/07/指针函数和函数指针的区别/">指针函数和函数指针的区别</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.指针函数</strong><br>指针函数是一个函数，函数的返回值是一个指针。<br>格式如下：</p>
+<pre><code>类型标识符 *函数名(参数表)
+如 double *myfunc(double x,double y);
+</code></pre><p>myfunc即为一个指针函数。</p>
+<p>代码示例如下：<br>pfunc.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+double *myfunc(double x,double y);
+int main()
+{
+    double *p = myfunc(2.5,4.3);
+    printf(&quot;%f\n&quot;,*p);
+    return 0;
+}
+double *myfunc(double x,double y)
+{
+    double result = x+y;
+    return &amp;result;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001412327-1346732365.png" alt=""></p>
+<p><strong>2.函数指针</strong><br>函数指针是一个指针，它指向函数地址<br>格式如下：</p>
+<pre><code>类型标识符 (*指针名)(参数表)
+如 double (*myfuncp)(double x,double y);
+</code></pre><p>myfuncp是一个指针，*myfuncp为指针指向的函数的地址。</p>
+<p>我们有以下函数<br>double myfunc(double x,double y);<br>则可将函数的地址赋给指针<br>myfuncp = &amp;myfunc或myfuncp=myfunc(取地址运算符不是必需的)</p>
+<p>代码示例如下：<br>funcp.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+double (*myfuncp)(double x,double y);
+double myfunc(double x,double y);
+int main()
+{
+    myfuncp = &amp;myfunc;
+    double result = (*myfunc)(2.5,4.3);
+    printf(&quot;%f\n&quot;,result);
+    return 0;
+}
+double myfunc(double x,double y)
+{
+    return x+y;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001457811-2041478665.png" alt=""></p>
+<p><strong>3.指针的指针</strong><br>表示指针指向的值，是一个指针类型。<br>如 int i=5;<br>int <em>p = &amp;i;<br>int *</em>pp = &amp;p;<br>其中pp即为一个指向指针的指针。<br>可以用以下示意图来标识。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001516452-748101375.png" alt=""></p>
+<p>再看下面的图</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001549155-1269840008.png" alt=""></p>
+<p>若<em>pp=p2;会发生什么？</em>pp即p=p2,那么p将指向p2所指的地方，即p指向j。<br>如下图所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001616311-903524457.png" alt=""></p>
+<p><strong>4.指针的指针的作用</strong><br>1)调用函数修改局部指针变量<br>2)处理指针数组</p>
+<p>代码示例如下：<br>从一个int类型数组中，找出第一个负数。<br>pptest2.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+    int vals[]={7,6,5,-4,3,2,1,0};
+    int *p=vals;
+    getnegative(&amp;p);
+    printf(&quot;%d\n&quot;,*p);
+    return 0;
+}
+void getnegative(int **pp)
+{
+    while(**pp!=0)
+    {
+        if(**pp&lt;0)
+            break;
+        else
+            (*pp)++;
+    }
+}
+</code></pre><p>输出结果:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001715546-1319494951.png" alt=""></p>
+<p>我们可以用指针数组来代替多维数组，<br>代码示例如下：<br>arrayp.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+        char* names[]={&quot;Bill&quot;,&quot;Sam&quot;,&quot;Jim&quot;,&quot;Paul&quot;,&quot;Jack&quot;,&quot;0&quot;};
+        char **namesp = names;
+        while(*namesp!=&quot;0&quot;)
+        {
+                printf(&quot;%s &quot;,*namesp++);
+        }
+        return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001801046-2004231501.png" alt=""></p>
+<p>其中*namesp++表示先取得指针指向的内容，然后使指针自增。</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/page/5/" class="prev">Prev</a>
+  
+  
+    <a href="/page/7/" class="next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

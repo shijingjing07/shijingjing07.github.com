@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>指针函数和函数指针的区别 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.指针函数指针函数是一个函数，函数的返回值是一个指针。格式如下：
+类型标识符 *函数名(参数表)
+如 double *myfunc(double x,double y);
+myfunc即为一个指针函数。
+代码示例如下：pfunc.c
+#include&amp;lt;stdio.h&amp;gt;
+double *myfunc(double x,double y);
+int main()
+{
+    double">
+  
+  <meta name="description" content="1.指针函数指针函数是一个函数，函数的返回值是一个指针。格式如下：
+类型标识符 *函数名(参数表)
+如 double *myfunc(double x,double y);
+myfunc即为一个指针函数。
+代码示例如下：pfunc.c
+#include&amp;lt;stdio.h&amp;gt;
+double *myfunc(double x,double y);
+int main()
+{
+    double">
+<meta property="og:type" content="article">
+<meta property="og:title" content="指针函数和函数指针的区别">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/07/07/指针函数和函数指针的区别/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.指针函数指针函数是一个函数，函数的返回值是一个指针。格式如下：
+类型标识符 *函数名(参数表)
+如 double *myfunc(double x,double y);
+myfunc即为一个指针函数。
+代码示例如下：pfunc.c
+#include&amp;lt;stdio.h&amp;gt;
+double *myfunc(double x,double y);
+int main()
+{
+    double">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001412327-1346732365.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001457811-2041478665.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001516452-748101375.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001549155-1269840008.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001616311-903524457.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001715546-1319494951.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001801046-2004231501.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:30.560Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="指针函数和函数指针的区别">
+<meta name="twitter:description" content="1.指针函数指针函数是一个函数，函数的返回值是一个指针。格式如下：
+类型标识符 *函数名(参数表)
+如 double *myfunc(double x,double y);
+myfunc即为一个指针函数。
+代码示例如下：pfunc.c
+#include&amp;lt;stdio.h&amp;gt;
+double *myfunc(double x,double y);
+int main()
+{
+    double">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001412327-1346732365.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/07/指针函数和函数指针的区别/">
+  <time datetime="2016-07-07T08:19:00.000Z">
+    2016-07-07
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">指针函数和函数指针的区别</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.指针函数</strong><br>指针函数是一个函数，函数的返回值是一个指针。<br>格式如下：</p>
+<pre><code>类型标识符 *函数名(参数表)
+如 double *myfunc(double x,double y);
+</code></pre><p>myfunc即为一个指针函数。</p>
+<p>代码示例如下：<br>pfunc.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+double *myfunc(double x,double y);
+int main()
+{
+    double *p = myfunc(2.5,4.3);
+    printf(&quot;%f\n&quot;,*p);
+    return 0;
+}
+double *myfunc(double x,double y)
+{
+    double result = x+y;
+    return &amp;result;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001412327-1346732365.png" alt=""></p>
+<p><strong>2.函数指针</strong><br>函数指针是一个指针，它指向函数地址<br>格式如下：</p>
+<pre><code>类型标识符 (*指针名)(参数表)
+如 double (*myfuncp)(double x,double y);
+</code></pre><p>myfuncp是一个指针，*myfuncp为指针指向的函数的地址。</p>
+<p>我们有以下函数<br>double myfunc(double x,double y);<br>则可将函数的地址赋给指针<br>myfuncp = &amp;myfunc或myfuncp=myfunc(取地址运算符不是必需的)</p>
+<p>代码示例如下：<br>funcp.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+double (*myfuncp)(double x,double y);
+double myfunc(double x,double y);
+int main()
+{
+    myfuncp = &amp;myfunc;
+    double result = (*myfunc)(2.5,4.3);
+    printf(&quot;%f\n&quot;,result);
+    return 0;
+}
+double myfunc(double x,double y)
+{
+    return x+y;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001457811-2041478665.png" alt=""></p>
+<p><strong>3.指针的指针</strong><br>表示指针指向的值，是一个指针类型。<br>如 int i=5;<br>int <em>p = &amp;i;<br>int *</em>pp = &amp;p;<br>其中pp即为一个指向指针的指针。<br>可以用以下示意图来标识。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001516452-748101375.png" alt=""></p>
+<p>再看下面的图</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001549155-1269840008.png" alt=""></p>
+<p>若<em>pp=p2;会发生什么？</em>pp即p=p2,那么p将指向p2所指的地方，即p指向j。<br>如下图所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001616311-903524457.png" alt=""></p>
+<p><strong>4.指针的指针的作用</strong><br>1)调用函数修改局部指针变量<br>2)处理指针数组</p>
+<p>代码示例如下：<br>从一个int类型数组中，找出第一个负数。<br>pptest2.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+    int vals[]={7,6,5,-4,3,2,1,0};
+    int *p=vals;
+    getnegative(&amp;p);
+    printf(&quot;%d\n&quot;,*p);
+    return 0;
+}
+void getnegative(int **pp)
+{
+    while(**pp!=0)
+    {
+        if(**pp&lt;0)
+            break;
+        else
+            (*pp)++;
+    }
+}
+</code></pre><p>输出结果:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001715546-1319494951.png" alt=""></p>
+<p>我们可以用指针数组来代替多维数组，<br>代码示例如下：<br>arrayp.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+        char* names[]={&quot;Bill&quot;,&quot;Sam&quot;,&quot;Jim&quot;,&quot;Paul&quot;,&quot;Jack&quot;,&quot;0&quot;};
+        char **namesp = names;
+        while(*namesp!=&quot;0&quot;)
+        {
+                printf(&quot;%s &quot;,*namesp++);
+        }
+        return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001801046-2004231501.png" alt=""></p>
+<p>其中*namesp++表示先取得指针指向的内容，然后使指针自增。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/07/07/指针函数和函数指针的区别/" data-title="指针函数和函数指针的区别" data-url="https://shijingjing07.github.io/2016/07/07/指针函数和函数指针的区别/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

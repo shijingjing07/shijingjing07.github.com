@@ -1,0 +1,401 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>PostgreSQL连接Python | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="安装PostgreSQL可以用Python psycopg2模块集成。 sycopg2是Python编程语言的PostgreSQL数据库的适配器。其程序代码少，速度快，稳定。不需要单独安装这个模块，因为它默认情况下被运往随着Python版本在2.5.x一起的。如果不把它安装在机器上，然后可以使用pip命令安装它，如下所示：
+$sudo pip install psycopg2
+ www.yiiba">
+  
+  <meta name="description" content="安装PostgreSQL可以用Python psycopg2模块集成。 sycopg2是Python编程语言的PostgreSQL数据库的适配器。其程序代码少，速度快，稳定。不需要单独安装这个模块，因为它默认情况下被运往随着Python版本在2.5.x一起的。如果不把它安装在机器上，然后可以使用pip命令安装它，如下所示：
+$sudo pip install psycopg2
+ www.yiiba">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL连接Python">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/08/09/PostgreSQL连接Python/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="安装PostgreSQL可以用Python psycopg2模块集成。 sycopg2是Python编程语言的PostgreSQL数据库的适配器。其程序代码少，速度快，稳定。不需要单独安装这个模块，因为它默认情况下被运往随着Python版本在2.5.x一起的。如果不把它安装在机器上，然后可以使用pip命令安装它，如下所示：
+$sudo pip install psycopg2
+ www.yiiba">
+<meta property="og:updated_time" content="2017-01-12T01:35:28.418Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PostgreSQL连接Python">
+<meta name="twitter:description" content="安装PostgreSQL可以用Python psycopg2模块集成。 sycopg2是Python编程语言的PostgreSQL数据库的适配器。其程序代码少，速度快，稳定。不需要单独安装这个模块，因为它默认情况下被运往随着Python版本在2.5.x一起的。如果不把它安装在机器上，然后可以使用pip命令安装它，如下所示：
+$sudo pip install psycopg2
+ www.yiiba">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/09/PostgreSQL连接Python/">
+  <time datetime="2016-08-08T21:45:00.000Z">
+    2016-08-09
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">PostgreSQL连接Python</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>PostgreSQL可以用Python psycopg2模块集成。 sycopg2是Python编程语言的PostgreSQL数据库的适配器。<br>其程序代码少，速度快，稳定。不需要单独安装这个模块，因为它默认情况下被运往随着Python版本在2.5.x一起的。如果不把它安装在机器上，然后可<br>以使用pip命令安装它，如下所示：</p>
+<pre><code>$sudo pip install psycopg2
+ www.yiibai.com 
+</code></pre><p>要使用psycopg2的模块，首先必须创建一个Connection对象，它表示数据库然后再可以选择创建游标对象，这将帮助执行的所有SQL语句。<br>www.yiibai.com</p>
+<h2 id="Python-psycopg2-模块APIs"><a href="#Python-psycopg2-模块APIs" class="headerlink" title="Python psycopg2 模块APIs"></a>Python psycopg2 模块APIs</h2><p>以下是psycopg2的重要的的模块例程可以满足Python程序与PostgreSQL数据库的工作。如果寻找一个更复杂的应用程序，那么可以看看Python<br>psycopg2的模块的官方文档。 www.yiibai.com</p>
+<table>
+<thead>
+<tr>
+<th>S.N.</th>
+<th>API &amp; 描述  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>**psycopg2.connect(database=”testdb”, user=”postgres”,</td>
+</tr>
+</tbody>
+</table>
+<p>password=”cohondob”, host=”127.0.0.1”, port=”5432”)**  </p>
+<p>这个API打开一个连接到PostgreSQL数据库。如果成功打开数据库时，它返回一个连接对象。 www.yiibai.com  </p>
+<p>2 |  <strong>connection.cursor()</strong>  </p>
+<p>该程序创建一个光标将用于整个数据库使用Python编程。 yiibai.com  </p>
+<p>3 |  <strong>cursor.execute(sql [, optional parameters])</strong>  </p>
+<p>此例程执行SQL语句。可被参数化的SQL语句（即占位符，而不是SQL文字）。 psycopg2的模块支持占位符用％s标志 yiibai.com</p>
+<p>例如：cursor.execute(“insert into people values (%s, %s)”, (who, age))</p>
+<p>4 |  <strong>curosr.executemany(sql, seq_of_parameters)</strong>  </p>
+<p>该程序执行SQL命令对所有参数序列或序列中的sql映射。 www.yiibai.com  </p>
+<p>5 |  <strong>curosr.callproc(procname[, parameters])</strong>  </p>
+<p>这个程序执行的存储数据库程序给定的名称。该程序预计为每一个参数，参数的顺序必须包含一个条目。</p>
+<p>6 |  <strong>cursor.rowcount</strong>  </p>
+<p>这个只读属性，它返回数据库中的行的总数已修改，插入或删除最后 execute*().</p>
+<p>7 |  <strong>connection.commit()</strong>  </p>
+<p>此方法提交当前事务。如果不调用这个方法，无论做了什么修改，自从上次调用commit()是不可见的，从其他的数据库连接。</p>
+<p>8 |  <strong>connection.rollback()</strong>  </p>
+<p>此方法会回滚任何更改数据库自上次调用commit（）方法。</p>
+<p>9 |  <strong>connection.close()</strong>  </p>
+<p>此方法关闭数据库连接。请注意，这并不自动调用commit（）。如果你只是关闭数据库连接而不调用commit（）方法首先，那么所有更改将会丢失！<br>www.yiibai.com  </p>
+<p>10 |  <strong>cursor.fetchone()</strong>  </p>
+<p>这种方法提取的查询结果集的下一行，返回一个序列，或者无当没有更多的数据是可用的。</p>
+<p>11 |  <strong>cursor.fetchmany([size=cursor.arraysize])</strong>  </p>
+<p>这个例程中取出下一个组的查询结果的行数，返回一个列表。当没有找到记录，返回空列表。该方法试图获取尽可能多的行所显示的大小参数。</p>
+<p>12 |  <strong>cursor.fetchall()</strong>  </p>
+<p>这个例程获取所有查询结果（剩余）行，返回一个列表。空行时则返回空列表。 www.yiibai.com  </p>
+<h2 id="连接到数据库"><a href="#连接到数据库" class="headerlink" title="连接到数据库"></a>连接到数据库</h2><p>Python代码显示了如何连接到一个现有的数据库。如果数据库不存在，那么它就会被创建，最终将返回一个数据库对象。 yiibai.com</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+
+print &quot;Opened database successfully&quot;  
+</code></pre><p>在这里，也可以提供数据库testdb的名称，如果数据库成功打开，那么它会给下面的消息：</p>
+<pre><code>Open database successfully
+</code></pre><h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><p>以下Python程序将使用以前创建的数据库中创建一个表：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+cur.execute(&apos;&apos;&apos;CREATE TABLE COMPANY
+       (ID INT PRIMARY KEY     NOT NULL,
+       NAME           TEXT    NOT NULL,
+       AGE            INT     NOT NULL,
+       ADDRESS        CHAR(50),
+       SALARY         REAL);&apos;&apos;&apos;)
+print &quot;Table created successfully&quot;
+
+conn.commit()
+conn.close()  
+</code></pre><p>上述程序执行时，它会创建表COMPANY 在数据库test.db中，它会显示以下消息：</p>
+<pre><code>Opened database successfully
+Table created successfully
+</code></pre><h2 id="INSERT-操作"><a href="#INSERT-操作" class="headerlink" title="INSERT 操作"></a>INSERT 操作</h2><p>Python程序显示了我们如何创建表COMPANY 在上面的例子中创建表中的记录：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+
+cur.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (1, &apos;Paul&apos;, 32, &apos;California&apos;, 20000.00 )&quot;);
+
+cur.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (2, &apos;Allen&apos;, 25, &apos;Texas&apos;, 15000.00 )&quot;);
+
+cur.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (3, &apos;Teddy&apos;, 23, &apos;Norway&apos;, 20000.00 )&quot;);
+
+cur.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (4, &apos;Mark&apos;, 25, &apos;Rich-Mond &apos;, 65000.00 )&quot;);
+
+conn.commit()
+print &quot;Records created successfully&quot;;
+conn.close() yiibai.com 
+</code></pre><p>上述程序执行时，它会创建COMPANY表中的记录，并显示以下两行：</p>
+<pre><code>Opened database successfully
+Records created successfully
+ yiibai.com 
+</code></pre><h2 id="SELECT-操作"><a href="#SELECT-操作" class="headerlink" title="SELECT 操作"></a>SELECT 操作</h2><p>Python程序，显示如何获取并显示COMPANY 表在上面的例子中创建的记录：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+
+cur.execute(&quot;SELECT id, name, address, salary  from COMPANY&quot;)
+rows = cur.fetchall()
+for row in rows:
+   print &quot;ID = &quot;, row[0]
+   print &quot;NAME = &quot;, row[1]
+   print &quot;ADDRESS = &quot;, row[2]
+   print &quot;SALARY = &quot;, row[3], &quot;\n&quot;
+
+print &quot;Operation done successfully&quot;;
+conn.close()  
+</code></pre><p>当上述程序执行时，它会产生以下结果：</p>
+<pre><code>Opened database successfully
+ID =  1
+NAME =  Paul
+ADDRESS =  California
+SALARY =  20000.0
+
+ID =  2
+NAME =  Allen
+ADDRESS =  Texas
+SALARY =  15000.0
+
+ID =  3
+NAME =  Teddy
+ADDRESS =  Norway
+SALARY =  20000.0
+
+ID =  4
+NAME =  Mark
+ADDRESS =  Rich-Mond
+SALARY =  65000.0
+
+Operation done successfully
+</code></pre><h2 id="UPDATE-操作"><a href="#UPDATE-操作" class="headerlink" title="UPDATE 操作"></a>UPDATE 操作</h2><p>Python代码显示如何，我们可以使用UPDATE语句来更新记录，然后从COMPANY表获取并显示更新的记录：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+
+cur.execute(&quot;UPDATE COMPANY set SALARY = 25000.00 where ID=1&quot;)
+conn.commit
+print &quot;Total number of rows updated :&quot;, cur.rowcount
+
+cur.execute(&quot;SELECT id, name, address, salary  from COMPANY&quot;)
+rows = cur.fetchall()
+for row in rows:
+   print &quot;ID = &quot;, row[0]
+   print &quot;NAME = &quot;, row[1]
+   print &quot;ADDRESS = &quot;, row[2]
+   print &quot;SALARY = &quot;, row[3], &quot;\n&quot;
+
+print &quot;Operation done successfully&quot;;
+conn.close()  
+</code></pre><p>当上述程序执行时，它会产生以下结果：</p>
+<pre><code>Opened database successfully
+Total number of rows updated : 1
+ID =  1
+NAME =  Paul
+ADDRESS =  California
+SALARY =  25000.0
+
+ID =  2
+NAME =  Allen
+ADDRESS =  Texas
+SALARY =  15000.0
+
+ID =  3
+NAME =  Teddy
+ADDRESS =  Norway
+SALARY =  20000.0
+
+ID =  4
+NAME =  Mark
+ADDRESS =  Rich-Mond
+SALARY =  65000.0
+
+Operation done successfully
+</code></pre><h2 id="DELETE-操作"><a href="#DELETE-操作" class="headerlink" title="DELETE 操作"></a>DELETE 操作</h2><p>Python代码显示了如何我们可以使用DELETE语句删除记录，然后获取并显示COMPANY 表剩余的记录：</p>
+<pre><code>#!/usr/bin/python
+
+import psycopg2
+
+conn = psycopg2.connect(database=&quot;testdb&quot;, user=&quot;postgres&quot;, password=&quot;pass123&quot;, host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+print &quot;Opened database successfully&quot;
+
+cur = conn.cursor()
+
+cur.execute(&quot;DELETE from COMPANY where ID=2;&quot;)
+conn.commit
+print &quot;Total number of rows deleted :&quot;, cur.rowcount
+
+cur.execute(&quot;SELECT id, name, address, salary  from COMPANY&quot;)
+rows = cur.fetchall()
+for row in rows:
+   print &quot;ID = &quot;, row[0]
+   print &quot;NAME = &quot;, row[1]
+   print &quot;ADDRESS = &quot;, row[2]
+   print &quot;SALARY = &quot;, row[3], &quot;\n&quot;
+
+print &quot;Operation done successfully&quot;;
+conn.close()  
+</code></pre><p>当上述程序执行时，它会产生以Opened database successfully</p>
+<pre><code>_Total number of rows deleted : 1
+ID =  1
+NAME =  Paul
+ADDRESS =  California
+SALARY =  20000.0
+
+ID =  3
+NAME =  Teddy
+ADDRESS =  Norway
+SALARY =  20000.0
+
+ID =  4
+NAME =  Mark
+ADDRESS =  Rich-Mond
+SALARY =  65000.0
+
+Operation done successfully   
+
+_转自：&lt;http://www.yiibai.com/html/postgresql/2013/080998.html&gt;_  
+www.yiibai.c  
+
+转子_
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/08/09/PostgreSQL连接Python/" data-title="PostgreSQL连接Python" data-url="https://shijingjing07.github.io/2016/08/09/PostgreSQL连接Python/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

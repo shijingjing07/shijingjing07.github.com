@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python程序的调试方法 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="【转自：http://blog.csdn.net/luckeryin/article/details/4477233】
+本文讨论在没有方便的IDE工具可用的情况下，使用pdb调试python程序
+源码例子
+例如，有模拟税收计算的程序：
+#!/usr/bin/pythondef debug_demo(val):                if val &amp;lt;= 1600 :">
+  
+  <meta name="description" content="【转自：http://blog.csdn.net/luckeryin/article/details/4477233】
+本文讨论在没有方便的IDE工具可用的情况下，使用pdb调试python程序
+源码例子
+例如，有模拟税收计算的程序：
+#!/usr/bin/pythondef debug_demo(val):                if val &amp;lt;= 1600 :">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python程序的调试方法">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/09/30/python程序的调试方法/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="【转自：http://blog.csdn.net/luckeryin/article/details/4477233】
+本文讨论在没有方便的IDE工具可用的情况下，使用pdb调试python程序
+源码例子
+例如，有模拟税收计算的程序：
+#!/usr/bin/pythondef debug_demo(val):                if val &amp;lt;= 1600 :">
+<meta property="og:updated_time" content="2017-01-12T01:35:18.183Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python程序的调试方法">
+<meta name="twitter:description" content="【转自：http://blog.csdn.net/luckeryin/article/details/4477233】
+本文讨论在没有方便的IDE工具可用的情况下，使用pdb调试python程序
+源码例子
+例如，有模拟税收计算的程序：
+#!/usr/bin/pythondef debug_demo(val):                if val &amp;lt;= 1600 :">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/09/30/python程序的调试方法/">
+  <time datetime="2016-09-29T18:09:00.000Z">
+    2016-09-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python程序的调试方法</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id=""><a href="#" class="headerlink" title=" "></a> </h1><p>【转自：<a href="http://blog.csdn.net/luckeryin/article/details/4477233" target="_blank" rel="external">http://blog.csdn.net/luckeryin/article/details/4477233</a>】</p>
+<p>本文讨论在没有方便的IDE工具可用的情况下，使用pdb调试python程序</p>
+<p><strong>源码例子</strong></p>
+<p>例如，有模拟税收计算的程序：</p>
+<p>#!/usr/bin/python<br>def debug_demo(val):<br>                if val &lt;= 1600 :<br>                                print “level 1”<br>                                print 0<br>                elif val &lt;= 3500 :<br>                                print “level 2”<br>                                print (val - 1600) <em> 0.05<br>                elif val &lt;= 6500 :<br>                                print “level 3”<br>                                print (val - 3500) </em> 0.10 + (3500-1600) <em> 0.05<br>                else:<br>                                print “level 4”<br>                                print (val - 6500) </em> 0.20 + (6500-3500) <em> 0.10 + (3500-1600) </em> 0.05   </p>
+<p>#~def debug_demo<br>if <strong>name</strong> == “<strong>main</strong>“:<br>                debug_demo(4500)</p>
+<p>debug_demo函数计算4500的入账所需的税收。</p>
+<p><strong>如何调试?</strong></p>
+<p><strong>1.加入断点</strong></p>
+<p>在需要插入断点的地方，加入红色部分代码：如果_DEBUG值为True，则在该处开始调试（加入_DEBUG的原因是为了方便打开/关闭调试）。</p>
+<p>#!/usr/bin/python<br>_DEBUG=True<br>def debug_demo(val):<br>                if _DEBUG == True:<br>                                import pdb<br>                                pdb.set_trace()<br>                if val &lt;= 1600 :<br>                                print “level 1”<br>                                print 0<br>                elif val &lt;= 3500 :<br>                                print “level 2”<br>                                print (val - 1600) <em> 0.05<br>                elif val &lt;= 6500 :<br>                                print “level 3”<br>                                print (val - 3500) </em> 0.10 + (3500-1600) <em> 0.05<br>                else:<br>                                print “level 4”<br>                                print (val - 6500) </em> 0.20 + (6500-3500) <em> 0.10 + (3500-1600) </em> 0.05   </p>
+<p>#~def debug_demo<br>if <strong>name</strong> == “<strong>main</strong>“:<br>                debug_demo(4500)</p>
+<p><strong>2.开始运行调试</strong></p>
+<p>  运行程序./debug_demo.py,得到</p>
+<p>&gt; /usr/local/qspace/user_network/debug_demo.py(7)debug_demo()<br>-&gt; if val &lt;= 1600 :<br>(Pdb)</p>
+<p>-&gt; val &lt;= 1600 : 指示当前执行的语句，（Pdb）等待你的调试指令. pdb的指令很丰富，输入h指令可以查看指令的使用方法。下面简单介绍常用指令：</p>
+<p>  查看代码上下文，l（小写L）</p>
+<p>(Pdb) l<br>    2         _DEBUG=True<br>    3         def debug_demo(val):<br>    4                         if _DEBUG == True:<br>    5                                         import pdb<br>    6                                         pdb.set_trace()<br>    7    -&gt;                 if val &lt;= 1600 :<br>    8                                         print “level 1”<br>    9                                         print 0<br>  10                         elif val &lt;= 3500 :<br>  11                                         print “level 2”<br>  12                                         print (val - 1600) * 0.05<br>(Pdb)  </p>
+<p>左边是行号，右边是代码正文。</p>
+<p>  监视变量：p 变量名</p>
+<p>(Pdb) p val<br>4500<br>(Pdb)  </p>
+<p>单步执行: n</p>
+<p>-&gt; elif val &lt;= 3500 :<br>(Pdb) l<br>  5                                         import pdb<br>  6                                         pdb.set_trace()<br>  7                         if val &lt;= 1600 :<br>  8                                         print “level 1”<br>  9                                         print 0<br>10    -&gt;                 elif val &lt;= 3500 :<br>11                                         print “level 2”<br>12                                         print (val - 1600) <em> 0.05<br>13                         elif val &lt;= 6500 :<br>14                                         print “level 3”<br>15                                         print (val - 3500) </em> 0.10 +<br>(3500-1600) * 0.05</p>
+<p>加入断点:b 行号</p>
+<p>(Pdb) b 14</p>
+<p>运行到断点: c</p>
+<p>(Pdb) c<br>&gt; /<strong>*</strong><br>-&gt; print “level 3”<br>(Pdb) l<br>  9                                         print 0<br>10                         elif val &lt;= 3500 :<br>11                                         print “level 2”<br>12                                         print (val - 1600) <em> 0.05<br>13                         elif val &lt;= 6500 :<br>14 B-&gt;                                 print “level 3”<br>15                                         print (val - 3500) </em> 0.10 +<br>(3500-1600) <em> 0.05<br>16                         else:<br>17                                         print “level 4”<br>18                                         print (val - 6500) </em> 0.20 +<br>(6500-3500) <em> 0.10 + (3500-1600) </em> 0.05<br>19  </p>
+<p>执行到函数返回前: r</p>
+<p>(Pdb) r<br>level 3<br>195.0<br>--Return–<br>&gt; /<em>**</em>()</p>
+<p>-&gt;None<br>-&gt; print (val - 3500) <em> 0.10 + (3500-1600) </em> 0.05<br>(Pdb)  </p>
+<p><strong>说明：</strong></p>
+<p>  pdb还有很多其他很多有用的指令，读者可以自行探索。输入h，h 命令。就可以得到命令的详细帮助。</p>
+<p>  不过，我个人认为一般无需启动这种调试方法，一般使用日志输出进行调试即可，除非遇到了非常微妙的错误。这时，单步调试的威力便显示出来了</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/09/30/python程序的调试方法/" data-title="python程序的调试方法" data-url="https://shijingjing07.github.io/2016/09/30/python程序的调试方法/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

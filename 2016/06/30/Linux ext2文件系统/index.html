@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux ext2文件系统 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="Linux最传统的磁盘文件系统(filesystem)使用的是ext2
+1.ext2文件系统结构ext2文件系统划分为多个块组，每个块组拥有独立的inode/block，一个文件系统只有一个Superblock。如下图所示：
+
+1)Boot Sector:启动扇区。启动扇区可以安装引导装载程序，这样可以将不同的引导装载程序安装到不同的文件系统，不用覆盖整块硬盘唯一的MBR，才能制作出多重引导的环境">
+  
+  <meta name="description" content="Linux最传统的磁盘文件系统(filesystem)使用的是ext2
+1.ext2文件系统结构ext2文件系统划分为多个块组，每个块组拥有独立的inode/block，一个文件系统只有一个Superblock。如下图所示：
+
+1)Boot Sector:启动扇区。启动扇区可以安装引导装载程序，这样可以将不同的引导装载程序安装到不同的文件系统，不用覆盖整块硬盘唯一的MBR，才能制作出多重引导的环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux ext2文件系统">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/30/Linux ext2文件系统/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="Linux最传统的磁盘文件系统(filesystem)使用的是ext2
+1.ext2文件系统结构ext2文件系统划分为多个块组，每个块组拥有独立的inode/block，一个文件系统只有一个Superblock。如下图所示：
+
+1)Boot Sector:启动扇区。启动扇区可以安装引导装载程序，这样可以将不同的引导装载程序安装到不同的文件系统，不用覆盖整块硬盘唯一的MBR，才能制作出多重引导的环境">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173517390-2010416358.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173538968-986757518.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173604874-1386854855.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:31.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux ext2文件系统">
+<meta name="twitter:description" content="Linux最传统的磁盘文件系统(filesystem)使用的是ext2
+1.ext2文件系统结构ext2文件系统划分为多个块组，每个块组拥有独立的inode/block，一个文件系统只有一个Superblock。如下图所示：
+
+1)Boot Sector:启动扇区。启动扇区可以安装引导装载程序，这样可以将不同的引导装载程序安装到不同的文件系统，不用覆盖整块硬盘唯一的MBR，才能制作出多重引导的环境">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173517390-2010416358.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/30/Linux ext2文件系统/">
+  <time datetime="2016-06-30T01:42:00.000Z">
+    2016-06-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux ext2文件系统</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>Linux最传统的磁盘文件系统(filesystem)使用的是ext2</p>
+<p><strong>1.ext2文件系统结构</strong><br>ext2文件系统划分为多个块组，每个块组拥有独立的inode/block，一个文件系统只有一个Superblock。<br>如下图所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173517390-2010416358.png" alt=""></p>
+<p>1)Boot Sector:启动扇区。<br>启动扇区可以安装引导装载程序，这样可以将不同的引导装载程序安装到不同的文件系统，<br>不用覆盖整块硬盘唯一的MBR，才能制作出多重引导的环境。</p>
+<p>2)Data Block:存放文件内容。<br>ext2系统中block的大小有1KB,2KB,4KB三种，block大小由文件系统总容量决定，如下图所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173538968-986757518.png" alt=""></p>
+<p>每个block只能放一个文件的数据，若文件大小超过block，则占用多个；<br>若小于block，block剩余的空间也不能被其他文件使用。</p>
+<p>3)Inode Table:存放文件属性和权限等。<br>inode存放的文件数据至少有：<br>文件的访问权限(rwx)<br>文件的所有者与组(ower/group)<br>文件的大小<br>文件创建和状态改变时间<br>最近一次读的时间<br>最近修改的时间<br>文件类型标识<br>文件指向的block号</p>
+<p>inode的大小固定为128B<br>我们重点看一下最后一项，”文件指向的block号”<br>inode是通过12个直接指针，1个间接指针，1个双间接指针，1个三间接指针来指向block的。<br>如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173604874-1386854855.png" alt=""></p>
+<p>12个直接指针:直接取得block号码<br>如果文件太大,就会使用间接指针，双间接指针，三间接指针来记录编号</p>
+<p>4)Superblock:存放文件系统的基本信息。<br>一个文件系统只有一个Superblock，存放的信息有：<br>inode,block的总量<br>未使用和已使用的inode,block数量<br>inode,block的大小<br>文件系统挂载时间，最近写入数据时间，最近检查磁盘时间<br>validbit值，文件系统已挂载，则validbit为0，否则为1</p>
+<p>5)File system Description(文件系统描述):每个块组的开始结束号码</p>
+<p>6)block bitmap(block对照表)：标识block是否使用<br>便于系统快速找到空间来处置文件</p>
+<p>7)inode bitmap(inode对照表):标识inode是否使用<br>与block bitmap相似。</p>
+<p><strong>2.文件系统树型结构之间的关系</strong><br>1)目录<br>新建一个目录时，ext2会分配一个inode和至少一块block给该目录。<br>inode记录目录权限和属性，以及分配的block号。<br>block记录目录下的文件名和文件名占用的inode号。</p>
+<p>2)文件<br>新建一个文件时，ext2会分配一个inode和对应文件大小的N个block块给该文件。<br>inode和文件名会同时被记录在目录的block中，以便通过目录访问到该文件。<br>block存放文件内容。</p>
+<p>3)文件查找<br>查找文件时，会先找到文件所在目录，目录的inode对应的block中，<br>存放着文件的名称和inode，找到文件名对应的inode,<br>然后找到文件inode对应的block，找到文件内容。</p>
+<p><strong>3.ext3文件系统</strong><br>ext3是ext2的升级，加入了日志文件系统。</p>
+<p><strong>4.挂载文件系统</strong><br>文件系统要挂载到目录树，才能使用。<br>文件系统与目录树结合的操作，称为挂载。<br>挂载点是目录，该目录为进入该文件系统的入口。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/30/Linux ext2文件系统/" data-title="Linux ext2文件系统" data-url="https://shijingjing07.github.io/2016/06/30/Linux ext2文件系统/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

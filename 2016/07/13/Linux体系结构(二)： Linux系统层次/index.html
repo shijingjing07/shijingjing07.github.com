@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux体系结构(二)： Linux系统层次 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="前一节内容大概介绍了一下Linux的历史由来，各大Linux发行厂商都是基于GNU项目下的所有开源软件，来构建各自己的Linux发行版本，一个完整的Linux发行版本大概可以分为以下四个层次结构:
+Base System =&amp;gt; X Protocol =&amp;gt; Windows Manager =&amp;gt; Application
+1. Base System所谓Base System，也就是一">
+  
+  <meta name="description" content="前一节内容大概介绍了一下Linux的历史由来，各大Linux发行厂商都是基于GNU项目下的所有开源软件，来构建各自己的Linux发行版本，一个完整的Linux发行版本大概可以分为以下四个层次结构:
+Base System =&amp;gt; X Protocol =&amp;gt; Windows Manager =&amp;gt; Application
+1. Base System所谓Base System，也就是一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux体系结构(二)： Linux系统层次">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/07/13/Linux体系结构(二)： Linux系统层次/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="前一节内容大概介绍了一下Linux的历史由来，各大Linux发行厂商都是基于GNU项目下的所有开源软件，来构建各自己的Linux发行版本，一个完整的Linux发行版本大概可以分为以下四个层次结构:
+Base System =&amp;gt; X Protocol =&amp;gt; Windows Manager =&amp;gt; Application
+1. Base System所谓Base System，也就是一">
+<meta property="og:image" content="http://blog.chinaunix.net/attachment/201203/31/26838492_1333183782GtzC.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:30.107Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux体系结构(二)： Linux系统层次">
+<meta name="twitter:description" content="前一节内容大概介绍了一下Linux的历史由来，各大Linux发行厂商都是基于GNU项目下的所有开源软件，来构建各自己的Linux发行版本，一个完整的Linux发行版本大概可以分为以下四个层次结构:
+Base System =&amp;gt; X Protocol =&amp;gt; Windows Manager =&amp;gt; Application
+1. Base System所谓Base System，也就是一">
+<meta name="twitter:image" content="http://blog.chinaunix.net/attachment/201203/31/26838492_1333183782GtzC.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/13/Linux体系结构(二)： Linux系统层次/">
+  <time datetime="2016-07-12T21:52:00.000Z">
+    2016-07-13
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux体系结构(二)： Linux系统层次</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>前一节内容大概介绍了一下Linux的历史由来，各大Linux发行厂商都是基于GNU项目下的所有开源软件，来构建各自己的Linux发行版本，一个完整的Linux发行版本大概可以分为以下四个层次结构:</p>
+<p>Base System =&gt; X Protocol =&gt; Windows Manager =&gt; Application</p>
+<p><strong>1. Base System</strong><br>所谓Base System，也就是一个最小的基本系统，需要包含一些系统必备的开源组件，比如：kernel, filesystem, glibc,<br>bash等。</p>
+<p>这个最小系统最终能达到的层次就是能够启动我们的命令行字符控制终端，也就是一个bash环境，这样一个最小系统可以精简、控制在几十M的大小以内。</p>
+<p><strong>2. X Protocol</strong><br>当我们构建完了最小的基本系统以后，这样一个系统只支持命令行字符终端模式，而无法支持图形化界面，如果想要使我们的Linux系统能够支持图形化界面，必须要有X<br>Protocol的支持，基于这样的一个X协议，就可以在最小系统的层次上，构建Linux的窗口管理器。</p>
+<p>X<br>Protocol仅仅只是一个协议，对于这样一个协议，具体是由什么来实现的呢？在Linux早期的时候，是通过XFree86来实现X协议，经过多年的发展，XFree86已经更替为今天的X.Org项目。</p>
+<p>不管是XFree86, 还是现在的X.Org，在实现X协议的时候，都是基于C/S架构，也就是X Server 和 X Client 的交互模式。关于X<br>Server 和 X Client<br>之间的关系，在接下来的一节中将详细介绍。在这里大家只需明确：如果我们需要支持图形化界面，就需要有X相关的组件来作为一个沟通的桥梁。</p>
+<p>当然，X 并不是唯一的桥梁，有像Wayland这样的新生替代品也已经面世，只是目前尚不成熟，也许在未来的某一天，Wayland将会全面代替现在的 X。</p>
+<p><strong>3. Windows Manager</strong><br>有了X层的支持以后，广大开源软件开发者或开发组织，就可以基于这样的一个接口，来开发上层的图形化窗口管理器，即Windows Manager,<br>比如我们熟知的KDE，Gnome， Xfce， Openbox等，这些图形化的桌面环境也就是对上面提到的X Client的一个具体实现，来和 X<br>Server进行交互通信。</p>
+<p>在一下章节中，将具体讲解X Server, X Client， Xlib， QT， GTK， KDE， Gnome之间的关系。</p>
+<p><strong>4. Application</strong><br>Application也就是指我们的上层图形化应用程序，比如 Liberoffice办公套件，Firefox，Thunderbird，Pidgin等。</p>
+<p>Linux系统中的大多数图形化应用程序都是基于QT或GTK+这两个开发套件来开发的，当然也有像Java， Python等编写的应用程序。</p>
+<p>综上，Linux发行厂商组合上面所描述的四个层次的GNU项目组件，最终提供给用户一个完整的Linux操作系统，下面还是以一张结构图来展示这一节所阐述的Linux层次：</p>
+<p><a href="http://blog.chinaunix.net/attachment/201203/31/26838492_1333183782GtzC.png" target="_blank" rel="external"><img src="http://blog.chinaunix.net/attachment/201203/31/26838492_1333183782GtzC.png" alt=""></a></p>
+<p>转自：<a href="http://blog.chinaunix.net/uid-26838492-id-3156661.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-26838492-id-3156661.html</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/07/13/Linux体系结构(二)： Linux系统层次/" data-title="Linux体系结构(二)： Linux系统层次" data-url="https://shijingjing07.github.io/2016/07/13/Linux体系结构(二)： Linux系统层次/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

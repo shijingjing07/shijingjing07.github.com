@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++ vector和list的区别 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.vector数据结构vector和数组类似，拥有一段连续的内存空间，并且起始地址不变。因此能高效的进行随机存取，时间复杂度为o(1);但因为内存空间是连续的，所以在进行插入和删除操作时，会造成内存块的拷贝，时间复杂度为o(n)。另外，当数组中内存空间不够时，会重新申请一块内存空间并进行内存拷贝。
+2.list数据结构list是由双向链表实现的，因此内存空间是不连续的。只能通过指针访问数据，所以">
+  
+  <meta name="description" content="1.vector数据结构vector和数组类似，拥有一段连续的内存空间，并且起始地址不变。因此能高效的进行随机存取，时间复杂度为o(1);但因为内存空间是连续的，所以在进行插入和删除操作时，会造成内存块的拷贝，时间复杂度为o(n)。另外，当数组中内存空间不够时，会重新申请一块内存空间并进行内存拷贝。
+2.list数据结构list是由双向链表实现的，因此内存空间是不连续的。只能通过指针访问数据，所以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ vector和list的区别">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/15/C++ vector和list的区别/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.vector数据结构vector和数组类似，拥有一段连续的内存空间，并且起始地址不变。因此能高效的进行随机存取，时间复杂度为o(1);但因为内存空间是连续的，所以在进行插入和删除操作时，会造成内存块的拷贝，时间复杂度为o(n)。另外，当数组中内存空间不够时，会重新申请一块内存空间并进行内存拷贝。
+2.list数据结构list是由双向链表实现的，因此内存空间是不连续的。只能通过指针访问数据，所以">
+<meta property="og:updated_time" content="2017-01-12T01:35:36.255Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ vector和list的区别">
+<meta name="twitter:description" content="1.vector数据结构vector和数组类似，拥有一段连续的内存空间，并且起始地址不变。因此能高效的进行随机存取，时间复杂度为o(1);但因为内存空间是连续的，所以在进行插入和删除操作时，会造成内存块的拷贝，时间复杂度为o(n)。另外，当数组中内存空间不够时，会重新申请一块内存空间并进行内存拷贝。
+2.list数据结构list是由双向链表实现的，因此内存空间是不连续的。只能通过指针访问数据，所以">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/15/C++ vector和list的区别/">
+  <time datetime="2016-06-14T23:39:00.000Z">
+    2016-06-15
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++ vector和list的区别</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.vector数据结构</strong><br>vector和数组类似，拥有一段连续的内存空间，并且起始地址不变。<br>因此能高效的进行随机存取，时间复杂度为o(1);<br>但因为内存空间是连续的，所以在进行插入和删除操作时，会造成内存块的拷贝，时间复杂度为o(n)。<br>另外，当数组中内存空间不够时，会重新申请一块内存空间并进行内存拷贝。</p>
+<p><strong>2.list数据结构</strong><br>list是由双向链表实现的，因此内存空间是不连续的。<br>只能通过指针访问数据，所以list的随机存取非常没有效率，时间复杂度为o(n);<br>但由于链表的特点，能高效地进行插入和删除。</p>
+<p><strong>3.vector和list的区别</strong><br>我们看一个简单的vector和list使用示例：</p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;list&gt;
+using namespace std;
+int main()
+{
+    vector&lt;int&gt; v;
+    list&lt;int&gt; l;
+    for(int i=0;i&lt;8;i++) ////往v和l中分别添加元素
+    {
+        v.push_back(i);
+        l.push_back(i);
+    }
+    cout&lt;&lt;&quot;v[2]=&quot;&lt;&lt;v[2]&lt;&lt;endl;
+    //cout&lt;&lt;&quot;l[2]=&quot;&lt;&lt;l[2]&lt;&lt;endl;  //编译错误,list没有重载[]
+    cout&lt;&lt;(v.begin()&lt;v.end())&lt;&lt;endl; 
+    //cout&lt;&lt;(l.begin()&lt;l.end())&lt;&lt;endl; /编译错误,list::iterator没有重载&lt;或&gt;
+    cout&lt;&lt;*(v.begin()+1)&lt;&lt;endl;
+    //cout&lt;&lt;*(l.begin()+1)&lt;&lt;endl; //编译错误,list::iterator没有重载+
+    vector&lt;int&gt;::iterator itv=v.begin();
+    list&lt;int&gt;::iterator itl=l.begin();
+    itv = itv+2;
+    //itl=itl+2; //编译错误,list::iterator没有重载+
+    itl++; //list::iterator中重载了++，只能使用++进行迭代访问。
+    itl++;
+    cout&lt;&lt;*itv&lt;&lt;endl;
+    cout&lt;&lt;*itl&lt;&lt;endl;
+    getchar();
+    return 0;
+}
+</code></pre><p>vector拥有一段连续的内存空间，能很好的支持随机存取，<br>因此vector&lt;int&gt;::iterator支持”+”，”+=”，”&lt;”等操作符。</p>
+<p>list的内存空间可以是不连续，它不支持随机访问，<br>因此list&lt;int&gt;::iterator则不支持”+”、”+=”、”&lt;”等</p>
+<p>vector&lt;int&gt;::iterator和list&lt;int&gt;::iterator都重载了”++”运算符。</p>
+<p>总之，如果需要高效的随机存取，而不在乎插入和删除的效率，使用vector;<br>如果需要大量的插入和删除，而不关心随机存取，则应使用list。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/15/C++ vector和list的区别/" data-title="C++ vector和list的区别" data-url="https://shijingjing07.github.io/2016/06/15/C++ vector和list的区别/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

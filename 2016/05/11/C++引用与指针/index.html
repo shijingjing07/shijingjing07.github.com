@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++引用与指针 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是引用引用是某一对象（变量）的一个别名。int m=0;int &amp;amp;n=m;n=1;cout&amp;lt;&amp;lt;”n “&amp;lt;&amp;lt;n&amp;lt;&amp;lt;endl;cout&amp;lt;&amp;lt;”m “&amp;lt;&amp;lt;m&amp;lt;&amp;lt;endl;&amp;amp;表示n是m的引用，即别名，对n的任何操作就是对m的操作。所以n既不是m的拷贝，也不是指向m的指针，其实n就是m它自己。将n的值赋值为1,则m">
+  
+  <meta name="description" content="1.什么是引用引用是某一对象（变量）的一个别名。int m=0;int &amp;amp;n=m;n=1;cout&amp;lt;&amp;lt;”n “&amp;lt;&amp;lt;n&amp;lt;&amp;lt;endl;cout&amp;lt;&amp;lt;”m “&amp;lt;&amp;lt;m&amp;lt;&amp;lt;endl;&amp;amp;表示n是m的引用，即别名，对n的任何操作就是对m的操作。所以n既不是m的拷贝，也不是指向m的指针，其实n就是m它自己。将n的值赋值为1,则m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++引用与指针">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/11/C++引用与指针/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是引用引用是某一对象（变量）的一个别名。int m=0;int &amp;amp;n=m;n=1;cout&amp;lt;&amp;lt;”n “&amp;lt;&amp;lt;n&amp;lt;&amp;lt;endl;cout&amp;lt;&amp;lt;”m “&amp;lt;&amp;lt;m&amp;lt;&amp;lt;endl;&amp;amp;表示n是m的引用，即别名，对n的任何操作就是对m的操作。所以n既不是m的拷贝，也不是指向m的指针，其实n就是m它自己。将n的值赋值为1,则m">
+<meta property="og:updated_time" content="2017-01-12T01:35:42.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++引用与指针">
+<meta name="twitter:description" content="1.什么是引用引用是某一对象（变量）的一个别名。int m=0;int &amp;amp;n=m;n=1;cout&amp;lt;&amp;lt;”n “&amp;lt;&amp;lt;n&amp;lt;&amp;lt;endl;cout&amp;lt;&amp;lt;”m “&amp;lt;&amp;lt;m&amp;lt;&amp;lt;endl;&amp;amp;表示n是m的引用，即别名，对n的任何操作就是对m的操作。所以n既不是m的拷贝，也不是指向m的指针，其实n就是m它自己。将n的值赋值为1,则m">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/11/C++引用与指针/">
+  <time datetime="2016-05-10T19:04:00.000Z">
+    2016-05-11
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++引用与指针</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.什么是引用<br>引用是某一对象（变量）的一个别名。<br>int m=0;<br>int &amp;n=m;<br>n=1;<br>cout&lt;&lt;”n “&lt;&lt;n&lt;&lt;endl;<br>cout&lt;&lt;”m “&lt;&lt;m&lt;&lt;endl;<br>&amp;表示n是m的引用，即别名，对n的任何操作就是对m的操作。<br>所以n既不是m的拷贝，也不是指向m的指针，其实n就是m它自己。<br>将n的值赋值为1,则m的值也变为1</p>
+<p>2.什么是指针<br>指针用于指向对象（变量），指针存放的是对象（变量）的地址。<br>int m;<br>int *n=&amp;m;<br>指针n是一个指向int型变量m的指针。<br>&amp;是取地址操作符，&amp;m为m的地址。</p>
+<p>3.引用和指针的联系和区别<br>1)都是有关地址的<br>引用是对象本身，而指针是对象的地址。<br>2)都是间接访问对象<br>3)都能用于函数参数和返回值传递<br>4)指针是一个实体，引用只是别名<br>指针会分配内存（4字节int型），引用不会<br>5)指针可变，引用不可变<br>指针指向的地址，其指向地址中存放的数据都是可变的<br>引用必须在一开始就被初始化，而且一旦和一个对象绑定后，就不能再改变（从一而终）。<br>6)指针可为空，引用不能。</p>
+<p>4.函数参数和返回值传递方式<br>1)值引用<br>值传递过程中，被调用的形式参数作为被调函数函数的局部变量处理，即在栈中开辟了内存空间以存放由主调函数放进来的实参的值，从而成为了实参的一个拷贝。值传递的特点是被调函数对形式参数的任何操作都是作为局部变量进行，不会影响主调函数的实参变量的值。</p>
+<p>2)指针传递<br>指针传递本质上是值传递，只不过它传递的是一个地址值。我们可以用*操作符访问实参，从而对实参进行操作。</p>
+<p>3)引用传递<br>引用传递过程中，被调函数的形式参数虽然也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。被调函数对形参的任何操作都被处理成间接寻址（不必通过*操作符），即通过栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量（此时形参就是实参）。</p>
+<p>5.从编译角度理解指针和引用<br>程序在编译时分别将指针和引用添加到符号表上，符号表上记录的是变量名及变量所对应的地址。指针变量在符号表上对应的地址值为指针变量的地址值，而引用在符号表上对应的地址值为引用对象的地址值。符号表生成后就不会再改，因此指针可以改变其指向的对象（指针变量中的值可以改），而引用对象则不能修改。</p>
+<p>6.引用不能const，指针能const,const的指针不可变</p>
+<p>7.sizeof引用得到的是所指向的变量的大小，而sizeof指针得到的是指针本身的大小</p>
+<p>8.指针和引用的自增(++)运算意义不一样。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/11/C++引用与指针/" data-title="C++引用与指针" data-url="https://shijingjing07.github.io/2016/05/11/C++引用与指针/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

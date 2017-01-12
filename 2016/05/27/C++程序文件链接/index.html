@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++程序文件链接 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是转换单元程序中的每个.cpp文件和它包含的所有头文件称为一个转换单元。编译器处理每个转换单元，生成二进制对象文件，用扩展名.obj来标识。链接器将对象文件组合起来，生成一个可执行文件，用扩展名.exe来标识。
+2.作用域使用{}来限定变量的作用域
+内部作用域可以定义一个和外部作用域相同的名称，此时，内部作用域中定义的名称，将隐藏外部作用域中的名称，
+若要访问外层作用域中的名称，可使用解析">
+  
+  <meta name="description" content="1.什么是转换单元程序中的每个.cpp文件和它包含的所有头文件称为一个转换单元。编译器处理每个转换单元，生成二进制对象文件，用扩展名.obj来标识。链接器将对象文件组合起来，生成一个可执行文件，用扩展名.exe来标识。
+2.作用域使用{}来限定变量的作用域
+内部作用域可以定义一个和外部作用域相同的名称，此时，内部作用域中定义的名称，将隐藏外部作用域中的名称，
+若要访问外层作用域中的名称，可使用解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++程序文件链接">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/27/C++程序文件链接/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是转换单元程序中的每个.cpp文件和它包含的所有头文件称为一个转换单元。编译器处理每个转换单元，生成二进制对象文件，用扩展名.obj来标识。链接器将对象文件组合起来，生成一个可执行文件，用扩展名.exe来标识。
+2.作用域使用{}来限定变量的作用域
+内部作用域可以定义一个和外部作用域相同的名称，此时，内部作用域中定义的名称，将隐藏外部作用域中的名称，
+若要访问外层作用域中的名称，可使用解析">
+<meta property="og:updated_time" content="2017-01-12T01:35:40.016Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++程序文件链接">
+<meta name="twitter:description" content="1.什么是转换单元程序中的每个.cpp文件和它包含的所有头文件称为一个转换单元。编译器处理每个转换单元，生成二进制对象文件，用扩展名.obj来标识。链接器将对象文件组合起来，生成一个可执行文件，用扩展名.exe来标识。
+2.作用域使用{}来限定变量的作用域
+内部作用域可以定义一个和外部作用域相同的名称，此时，内部作用域中定义的名称，将隐藏外部作用域中的名称，
+若要访问外层作用域中的名称，可使用解析">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/27/C++程序文件链接/">
+  <time datetime="2016-05-26T18:26:00.000Z">
+    2016-05-27
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++程序文件链接</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是转换单元</strong><br>程序中的每个.cpp文件和它包含的所有头文件称为一个转换单元。<br>编译器处理每个转换单元，生成二进制对象文件，用扩展名.obj来标识。<br>链接器将对象文件组合起来，生成一个可执行文件，用扩展名.exe来标识。</p>
+<p><strong>2.作用域</strong><br>使用{}来限定变量的作用域</p>
+<p>内部作用域可以定义一个和外部作用域相同的名称，此时，内部作用域中定义的名称，将隐藏外部作用域中的名称，</p>
+<p>若要访问外层作用域中的名称，可使用解析运算符::，解析运算符的介绍，可参考 <a href="http://www.cnblogs.com/shijingjing07/p/5531419.html" target="_blank" rel="external">C++范围解析运算符::的使用
+</a></p>
+<pre><code>int main()
+{
+const int limit =10;
+std::cout&lt;&lt;&quot;limit 1 is &quot;&lt;&lt;limit&lt;&lt;std::endl;
+{
+const int limit = 5;
+std::cout&lt;&lt;&quot;limit 2 is &quot;&lt;&lt;limit&lt;&lt;std::endl;
+std::cout&lt;&lt;&quot;limit 3 is &quot;&lt;&lt;::limit&lt;&lt;std::endl;
+}
+std::cout&lt;&lt;&quot;limit 4 is &quot;&lt;&lt;limit&lt;std::endl;
+}
+</code></pre><p>输出结果：<br>limit 1 is 10<br>limit 2 is 5<br>limit 3 is 10<br>limit 4 is 10</p>
+<p><strong>3.转换单元的全局名称属性linkage</strong><br>每个转换单元中的全局名称，都有一个属性linkage，该属性指明该全局名称可以在程序代码的什么地方使用。<br>内部链接属性：该名称只能在同一转换单元的任何地方访问。比如全局const变量。<br>外部链接属性：该名称除了在同一转换单元访问外，还可在其他的转换单元中访问。除了全局const变量，其他的全局名称都是外部链接属性的。</p>
+<p>局部名称没有链接属性。</p>
+<p><strong>4.什么是”一个定义”规则</strong><br>在所有的转换单元中，外部链接属性的全局名称，如变量、函数、类类型、枚举类型、模板都只能定义一次。<br>内联函数除外，内联函数的定义必须出现在调用该函数的每个转换单元中。</p>
+<p>内部链接属性的名称可以在多个转换单元中同时定义。</p>
+<p><strong>5.如何访问另一转换单元中定义的变量</strong><br>对于函数来说，如果函数的调用和定义不在同一个转换单元，编译器会把这个函数调用标记为外部的，让链接程序去处理它。</p>
+<p>对于变量来说，是不同的。必须使用extern关键字来声明该变量。表示该变量的定义在另一个转换单元中。</p>
+<p>示例代码如下：</p>
+<pre><code>myextern.cpp
+int limit = 15;
+
+mymain.cpp
+int main()
+{
+    extern int limit;
+    std::cout&lt;&lt;&quot;Extern limit is &quot;&lt;&lt;limit&lt;&lt;std::endl;
+    return 0;
+}
+</code></pre><p>由链接属性linkage的介绍，我们知道const变量是内部链接属性的，只能在转换单元内部访问。</p>
+<p>而定义一个const变量，希望其他的转换单元都可以使用的情况是常见的，如圆周率PI，const double pi=3.14159265，</p>
+<p>那么，怎么才能让const变量也具有外部链接属性呢。<br>我们只需要在定义const变量时，也加上extern关键字就可以了。</p>
+<p>示例代码如下：</p>
+<pre><code>myextern.cpp
+extern const double pi=3.14159265；
+
+mymain.cpp
+int main()
+{
+    extern const double pi;
+    std::cout&lt;&lt;&quot;Extern pi is &quot;&lt;&lt;pi&lt;&lt;std::endl;
+    return 0;
+}
+</code></pre><p>另外需要说明的是，extern变量声明的位置，决定了该外部变量的作用域。</p>
+<p>参考资料：《C++入门经典 第三版》 pp.309-318</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/27/C++程序文件链接/" data-title="C++程序文件链接" data-url="https://shijingjing07.github.io/2016/05/27/C++程序文件链接/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

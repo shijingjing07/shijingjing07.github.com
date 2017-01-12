@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>持续集成详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="持续集成
+1.什么是持续集成针对系统的开发和发布，形成的一套标准流程。持续集成指的是，频繁地（一天多次）将代码集成到主干
+2.持续集成的流程1)开发者向代码仓库提交代码本地代码commit到代码仓库2)代码仓库对提交的代码进行测试代码仓库对commit操作配置了钩子(hook)，只要提交代码或者合并进主干，就会跑自动化测试。测试的种类如下：单元测试：测试函数或模块功能集成测试：针对整个产品的某个功">
+  
+  <meta name="description" content="持续集成
+1.什么是持续集成针对系统的开发和发布，形成的一套标准流程。持续集成指的是，频繁地（一天多次）将代码集成到主干
+2.持续集成的流程1)开发者向代码仓库提交代码本地代码commit到代码仓库2)代码仓库对提交的代码进行测试代码仓库对commit操作配置了钩子(hook)，只要提交代码或者合并进主干，就会跑自动化测试。测试的种类如下：单元测试：测试函数或模块功能集成测试：针对整个产品的某个功">
+<meta property="og:type" content="article">
+<meta property="og:title" content="持续集成详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/10/15/持续集成详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="持续集成
+1.什么是持续集成针对系统的开发和发布，形成的一套标准流程。持续集成指的是，频繁地（一天多次）将代码集成到主干
+2.持续集成的流程1)开发者向代码仓库提交代码本地代码commit到代码仓库2)代码仓库对提交的代码进行测试代码仓库对commit操作配置了钩子(hook)，只要提交代码或者合并进主干，就会跑自动化测试。测试的种类如下：单元测试：测试函数或模块功能集成测试：针对整个产品的某个功">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161015220148390-1415314161.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:16.626Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="持续集成详解">
+<meta name="twitter:description" content="持续集成
+1.什么是持续集成针对系统的开发和发布，形成的一套标准流程。持续集成指的是，频繁地（一天多次）将代码集成到主干
+2.持续集成的流程1)开发者向代码仓库提交代码本地代码commit到代码仓库2)代码仓库对提交的代码进行测试代码仓库对commit操作配置了钩子(hook)，只要提交代码或者合并进主干，就会跑自动化测试。测试的种类如下：单元测试：测试函数或模块功能集成测试：针对整个产品的某个功">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161015220148390-1415314161.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/10/15/持续集成详解/">
+  <time datetime="2016-10-15T06:02:00.000Z">
+    2016-10-15
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">持续集成详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>持续集成</p>
+<p>1.什么是持续集成<br>针对系统的开发和发布，形成的一套标准流程。<br>持续集成指的是，频繁地（一天多次）将代码集成到主干<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161015220148390-1415314161.png" alt=""></p>
+<p>2.持续集成的流程<br>1)开发者向代码仓库提交代码<br>本地代码commit到代码仓库<br>2)代码仓库对提交的代码进行测试<br>代码仓库对commit操作配置了钩子(hook)，只要提交代码或者合并进主干，就会跑自动化测试。<br>测试的种类如下：<br>单元测试：测试函数或模块功能<br>集成测试：针对整个产品的某个功能的测试，又称功能测试<br>端对端测试：从用户界面直达数据库的全链路测试<br>3)持续交付<br>通过上步测试后，代码就可以合并进主干了，此时称作可交付。<br>4)构建<br>构建指的是，交付后的源代码转为运行的实际代码，比如安装依赖，配置各种资源（样式表，js脚本，图片）等等。<br>5)测试<br>构建完毕后，会进入测试。以自动化测试为主，无法自动化的测试用例，需要人工跑。<br>6)部署到生产服务器<br>通过上步测试后，当前代码就是一个可以直接部署的版本。将这个版本的所有文件打包存档，发到生产服务器上。<br>生产服务器解包文件，再将运行路径符号链接指向文件目录，然后重新启动应用。<br>部署工具有Ansible,Chef,Puppet等。<br>7)回滚<br>若当前版本有问题，需要回滚上一个版本的构建结果。最简单的做法就是修改运行路径符号链接，指向上次构建的目录。</p>
+<p>3.持续集成的优点<br>1)快速发现发错<br>每完成一点更新，就集成到主干，可快速发现和定位错误<br>2)防止分支大幅偏离主干<br>主干不断更新，会导致分支集成难度变大或难以集成。</p>
+<p>4.持续集成的目的<br>让产品可以快速迭代，同时还能保持高质量。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/10/15/持续集成详解/" data-title="持续集成详解" data-url="https://shijingjing07.github.io/2016/10/15/持续集成详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

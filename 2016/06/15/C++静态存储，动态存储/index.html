@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++静态存储，动态存储 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="什么是静态存储，动态存储静态存储变量通常是在变量定义时就分定存储单元并一直保持不变， 直至整个程序结束。
+动态存储变量是在程序执行过程中，使用它时才分配存储单元， 使用完毕立即释放。典型的例子是函数的形式参数，在函数定义时并不给形参分配存储单元，只是在函数被调用时，才予以分配，调用函数完毕立即释放。如果一个函数被多次调用，则反复地分配、 释放形参变量的存储单元。
+从以上分析可知， 静态存储变量是一">
+  
+  <meta name="description" content="什么是静态存储，动态存储静态存储变量通常是在变量定义时就分定存储单元并一直保持不变， 直至整个程序结束。
+动态存储变量是在程序执行过程中，使用它时才分配存储单元， 使用完毕立即释放。典型的例子是函数的形式参数，在函数定义时并不给形参分配存储单元，只是在函数被调用时，才予以分配，调用函数完毕立即释放。如果一个函数被多次调用，则反复地分配、 释放形参变量的存储单元。
+从以上分析可知， 静态存储变量是一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++静态存储，动态存储">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/15/C++静态存储，动态存储/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="什么是静态存储，动态存储静态存储变量通常是在变量定义时就分定存储单元并一直保持不变， 直至整个程序结束。
+动态存储变量是在程序执行过程中，使用它时才分配存储单元， 使用完毕立即释放。典型的例子是函数的形式参数，在函数定义时并不给形参分配存储单元，只是在函数被调用时，才予以分配，调用函数完毕立即释放。如果一个函数被多次调用，则反复地分配、 释放形参变量的存储单元。
+从以上分析可知， 静态存储变量是一">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160615110055417-1375673411.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:36.428Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++静态存储，动态存储">
+<meta name="twitter:description" content="什么是静态存储，动态存储静态存储变量通常是在变量定义时就分定存储单元并一直保持不变， 直至整个程序结束。
+动态存储变量是在程序执行过程中，使用它时才分配存储单元， 使用完毕立即释放。典型的例子是函数的形式参数，在函数定义时并不给形参分配存储单元，只是在函数被调用时，才予以分配，调用函数完毕立即释放。如果一个函数被多次调用，则反复地分配、 释放形参变量的存储单元。
+从以上分析可知， 静态存储变量是一">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160615110055417-1375673411.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/15/C++静态存储，动态存储/">
+  <time datetime="2016-06-14T19:10:00.000Z">
+    2016-06-15
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++静态存储，动态存储</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>什么是静态存储，动态存储</strong><br>静态存储变量通常是在变量定义时就分定存储单元并一直保持不变， 直至整个程序结束。</p>
+<p>动态存储变量是在程序执行过程中，使用它时才分配存储单元， 使用完毕立即释放。<br>典型的例子是函数的形式参数，在函数定义时并不给形参分配存储单元，只是在函数被调用时，才予以分配，<br>调用函数完毕立即释放。如果一个函数被多次调用，则反复地分配、 释放形参变量的存储单元。</p>
+<p>从以上分析可知， 静态存储变量是一直存在的， 而动态存储变量则时而存在时而消失。<br>我们又把这种由于变量存储方式不同而产生的特性称变量的生存期。 生存期表示了变量存在的时间。<br>生存期和作用域是从时间和空间这两个不同的角度来描述变量的特性，这两者既有联系，又有区别。<br>一个变量究竟属于哪一种存储方式， 并不能仅从其作用域来判断，还应有明确的存储类型说明。</p>
+<p><strong>四种变量的存储方式和作用域</strong><br>在Ｃ语言中，有以下四种变量：静态变量(static)、自动变量(auto)、寄存器变量(register)、外部变量(extern)。<br>其中自动变量和寄存器变量属于动态存储方式，外部变量和静态局部变量属于静态存储方式。<br>下面我们详细介绍这四种变量：</p>
+<p>一、静态局部变量-静态存储<br>定义格式：<br>static 数据类型 变量名；</p>
+<p>存储特点：<br>静态局部变量属于静态存储。<br>在程序执行过程中，即使所在函数调用结束也不释放。<br>换句话说，在程序执行期间，静态局部变量始终存在，但其它函数是不能引用它们的。  </p>
+<p>初始化：<br>定义但不初始化，则自动赋以”０”（整型和实型）或’\0’（字符型）；<br>且每次调用它们所在的函数时，不再重新赋初值，只是保留上次调用结束时的值！</p>
+<p>使用场合：<br>需要保留函数上一次调用结束时的值。<br>变量只被引用而不改变其值。</p>
+<p>二、自动变量-动态存储<br>定义格式：<br>[auto] 数据类型 变量名；</p>
+<p>存储特点：<br>自动变量属于动态存储方式。<br>在函数或复合语句中定义的自动变量，只在该函数复合语句内有效；函数复合语句被调用时分配存储空间，调用结束就释放。  </p>
+<p>初始化：<br>定义而不初始化，则其值是不确定的。<br>如果初始化，则赋初值操作是在调用时进行的，且每次调用都要重新赋一次初值。</p>
+<p>由于自动变量的作用域和生存期，都局限于定义它的个体内（函数或复合语句），<br>因此不同的个体中允许使用同名的变量而不会混淆。<br>即使在函数内定义的自动变量，也可与该函数内部的复合语句中定义的自动变量同名。<br>建议：系统不会混淆，并不意味着人也不会混淆，所以尽量少用同名自动变量！</p>
+<p>自动变量与静态局部变量的示例如下：</p>
+<pre><code>void  auto_static() 
+{      
+    int var_auto=0; /*自动变量：每次调用都重新初始化*/ 
+    static int var_static=0; /*静态局部变量：只初始化1次*/ 
+    printf(&quot;var_auto=%d, var_static=%d\n&quot;, var_auto, var_static); 
+    ++var_auto; 
+    ++var_static; 
+} 
+void main() 
+{   int i; 
+    for(i=0; i&lt;5; i++) 
+        auto_static(); 
+} 
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160615110055417-1375673411.png" alt=""></p>
+<p>三、寄存器变量-动态存储<br>存储特点：<br>一般情况下，变量的值都是存储在内存中的。<br>为提高执行效率，Ｃ语言允许将局部变量的值存放到寄存器中，这种变量就称为寄存器变量。</p>
+<p>定义格式：<br>register 数据类型 变量名；  </p>
+<p>寄存器变量需要注意以下几点：<br>1)只有局部变量才能定义成寄存器变量，即全局变量不行。<br>2)对寄存器变量的实际处理，随系统而异。例如，微机上的MSC和TC 将寄存器变量实际当作自动变量处理。<br>3)允许使用的寄存器数目是有限的，不能定义任意多个寄存器变量。</p>
+<p>四、外部变量-静态存储<br>存储特点：<br>外部变量属于静态存储方式。又分为静态外部变量和非静态外部变量</p>
+<p>静态外部变量<br>只允许被本源文件中的函数引用<br>定义格式： static 数据类型 外部变量名；</p>
+<p>非静态外部变量<br>允许被其它源文件中的函数引用<br>定义时缺省static关键字的外部变量，即为非静态外部变量。<br>定义格式：数据类型 外部变量名；<br>其它源文件中的函数，引用非静态外部变量时，需要在引用函数所在的源文件中进行说明：<br>格式：extern 数据类型 外部变量表；  </p>
+<p>静态局部变量和静态外部变量同属静态存储方式，但两者区别较大：<br>1)定义的位置不同。<br>静态局部变量在函数内定义，静态外部变量在函数外定义。<br>2)作用域不同。<br>静态局部变量属于内部变量，其作用域仅限于定义它的函数内；<br>虽然生存期为整个源程序，但其它函数是不能使用它的。</p>
+<p>静态外部变量在函数外定义，其作用域为定义它的源文件内；<br>生存期为整个源程序，但其它源文件中的函数也是不能使用它的。<br>3)初始化处理不同。<br>静态局部变量，仅在第1次调用它所在的函数时被初始化，<br>当再次调用定义它的函数时，不再初始化，而是保留上1次调用结束时的值。<br>而静态外部变量是在函数外定义的，不存在静态内部变量的”重复”初始化问题，<br>其当前值由最近1次给它赋值的操作决定。</p>
+<p>把局部变量改变为静态内部变量后，改变了它的存储方式，即改变了它的生存期。<br>把外部变量改变为静态外部变量后，改变了它的作用域，限制了它的使用范围。<br>因此，关键字”static”在不同的地方所起的作用是不同的。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/15/C++静态存储，动态存储/" data-title="C++静态存储，动态存储" data-url="https://shijingjing07.github.io/2016/06/15/C++静态存储，动态存储/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>jQuery easyui datagrid数据绑定 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.绑定json数据
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta http-equiv=&amp;quot;Content-Type&amp;quot; content=&amp;quot;text/html; charset=utf-8&amp;quot;/&amp;gt;
+    &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
+    &amp;lt;meta c">
+  
+  <meta name="description" content="1.绑定json数据
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta http-equiv=&amp;quot;Content-Type&amp;quot; content=&amp;quot;text/html; charset=utf-8&amp;quot;/&amp;gt;
+    &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
+    &amp;lt;meta c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery easyui datagrid数据绑定">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/08/18/jQuery easyui datagrid数据绑定/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.绑定json数据
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta http-equiv=&amp;quot;Content-Type&amp;quot; content=&amp;quot;text/html; charset=utf-8&amp;quot;/&amp;gt;
+    &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
+    &amp;lt;meta c">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818175001406-827948937.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818180125328-1201691621.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:21.574Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery easyui datagrid数据绑定">
+<meta name="twitter:description" content="1.绑定json数据
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta http-equiv=&amp;quot;Content-Type&amp;quot; content=&amp;quot;text/html; charset=utf-8&amp;quot;/&amp;gt;
+    &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
+    &amp;lt;meta c">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818175001406-827948937.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/18/jQuery easyui datagrid数据绑定/">
+  <time datetime="2016-08-18T02:02:00.000Z">
+    2016-08-18
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">jQuery easyui datagrid数据绑定</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.绑定json数据</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;script src=&quot;Scripts/jquery.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
+     &lt;script src=&quot;Scripts/jquery.easyui.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
+     &lt;link href=&quot;Css/easyui.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;   
+     &lt;script type=&quot;text/javascript&quot;&gt; 
+         $(function () {      
+             var json={&quot;total&quot;:28,&quot;rows&quot;:[
+{&quot;productid&quot;:&quot;FI-SW-01&quot;,&quot;unitcost&quot;:10.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:36.50,&quot;attr1&quot;:&quot;Large&quot;,&quot;itemid&quot;:&quot;EST-1&quot;},
+{&quot;productid&quot;:&quot;K9-DL-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:18.50,&quot;attr1&quot;:&quot;Spotted Adult Female&quot;,&quot;itemid&quot;:&quot;EST-10&quot;},
+{&quot;productid&quot;:&quot;RP-SN-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:28.50,&quot;attr1&quot;:&quot;Venomless&quot;,&quot;itemid&quot;:&quot;EST-11&quot;},
+{&quot;productid&quot;:&quot;RP-SN-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:26.50,&quot;attr1&quot;:&quot;Rattleless&quot;,&quot;itemid&quot;:&quot;EST-12&quot;},
+{&quot;productid&quot;:&quot;RP-LI-02&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:35.50,&quot;attr1&quot;:&quot;Green Adult&quot;,&quot;itemid&quot;:&quot;EST-13&quot;},
+{&quot;productid&quot;:&quot;FL-DSH-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:158.50,&quot;attr1&quot;:&quot;Tailless&quot;,&quot;itemid&quot;:&quot;EST-14&quot;},
+{&quot;productid&quot;:&quot;FL-DSH-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:83.50,&quot;attr1&quot;:&quot;With tail&quot;,&quot;itemid&quot;:&quot;EST-15&quot;},
+{&quot;productid&quot;:&quot;FL-DLH-02&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:63.50,&quot;attr1&quot;:&quot;Adult Female&quot;,&quot;itemid&quot;:&quot;EST-16&quot;},
+{&quot;productid&quot;:&quot;FL-DLH-02&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:89.50,&quot;attr1&quot;:&quot;Adult Male&quot;,&quot;itemid&quot;:&quot;EST-17&quot;},
+{&quot;productid&quot;:&quot;AV-CB-01&quot;,&quot;unitcost&quot;:92.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:63.50,&quot;attr1&quot;:&quot;Adult Male&quot;,&quot;itemid&quot;:&quot;EST-18&quot;}
+             ]};
+             $(&apos;#tbl&apos;).datagrid({
+                 title: &apos;测试DataGrid&apos;,
+                 width: 700,
+                 height: &apos;auto&apos;,
+                 fitColumns: true,
+                 columns:[[
+                 {field:&apos;itemid&apos;,title:&apos;Item ID&apos;,width:80},
+                 {field:&apos;productid&apos;,title:&apos;Product ID&apos;,width:120},
+                 {field:&apos;listprice&apos;,title:&apos;List Price&apos;,width:80,align:&apos;right&apos;},
+                 {field:&apos;unitcost&apos;,title:&apos;Unit Cost&apos;,width:80,align:&apos;right&apos;},
+                 {field:&apos;attr1&apos;,title:&apos;Attribute&apos;,width:250},
+                 {field:&apos;status&apos;,title:&apos;Status&apos;,width:60,align:&apos;center&apos;}
+                 ]]
+             }).datagrid(&quot;loadData&quot;,json);
+         });
+     &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;table id=&quot;tbl&quot;&gt;     
+    &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>浏览器显示结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818175001406-827948937.png" alt=""></p>
+<p>2.查询后台数据，然后绑定</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;script src=&quot;Scripts/jquery.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
+    &lt;script src=&quot;Scripts/jquery.easyui.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
+    &lt;link href=&quot;Css/easyui.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;   
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        var userUrl = &quot;http://127.0.0.1:9998/getUser&quot;;
+        function initUser() {
+            $(&apos;#dri_grid&apos;).datagrid({
+                border: false,
+                fit: true,
+                singleSelect: true,
+                method: &apos;get&apos;,
+                pagination: true,
+                striped: true,
+                pageSize: 20,
+                onBeforeLoad: function() {
+                },
+                columns: [
+                    [{
+                        field: &apos;id&apos;,
+                        title: &apos;&amp;#12288;编号&apos;,
+                        width: &apos;8%&apos;,
+                        align: &apos;center&apos;
+                    }, {
+                        field: &apos;lasttimeonline&apos;,
+                        title: &apos;&amp;#12288;最后登录时间&apos;,
+                        width: &apos;14%&apos;,
+                        align: &apos;center&apos;
+                    }
+                    ]
+                ],
+                onLoadSuccess: function(data) {
+                }
+            });
+        }
+        $(function () {
+            initUser();
+            $(&apos;#dri_grid&apos;).datagrid(&apos;load&apos;, userUrl);
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;table id=&quot;dri_grid&quot;&gt;&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>浏览器显示结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818180125328-1201691621.png" alt=""></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/08/18/jQuery easyui datagrid数据绑定/" data-title="jQuery easyui datagrid数据绑定" data-url="https://shijingjing07.github.io/2016/08/18/jQuery easyui datagrid数据绑定/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

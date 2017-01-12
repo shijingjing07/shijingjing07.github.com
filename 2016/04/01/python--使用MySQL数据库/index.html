@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python--使用MySQL数据库 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.安装mysqlsudo apt-get install mysql-serverSudo apt-get install mysql-client
+2.安装MySQL-python驱动sudo apt-get install mysql-python
+3.测试是否安装成功python解释器命令下运行 import MySQLdb没有报错，说明安装已成功。
+4.python使用mysql数据库常">
+  
+  <meta name="description" content="1.安装mysqlsudo apt-get install mysql-serverSudo apt-get install mysql-client
+2.安装MySQL-python驱动sudo apt-get install mysql-python
+3.测试是否安装成功python解释器命令下运行 import MySQLdb没有报错，说明安装已成功。
+4.python使用mysql数据库常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python--使用MySQL数据库">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/01/python--使用MySQL数据库/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.安装mysqlsudo apt-get install mysql-serverSudo apt-get install mysql-client
+2.安装MySQL-python驱动sudo apt-get install mysql-python
+3.测试是否安装成功python解释器命令下运行 import MySQLdb没有报错，说明安装已成功。
+4.python使用mysql数据库常">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160401160447816-1857114613.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:46.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python--使用MySQL数据库">
+<meta name="twitter:description" content="1.安装mysqlsudo apt-get install mysql-serverSudo apt-get install mysql-client
+2.安装MySQL-python驱动sudo apt-get install mysql-python
+3.测试是否安装成功python解释器命令下运行 import MySQLdb没有报错，说明安装已成功。
+4.python使用mysql数据库常">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160401160447816-1857114613.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/01/python--使用MySQL数据库/">
+  <time datetime="2016-04-01T00:05:00.000Z">
+    2016-04-01
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python--使用MySQL数据库</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.安装mysql<br>sudo apt-get install mysql-server<br>Sudo apt-get install mysql-client</p>
+<p>2.安装MySQL-python驱动<br>sudo apt-get install mysql-python</p>
+<p>3.测试是否安装成功<br>python解释器命令下运行 import MySQLdb<br>没有报错，说明安装已成功。</p>
+<p>4.python使用mysql数据库常见操作 exmysql.py</p>
+<pre><code># -*- coding: utf-8 -*-                                                                                                                                 
+import MySQLdb
+
+try:
+        #mysql连接
+        conn = MySQLdb.connect(host=&apos;localhost&apos;,user=&apos;root&apos;,passwd=&apos;password&apos;,port=3306,charset=&apos;utf8&apos;)
+
+        #创建游标
+        cur = conn.cursor()
+
+        #创建数据库
+        cur.execute(&apos;create database if not exists  pythondb&apos;)
+
+        #切换到数据库
+        conn.select_db(&apos;pythondb&apos;)   
+
+        #创建表
+        cur.execute(&quot;create table student(id int,name varchar(20),age int)&quot;)
+
+        #插入单条数据
+        cur.execute(&quot;insert into student values(9,&apos;张三&apos;,28)&quot;)
+
+        #插入多条数据
+        cur.execute(&quot;insert into student values(2,&apos;shijingjing08&apos;,21),(3,&apos;shijingjing09&apos;,30),(4,&apos;shijingjing10&apos;,12)&quot;)
+
+        #更新数据
+        cur.execute(&quot;update student set age=27 where name=&apos;shijingjing07&apos; &quot;)
+
+        #删除数据
+        cur.execute(&quot;delete from student where name=&apos;shijingjing10&apos; &quot;)
+
+        #查找数据
+        count = cur.execute(&quot;select * from student &quot;)
+        print &quot;总条数&quot;
+        print count
+
+        result = cur.fetchone()
+        print &quot;查找一条&quot;
+        print result
+
+        results = cur.fetchmany(5)
+        print &quot;查找多条&quot;
+        for r in results:
+                print r
+
+        cur.scroll(0,mode=&apos;absolute&apos;)
+
+        #游标定位到表中第一条数据
+        results = cur.fetchall()
+
+        print &quot;查找所有数据，第二列的值&quot;
+        for r in results:
+                print r[1]
+
+        #在再次执行select查询返回结果集时，需要执行nextset()操作，移动到下一结果集，否则会报2014错误
+        cur.nextset()
+
+
+        #执行存储过程的两种方法
+        #cur.execute(&quot;call get_student(&apos;shijingjing&apos;,20)&quot;)
+        cur.callproc(&quot;get_student&quot;,(&apos;shijingjing&apos;,20))
+        print &quot;执行存储过程&quot;
+        data=cur.fetchall()
+        for d in data:
+                print d
+
+
+        #关闭游标
+        cur.close()
+
+        #提交
+        conn.commit()
+        #关闭数据库连接
+        conn.close()
+
+except MySQLdb.Error,e:
+        print &quot;Mysql Error %d:%s&quot;%(e.args[0],e.args[1]) 
+</code></pre><p> 存储过程get_student(in p_name varchar(20),in p_age<br>int),输入name,age参数，模糊查找name,以及age&gt;p_age的学生。</p>
+<pre><code>delimiter $
+create procedure get_student(in p_name varchar(20),in p_age int) 
+     begin
+          select * from student where name like concat(p_name,&apos;%&apos;) and age&gt;p_age;
+     end;
+$
+</code></pre><p>5.运行结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160401160447816-1857114613.png" alt=""></p>
+<p>6.常用的操作：<br>commit() 提交<br>rollback() 回滚</p>
+<p>callproc(self, procname, args):用来执行存储过程,接收的参数为存储过程名和参数列表,返回值为受影响的行数<br>execute(self, query, args):执行单条sql语句,接收的参数为sql语句本身和使用的参数列表,返回值为受影响的行数<br>executemany(self, query, args):执行单挑sql语句,但是重复执行参数列表里的参数,返回值为受影响的行数<br>nextset(self):移动到下一个结果集</p>
+<p>fetchall(self):接收全部的返回结果行.<br>fetchmany(self,<br>size=None):接收size条返回结果行.如果size的值大于返回的结果行的数量,则会返回cursor.arraysize条数据.<br>fetchone(self):返回一条结果行.<br>scroll(self, value,<br>mode=’relative’):移动指针到某一行.如果mode=’relative’,则表示从当前所在行移动value条,如果<br>mode=’absolute’,则表示从结果集的第一行移动value条.</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/01/python--使用MySQL数据库/" data-title="python--使用MySQL数据库" data-url="https://shijingjing07.github.io/2016/04/01/python--使用MySQL数据库/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

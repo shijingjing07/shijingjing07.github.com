@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>ARM中LDR伪指令与LDR加载指令 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="ARM指令集中，LDR通常都是作加载指令的，但是它也可以作伪指令。
+LDR伪指令的形式是”LDR Rn,=expr”。下面举一个例子来说明它的用法。
+COUNT EQU       0x40003100
+……
+LDR       R1,=COUNT
+MOV      R0,#0
+STR       R0,[R1]
+COUNT是我们定义的一个变量，地址为0x40003100。这中定义方法在汇编语言中">
+  
+  <meta name="description" content="ARM指令集中，LDR通常都是作加载指令的，但是它也可以作伪指令。
+LDR伪指令的形式是”LDR Rn,=expr”。下面举一个例子来说明它的用法。
+COUNT EQU       0x40003100
+……
+LDR       R1,=COUNT
+MOV      R0,#0
+STR       R0,[R1]
+COUNT是我们定义的一个变量，地址为0x40003100。这中定义方法在汇编语言中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARM中LDR伪指令与LDR加载指令">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/26/ARM中LDR伪指令与LDR加载指令/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="ARM指令集中，LDR通常都是作加载指令的，但是它也可以作伪指令。
+LDR伪指令的形式是”LDR Rn,=expr”。下面举一个例子来说明它的用法。
+COUNT EQU       0x40003100
+……
+LDR       R1,=COUNT
+MOV      R0,#0
+STR       R0,[R1]
+COUNT是我们定义的一个变量，地址为0x40003100。这中定义方法在汇编语言中">
+<meta property="og:updated_time" content="2017-01-12T01:35:40.447Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ARM中LDR伪指令与LDR加载指令">
+<meta name="twitter:description" content="ARM指令集中，LDR通常都是作加载指令的，但是它也可以作伪指令。
+LDR伪指令的形式是”LDR Rn,=expr”。下面举一个例子来说明它的用法。
+COUNT EQU       0x40003100
+……
+LDR       R1,=COUNT
+MOV      R0,#0
+STR       R0,[R1]
+COUNT是我们定义的一个变量，地址为0x40003100。这中定义方法在汇编语言中">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/26/ARM中LDR伪指令与LDR加载指令/">
+  <time datetime="2016-05-25T17:35:00.000Z">
+    2016-05-26
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">ARM中LDR伪指令与LDR加载指令</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>ARM指令集中，LDR通常都是作加载指令的，但是它也可以作伪指令。</p>
+<p>LDR伪指令的形式是”LDR Rn,=expr”。下面举一个例子来说明它的用法。</p>
+<p>COUNT EQU       0x40003100</p>
+<p>……</p>
+<p>LDR       R1,=COUNT</p>
+<p>MOV      R0,#0</p>
+<p>STR       R0,[R1]</p>
+<p>COUNT是我们定义的一个变量，地址为0x40003100。这中定义方法在汇编语言中是很常见的，如果使用过单片机的话，应该都熟悉这种用法。</p>
+<p>LDR       R1,=COUNT是将COUNT这个变量的地址，也就是0x40003100放到R1中。</p>
+<p>MOV      R0,#0是将立即数0放到R0中。最后一句STR<br>R0,[R1]是一个典型的存储指令，将R0中的值放到以R1中的值为地址的存储单元去。实际就是将0放到地址为0x40003100的存储单元中去。可<br>见这三条指令是为了完成对变量COUNT赋值。用三条指令来完成对一个变量的赋值，看起来有点不太舒服。这可能跟ARM的采用RISC有关。</p>
+<p>下面还有一个例子</p>
+<p>；将COUNT的值赋给R0</p>
+<p>LDR       R1,=COUNT</p>
+<p>LDR       R0,[R1]</p>
+<p>LDR<br>R1,=COUNT这条伪指令，是怎样完成将COUNT的地址赋给R1，有兴趣的可以看它编译后的结果。这条指令实际上会编译成一条LDR指令和一条DCD伪指令。</p>
+<p>LDR 的两种用法</p>
+<p>1）LDR pc, =MyHandleIRQ 表示将MyHandleIRQ符号放入pc寄存器中</p>
+<p>2）LDR PC，MyHandleIRQ 表示将读取存储器中MyHandleIRQ符号所表示的地址中的值，及需要多读一次存储器。</p>
+<p>在代码中：</p>
+<p>start:<br>        ldr pc,=MyHandleReset   @jump to HandleReset<br>        ldr pc,=MyHandleUndef   @jump to HandleUndef<br>        ldr pc,=MyHandleSWI     @jump to HandleSWI<br>        ldr pc,=MyHandleIabort  @jump to HandleIabort<br>        ldr pc,=MyHandleDabort  @jump to HandleDabort<br>        nop<br>        ldr pc,=MyHandleIRQ     @jump to HandleIRQ             &lt;=之前出错的一行<br>        ldr pc,=MyHandleFIQ     @jump to HandleFIQ</p>
+<p>@MyHandleIRQ:   .word OS_CPU_IRQ_ISR<br>MyHandleIRQ:<br>        sub lr, lr, #4          @ to calculate the return address<br>        stmdb sp!, {r0-r12,lr}<br>        ldr lr, =int_return     @ restore the return address<br>        ldr pc, =int_handle     @ call for the interrupt handler</p>
+<p>在”之前出错的一行”处，如果改成”ldr pc,MyHandleIRQ”当中断来临时，无法进行中断处理。</p>
+<p>另一种情况是正确的，注意体会：</p>
+<p>start:<br>        ldr pc,=MyHandleReset   @jump to HandleReset<br>        ldr pc,=MyHandleUndef   @jump to HandleUndef<br>        ldr pc,=MyHandleSWI     @jump to HandleSWI<br>        ldr pc,=MyHandleIabort  @jump to HandleIabort<br>        ldr pc,=MyHandleDabort  @jump to HandleDabort<br>        nop<br>        ldr pc,MyHandleIRQ     @jump to HandleIRQ             &lt;=之前出错的一行<br>        ldr pc,=MyHandleFIQ     @jump to HandleFIQ</p>
+<p>MyHandleIRQ:   .word OS_CPU_IRQ_ISR<br>@MyHandleIRQ:<br>@        sub lr, lr, #4          @ to calculate the return address<br>@        stmdb sp!, {r0-r12,lr}<br>@        ldr lr, =int_return     @ restore the return address<br>@        ldr pc, =int_handle     @ call for the interrupt handler</p>
+<p>因为当中断来临时，还需要去MyHandleIRQ处把OS_CPU_IRQ_ISR取出，即多取一次存储器。</p>
+<h1 id="这篇文章针对用法1进行了详细的说明"><a href="#这篇文章针对用法1进行了详细的说明" class="headerlink" title="这篇文章针对用法1进行了详细的说明"></a>这篇文章针对用法1进行了详细的说明</h1><h1 id="说说ARM汇编的LDR伪指令"><a href="#说说ARM汇编的LDR伪指令" class="headerlink" title="说说ARM汇编的LDR伪指令"></a>说说ARM汇编的LDR伪指令</h1><p><strong><a href="http://my.chinaunix.net/link.php?url=http://blog.csdn.net%2Faxx1611%2Farchive%2F2008%2F04%2F27%2F2335410.aspx" target="_blank" rel="external">http://blog.csdn.net/axx1611/archive/2008/04/27/2335410.aspx</a></strong></p>
+<p>转自：<a href="http://www.cnblogs.com/hnrainll/archive/2011/06/14/2080241.html" target="_blank" rel="external">http://www.cnblogs.com/hnrainll/archive/2011/06/14/2080241.html</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/26/ARM中LDR伪指令与LDR加载指令/" data-title="ARM中LDR伪指令与LDR加载指令" data-url="https://shijingjing07.github.io/2016/05/26/ARM中LDR伪指令与LDR加载指令/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

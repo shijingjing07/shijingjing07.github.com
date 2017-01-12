@@ -1,0 +1,444 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>posix多线程--线程取消 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.三种取消状态Off                   禁用取消Deferred           推迟取消：在下一个取消点执行取消Asynchronous   异步取消：可以随时执行取消
+int pthread_cancel(pthread_t thread)
+2.推迟取消：在下一个取消点执行取消
+Pthreads系统上的某些函数会被作为取消点，如pthread_testcancel,sl">
+  
+  <meta name="description" content="1.三种取消状态Off                   禁用取消Deferred           推迟取消：在下一个取消点执行取消Asynchronous   异步取消：可以随时执行取消
+int pthread_cancel(pthread_t thread)
+2.推迟取消：在下一个取消点执行取消
+Pthreads系统上的某些函数会被作为取消点，如pthread_testcancel,sl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="posix多线程--线程取消">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/17/posix多线程--线程取消/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.三种取消状态Off                   禁用取消Deferred           推迟取消：在下一个取消点执行取消Asynchronous   异步取消：可以随时执行取消
+int pthread_cancel(pthread_t thread)
+2.推迟取消：在下一个取消点执行取消
+Pthreads系统上的某些函数会被作为取消点，如pthread_testcancel,sl">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:updated_time" content="2017-01-12T01:35:45.240Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="posix多线程--线程取消">
+<meta name="twitter:description" content="1.三种取消状态Off                   禁用取消Deferred           推迟取消：在下一个取消点执行取消Asynchronous   异步取消：可以随时执行取消
+int pthread_cancel(pthread_t thread)
+2.推迟取消：在下一个取消点执行取消
+Pthreads系统上的某些函数会被作为取消点，如pthread_testcancel,sl">
+<meta name="twitter:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/17/posix多线程--线程取消/">
+  <time datetime="2016-04-17T07:56:00.000Z">
+    2016-04-17
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">posix多线程--线程取消</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.三种取消状态<br>Off                   禁用取消<br>Deferred           推迟取消：在下一个取消点执行取消<br>Asynchronous   异步取消：可以随时执行取消</p>
+<p>int pthread_cancel(pthread_t thread)</p>
+<p>2.推迟取消：在下一个取消点执行取消</p>
+<p>Pthreads系统上的某些函数会被作为取消点，如pthread_testcancel,sleep,pthread_cond_wait等。<br>线程调用pthread_cancel函数后，被取消线程不会立即取消，仅仅在到达取消点时响应取消请求。</p>
+<p>代码示例如下：</p>
+<p>在pthread_testcancel取消点，响应线程取消请求。</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+#include&lt;errno.h&gt;
+int counter;
+pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
+void *thread_route(void *arg)
+{
+        pthread_mutex_lock(&amp;mutex);
+        for(counter=0;;counter++)
+        {
+                if(counter%2000==0){
+                        printf(&quot;calling testcancel\n&quot;);
+                        pthread_testcancel();
+                }
+
+        }
+        pthread_mutex_unlock(&amp;mutex);
+}
+int main(void)
+{
+        pthread_t tid;
+        void *result;
+        pthread_create(&amp;tid,NULL,thread_route,NULL);
+        sleep(1);
+        printf(&quot;call cancel\n&quot;);
+        pthread_cancel(tid);
+        printf(&quot;call joining\n&quot;);
+        pthread_join(tid,&amp;result);
+        if(result==PTHREAD_CANCELED)
+        {
+            printf(&quot;Thread cancelled at %d\n&quot;,counter);
+        }
+        else{
+                printf(&quot;Thread was not canceled\n&quot;);
+        }
+        pthread_mutex_lock(&amp;mutex);
+        printf(&quot;main thread locked&quot;);
+        pthread_mutex_unlock(&amp;mutex);
+} 
+</code></pre><p>View Code</p>
+<p>3.如果要保证取消不在一个特别的取消点发生，可以暂时在代码的那个区域停用取消。<br>int pthread_setcancelstate(PTHREAD_CANCEL_DISABLE,int *state)</p>
+<p>代码示例如下：</p>
+<p>在sleep()时，禁用取消。</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+#include&lt;errno.h&gt;
+int counter;
+pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
+void *thread_route(void *arg)
+{
+        int state;
+        pthread_mutex_lock(&amp;mutex);
+        for(counter=0;;counter++)
+        {
+                if(counter%582==0)
+                {
+                        pthread_setcancelstate(PTHREAD_CANCEL_DISABLE,&amp;state)
+;
+                        sleep(1);
+                        pthread_setcancelstate(state,&amp;state);
+                }
+                if(counter%2000==0){
+                        printf(&quot;calling testcancel\n&quot;);
+                        pthread_testcancel();
+                }
+
+        }
+        pthread_mutex_unlock(&amp;mutex);
+}
+int main(void)
+{
+        pthread_t tid;
+        void *result;
+        pthread_create(&amp;tid,NULL,thread_route,NULL);
+        sleep(1);
+        printf(&quot;call cancel\n&quot;);
+        pthread_cancel(tid);
+        printf(&quot;call joining\n&quot;);
+        pthread_join(tid,&amp;result);
+        if(result==PTHREAD_CANCELED)
+        {
+                printf(&quot;Thread cancelled at %d\n&quot;,counter);
+        }
+        else{
+                printf(&quot;Thread was not canceled\n&quot;);
+        }
+        pthread_mutex_lock(&amp;mutex);
+        printf(&quot;main thread locked&quot;);
+        pthread_mutex_unlock(&amp;mutex);
+}           
+</code></pre><p>View Code</p>
+<p>4.异步取消：可以随时执行取消<br>异步取消不需要使用取消点来查询取消请求。异步取消不能获得任何资源，应避免异步的取消<br>代码示例如下：</p>
+<p>矩阵相乘线程取消</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+#define SIZE 10
+int arr_a[SIZE][SIZE];
+int arr_b[SIZE][SIZE];
+int arr_c[SIZE][SIZE];
+void printarr(int arr[SIZE][SIZE])
+{
+        int i,j;
+        for(i=0;i&lt;SIZE;i++)
+        {
+                for(j=0;j&lt;SIZE;j++)
+                {
+                        printf(&quot;%x &quot;,arr[i][j]);    
+                }
+                printf(&quot;\n&quot;);
+        }
+}
+void *thread_routine(void *arg)
+{
+        int i,j,cancel_type;
+        for(i=0;i&lt;SIZE;i++)
+                for(j=0;j&lt;SIZE;j++)
+                {
+                        arr_a[i][j] = i;
+                        arr_b[i][j] = j;
+                }
+        while(1)
+        {
+                pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,&amp;cancel_type);
+                 for(i=0;i&lt;SIZE;i++)
+                        for(j=0;j&lt;SIZE;j++)
+                        {
+                                arr_c[i][j] = arr_a[i][j]*arr_b[i][j];
+                        }
+                pthread_setcanceltype(cancel_type,&amp;cancel_type);
+                for(i=0;i&lt;SIZE;i++)
+                        for(j=0;j&lt;SIZE;j++)
+                                arr_a[i][j] = arr_c[i][j];
+        }
+}
+int main(void)
+{
+        pthread_t tid;                                                           
+        void *result;
+        pthread_create(&amp;tid,NULL,thread_routine,NULL);
+        sleep(1);
+        printf(&quot;canceling!&quot;);
+        pthread_cancel(tid);
+        printf(&quot;joining&quot;);
+        pthread_join(tid,&amp;result);
+        if(result==PTHREAD_CANCELED)
+                printf(&quot;thread cancelled\n&quot;);
+        else    
+                printf(&quot;thread was not cancelled\n&quot;);
+        printarr(arr_a);
+        printarr(arr_b);
+        printarr(arr_c);
+}
+</code></pre><p>View Code</p>
+<p>5.清除<br>在编写代码时，应将其设计为可以推迟取消，在不适当的地方停用取消，在取消点使用清除处理器。</p>
+<p>清除处理器可以理解为每个线程有一个活动的清除处理函数的栈，调用pthread_cleanup_push将清除函数加到栈中，调用pthread_cleanup_pop删除最近增加的处理函数。当所有活动的清除处理函数返回时，线程被终止。当pthread_cleanup_pop以非零值被调用时，即使线程没被取消，清除处理函数也要被执行。</p>
+<p>代码示例如下：<br>当一个条件变量等待被取消时，使用一个清除处理函数来释放互斥量。</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+#define THREADS 5
+typedef struct work_tag
+{
+        pthread_mutex_t mutex;
+        pthread_cond_t cond;
+        int counter;
+        int busy;
+}work_t;
+work_t work = {PTHREAD_MUTEX_INITIALIZER,PTHREAD_COND_INITIALIZER,0,1};
+void cleanup_handler(void *arg)
+{
+        work_t *work_p = (work_t*)arg;
+        work_p-&gt;counter--;
+        pthread_mutex_unlock(&amp;work_p-&gt;mutex);
+}
+void *thread_routine(void *arg)
+{
+        pthread_cleanup_push(cleanup_handler,(void *)&amp;work);
+        pthread_mutex_lock(&amp;work.mutex);
+        work.counter++;
+        while(work.busy)
+        {
+                pthread_cond_wait(&amp;work.cond,&amp;work.mutex);
+        }
+        pthread_cleanup_pop(1);
+        return NULL;
+}
+int main(void)
+{
+        pthread_t tid[THREADS];
+        void *result;
+        int i;
+        for(i=0;i&lt;THREADS;i++)
+        {
+                pthread_create(&amp;tid[i],NULL,thread_routine,NULL);
+        }
+        sleep(2);
+        for(i=0;i&lt;THREADS;i++)
+        {
+                pthread_cancel(tid[i]);
+                pthread_join(tid[i],&amp;result);
+                if(result == PTHREAD_CANCELED)
+                        printf(&quot;thread %d cancelled\n&quot;,i);
+                else
+                        printf(&quot;thread %d was not cancelled\n&quot;,i);
+        }
+        return 0;
+}       
+</code></pre><p>View Code</p>
+<p>在一套”转包”功能的程序中，当分包线程在进行中时，承包线程被取消，这时不希望分包线程继续运行。可以在承包线程清除处理函数中取消每个分包线程，<br>如果原来是连接分包线程，它们将继续消费一些资源直到它们被连接或分离。这时应在承包线程清除处理函数中使用pthread_detach立即分离它。</p>
+<p>代码示例如下：</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+#define THREADS 5
+typedef struct send_tag
+{
+        pthread_t sid[THREADS];
+}send_t;
+void *send_routine(void *arg)
+{
+        int counter;
+        for(counter=0;;counter++)
+                if(counter%1000==0)
+                        pthread_testcancel();
+}
+void cleanup(void *arg)
+{
+        send_t *send = (send_t*)arg;
+        int i;
+        for(i=0;i&lt;THREADS;i++)
+        {
+                pthread_cancel(send-&gt;sid[i]);
+                pthread_detach(send-&gt;sid[i]);
+                printf(&quot;cleanup:cancelled %d\n&quot;,i);
+        }
+}
+void *thread_routine(void *arg)
+{
+        send_t send;
+        int i;
+        void *result;
+        for(i=0;i&lt;THREADS;i++)
+        {
+                pthread_create(&amp;send.sid[i],NULL,send_routine,NULL);
+        }
+        pthread_cleanup_push(cleanup,(void*)&amp;send);
+        for(i=0;i&lt;THREADS;i++)
+                pthread_join(send.sid[i],&amp;result);
+        pthread_cleanup_pop(0);
+}
+int main(void)
+{
+        pthread_t tid;
+        void *result;
+        pthread_create(&amp;tid,NULL,thread_routine,NULL);
+        sleep(5);
+        pthread_cancel(tid);
+        pthread_join(tid,&amp;result);
+        return 0;
+}                                                                                
+</code></pre><p>View Code</p>
+<p>参考资料：《POSIX多线程程序设计》 pp.120-137</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/17/posix多线程--线程取消/" data-title="posix多线程--线程取消" data-url="https://shijingjing07.github.io/2016/04/17/posix多线程--线程取消/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

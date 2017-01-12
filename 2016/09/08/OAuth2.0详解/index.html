@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>OAuth2.0详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.使用场景
+A系统存放着订单信息
+B系统需要查询A系统中的订单信息，但是必须要A系统验证通过后，才能查询。
+此时，我们有两种验证方式：
+1)拥有A系统的账户/密码
+  弊端是对A系统来说，直接提供账户/密码的方式非常不安全。
+2)A系统给B系统颁发一个令牌，规定了令牌的使用范围和有效期，可以理解为一个通行证。
+第二种方式，就是我们所说的OAuth授权。
+2.OAuth原理
+我们称待授权系统为”客">
+  
+  <meta name="description" content="1.使用场景
+A系统存放着订单信息
+B系统需要查询A系统中的订单信息，但是必须要A系统验证通过后，才能查询。
+此时，我们有两种验证方式：
+1)拥有A系统的账户/密码
+  弊端是对A系统来说，直接提供账户/密码的方式非常不安全。
+2)A系统给B系统颁发一个令牌，规定了令牌的使用范围和有效期，可以理解为一个通行证。
+第二种方式，就是我们所说的OAuth授权。
+2.OAuth原理
+我们称待授权系统为”客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OAuth2.0详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/09/08/OAuth2.0详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.使用场景
+A系统存放着订单信息
+B系统需要查询A系统中的订单信息，但是必须要A系统验证通过后，才能查询。
+此时，我们有两种验证方式：
+1)拥有A系统的账户/密码
+  弊端是对A系统来说，直接提供账户/密码的方式非常不安全。
+2)A系统给B系统颁发一个令牌，规定了令牌的使用范围和有效期，可以理解为一个通行证。
+第二种方式，就是我们所说的OAuth授权。
+2.OAuth原理
+我们称待授权系统为”客">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171316113-195409067.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171336691-1061817565.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171351238-623752089.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171403879-1720556914.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171413441-1479058253.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:19.205Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OAuth2.0详解">
+<meta name="twitter:description" content="1.使用场景
+A系统存放着订单信息
+B系统需要查询A系统中的订单信息，但是必须要A系统验证通过后，才能查询。
+此时，我们有两种验证方式：
+1)拥有A系统的账户/密码
+  弊端是对A系统来说，直接提供账户/密码的方式非常不安全。
+2)A系统给B系统颁发一个令牌，规定了令牌的使用范围和有效期，可以理解为一个通行证。
+第二种方式，就是我们所说的OAuth授权。
+2.OAuth原理
+我们称待授权系统为”客">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171316113-195409067.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/09/08/OAuth2.0详解/">
+  <time datetime="2016-09-08T01:13:00.000Z">
+    2016-09-08
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">OAuth2.0详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.使用场景</p>
+<p>A系统存放着订单信息</p>
+<p>B系统需要查询A系统中的订单信息，但是必须要A系统验证通过后，才能查询。</p>
+<p>此时，我们有两种验证方式：</p>
+<p>1)拥有A系统的账户/密码</p>
+<p>  弊端是对A系统来说，直接提供账户/密码的方式非常不安全。</p>
+<p>2)A系统给B系统颁发一个令牌，规定了令牌的使用范围和有效期，可以理解为一个通行证。</p>
+<p>第二种方式，就是我们所说的OAuth授权。</p>
+<p>2.OAuth原理</p>
+<p>我们称待授权系统为”客户端”，授权系统为”服务器”</p>
+<p>OAuth的原理是，”客户端”不能直接登录”服务器”，”客户端”登录时，”服务端”有一个”授权层”，会首先检验颁发给”客户端”的”令牌”是否有效，若有效，则允许登录。</p>
+<p>3.OAuth验证流程</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171316113-195409067.png" alt=""></p>
+<p>（A）客户端请求用户授权</p>
+<p>（B）用户同意授权给客户端</p>
+<p>（C）客户端使用上一步获得的授权，像服务器申请令牌</p>
+<p>（D）服务器对客户端进行认证后，确认无误，同意发送令牌</p>
+<p>（E）客户端使用令牌，向服务器请求资源</p>
+<p>（F）服务器确认令牌无误，返回资源</p>
+<p>上述步骤中，关键是用户如何给客户端授权。有了授权后，客户端就可以获得令牌，继而获得资源。</p>
+<p>4.客户端授权的四种模式</p>
+<p>授权码模式</p>
+<p>简化模式</p>
+<p>密码模式</p>
+<p>客户端模式</p>
+<p>5.授权码模式</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171336691-1061817565.png" alt=""></p>
+<p>（A）用户访问客户端，客户端将用户导向服务器，包含了”重定向URI”地址</p>
+<p>（B）用户选择是否给予客户端授权</p>
+<p>（C）若给予，服务器将用户导向”重定向URI”地址，同时附上一个授权码</p>
+<p>（D）客户端收到授权码，附上”重定向URI”地址，向服务器申请令牌</p>
+<p>（E）服务端核对授权码和重定向URI，确认无误，向客户端发送访问令牌和更新令牌</p>
+<p>授权模式的特点是，需要通过客户端服务器，来和服务器端进行交互。</p>
+<p>6.简化模式</p>
+<p>简化模式不需要客户端服务器，直接通过浏览器向服务器申请令牌，跳过了”授权码”</p>
+<p>所有步骤在浏览器中完成，不需要认证客户端。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171351238-623752089.png" alt=""></p>
+<p>（A）客户端将用户导向服务器</p>
+<p>（B）用户决定是否给予客户端授权</p>
+<p>（C）若授权，服务器将用户导向客户端指定的”重定向URI”，URI的hash部分包含了访问令牌。</p>
+<p>（D）浏览器向服务器发出请求，不包括上一步收到的hash值</p>
+<p>（E）服务器返回一个网页，其中包含的代码可以获取hash值中的令牌</p>
+<p>（F）浏览器执行上一步获得的脚本，提取出令牌</p>
+<p>（G）浏览器将令牌发给客户端</p>
+<p>7.密码模式</p>
+<p>用户向客户端提供自己的用户名和密码，客户端使用用户名/密码，向服务器索要授权</p>
+<p>客户端不得储存密码，通常是一些大品牌信誉好的公司，才用这种模式。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171403879-1720556914.png" alt=""></p>
+<p>（A）用户向客户端提供用户名/密码</p>
+<p>（B）客户端讲用户名/密码发给服务器，请求令牌</p>
+<p>（C）服务器确认无误，向客户端提供访问令牌</p>
+<p>8.客户端模式</p>
+<p>客户端以自己的名义，而不是用户的名义，向服务器进行认证。用户直接向客户端注册，客户端以自己的名义要求服务器提供服务，其实不存在授权问题。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171413441-1479058253.png" alt=""></p>
+<p>（A）客户端向服务器进行身份认证，并要求一个访问令牌</p>
+<p>（B）服务器确认无误，向客户端提供访问令牌</p>
+<p>9.更新令牌</p>
+<p>客户端的访问令牌过期后，需要使用更新令牌申请一个新的访问令牌</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/09/08/OAuth2.0详解/" data-title="OAuth2.0详解" data-url="https://shijingjing07.github.io/2016/09/08/OAuth2.0详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

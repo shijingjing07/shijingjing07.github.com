@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>SDL2中文教程 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="SDL2.0 Tutorial Index原文地址:SDL 2.0 Tutorial Index
+Welcome!下面的教程旨在为你提供一个SDL2.0以及c++中游戏设计和相关概念的介绍。在本教程中，我们假定你对C++有一定程度上的知识，至少了解数组，vector，控制结构，函数还有指针。  
+如果你觉得理解教程中的代码有困难，你可以在教程后面随意留言，或者在StackOverflow上的这个列">
+  
+  <meta name="description" content="SDL2.0 Tutorial Index原文地址:SDL 2.0 Tutorial Index
+Welcome!下面的教程旨在为你提供一个SDL2.0以及c++中游戏设计和相关概念的介绍。在本教程中，我们假定你对C++有一定程度上的知识，至少了解数组，vector，控制结构，函数还有指针。  
+如果你觉得理解教程中的代码有困难，你可以在教程后面随意留言，或者在StackOverflow上的这个列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDL2中文教程">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/18/SDL2中文教程/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="SDL2.0 Tutorial Index原文地址:SDL 2.0 Tutorial Index
+Welcome!下面的教程旨在为你提供一个SDL2.0以及c++中游戏设计和相关概念的介绍。在本教程中，我们假定你对C++有一定程度上的知识，至少了解数组，vector，控制结构，函数还有指针。  
+如果你觉得理解教程中的代码有困难，你可以在教程后面随意留言，或者在StackOverflow上的这个列">
+<meta property="og:updated_time" content="2017-01-12T01:35:42.046Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SDL2中文教程">
+<meta name="twitter:description" content="SDL2.0 Tutorial Index原文地址:SDL 2.0 Tutorial Index
+Welcome!下面的教程旨在为你提供一个SDL2.0以及c++中游戏设计和相关概念的介绍。在本教程中，我们假定你对C++有一定程度上的知识，至少了解数组，vector，控制结构，函数还有指针。  
+如果你觉得理解教程中的代码有困难，你可以在教程后面随意留言，或者在StackOverflow上的这个列">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/18/SDL2中文教程/">
+  <time datetime="2016-05-17T19:12:00.000Z">
+    2016-05-18
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">SDL2中文教程</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id="SDL2-0-Tutorial-Index"><a href="#SDL2-0-Tutorial-Index" class="headerlink" title="SDL2.0 Tutorial Index"></a>SDL2.0 Tutorial Index</h1><p>原文地址:<a href="http://twinklebeardev.blogspot.com/p/sdl-20
+-tutorial-index.html" target="_blank" rel="external">SDL 2.0 Tutorial Index</a></p>
+<h3 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome!"></a>Welcome!</h3><p>下面的教程旨在为你提供一个SDL2.0以及c++中游戏设计和相关概念的介绍。在本教程中，我们假定你对C++有一定程度上的知识，至少了解数组，vector，控制结构，函数还有指针。  </p>
+<p>如果你觉得理解教程中的代码有困难，你可以在教程后面随意留言，或者在<a href="http://stackoverflow.com/questions/388242
+/the-definitive-c-book-guide-and-list" target="_blank" rel="external">StackOverflow</a>上的这个列表里抓一本书来读。  </p>
+<p>如果你想要查看或者下载全部的程序代码，你可以在<a href="https://github.com/Twinklebear/TwinklebearDev-
+Lessons" target="_blank" rel="external">Github</a>上找到。但是切忌复制粘贴！  </p>
+<p>SDL2.0的文档现在可以在<a href="http://wiki.libsdl.org/moin.cgi/FrontPage" target="_blank" rel="external">online wiki</a>上查看到。  </p>
+<h3 id="教程目录："><a href="#教程目录：" class="headerlink" title="教程目录："></a>教程目录：</h3><p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-0
+-setting-up-sdl.html" target="_blank" rel="external">Lesson 0: Setting up SDL</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/25/lesson-0
+-setting-up-sdl/" target="_blank" rel="external">第0节：配置SDL</a></p>
+<p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-1
+-hello-world.html" target="_blank" rel="external">Lesson 1: Hello World!</a> <a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/26/lesson-1
+-hello-world/" target="_blank" rel="external">第一节: Hello<br>World!</a></p>
+<p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-2-dont-put-everything-
+in-main.html" target="_blank" rel="external">Lesson 2: Don’t Put Everything in<br>Main</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/28/lesson-2
+-dont-put-everything-in-main/" target="_blank" rel="external">第二节：别什么都塞进main里</a></p>
+<p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-3-sdl-extension-
+libraries.html" target="_blank" rel="external">Lesson 3: SDL Extension<br>Libraries</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/28/lesson-3
+-sdl-extension-libraries/" target="_blank" rel="external">第三节：SDL扩展库</a></p>
+<p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-4-event-driven-
+programming.html" target="_blank" rel="external">Lesson 4: Event Driven<br>Programming</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/02/12/lesson-4
+-event-driven-programming/" target="_blank" rel="external">第四节：事件驱动的编程</a></p>
+<p><a href="http://twinklebeardev.blogspot.com/2012/08/lesson-5-clipping-sprite-
+sheets.html" target="_blank" rel="external">Lesson 5: Clipping Sprite<br>Sheets</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/02/14/lesson-5
+-clipping-sprite-sheets/" target="_blank" rel="external">第五节：裁剪精灵表</a></p>
+<p><a href="http://twinklebeardev.blogspot.com/2012/08/lesson-6-true-type-fonts-
+with-sdlttf.html" target="_blank" rel="external">Lesson 6: True Type Fonts with<br>SDL_ttf</a> <a href="http://adolfans.github.io/sdltutorialcn/blog/2013/03/23/lesson-6-true-
+type-fonts-with-sdl-ttf/" target="_blank" rel="external">第六节: 使用SDL_ttf绘制True<br>Type字体</a></p>
+<p><a href="http://twinklebeardev.blogspot.com/2012/09/lesson-7-taking-advantage-
+of-classes.html" target="_blank" rel="external">Lesson 7: Taking Advantage of<br>Classes</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/03/24/lesson-7
+-taking-advantage-of-classes/" target="_blank" rel="external">第七节：充分利用类</a></p>
+<p><a href="http://twinklebeardev.blogspot.com/2012/10/lesson-8-timers.html" target="_blank" rel="external">Lesson 8:<br>Timers</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/28/lesson-8-timers/" target="_blank" rel="external">第八节：计时器</a></p>
+<p>转自：<a href="http://adolfans.github.io/sdltutorialcn/sdl-2-dot-0-tutorial-index/" target="_blank" rel="external">http://adolfans.github.io/sdltutorialcn/sdl-2-dot-0-tutorial-index/</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/18/SDL2中文教程/" data-title="SDL2中文教程" data-url="https://shijingjing07.github.io/2016/05/18/SDL2中文教程/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

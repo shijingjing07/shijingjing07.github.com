@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C--预处理指令 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="源代码在编译成机器指令之前，要进行预处理。预处理功能主要包括宏定义，文件包含，条件编译三部分。这些预处理操作发生在编译程序过程中，它们会修改程序的语句，但不会干涉程序的执行。ANSI标准定义的C语言预处理程序包括下列命令：指令 用途  
+#include 包含一个源代码文件  
+#define 定义宏  
+#undef 取消已定义的宏  
+#if 如果给定条件为真，则编译下面代码  
+#ifdef">
+  
+  <meta name="description" content="源代码在编译成机器指令之前，要进行预处理。预处理功能主要包括宏定义，文件包含，条件编译三部分。这些预处理操作发生在编译程序过程中，它们会修改程序的语句，但不会干涉程序的执行。ANSI标准定义的C语言预处理程序包括下列命令：指令 用途  
+#include 包含一个源代码文件  
+#define 定义宏  
+#undef 取消已定义的宏  
+#if 如果给定条件为真，则编译下面代码  
+#ifdef">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C--预处理指令">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/06/C--预处理指令/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="源代码在编译成机器指令之前，要进行预处理。预处理功能主要包括宏定义，文件包含，条件编译三部分。这些预处理操作发生在编译程序过程中，它们会修改程序的语句，但不会干涉程序的执行。ANSI标准定义的C语言预处理程序包括下列命令：指令 用途  
+#include 包含一个源代码文件  
+#define 定义宏  
+#undef 取消已定义的宏  
+#if 如果给定条件为真，则编译下面代码  
+#ifdef">
+<meta property="og:updated_time" content="2017-01-12T01:35:42.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C--预处理指令">
+<meta name="twitter:description" content="源代码在编译成机器指令之前，要进行预处理。预处理功能主要包括宏定义，文件包含，条件编译三部分。这些预处理操作发生在编译程序过程中，它们会修改程序的语句，但不会干涉程序的执行。ANSI标准定义的C语言预处理程序包括下列命令：指令 用途  
+#include 包含一个源代码文件  
+#define 定义宏  
+#undef 取消已定义的宏  
+#if 如果给定条件为真，则编译下面代码  
+#ifdef">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/06/C--预处理指令/">
+  <time datetime="2016-05-06T02:07:00.000Z">
+    2016-05-06
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C--预处理指令</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>源代码在编译成机器指令之前，要进行预处理。预处理功能主要包括宏定义，文件包含，条件编译三部分。这些预处理操作发生在编译程序过程中，它们会修改程序的语句，但不会干涉程序的执行。<br>ANSI标准定义的C语言预处理程序包括下列命令：<br>指令 用途  </p>
+<p>#include 包含一个源代码文件  </p>
+<p>#define 定义宏  </p>
+<p>#undef 取消已定义的宏  </p>
+<p>#if 如果给定条件为真，则编译下面代码  </p>
+<p>#ifdef 如果宏已经定义，则编译下面代码  </p>
+<p>#ifndef 如果宏没有定义，则编译下面代码  </p>
+<p>#elif 如果前面的#if给定条件不为真，当前条件为真，则编译下面代码  </p>
+<p>#endif 结束一个#if……#else条件编译块  </p>
+<p>#error 停止编译并显示错误信息  </p>
+<p>#else 略  </p>
+<p>#line 指令可以改变编译器用来指出警告和错误信息的文件号和行号。  </p>
+<p>#pragma 设定编译器的状态或者是指示编译器完成一些特定的动作。  </p>
+<p>#pragma指令稍复杂，格式一般为: #pragma para ，下面来看一些#pragma指令常用的参数。<br>(1)message 参数</p>
+<p>message参数，能够在编译信息输出窗口中输出相应的信息，<br>这对于源代码信息的控制是非常重要的。其使用方法为：  </p>
+<p>#pragma message(“消息文本”)<br>当编译器遇到这条指令时就在编译输出窗口中将消息文本打印出来。<br>当我们在程序中定义了许多宏来控制源代码版本的时候，我们自己有可能都会忘记有没有正确的设置这些宏，<br>此时我们可以用这条指令在编译的时候就进行检查。假设我们希望判断自己有没有在源代码的什么地方定义了_X86这个宏,<br>可以用下面的方法:  </p>
+<p>#ifdef _X86  </p>
+<p>#pragma message(“_X86 macro activated!”)  </p>
+<p>#endif<br>我们定义了_X86这个宏以后，应用程序在编译时就会在编译输出窗口里显示”_86 macro activated!”。<br>我们就不会因为不记得自己定义的一些特定的宏而抓耳挠腮了。  </p>
+<p>(2)另一个使用得比较多的pragma参数是code_seg</p>
+<p>格式如：  </p>
+<p>#pragma code_seg( [“section-name” [, “section-class”] ] )<br>它能够设置程序中函数代码存放的代码段，当我们开发驱动程序的时候就会使用到它。  </p>
+<p>(3)#pragma once (比较常用)</p>
+<p>只要在头文件的最开始加入这条指令就能够保证头文件被编译一次，这条指令实际上在VC6中就已经有了，<br>但是考虑到兼容性并没有太多的使用它。</p>
+<p>(4)#pragma hdrstop</p>
+<p>表示预编译头文件到此为止，后面的头文件不进行预编译。BCB可以预编译头文件以加快链接的速度，<br>但如果所有头文件都进行预编译又可能占太多磁盘空间，所以使用这个选项排除一些头文件。<br>有时单元之间有依赖关系，比如单元A依赖单元B，所以单元B要先于单元A编译。<br>你可以用#pragma startup指定编译优先级，如果使用了#pragma package(smart_init)，<br>BCB就会根据优先级的大小先后编译。</p>
+<p>(5)#pragma resource “*.dfm”</p>
+<p>表示把<em>.dfm文件中的资源加入工程。</em>.dfm中包括窗体<br>外观的定义。</p>
+<p>(6)#pragma warning( disable: 4507 34; once: 4385; error: 164 )  </p>
+<p>等价于：  </p>
+<p>#pragma warning( disable: 4507 34 ) // 不显示4507和34号警告信息  </p>
+<p>#pragma warning( once: 4385 ) // 4385号警告信息仅报告一次  </p>
+<p>#pragma warning( error: 164 ) // 把164号警告信息作为一个错误。</p>
+<p>同时这个pragma warning 也支持如下格式：  </p>
+<p>#pragma warning( push [, n ] )  </p>
+<p>#pragma warning( pop )<br>这里n代表一个警告等级(1—4)。  </p>
+<p>#pragma warning( push )保存所有警告信息的现有的警告状态。  </p>
+<p>#pragma warning( push, n )保存所有警告信息的现有的警告状态，并且把全局警告等级设定为n。  </p>
+<p>#pragma warning( pop )向栈中弹出最后一个警告信息，在入栈和出栈之间所作的一切改动取消。例如：  </p>
+<p>#pragma warning( push )  </p>
+<p>#pragma warning( disable: 4705 )  </p>
+<p>#pragma warning( disable: 4706 )  </p>
+<p>#pragma warning( disable: 4707 )<br>//…….  </p>
+<p>#pragma warning( pop )<br>在这段代码的最后，重新保存所有的警告信息(包括4705，4706和4707)。</p>
+<p>(7)#pragma comment(…)</p>
+<p>该指令将一个注释记录放入一个对象文件或可执行文件中。<br>常用的lib关键字，可以帮我们连入一个库文件。如：  </p>
+<p>#pragma comment(lib, “comctl32.lib”)  </p>
+<p>#pragma comment(lib, “vfw32.lib”)  </p>
+<p>#pragma comment(lib, “wsock32.lib”)  </p>
+<p>每个编译程序可以用#pragma指令激活或终止该编译程序支持的一些编译功能。</p>
+<p>例如，对循环优化功能：  </p>
+<p>#pragma loop_opt(on) // 激活  </p>
+<p>#pragma loop_opt(off) // 终止</p>
+<p>有时，程序中会有些函数会使编译器发出你熟知而想忽略的警告，<br>如”Parameter xxx is never used in function xxx”，可以这样：  </p>
+<p>#pragma warn –100 // Turn off the warning message for warning #100<br>int insert_record(REC <em>r)<br>{ /</em> function body */ }  </p>
+<p>#pragma warn +100 // Turn the warning message for warning #100 back on<br>函数会产生一条有唯一特征码100的警告信息，如此可暂时终止该警告。</p>
+<p>每个编译器对#pragma的实现不同，在一个编译器中有效在别的编译器中几乎无效。可从编译器的文档中查看。</p>
+<p>#pragma pack 与 内存对齐问题</p>
+<p>许多实际的计算机系统对基本类型数据在内存中存放的位置有限制，它们会要求这些数据的首地址的值是某个数k<br>(通常它为4或8)的倍数，这就是所谓的内存对齐，而这个k则被称为该数据类型的对齐模数(alignment modulus)。</p>
+<p>Win32平台下的微软C编译器(cl.exe for 80x86)在默认情况下采用如下的对齐规则:<br>任何基本数据类型T的对齐模数就是T的大小，即sizeof(T)。比如对于double类型(8字节)，<br>就要求该类型数据的地址总是8的倍数，而char类型数据(1字节)则可以从任何一个地址开始。</p>
+<p>Linux下的GCC奉行的是另外一套规则，任何2字节大小的数据类型(比如short)的对齐模数是2，而其它所有超过2字节的数据类型<br>(比如long,double)都以4为对齐模数。</p>
+<p>ANSI C规定一种结构类型的大小是它所有字段的大小以及字段之间或字段尾部的填充区大小之和。<br>填充区就是为了使结构体字段满足内存对齐要求而额外分配给结构体的空间。那么结构体本身有什么对齐要求吗？<br>有的，ANSI C标准规定结构体类型的对齐要求不能比它所有字段中要求最严格的那个宽松，可以更严格。</p>
+<p>如何使用c/c++中的对齐选项</p>
+<p>vc6中的编译选项有 /Zp[1|2|4|8|16] ，/Zp1表示以1字节边界对齐，相应的，/Zpn表示以n字节边界对齐。<br>n字节边界对齐的意思是说，一个成员的地址必须安排在成员的尺寸的整数倍地址上或者是n的整数倍地址上，取它们中的最小值。<br>也就是：<br>min ( sizeof ( member ), n)</p>
+<p>实际上，1字节边界对齐也就表示了结构成员之间没有空洞。<br>/Zpn选项是应用于整个工程的，影响所有的参与编译的结构。<br>要使用这个选项，可以在vc6中打开工程属性页，c/c++页，选择Code Generation分类，在Struct member<br>alignment可以选择。</p>
+<p>要专门针对某些结构定义使用对齐选项，可以使用#pragma pack编译指令:</p>
+<p>(1) #pragma pack( [ n ] )</p>
+<p>该指令指定结构和联合成员的紧凑对齐。而一个完整的转换单元的结构和联合的紧凑对齐由/Zp 选项设置。<br>紧凑对齐用pack编译指示在数据说明层设置。该编译指示在其出现后的第一个结构或联合说明处生效。<br>该编译指示对定义无效。<br>当你使用#pragma pack ( n ) 时, 这里n 为1、2、4、8 或16。<br>第一个结构成员之后的每个结构成员都被存储在更小的成员类型或n 字节界限内。<br>如果你使用无参量的#pragma pack, 结构成员被紧凑为以/Zp 指定的值。该缺省/Zp 紧凑值为/Zp8 。</p>
+<p>(2) 编译器也支持以下增强型语法:  </p>
+<p>#pragma pack( [ [ { push | pop } , ] [ identifier, ] ] [ n] )</p>
+<p>若不同的组件使用pack编译指示指定不同的紧凑对齐, 这个语法允许你把程序组件组合为一个单独的转换单元。<br>带push参量的pack编译指示的每次出现将当前的紧凑对齐存储到一个内部编译器堆栈中。<br>编译指示的参量表从左到右读取。如果你使用push, 则当前紧凑值被存储起来;<br>如果你给出一个n 的值, 该值将成为新的紧凑值。若你指定一个标识符, 即你选定一个名称,<br>则该标识符将和这个新的的紧凑值联系起来。</p>
+<p>带一个pop参量的pack编译指示的每次出现都会检索内部编译器堆栈顶的值,并且使该值为新的紧凑对齐值。<br>如果你使用pop参量且内部编译器堆栈是空的,则紧凑值为命令行给定的值, 并且将产生一个警告信息。<br>若你使用pop且指定一个n的值, 该值将成为新的紧凑值。若你使用p o p 且指定一个标识符,<br>所有存储在堆栈中的值将从栈中删除, 直到找到一个匹配的标识符, 这个与标识符相关的紧凑值也从栈中移出,<br>并且这个仅在标识符入栈之前存在的紧凑值成为新的紧凑值。如果未找到匹配的标识符,<br>将使用命令行设置的紧凑值, 并且将产生一个一级警告。缺省紧凑对齐为8 。</p>
+<p>pack编译指示的新的增强功能让你编写头文件, 确保在遇到该头文件的前后的<br>紧凑值是一样的。</p>
+<p>(3) 栈内存对齐</p>
+<p>在vc6中栈的对齐方式不受结构成员对齐选项的影响。它总是保持对齐，而且对齐在4字节边界上。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/06/C--预处理指令/" data-title="C--预处理指令" data-url="https://shijingjing07.github.io/2016/05/06/C--预处理指令/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

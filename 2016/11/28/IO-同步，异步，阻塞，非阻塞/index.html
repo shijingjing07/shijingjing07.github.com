@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>IO-同步，异步，阻塞，非阻塞 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="IO-同步，异步，阻塞，非阻塞1.什么是IO数据在系统内核(kernel)和用户进程之间的传递，称为IO。
+2.IO操作步骤以read为例，涉及两个系统对象，调用IO的process(or thread)，即用户进程；另一个为系统内核(kernel)。当用户进程调用recvfrom操作时，会经历两个阶段1)等待数据准备2)将数据从内核拷贝至进程中
+3.IO模型根据用户进程在IO操作时的状态，可以分">
+  
+  <meta name="description" content="IO-同步，异步，阻塞，非阻塞1.什么是IO数据在系统内核(kernel)和用户进程之间的传递，称为IO。
+2.IO操作步骤以read为例，涉及两个系统对象，调用IO的process(or thread)，即用户进程；另一个为系统内核(kernel)。当用户进程调用recvfrom操作时，会经历两个阶段1)等待数据准备2)将数据从内核拷贝至进程中
+3.IO模型根据用户进程在IO操作时的状态，可以分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IO-同步，异步，阻塞，非阻塞">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/11/28/IO-同步，异步，阻塞，非阻塞/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="IO-同步，异步，阻塞，非阻塞1.什么是IO数据在系统内核(kernel)和用户进程之间的传递，称为IO。
+2.IO操作步骤以read为例，涉及两个系统对象，调用IO的process(or thread)，即用户进程；另一个为系统内核(kernel)。当用户进程调用recvfrom操作时，会经历两个阶段1)等待数据准备2)将数据从内核拷贝至进程中
+3.IO模型根据用户进程在IO操作时的状态，可以分">
+<meta property="og:updated_time" content="2017-01-12T01:35:15.947Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IO-同步，异步，阻塞，非阻塞">
+<meta name="twitter:description" content="IO-同步，异步，阻塞，非阻塞1.什么是IO数据在系统内核(kernel)和用户进程之间的传递，称为IO。
+2.IO操作步骤以read为例，涉及两个系统对象，调用IO的process(or thread)，即用户进程；另一个为系统内核(kernel)。当用户进程调用recvfrom操作时，会经历两个阶段1)等待数据准备2)将数据从内核拷贝至进程中
+3.IO模型根据用户进程在IO操作时的状态，可以分">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/11/28/IO-同步，异步，阻塞，非阻塞/">
+  <time datetime="2016-11-28T06:21:00.000Z">
+    2016-11-28
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">IO-同步，异步，阻塞，非阻塞</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>IO-同步，异步，阻塞，非阻塞<br>1.什么是IO<br>数据在系统内核(kernel)和用户进程之间的传递，称为IO。</p>
+<p>2.IO操作步骤<br>以read为例，涉及两个系统对象，调用IO的process(or thread)，即用户进程；另一个为系统内核(kernel)。<br>当用户进程调用recvfrom操作时，会经历两个阶段<br>1)等待数据准备<br>2)将数据从内核拷贝至进程中</p>
+<p>3.IO模型<br>根据用户进程在IO操作时的状态，可以分为5中IO类型：<br>blocking IO:阻塞IO<br>non-blocking IO：非阻塞IO<br>IO multiplexing：多Socket连接IO<br>signal driven IO：信号驱动IO<br>asynchronous IO：异步IO</p>
+<p>signal driven IO实际中很少使用，在此不做介绍。</p>
+<p>2.blocking IO:阻塞IO<br>当用户进程调用recvfrom时，首先开始IO第一阶段：kernel准备数据。<br>用户进程会被阻塞。当kernel数据准备好以后，会将数据从kernel拷贝到用户内存，然后kernel返回结果，用户进程才会解除block的状态，重新运行起来。<br>blocking IO在IO执行的两个阶段都被block了。</p>
+<p>3.non-blocking IO:非阻塞IO<br>可以设置socket使其变为non-blocking。<br>当对一个non-blocking socket执行recvfrom操作时，流程如下：<br>用户进程调用recvfrom,如果kernel数据还没有准备好，此时用户进程不会被block。而是立刻返回一个error，从用户进程角度看，它并没有等待，而是立刻得到了一个结果。<br>用户进程判断是一个error时，它就知道数据还没有准备好，于是再次发送read操作。<br>一旦kernel中的数据准备好，并且再次收到了用户进程的system call,那么它马上将数据拷贝到用户内存，然后kernel返回结果。<br>non-blocking<br>IO在数据准备阶段，没有被block，而是不断的轮询kernel数据是否准备好；在数据拷贝阶段，用户进程被block，直到kernel拷贝结束，返回结果，用户进程才会解除block的状态。</p>
+<p>4.IO multiplexing：多Socket连接IO<br>IO<br>multiplexing的特点是单个用户进程可以同时处理多个网络连接IO，它的原理是select/epoll这个function会不断的轮询所负责的所有socket，当某个socket有数据到达了，就通知用户进程。<br>当用户进程调用select时，整个进程会被block，当任何一个socket中的数据准备好了，select就会返回。这时用户进程再调用read操作，将数据从kernel拷贝到用户进程。我们可以看出，IO<br>multiplexing和blocking IO的流程类似，不同的是，IO multiplexing需要两个system<br>call(select和recvfrom)，而blocking IO只调用了一个system<br>call(recvfrom)。select的优势在于它可以同时处理多个socket连接。所以如果连接数不高的话，使用select/epoll的web<br>server不一定比multi-threading+blocking IO的web<br>server性能更好，select/epoll的优势在于能够处理更多的连接。<br>IO multiplexing中，每一个socket一般设置为non-blocking的，但是用户进程一直是被select函数block的。</p>
+<p>5.asynchronous IO<br>用户进程发起read操作后，立刻返回可以去做其他的事情了。<br>此时，从kernel角度看，当它收到一个asynchronous<br>read后，首先他立刻返回，所以不会对用户进程产生任何block，然后,kernel等待数据准备完成，然后将数据拷贝到用户内存，当这一切完成之后，kernel会给用户进程发送一个signal告诉用户进程read操作完成了。</p>
+<p>6.四种IO模型的区别<br>blocking和non-blocking,synchronous IO和asynchronous IO的区别。<br>blocking和non-blocking的区别很明显，blocking会一致阻塞，non-blocking在数据没准备完全时会立刻返回。<br>synchronous同步IO指的是在IO操作时会阻塞用户进程；asynchronous含义相反。<br>可以看出blocking，non-blocking，IO multiplexing都是synchronous<br>IO；而asynchronous不会对用户进程产生任何阻塞。</p>
+<p>7.网上有一个比较形象的例子来说明这四种IO Model<br>有A，B，C，D四个人在钓鱼：<br>A用的是最老式的鱼竿，所以呢，得一直守着，等到鱼上钩了再拉杆；<br>B的鱼竿有个功能，能够显示是否有鱼上钩，所以呢，B就和旁边的MM聊天，隔会再看看有没有鱼上钩，有的话就迅速拉杆；<br>C用的鱼竿和B差不多，但他想了一个好办法，就是同时放好几根鱼竿，然后守在旁边，一旦有显示说鱼上钩了，它就将对应的鱼竿拉起来；<br>D是个有钱人，干脆雇了一个人帮他钓鱼，一旦那个人把鱼钓上来了，就给D发个短信。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/11/28/IO-同步，异步，阻塞，非阻塞/" data-title="IO-同步，异步，阻塞，非阻塞" data-url="https://shijingjing07.github.io/2016/11/28/IO-同步，异步，阻塞，非阻塞/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

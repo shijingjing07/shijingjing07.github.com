@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>数字证书 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是数字证书
+证书用来证明某个网站或文件。简单可以理解为类似公司公章，用来证明合同文件等是该公司的。
+2.什么是CA证书
+CA是”证书授权中心”的简称，是负责管理和签发证书的第三方机构。CA证书即为CA颁发的证书。证书人人都可以制作，但只有权威机构颁发的证书，大家才能一致认可。
+3.根证书
+如下图所示，假设C证书信任A证书，A证书信任A1证书，证书之间的关系构成一个树。根节点的证书即为”根证">
+  
+  <meta name="description" content="1.什么是数字证书
+证书用来证明某个网站或文件。简单可以理解为类似公司公章，用来证明合同文件等是该公司的。
+2.什么是CA证书
+CA是”证书授权中心”的简称，是负责管理和签发证书的第三方机构。CA证书即为CA颁发的证书。证书人人都可以制作，但只有权威机构颁发的证书，大家才能一致认可。
+3.根证书
+如下图所示，假设C证书信任A证书，A证书信任A1证书，证书之间的关系构成一个树。根节点的证书即为”根证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字证书">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/10/02/数字证书/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是数字证书
+证书用来证明某个网站或文件。简单可以理解为类似公司公章，用来证明合同文件等是该公司的。
+2.什么是CA证书
+CA是”证书授权中心”的简称，是负责管理和签发证书的第三方机构。CA证书即为CA颁发的证书。证书人人都可以制作，但只有权威机构颁发的证书，大家才能一致认可。
+3.根证书
+如下图所示，假设C证书信任A证书，A证书信任A1证书，证书之间的关系构成一个树。根节点的证书即为”根证">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033138765-602752021.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033304005-1939107415.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033313709-540663648.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033444481-454542060.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033518639-851094955.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033555642-1430002718.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033625332-2141633884.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:17.387Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数字证书">
+<meta name="twitter:description" content="1.什么是数字证书
+证书用来证明某个网站或文件。简单可以理解为类似公司公章，用来证明合同文件等是该公司的。
+2.什么是CA证书
+CA是”证书授权中心”的简称，是负责管理和签发证书的第三方机构。CA证书即为CA颁发的证书。证书人人都可以制作，但只有权威机构颁发的证书，大家才能一致认可。
+3.根证书
+如下图所示，假设C证书信任A证书，A证书信任A1证书，证书之间的关系构成一个树。根节点的证书即为”根证">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033138765-602752021.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/10/02/数字证书/">
+  <time datetime="2016-10-02T11:38:00.000Z">
+    2016-10-02
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">数字证书</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.什么是数字证书</p>
+<p>证书用来证明某个网站或文件。<br>简单可以理解为类似公司公章，用来证明合同文件等是该公司的。</p>
+<p>2.什么是CA证书</p>
+<p>CA是”证书授权中心”的简称，是负责管理和签发证书的第三方机构。<br>CA证书即为CA颁发的证书。<br>证书人人都可以制作，但只有权威机构颁发的证书，大家才能一致认可。</p>
+<p>3.根证书</p>
+<p>如下图所示，假设C证书信任A证书，A证书信任A1证书，证书之间的关系构成一个树。<br>根节点的证书即为”根证书”，根证书是不需要证明的，其他证书都需要上一级去证明可靠性。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033138765-602752021.png" alt=""></p>
+<p>4.证书的作用<br>1)验证网站是否可信(针对HTTPS)</p>
+<p>因为HTTP协议是明文的，如果有人偷窥你的网络通讯，他就可以看到通讯的内容。而HTTPS是加密协议。<br>但是光有加密是不够的，比如有人伪造了一个HTTPS站点，就可能获取到你的账户密码信息。<br>为了防止伪造站点，HTTPS协议除了加密机制，还有一套证书机制。<br>有了证书以后，当访问这个HTTPS网站时，会验证该站点上的CA证书。<br>如果浏览器发现该证书没有问题(证书被某个根证书信任，证书上绑定的域名和该网站的域名一致，证书没有过期)，那么页面直接打开。否则浏览器会弹出警告，下图是IE和Firefox的抓图：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033304005-1939107415.png" alt=""></p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033313709-540663648.png" alt=""></p>
+<p>2)验证文件是否可信</p>
+<p>证书还可以用来验证某个文件是否被篡改。<br>具体是通过证书来制作文件的数字签名。<br>如Firefox的安装文件，右键点击”属性”，会看到有个”数字签名”的标签页。<br>如果没有，说明该文件没有附带数字签名。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033444481-454542060.png" alt=""></p>
+<p>点击”详细信息”，可以看到”数字签名信息”，<br>若为”该数字签名正常”，说明该文件从出厂到你手里，中途没有被篡改过。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033518639-851094955.png" alt=""></p>
+<p>若为”该数字签名无效”，说明该文件被篡改过了（比如感染了病毒，被注入木马等）<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033555642-1430002718.png" alt=""></p>
+<p>点击”查看证书”，会 弹出证书对话框，点击”证书路径”，可看到证书信任链。如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033625332-2141633884.png" alt=""></p>
+<p>第一层为根证书Thawte<br>第二层为Thawte用来签名的证书<br>第三层为Mozilla自己的证书</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/10/02/数字证书/" data-title="数字证书" data-url="https://shijingjing07.github.io/2016/10/02/数字证书/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

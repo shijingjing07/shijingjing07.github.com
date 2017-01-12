@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux文件特殊权限 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="除了我们前面介绍的rwx权限外，Linux中还有另外三种特殊权限：SUID,SGID,SBIT一、SUID,SGID,SBIT介绍1.SUID:s出现在文件所有者的x权限上。1)SUID只能用于二进制可执行文件，对目录无效2)执行者若具有该文件的x权限，则将具有文件所有者的权限3)权限只在文件执行时有效，执行完毕不再拥有所有者权限
+2.SGID：s出现在文件所属群组的x权限上。SGID和SUID不">
+  
+  <meta name="description" content="除了我们前面介绍的rwx权限外，Linux中还有另外三种特殊权限：SUID,SGID,SBIT一、SUID,SGID,SBIT介绍1.SUID:s出现在文件所有者的x权限上。1)SUID只能用于二进制可执行文件，对目录无效2)执行者若具有该文件的x权限，则将具有文件所有者的权限3)权限只在文件执行时有效，执行完毕不再拥有所有者权限
+2.SGID：s出现在文件所属群组的x权限上。SGID和SUID不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux文件特殊权限">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/30/Linux文件特殊权限/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="除了我们前面介绍的rwx权限外，Linux中还有另外三种特殊权限：SUID,SGID,SBIT一、SUID,SGID,SBIT介绍1.SUID:s出现在文件所有者的x权限上。1)SUID只能用于二进制可执行文件，对目录无效2)执行者若具有该文件的x权限，则将具有文件所有者的权限3)权限只在文件执行时有效，执行完毕不再拥有所有者权限
+2.SGID：s出现在文件所属群组的x权限上。SGID和SUID不">
+<meta property="og:updated_time" content="2017-01-12T01:35:31.752Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux文件特殊权限">
+<meta name="twitter:description" content="除了我们前面介绍的rwx权限外，Linux中还有另外三种特殊权限：SUID,SGID,SBIT一、SUID,SGID,SBIT介绍1.SUID:s出现在文件所有者的x权限上。1)SUID只能用于二进制可执行文件，对目录无效2)执行者若具有该文件的x权限，则将具有文件所有者的权限3)权限只在文件执行时有效，执行完毕不再拥有所有者权限
+2.SGID：s出现在文件所属群组的x权限上。SGID和SUID不">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/30/Linux文件特殊权限/">
+  <time datetime="2016-06-29T18:08:00.000Z">
+    2016-06-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux文件特殊权限</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>除了我们前面介绍的rwx权限外，Linux中还有另外三种特殊权限：SUID,SGID,SBIT<br><strong>一、SUID,SGID,SBIT介绍</strong><br>1.SUID:s出现在文件所有者的x权限上。<br>1)SUID只能用于二进制可执行文件，对目录无效<br>2)执行者若具有该文件的x权限，则将具有文件所有者的权限<br>3)权限只在文件执行时有效，执行完毕不再拥有所有者权限</p>
+<p>2.SGID：s出现在文件所属群组的x权限上。<br>SGID和SUID不同，可以用于目录<br>1)使用者若有此目录的x,w权限，则可进入和修改此目录<br>2)使用者在此目录下的群组将变成该目录的群组，新建的文件，群组是此目录的群组。</p>
+<p>SGID对于文件来说<br>1)SGID只对二进制可执行文件有效<br>2)执行者若具有该文件的x权限，则将具有文件所属群组的权限<br>3)权限只在文件执行时有效，执行完毕不再拥有所属群组权限</p>
+<p>3.SBIT:t出现在文件其他用户的x权限上。<br>1)和SUID,SGID不同的是，只能用于目录<br>2)使用者在该目录下，仅自己与root才有权力删除新建的目录或文件</p>
+<p><strong>二、为什么要使用特殊权限</strong><br>举个例子，比如 /usr/bin/passwd 这个二进制文件。<br>它的权限是 -rwsr-xr-x ，我不是所有者，我具有”x”权限，我执行它时，获得了它的所有者（即root）的权限，<br>所以在该二进制程序执行时，我可以用它来读到我平时是没有权限访问的 /etc/shadow 文件（-r——–），从而能更改我自己的密码</p>
+<p><strong>三、修改SUID,SGID,SBIT权限</strong><br>1.符号类型修改权限<br>chmod u+s test –为test文件加上suid权限<br>chmod g+s test –为test文件加上sgid权限<br>chmod o+t test –为test文件加上sbit权限</p>
+<p>2.数字类型修改权限<br>我们知道普通文件的rwx权限修改<br>对于特殊权限，需要在最前面增加一位，SUID:4,SGID:2,SBIT:1<br>chmod 4777 test –test拥有SUID权限，rwsrwxrwx<br>chmod 2777 test –test拥有SGID权限，rwxrwsrwx<br>chmod 1777 test –test拥有SBIT权限，rwxrwxrwt</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/30/Linux文件特殊权限/" data-title="Linux文件特殊权限" data-url="https://shijingjing07.github.io/2016/06/30/Linux文件特殊权限/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

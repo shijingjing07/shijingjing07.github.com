@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python logging模块 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.logging模块提供了四个组件logger：日志类，有两个功能1)配置日志的等级，处理器handler，过滤器filterlogger.setLevel(logging.INFO)logger.addHandler(handler)logger.addFilter(filter)2)写日志logger.info()
+handler:处理器类，实际写日志的类常用的处理器有StreamHandl">
+  
+  <meta name="description" content="1.logging模块提供了四个组件logger：日志类，有两个功能1)配置日志的等级，处理器handler，过滤器filterlogger.setLevel(logging.INFO)logger.addHandler(handler)logger.addFilter(filter)2)写日志logger.info()
+handler:处理器类，实际写日志的类常用的处理器有StreamHandl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python logging模块">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/12/19/python logging模块/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.logging模块提供了四个组件logger：日志类，有两个功能1)配置日志的等级，处理器handler，过滤器filterlogger.setLevel(logging.INFO)logger.addHandler(handler)logger.addFilter(filter)2)写日志logger.info()
+handler:处理器类，实际写日志的类常用的处理器有StreamHandl">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161219133511603-20961325.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:15.525Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python logging模块">
+<meta name="twitter:description" content="1.logging模块提供了四个组件logger：日志类，有两个功能1)配置日志的等级，处理器handler，过滤器filterlogger.setLevel(logging.INFO)logger.addHandler(handler)logger.addFilter(filter)2)写日志logger.info()
+handler:处理器类，实际写日志的类常用的处理器有StreamHandl">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161219133511603-20961325.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/12/19/python logging模块/">
+  <time datetime="2016-12-18T21:37:00.000Z">
+    2016-12-19
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python logging模块</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.logging模块提供了四个组件<br>logger：日志类，有两个功能<br>1)配置日志的等级，处理器handler，过滤器filter<br>logger.setLevel(logging.INFO)<br>logger.addHandler(handler)<br>logger.addFilter(filter)<br>2)写日志<br>logger.info()</p>
+<p>handler:处理器类，实际写日志的类<br>常用的处理器有StreamHandler和FileHandler<br>StreamHandler将日志输出到stream，如sys.stdout,sys.stderr<br>FileHandler将日志输出到文件<br>处理器类可以配置自己的等级，过滤器<br>一个logger可以配置多个处理器类</p>
+<p>filter:过滤器类，过滤日志等级，内容<br>使用示例如下：<br>class InfoFilter(logging.Filter):<br>def filter(self,rec):<br>reurn rec.levelno==logging.INFO<br>logger.addFilter(InfoFilter())</p>
+<p>formatter:内容格式化类，格式化输出的内容<br>格式化配置，使用%(&lt;dict key&gt;)s的形式，具体有哪些关键字，可以参照官网的介绍。<br>使用示例如下：<br>fmt=’%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s’<br>formatter=logging.Formatter(fmt)<br>handler.setFormatter(formatter)</p>
+<p>2.logger对象<br>使用logging.getLogger(name=None)函数找到一个logger对象，当name指定的logger不存在时，会自动创建一个该名称的对象，保存在logging.manage的loggerDict中。</p>
+<p>3.logging日志输出流程</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161219133511603-20961325.png" alt=""></p>
+<p>logger输出日志的流程：<br>1)用户代码调用打印日志函数（logging.info(),logging.debug()等）<br>2)若希望打印的日志级别不够，则流程停止。否则进入步骤3<br>3)建立一个LogRecord对象，该对象代表打印的日志<br>4)判断这条日志是否被filter过滤掉，如果被过滤，流程停止。否则进入步骤5<br>5)logger将LogRecord传递到它定义的handlers，进行处理<br>6)判断当前logger的propagate属性，为0，则流程停止，否则进入步骤7<br>7)判断当前logger有无父logger，如果没有，流程停止，否则设置当前logger为它的父logger，继续执行步骤5<br>注：logger对象是有继承关系的，如名为a.b,a.c的logger都是名为a的子logger，并且所有的logger对象都继承自root,如果子对象没有添加handler等配置，会从父对象继承，这样可以通过继承关系来复用配置。</p>
+<p>handler处理日志的过程：<br>1)如果当前LogRecord的级别小于handler所设置的LogLevel,则停止流程，否则进入步骤2<br>2)判断当前LogRecord是否被handler设置的filter过滤，如果被过滤，流程停止，否则日志输出到最终目的地。</p>
+<p>4.logging使用示例<br>logging有三种配置方式<br>1)代码定义logger,handler等</p>
+<pre><code>#!/usr/bin/env python 
+# -*- coding: utf-8 -*- 
+import logging  
+import logging.config
+
+handler = logging.StreamHandler()
+fmt = &apos;%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s&apos;  
+
+formatter = logging.Formatter(fmt)   # 实例化formatter  
+handler.setFormatter(formatter)      # 为handler添加formatter  
+
+logger = logging.getLogger(&apos;tst&apos;)    # 获取名为tst的logger  
+logger.addHandler(handler)           # 为logger添加handler  
+logger.setLevel(logging.DEBUG)  
+
+logger.info(&apos;first info message&apos;)  
+logger.debug(&apos;first debug message&apos;)  
+</code></pre><p>2)logging配置文件<br>loggin.conf采用了模式匹配的方式进行配置，正则表达式是r’^[(.*)]$’，从而匹配出所有的组件。对于同一个组件具有多个实例的情况使用逗号’，’进行分隔。对于一个实例的配置采用componentName_instanceName配置块。使用这种方式还是蛮简单的。<br>logging.conf</p>
+<pre><code>[loggers]
+keys=root,simpleExample
+
+[handlers]
+keys=consoleHandler
+
+[formatters]
+keys=simpleFormatter
+
+[logger_root]
+level=DEBUG
+handlers=consoleHandler
+
+[logger_simpleExample]
+level=DEBUG
+handlers=consoleHandler
+qualname=simpleExample
+propagate=0
+
+[handler_consoleHandler]
+class=StreamHandler
+level=DEBUG
+formatter=simpleFormatter
+args=(sys.stdout,)
+
+[formatter_simpleFormatter]
+format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
+
+
+#!/usr/bin/env python 
+# -*- coding: utf-8 -*- 
+import logging  
+import logging.config  
+
+logging.config.fileConfig(&apos;logging.conf&apos;)
+
+# create logger
+logger = logging.getLogger(&apos;simpleExample&apos;)
+
+# &apos;application&apos; code
+logger.debug(&apos;debug message&apos;)
+logger.info(&apos;info message&apos;)
+logger.warn(&apos;warn message&apos;)
+logger.error(&apos;error message&apos;)
+logger.critical(&apos;critical message&apos;)
+</code></pre><p>3)logging配置字典</p>
+<pre><code>#!/usr/bin/env python 
+# -*- coding: utf-8 -*- 
+import logging  
+import logging.config  
+
+LOGGING = {
+    &apos;version&apos;: 1,
+    &apos;disable_existing_loggers&apos;: False,
+    &apos;handlers&apos;: {
+        &apos;console&apos;: {
+            &apos;class&apos;: &apos;logging.StreamHandler&apos;,
+        },
+    },
+    &apos;loggers&apos;: {
+        &apos;test&apos;: {
+            &apos;handlers&apos;: [&apos;console&apos;],
+            &apos;level&apos;: &apos;ERROR&apos;,
+        },
+    },
+}     
+logging.config.dictConfig(LOGGING)
+logger = logging.getLogger(&apos;test&apos;)
+logger.info(&apos;info message dict&apos;)
+logger.warn(&apos;warn message dict&apos;)
+logger.error(&apos;error message dict&apos;)
+logger.critical(&apos;critical message dict&apos;)
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/12/19/python logging模块/" data-title="python logging模块" data-url="https://shijingjing07.github.io/2016/12/19/python logging模块/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

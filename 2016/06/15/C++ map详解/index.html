@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++ map详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是mapmap是一个键值对容器。在处理一对一数据是，很有用。
+2.map数据结构的特点map内部自建一颗红黑树，这棵树具有对数据自动排序的功能，因此，map内的数据都是按key的值排好序的。
+3.map数据插入数据的插入有三种方法：第一种，调用insert函数，插入pair类型数据示例如下所示：
+#include &amp;lt;map&amp;gt;
+#include &amp;lt;string&amp;gt;
+#i">
+  
+  <meta name="description" content="1.什么是mapmap是一个键值对容器。在处理一对一数据是，很有用。
+2.map数据结构的特点map内部自建一颗红黑树，这棵树具有对数据自动排序的功能，因此，map内的数据都是按key的值排好序的。
+3.map数据插入数据的插入有三种方法：第一种，调用insert函数，插入pair类型数据示例如下所示：
+#include &amp;lt;map&amp;gt;
+#include &amp;lt;string&amp;gt;
+#i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ map详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/15/C++ map详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是mapmap是一个键值对容器。在处理一对一数据是，很有用。
+2.map数据结构的特点map内部自建一颗红黑树，这棵树具有对数据自动排序的功能，因此，map内的数据都是按key的值排好序的。
+3.map数据插入数据的插入有三种方法：第一种，调用insert函数，插入pair类型数据示例如下所示：
+#include &amp;lt;map&amp;gt;
+#include &amp;lt;string&amp;gt;
+#i">
+<meta property="og:updated_time" content="2017-01-12T01:35:36.111Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ map详解">
+<meta name="twitter:description" content="1.什么是mapmap是一个键值对容器。在处理一对一数据是，很有用。
+2.map数据结构的特点map内部自建一颗红黑树，这棵树具有对数据自动排序的功能，因此，map内的数据都是按key的值排好序的。
+3.map数据插入数据的插入有三种方法：第一种，调用insert函数，插入pair类型数据示例如下所示：
+#include &amp;lt;map&amp;gt;
+#include &amp;lt;string&amp;gt;
+#i">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/15/C++ map详解/">
+  <time datetime="2016-06-15T02:41:00.000Z">
+    2016-06-15
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++ map详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.什么是map</strong><br>map是一个键值对容器。在处理一对一数据是，很有用。</p>
+<p><strong>2.map数据结构的特点</strong><br>map内部自建一颗红黑树，这棵树具有对数据自动排序的功能，<br>因此，map内的数据都是按key的值排好序的。</p>
+<p><strong>3.map数据插入</strong><br>数据的插入有三种方法：<br>第一种，调用insert函数，插入pair类型数据<br>示例如下所示：</p>
+<pre><code>#include &lt;map&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+Using namespace std;
+int main()
+{
+       map&lt;int, string&gt; mapStudent;
+       mapStudent.insert(pair&lt;int, string&gt;(1, &quot;student_one&quot;));
+       mapStudent.insert(pair&lt;int, string&gt;(2, &quot;student_two&quot;));
+       mapStudent.insert(pair&lt;int, string&gt;(3, &quot;student_three&quot;));
+       map&lt;int, string&gt;::iterator  iter;
+       for(iter = mapStudent.begin(); iter != mapStudent.end(); iter++)
+       {
+            cout&lt;&lt;iter-&gt;first&lt;&lt;&quot;   &quot;&lt;&lt;iter-&gt;second&lt;&lt;end;
+       }
+       return 0;
+}
+</code></pre><p>第二种，调用insert插入value_type类型数据<br>示例如下所示：</p>
+<pre><code>#include &lt;map&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+Using namespace std;
+int main()
+{
+       map&lt;int, string&gt; mapStudent;
+       mapStudent.insert(map&lt;int, string&gt;::value_type(1, &quot;student_one&quot;));
+       mapStudent.insert(map&lt;int, string&gt;::value_type(2, &quot;student_two&quot;));
+       mapStudent.insert(map&lt;int, string&gt;::value_type(3, &quot;student_three&quot;));
+       map&lt;int, string&gt;::iterator  iter;
+       for(iter = mapStudent.begin(); iter != mapStudent.end(); iter++)
+       {
+            cout&lt;&lt;iter-&gt;first&lt;&lt;&quot;   &quot;&lt;&lt;iter-&gt;second&lt;&lt;end;
+       }
+       return 0;
+}
+</code></pre><p>第三种，使用数组赋值方式</p>
+<pre><code>#include &lt;map&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+Using namespace std;
+int main()
+{
+       map&lt;int, string&gt; mapStudent;
+       mapStudent[1]=&quot;student_one&quot;;
+       mapStudent[2]=&quot;student_two&quot;;
+       mapStudent[3]=&quot;student_three&quot;;
+       map&lt;int, string&gt;::iterator  iter;
+       for(iter = mapStudent.begin(); iter != mapStudent.end(); iter++)
+       {
+            cout&lt;&lt;iter-&gt;first&lt;&lt;&quot;   &quot;&lt;&lt;iter-&gt;second&lt;&lt;end;
+       }
+       return 0;
+}
+</code></pre><p>如何判断数据是否插入成功？<br>insert函数的返回值类型为：Pair&lt;map&lt;int,string&gt;::iterator,bool&gt;<br>返回值的key值表示，返回map的迭代器<br>返回值的value值表示，是否插入成功<br>因此，我们可以使用以下代码来判断，map键值对是否插入成功</p>
+<pre><code>Pair&lt;map&lt;int,string&gt;::iterator,bool&gt; Insert_Pair=mapStudent.insert(pair&lt;int, string&gt;(1, &quot;student_one&quot;));
+if(Insert_Pair.second)
+    cout&lt;&lt;&quot;success.\n&quot;;
+else
+    cout&lt;&lt;&quot;failed.\n&quot;;
+</code></pre><p><strong>4.map数据查找</strong><br>第一种，使用count方法判定是否存在<br>第二种，使用find方法，定位key出现的位置，该方法返回一个迭代器。<br>当数据出现时，返回数据所在位置的迭代器；<br>否则，返回的迭代器等于end方法返回的迭代器。<br>示例代码如下：</p>
+<pre><code>map&lt;int,string&gt;::iterator iter;
+iter=mapStudent.find(1);
+if(iter!=mapStudent.end())
+    cout&lt;&lt;&quot;success find.\n&quot;;
+else    
+    cout&lt;&lt;&quot;failed.\n&quot;;
+</code></pre><p>第三种，使用Lower_bound，Upper_bound方法，返回key的边界，在此，不再详细介绍。</p>
+<p><strong>5.map数据删除</strong><br>使用了我们很熟悉的erase函数，map中该函数有三个重载。<br>1)使用迭代器删除</p>
+<pre><code>map&lt;int,string&gt;::iterator iter;
+iter = mapStudent.find(1);
+mapStudent.erase(iter);
+</code></pre><p>2)使用关键字key删除</p>
+<pre><code>int result = mapStudent.erase(1);
+</code></pre><p>成功返回1，否则返回0</p>
+<p>3)使用迭代器，删除区间内的数据</p>
+<pre><code>mapStudent.erase(mapStudent.begin(),mapStudent.end());
+</code></pre><p><strong>6.关于map的自动排序</strong><br>前面我们说过，map内的数据会根据key值由大到小排序,<br>也就是说key值必须支持小于&lt;运算，否则无法插入map。<br>对于上面的示例，我们知道int类型本身是支持小于运算的。<br>但是对于不支持小于运算的key类型，我们该如何插入map呢？<br>很显然，我们需要自定义该类型的&lt;操作符。<br>如下例所示，我们要建立一个map&lt;学生信息,分数&gt;：</p>
+<pre><code>typedef struct tagStudentInfo
+{
+    int nID;
+    string strName;
+    bool operator&lt;(tagStudentInfo const &amp;_A) const
+    {
+        if(nID&lt;_A.nID) 
+            return true;
+        return false;
+    }
+}StudentInfo,*PStudentInfo;
+int main()
+{
+    map&lt;StudentInfo,int&gt; mapStudent;
+    StudentInfo studentInfo;
+    studentInfo.nID=1;
+    studentInfo.strName=&quot;student_one&quot;;
+    mapStudent.insert(pair&lt;StudentInfo, int&gt;(studentInfo,80));
+    return 0;
+}
+</code></pre><p>另外一种方式是，定义一个单独的类，类中定义key类型的比较函数<br>示例代码如下：</p>
+<pre><code>typedef struct tagStudentInfo
+{
+    int nID;
+    string strName;
+
+}StudentInfo,*PStudentInfo;
+class sort
+{
+public:
+    bool operator()(tagStudentInfo const &amp;_A,tagStudentInfo const &amp;_B) const
+    {
+        if(_A.nID&lt;_B.nID) 
+            return true;
+        return false;
+    }
+}
+int main()
+{
+    map&lt;StudentInfo,int,sort&gt; mapStudent;
+    StudentInfo studentInfo;
+    studentInfo.nID=1;
+    studentInfo.strName=&quot;student_one&quot;;
+    mapStudent.insert(pair&lt;StudentInfo, int&gt;(studentInfo,80));
+    return 0;
+}
+</code></pre><p><strong>7.map内存占用</strong><br>前面我们介绍过，map的数据结构为一颗红黑树，<br>该树的一个节点在不保存数据时，占用16字节的空间，<br>包括一个父节点指针，左右孩子指针，还有一个枚举值(标示红黑的，相当于平衡二叉树中的平衡因子)，<br>可见，map还是很耗内存的。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/15/C++ map详解/" data-title="C++ map详解" data-url="https://shijingjing07.github.io/2016/06/15/C++ map详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

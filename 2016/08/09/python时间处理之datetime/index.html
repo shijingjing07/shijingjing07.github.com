@@ -1,0 +1,490 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python时间处理之datetime | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="#python时间处理之datetime
+标签：pythondateimportstringc
+2012-09-12 23:21 20910人阅读评论(0) 收藏举报
+ 分类：
+Python系列（12）
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+目录(?)[+]
+运行环境:Python3.4[python] view plain copy
+
+-- coding: utf-8 --">
+  
+  <meta name="description" content="#python时间处理之datetime
+标签：pythondateimportstringc
+2012-09-12 23:21 20910人阅读评论(0) 收藏举报
+ 分类：
+Python系列（12）
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+目录(?)[+]
+运行环境:Python3.4[python] view plain copy
+
+-- coding: utf-8 --">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python时间处理之datetime">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/08/09/python时间处理之datetime/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="#python时间处理之datetime
+标签：pythondateimportstringc
+2012-09-12 23:21 20910人阅读评论(0) 收藏举报
+ 分类：
+Python系列（12）
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+目录(?)[+]
+运行环境:Python3.4[python] view plain copy
+
+-- coding: utf-8 --">
+<meta property="og:image" content="http://static.blog.csdn.net/images/category_icon.jpg">
+<meta property="og:image" content="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg">
+<meta property="og:updated_time" content="2017-01-12T01:35:27.654Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python时间处理之datetime">
+<meta name="twitter:description" content="#python时间处理之datetime
+标签：pythondateimportstringc
+2012-09-12 23:21 20910人阅读评论(0) 收藏举报
+ 分类：
+Python系列（12）
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+目录(?)[+]
+运行环境:Python3.4[python] view plain copy
+
+-- coding: utf-8 --">
+<meta name="twitter:image" content="http://static.blog.csdn.net/images/category_icon.jpg">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/09/python时间处理之datetime/">
+  <time datetime="2016-08-08T22:43:00.000Z">
+    2016-08-09
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python时间处理之datetime</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>#<br><a href="http://blog.csdn.net/wirelessqa/article/details/7973121" target="_blank" rel="external">python时间处理之datetime</a></p>
+<p>标签：<br><a href="http://www.csdn.net/tag/python" target="_blank" rel="external">python</a><a href="http://www.csdn.net/tag/date" target="_blank" rel="external">date</a><a href="http://www.csdn.net/tag/import" target="_blank" rel="external">import</a><a href="http://www.csdn.net/tag/string" target="_blank" rel="external">string</a><a href="http://www.csdn.net/tag/c" target="_blank" rel="external">c</a></p>
+<p>2012-09-12 23:21 20910人阅读<br><a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#comments" target="_blank" rel="external">评论</a>(0) 收藏<br><a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#report" title="举报" target="_blank" rel="external">举报</a></p>
+<p><img src="http://static.blog.csdn.net/images/category_icon.jpg" alt=""> 分类：</p>
+<p>Python系列（12）<br><img src="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg" alt=""></p>
+<p>版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+<p>目录<a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="系统根据文章中H1到H6标签自动生成文章目录" target="_blank" rel="external">(?)</a><a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="展开" target="_blank" rel="external">[+]</a></p>
+<h1 id="运行环境-Python3-4"><a href="#运行环境-Python3-4" class="headerlink" title="运行环境:Python3.4"></a>运行环境:Python3.4</h1><p><strong>[python]</strong> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li><h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1></li>
+<li></li>
+<li></li>
+<li>#datetime类  </li>
+<li>#datetime是date与time的结合体，包括date与time的所有信息。  </li>
+<li>#它的构造函数如下：  </li>
+<li>#datetime. datetime (year, month, day[ , hour[ , minute[ , second[ , microsecond[ , tzinfo] ] ] ] ] )  </li>
+<li>#各参数的含义与date、time的构造函数中的一样，要注意参数值的范围。  </li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li><h1 id="1-datetime类定义的类属性与方法："><a href="#1-datetime类定义的类属性与方法：" class="headerlink" title="1. datetime类定义的类属性与方法："></a>1. datetime类定义的类属性与方法：</h1></li>
+<li>#datetime.min、datetime.max：datetime所能表示的最小值与最大值；  </li>
+<li>#print: datetime.max: 9999-12-31 23:59:59.999999  </li>
+<li>#print: datetime.min: 0001-01-01 00:00:00  </li>
+<li>from  datetime  import  *   </li>
+<li>import time  </li>
+<li>print   (‘datetime.max:’ +str(datetime.max ))   </li>
+<li>print   (‘datetime.min:’ +str(datetime.min))    </li>
+<li>#datetime.resolution：datetime最小单位；  </li>
+<li>#print: datetime.resolution: 0:00:00.000001  </li>
+<li>print   (‘datetime.resolution:’ + str(datetime.resolution ))  </li>
+<li>#datetime.today()：返回一个表示当前本地时间的datetime对象；  </li>
+<li>#print: today(): 2012-09-12 19:37:50.721000  </li>
+<li>print   (‘today():’ +str(datetime.today() ))  </li>
+<li>#datetime.now([tz])：返回一个表示当前本地时间的datetime对象，如果提供了参数tz，则获取tz参数所指时区的本地时间；  </li>
+<li>#print: now(): 2012-09-12 19:37:50.738000  </li>
+<li>print   (‘now():’+str( datetime.now() ))  </li>
+<li>#datetime.utcnow()：返回一个当前utc时间的datetime对象；  </li>
+<li>#print: 2012-09-12 11:37:50.739000  </li>
+<li>print   (‘utcnow():’ +str(datetime.utcnow() ))   </li>
+<li>#datetime.fromtimestamp(timestamp[, tz])：根据时间戮创建一个datetime对象，参数tz指定时区信息；  </li>
+<li>#print: fromtimestamp(tmstmp): 2012-09-12 19:37:50.741000  </li>
+<li>print   (‘fromtimestamp(tmstmp):’ +str(datetime.fromtimestamp(time.time()) ))  </li>
+<li>#datetime.utcfromtimestamp(timestamp)：根据时间戮创建一个datetime对象；  </li>
+<li>#print: utcfromtimestamp(tmstmp): 2012-09-12 11:37:50.742000  </li>
+<li>print   (‘utcfromtimestamp(tmstmp):’ +str(datetime.utcfromtimestamp(time.time())) )  </li>
+<li>#datetime.combine(date, time)：根据date和time，创建一个datetime对象；  </li>
+<li>#print: datetime.combine(date,time):  2012-09-12 19:46:05  </li>
+<li>d = date(2012,9,12)  </li>
+<li>from  datetime  import  *   </li>
+<li>t = time(19,46,5)  </li>
+<li>print (‘datetime.combine(date,time): ‘+str(datetime.combine(d,t)))  </li>
+<li>#datetime.strptime(date_string, format)：将格式字符串转换为datetime对象；  </li>
+<li>#print: 2007-03-04 21:08:12  </li>
+<li>print (datetime.strptime(“2007-03-04 21:08:12”, “%Y-%m-%d %H:%M:%S”))  </li>
+<li></li>
+<li></li>
+<li>#2. datetime类提供的实例方法与属性  </li>
+<li>dt = datetime.strptime(“2012-09-12 21:08:12”, “%Y-%m-%d %H:%M:%S”)  </li>
+<li>#print: 2012 9 12 21 8 12 0 None  </li>
+<li>print (dt.year)  </li>
+<li>print(dt.month)  </li>
+<li>print(dt.day)  </li>
+<li>print(dt.hour)  </li>
+<li>print(dt.minute)  </li>
+<li>print(dt.second)  </li>
+<li>print(dt.microsecond)  </li>
+<li>print(dt.tzinfo)  </li>
+<li>print (dt.date())  </li>
+<li>print (dt.time())  </li>
+<li>print (dt.replace(year = 2013))  </li>
+<li>print (dt.timetuple())  </li>
+<li>print (dt.utctimetuple())  </li>
+<li>print (dt.toordinal())  </li>
+<li>print (dt.weekday())  </li>
+<li>print (dt.isocalendar())  </li>
+<li>#print dt.isoformat([sep])  </li>
+<li>#datetime. ctime ()：返回一个日期时间的C格式字符串，等效于time.ctime(time.mktime(dt.timetuple()))；  </li>
+<li></li>
+<li></li>
+<li>#3. 格式字符串  </li>
+<li><h1 id="datetime-strftime-format"><a href="#datetime-strftime-format" class="headerlink" title="datetime. strftime (format)"></a>datetime. strftime (format)</h1></li>
+<li><h1 id="a-星期的简写。如-星期三为Web"><a href="#a-星期的简写。如-星期三为Web" class="headerlink" title="%a 星期的简写。如 星期三为Web"></a>%a 星期的简写。如 星期三为Web</h1></li>
+<li><h1 id="A-星期的全写。如-星期三为Wednesday"><a href="#A-星期的全写。如-星期三为Wednesday" class="headerlink" title="%A 星期的全写。如 星期三为Wednesday"></a>%A 星期的全写。如 星期三为Wednesday</h1></li>
+<li><h1 id="b-月份的简写。如4月份为Apr"><a href="#b-月份的简写。如4月份为Apr" class="headerlink" title="%b 月份的简写。如4月份为Apr"></a>%b 月份的简写。如4月份为Apr</h1></li>
+<li><h1 id="B月份的全写。如4月份为April"><a href="#B月份的全写。如4月份为April" class="headerlink" title="%B月份的全写。如4月份为April"></a>%B月份的全写。如4月份为April</h1></li>
+<li><h1 id="c-日期时间的字符串表示。（如：-04-07-10-10-43-39）"><a href="#c-日期时间的字符串表示。（如：-04-07-10-10-43-39）" class="headerlink" title="%c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）"></a>%c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）</h1></li>
+<li><h1 id="d-日在这个月中的天数（是这个月的第几天）"><a href="#d-日在这个月中的天数（是这个月的第几天）" class="headerlink" title="%d:  日在这个月中的天数（是这个月的第几天）"></a>%d:  日在这个月中的天数（是这个月的第几天）</h1></li>
+<li><h1 id="f-微秒（范围-0-999999-）"><a href="#f-微秒（范围-0-999999-）" class="headerlink" title="%f:  微秒（范围[0,999999]）"></a>%f:  微秒（范围[0,999999]）</h1></li>
+<li><h1 id="H-小时（24小时制，-0-23-）"><a href="#H-小时（24小时制，-0-23-）" class="headerlink" title="%H:  小时（24小时制，[0, 23]）"></a>%H:  小时（24小时制，[0, 23]）</h1></li>
+<li><h1 id="I-小时（12小时制，-0-11-）"><a href="#I-小时（12小时制，-0-11-）" class="headerlink" title="%I:  小时（12小时制，[0, 11]）"></a>%I:  小时（12小时制，[0, 11]）</h1></li>
+<li><h1 id="j-日在年中的天数-001-366-（是当年的第几天）"><a href="#j-日在年中的天数-001-366-（是当年的第几天）" class="headerlink" title="%j:  日在年中的天数 [001,366]（是当年的第几天）"></a>%j:  日在年中的天数 [001,366]（是当年的第几天）</h1></li>
+<li><h1 id="m-月份（-01-12-）"><a href="#m-月份（-01-12-）" class="headerlink" title="%m:  月份（[01,12]）"></a>%m:  月份（[01,12]）</h1></li>
+<li><h1 id="M-分钟（-00-59-）"><a href="#M-分钟（-00-59-）" class="headerlink" title="%M:  分钟（[00,59]）"></a>%M:  分钟（[00,59]）</h1></li>
+<li><h1 id="p-AM或者PM"><a href="#p-AM或者PM" class="headerlink" title="%p:  AM或者PM"></a>%p:  AM或者PM</h1></li>
+<li><h1 id="S-秒（范围为-00-61-，为什么不是-00-59-，参考python手册-）"><a href="#S-秒（范围为-00-61-，为什么不是-00-59-，参考python手册-）" class="headerlink" title="%S:  秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）"></a>%S:  秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）</h1></li>
+<li><h1 id="U-周在当年的周数当年的第几周），星期天作为周的第一天"><a href="#U-周在当年的周数当年的第几周），星期天作为周的第一天" class="headerlink" title="%U:  周在当年的周数当年的第几周），星期天作为周的第一天"></a>%U:  周在当年的周数当年的第几周），星期天作为周的第一天</h1></li>
+<li><h1 id="w-今天在这周的天数，范围为-0-6-，6表示星期天"><a href="#w-今天在这周的天数，范围为-0-6-，6表示星期天" class="headerlink" title="%w:  今天在这周的天数，范围为[0, 6]，6表示星期天"></a>%w:  今天在这周的天数，范围为[0, 6]，6表示星期天</h1></li>
+<li><h1 id="W-周在当年的周数（是当年的第几周），星期一作为周的第一天"><a href="#W-周在当年的周数（是当年的第几周），星期一作为周的第一天" class="headerlink" title="%W:  周在当年的周数（是当年的第几周），星期一作为周的第一天"></a>%W:  周在当年的周数（是当年的第几周），星期一作为周的第一天</h1></li>
+<li><h1 id="x-日期字符串（如：04-07-10）"><a href="#x-日期字符串（如：04-07-10）" class="headerlink" title="%x:  日期字符串（如：04/07/10）"></a>%x:  日期字符串（如：04/07/10）</h1></li>
+<li><h1 id="X-时间字符串（如：10-43-39）"><a href="#X-时间字符串（如：10-43-39）" class="headerlink" title="%X:  时间字符串（如：10:43:39）"></a>%X:  时间字符串（如：10:43:39）</h1></li>
+<li><h1 id="y-2个数字表示的年份"><a href="#y-2个数字表示的年份" class="headerlink" title="%y:  2个数字表示的年份"></a>%y:  2个数字表示的年份</h1></li>
+<li><h1 id="Y-4个数字表示的年份"><a href="#Y-4个数字表示的年份" class="headerlink" title="%Y:  4个数字表示的年份"></a>%Y:  4个数字表示的年份</h1></li>
+<li><h1 id="z-与utc时间的间隔-（如果是本地时间，返回空字符串）"><a href="#z-与utc时间的间隔-（如果是本地时间，返回空字符串）" class="headerlink" title="%z:  与utc时间的间隔 （如果是本地时间，返回空字符串）"></a>%z:  与utc时间的间隔 （如果是本地时间，返回空字符串）</h1></li>
+<li><h1 id="Z-时区名称（如果是本地时间，返回空字符串）"><a href="#Z-时区名称（如果是本地时间，返回空字符串）" class="headerlink" title="%Z:  时区名称（如果是本地时间，返回空字符串）"></a>%Z:  时区名称（如果是本地时间，返回空字符串）</h1></li>
+<li><h1 id="gt"><a href="#gt" class="headerlink" title="%%:  %% =&gt; %"></a>%%:  %% =&gt; %</h1></li>
+<li></li>
+<li></li>
+<li>dt = datetime.now()  </li>
+<li>#print: (%Y-%m-%d %H:%M:%S %f):  2012-09-12 23:04:27 145000  </li>
+<li>print (‘(%Y-%m-%d %H:%M:%S %f): ‘+ str(dt.strftime(‘%Y-%m-%d %H:%M:%S %f’)))  </li>
+<li>#print: (%Y-%m-%d %H:%M:%S %p):  12-09-12 11:04:27 PM  </li>
+<li>print (‘(%Y-%m-%d %H:%M:%S %p): ‘+str(dt.strftime(‘%y-%m-%d %I:%M:%S %p’)))  </li>
+<li></li>
+<li>#print: %a: Wed   </li>
+<li>print (‘%%a: %s ‘ % dt.strftime(‘%a’))  </li>
+<li>#print: %A: Wednesday  </li>
+<li>print (‘%%A: %s ‘ % dt.strftime(‘%A’))  </li>
+<li>#print: %b: Sep   </li>
+<li>print (‘%%b: %s ‘ % dt.strftime(‘%b’))  </li>
+<li>#print: %B: September  </li>
+<li>print (‘%%B: %s ‘ % dt.strftime(‘%B’))  </li>
+<li>#print: 日期时间%c: 09/12/12 23:04:27  </li>
+<li>print (‘日期时间%%c: %s ‘ % dt.strftime(‘%c’))  </li>
+<li>#print: 日期%x：09/12/12  </li>
+<li>print (‘日期%%x：%s ‘ % dt.strftime(‘%x’))  </li>
+<li>#print: 时间%X：23:04:27  </li>
+<li>print (‘时间%%X：%s ‘ % dt.strftime(‘%X’))  </li>
+<li>#print: 今天是这周的第3天  </li>
+<li>print (‘今天是这周的第%s天 ‘ % dt.strftime(‘%w’))  </li>
+<li>#print: 今天是今年的第256天   </li>
+<li>print (‘今天是今年的第%s天 ‘ % dt.strftime(‘%j’))  </li>
+<li>#print: 今周是今年的第37周  </li>
+<li>print (‘今周是今年的第%s周 ‘ % dt.strftime(‘%U’))  </li>
+</ol>
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><strong>[python]</strong> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li>atetime.max:9999-12-31 23:59:59.999999  </li>
+<li>datetime.min:0001-01-01 00:00:00  </li>
+<li>datetime.resolution:0:00:00.000001  </li>
+<li>today():2014-05-04 15:58:18.141186  </li>
+<li>now():2014-05-04 15:58:18.193146  </li>
+<li>utcnow():2014-05-04 07:58:18.243958  </li>
+<li>fromtimestamp(tmstmp):2014-05-04 15:58:18.291558  </li>
+<li>utcfromtimestamp(tmstmp):2014-05-04 07:58:18.342550  </li>
+<li>datetime.combine(date,time): 2012-09-12 19:46:05  </li>
+<li>2007-03-04 21:08:12  </li>
+<li>2012  </li>
+<li>9  </li>
+<li>12  </li>
+<li>21  </li>
+<li>8  </li>
+<li>12  </li>
+<li>0  </li>
+<li>None  </li>
+<li>2012-09-12  </li>
+<li>21:08:12  </li>
+<li>2013-09-12 21:08:12  </li>
+<li>time.struct_time(tm_year=2012, tm_mon=9, tm_mday=12, tm_hour=21, tm_min=8, tm_sec=12, tm_wday=2, tm_yday=256, tm_isdst=-1)  </li>
+<li>time.struct_time(tm_year=2012, tm_mon=9, tm_mday=12, tm_hour=21, tm_min=8, tm_sec=12, tm_wday=2, tm_yday=256, tm_isdst=0)  </li>
+<li>734758  </li>
+<li>2  </li>
+<li>(2012, 37, 3)  </li>
+<li>(%Y-%m-%d %H:%M:%S %f): 2014-05-04 15:58:19 326295  </li>
+<li>(%Y-%m-%d %H:%M:%S %p): 14-05-04 03:58:19 PM  </li>
+<li>%a: Sun   </li>
+<li>%A: Sunday   </li>
+<li>%b: May   </li>
+<li>%B: May   </li>
+<li>日期时间%c: Sun May  4 15:58:19 2014   </li>
+<li>日期%x：05/04/14   </li>
+<li>时间%X：15:58:19   </li>
+<li>今天是这周的第0天   </li>
+<li>今天是今年的第124天   </li>
+<li>今周是今年的第18周   </li>
+</ol>
+<h1 id="运行环境-Python2-x"><a href="#运行环境-Python2-x" class="headerlink" title="运行环境:Python2.x"></a>运行环境:Python2.x</h1><p><strong>[python]</strong> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/wirelessqa/article/details/7973121/#" title="copy" target="_blank" rel="external">copy</a></p>
+<ol>
+<li><h1 id="coding-utf-8-1"><a href="#coding-utf-8-1" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1></li>
+<li></li>
+<li></li>
+<li>#datetime类  </li>
+<li>#datetime是date与time的结合体，包括date与time的所有信息。  </li>
+<li>#它的构造函数如下：  </li>
+<li>#datetime. datetime (year, month, day[ , hour[ , minute[ , second[ , microsecond[ , tzinfo] ] ] ] ] )  </li>
+<li>#各参数的含义与date、time的构造函数中的一样，要注意参数值的范围。  </li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li><h1 id="1-datetime类定义的类属性与方法：-1"><a href="#1-datetime类定义的类属性与方法：-1" class="headerlink" title="1. datetime类定义的类属性与方法："></a>1. datetime类定义的类属性与方法：</h1></li>
+<li>#datetime.min、datetime.max：datetime所能表示的最小值与最大值；  </li>
+<li>#print: datetime.max: 9999-12-31 23:59:59.999999  </li>
+<li>#print: datetime.min: 0001-01-01 00:00:00  </li>
+<li>from  datetime  import  *   </li>
+<li>import time  </li>
+<li>print   ‘datetime.max:’ , datetime.max    </li>
+<li>print   ‘datetime.min:’ , datetime.min    </li>
+<li>#datetime.resolution：datetime最小单位；  </li>
+<li>#print: datetime.resolution: 0:00:00.000001  </li>
+<li>print   ‘datetime.resolution:’ , datetime.resolution   </li>
+<li>#datetime.today()：返回一个表示当前本地时间的datetime对象；  </li>
+<li>#print: today(): 2012-09-12 19:37:50.721000  </li>
+<li>print   ‘today():’ , datetime.today()   </li>
+<li>#datetime.now([tz])：返回一个表示当前本地时间的datetime对象，如果提供了参数tz，则获取tz参数所指时区的本地时间；  </li>
+<li>#print: now(): 2012-09-12 19:37:50.738000  </li>
+<li>print   ‘now():’ , datetime.now()   </li>
+<li>#datetime.utcnow()：返回一个当前utc时间的datetime对象；  </li>
+<li>#print: 2012-09-12 11:37:50.739000  </li>
+<li>print   ‘utcnow():’ , datetime.utcnow()    </li>
+<li>#datetime.fromtimestamp(timestamp[, tz])：根据时间戮创建一个datetime对象，参数tz指定时区信息；  </li>
+<li>#print: fromtimestamp(tmstmp): 2012-09-12 19:37:50.741000  </li>
+<li>print   ‘fromtimestamp(tmstmp):’ , datetime.fromtimestamp(time.time())   </li>
+<li>#datetime.utcfromtimestamp(timestamp)：根据时间戮创建一个datetime对象；  </li>
+<li>#print: utcfromtimestamp(tmstmp): 2012-09-12 11:37:50.742000  </li>
+<li>print   ‘utcfromtimestamp(tmstmp):’ , datetime.utcfromtimestamp(time.time())   </li>
+<li>#datetime.combine(date, time)：根据date和time，创建一个datetime对象；  </li>
+<li>#print: datetime.combine(date,time):  2012-09-12 19:46:05  </li>
+<li>d = date(2012,9,12)  </li>
+<li>from  datetime  import  *   </li>
+<li>t = time(19,46,5)  </li>
+<li>print ‘datetime.combine(date,time): ‘,datetime.combine(d,t)  </li>
+<li>#datetime.strptime(date_string, format)：将格式字符串转换为datetime对象；  </li>
+<li>#print: 2007-03-04 21:08:12  </li>
+<li>print datetime.strptime(“2007-03-04 21:08:12”, “%Y-%m-%d %H:%M:%S”)  </li>
+<li></li>
+<li></li>
+<li>#2. datetime类提供的实例方法与属性  </li>
+<li>dt = datetime.strptime(“2012-09-12 21:08:12”, “%Y-%m-%d %H:%M:%S”)  </li>
+<li>#print: 2012 9 12 21 8 12 0 None  </li>
+<li>print dt.year,dt.month,dt.day,dt.hour,dt.minute,dt.second,dt.microsecond,dt.tzinfo  </li>
+<li>print dt.date()  </li>
+<li>print dt.time()  </li>
+<li>print dt.replace(year = 2013)  </li>
+<li>print dt.timetuple()  </li>
+<li>print dt.utctimetuple()  </li>
+<li>print dt.toordinal()  </li>
+<li>print dt.weekday()  </li>
+<li>print dt.isocalendar()  </li>
+<li>#print dt.isoformat([sep])  </li>
+<li>#datetime. ctime ()：返回一个日期时间的C格式字符串，等效于time.ctime(time.mktime(dt.timetuple()))；  </li>
+<li></li>
+<li></li>
+<li>#3. 格式字符串  </li>
+<li><h1 id="datetime-strftime-format-1"><a href="#datetime-strftime-format-1" class="headerlink" title="datetime. strftime (format)"></a>datetime. strftime (format)</h1></li>
+<li><h1 id="a-星期的简写。如-星期三为Web-1"><a href="#a-星期的简写。如-星期三为Web-1" class="headerlink" title="%a 星期的简写。如 星期三为Web"></a>%a 星期的简写。如 星期三为Web</h1></li>
+<li><h1 id="A-星期的全写。如-星期三为Wednesday-1"><a href="#A-星期的全写。如-星期三为Wednesday-1" class="headerlink" title="%A 星期的全写。如 星期三为Wednesday"></a>%A 星期的全写。如 星期三为Wednesday</h1></li>
+<li><h1 id="b-月份的简写。如4月份为Apr-1"><a href="#b-月份的简写。如4月份为Apr-1" class="headerlink" title="%b 月份的简写。如4月份为Apr"></a>%b 月份的简写。如4月份为Apr</h1></li>
+<li><h1 id="B月份的全写。如4月份为April-1"><a href="#B月份的全写。如4月份为April-1" class="headerlink" title="%B月份的全写。如4月份为April"></a>%B月份的全写。如4月份为April</h1></li>
+<li><h1 id="c-日期时间的字符串表示。（如：-04-07-10-10-43-39）-1"><a href="#c-日期时间的字符串表示。（如：-04-07-10-10-43-39）-1" class="headerlink" title="%c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）"></a>%c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）</h1></li>
+<li><h1 id="d-日在这个月中的天数（是这个月的第几天）-1"><a href="#d-日在这个月中的天数（是这个月的第几天）-1" class="headerlink" title="%d:  日在这个月中的天数（是这个月的第几天）"></a>%d:  日在这个月中的天数（是这个月的第几天）</h1></li>
+<li><h1 id="f-微秒（范围-0-999999-）-1"><a href="#f-微秒（范围-0-999999-）-1" class="headerlink" title="%f:  微秒（范围[0,999999]）"></a>%f:  微秒（范围[0,999999]）</h1></li>
+<li><h1 id="H-小时（24小时制，-0-23-）-1"><a href="#H-小时（24小时制，-0-23-）-1" class="headerlink" title="%H:  小时（24小时制，[0, 23]）"></a>%H:  小时（24小时制，[0, 23]）</h1></li>
+<li><h1 id="I-小时（12小时制，-0-11-）-1"><a href="#I-小时（12小时制，-0-11-）-1" class="headerlink" title="%I:  小时（12小时制，[0, 11]）"></a>%I:  小时（12小时制，[0, 11]）</h1></li>
+<li><h1 id="j-日在年中的天数-001-366-（是当年的第几天）-1"><a href="#j-日在年中的天数-001-366-（是当年的第几天）-1" class="headerlink" title="%j:  日在年中的天数 [001,366]（是当年的第几天）"></a>%j:  日在年中的天数 [001,366]（是当年的第几天）</h1></li>
+<li><h1 id="m-月份（-01-12-）-1"><a href="#m-月份（-01-12-）-1" class="headerlink" title="%m:  月份（[01,12]）"></a>%m:  月份（[01,12]）</h1></li>
+<li><h1 id="M-分钟（-00-59-）-1"><a href="#M-分钟（-00-59-）-1" class="headerlink" title="%M:  分钟（[00,59]）"></a>%M:  分钟（[00,59]）</h1></li>
+<li><h1 id="p-AM或者PM-1"><a href="#p-AM或者PM-1" class="headerlink" title="%p:  AM或者PM"></a>%p:  AM或者PM</h1></li>
+<li><h1 id="S-秒（范围为-00-61-，为什么不是-00-59-，参考python手册-）-1"><a href="#S-秒（范围为-00-61-，为什么不是-00-59-，参考python手册-）-1" class="headerlink" title="%S:  秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）"></a>%S:  秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）</h1></li>
+<li><h1 id="U-周在当年的周数当年的第几周），星期天作为周的第一天-1"><a href="#U-周在当年的周数当年的第几周），星期天作为周的第一天-1" class="headerlink" title="%U:  周在当年的周数当年的第几周），星期天作为周的第一天"></a>%U:  周在当年的周数当年的第几周），星期天作为周的第一天</h1></li>
+<li><h1 id="w-今天在这周的天数，范围为-0-6-，6表示星期天-1"><a href="#w-今天在这周的天数，范围为-0-6-，6表示星期天-1" class="headerlink" title="%w:  今天在这周的天数，范围为[0, 6]，6表示星期天"></a>%w:  今天在这周的天数，范围为[0, 6]，6表示星期天</h1></li>
+<li><h1 id="W-周在当年的周数（是当年的第几周），星期一作为周的第一天-1"><a href="#W-周在当年的周数（是当年的第几周），星期一作为周的第一天-1" class="headerlink" title="%W:  周在当年的周数（是当年的第几周），星期一作为周的第一天"></a>%W:  周在当年的周数（是当年的第几周），星期一作为周的第一天</h1></li>
+<li><h1 id="x-日期字符串（如：04-07-10）-1"><a href="#x-日期字符串（如：04-07-10）-1" class="headerlink" title="%x:  日期字符串（如：04/07/10）"></a>%x:  日期字符串（如：04/07/10）</h1></li>
+<li><h1 id="X-时间字符串（如：10-43-39）-1"><a href="#X-时间字符串（如：10-43-39）-1" class="headerlink" title="%X:  时间字符串（如：10:43:39）"></a>%X:  时间字符串（如：10:43:39）</h1></li>
+<li><h1 id="y-2个数字表示的年份-1"><a href="#y-2个数字表示的年份-1" class="headerlink" title="%y:  2个数字表示的年份"></a>%y:  2个数字表示的年份</h1></li>
+<li><h1 id="Y-4个数字表示的年份-1"><a href="#Y-4个数字表示的年份-1" class="headerlink" title="%Y:  4个数字表示的年份"></a>%Y:  4个数字表示的年份</h1></li>
+<li><h1 id="z-与utc时间的间隔-（如果是本地时间，返回空字符串）-1"><a href="#z-与utc时间的间隔-（如果是本地时间，返回空字符串）-1" class="headerlink" title="%z:  与utc时间的间隔 （如果是本地时间，返回空字符串）"></a>%z:  与utc时间的间隔 （如果是本地时间，返回空字符串）</h1></li>
+<li><h1 id="Z-时区名称（如果是本地时间，返回空字符串）-1"><a href="#Z-时区名称（如果是本地时间，返回空字符串）-1" class="headerlink" title="%Z:  时区名称（如果是本地时间，返回空字符串）"></a>%Z:  时区名称（如果是本地时间，返回空字符串）</h1></li>
+<li><h1 id="gt-1"><a href="#gt-1" class="headerlink" title="%%:  %% =&gt; %"></a>%%:  %% =&gt; %</h1></li>
+<li></li>
+<li></li>
+<li>dt = datetime.now()  </li>
+<li>#print: (%Y-%m-%d %H:%M:%S %f):  2012-09-12 23:04:27 145000  </li>
+<li>print ‘(%Y-%m-%d %H:%M:%S %f): ‘, dt.strftime(‘%Y-%m-%d %H:%M:%S %f’)  </li>
+<li>#print: (%Y-%m-%d %H:%M:%S %p):  12-09-12 11:04:27 PM  </li>
+<li>print ‘(%Y-%m-%d %H:%M:%S %p): ‘, dt.strftime(‘%y-%m-%d %I:%M:%S %p’)  </li>
+<li>#print: %a: Wed   </li>
+<li>print ‘%%a: %s ‘ % dt.strftime(‘%a’)  </li>
+<li>#print: %A: Wednesday  </li>
+<li>print ‘%%A: %s ‘ % dt.strftime(‘%A’)  </li>
+<li>#print: %b: Sep   </li>
+<li>print ‘%%b: %s ‘ % dt.strftime(‘%b’)  </li>
+<li>#print: %B: September  </li>
+<li>print ‘%%B: %s ‘ % dt.strftime(‘%B’)  </li>
+<li>#print: 日期时间%c: 09/12/12 23:04:27  </li>
+<li>print ‘日期时间%%c: %s ‘ % dt.strftime(‘%c’)  </li>
+<li>#print: 日期%x：09/12/12  </li>
+<li>print ‘日期%%x：%s ‘ % dt.strftime(‘%x’)  </li>
+<li>#print: 时间%X：23:04:27  </li>
+<li>print ‘时间%%X：%s ‘ % dt.strftime(‘%X’)  </li>
+<li>#print: 今天是这周的第3天  </li>
+<li>print ‘今天是这周的第%s天 ‘ % dt.strftime(‘%w’)  </li>
+<li>#print: 今天是今年的第256天   </li>
+<li>print ‘今天是今年的第%s天 ‘ % dt.strftime(‘%j’)  </li>
+<li>#print: 今周是今年的第37周  </li>
+<li>print ‘今周是今年的第%s周 ‘ % dt.strftime(‘%U’)  </li>
+</ol>
+<p>顶</p>
+<pre><code>0
+</code></pre><p>踩</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/08/09/python时间处理之datetime/" data-title="python时间处理之datetime" data-url="https://shijingjing07.github.io/2016/08/09/python时间处理之datetime/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1)依赖依赖关系是类与类之间的联接。一个类依赖于另一个类的定义。如，一个人(Person)可以买车(Car)和房子(House),Person类依赖于Car和House的定义，因为Person引入了Car和House。与关联不同的是，Person类中没有Car和House的属性，Car和House的实例是以参量的方式传入到buy()方法中的。一般而言，依赖关系在Java语言中体现为局部变量，方法形">
+  
+  <meta name="description" content="1)依赖依赖关系是类与类之间的联接。一个类依赖于另一个类的定义。如，一个人(Person)可以买车(Car)和房子(House),Person类依赖于Car和House的定义，因为Person引入了Car和House。与关联不同的是，Person类中没有Car和House的属性，Car和House的实例是以参量的方式传入到buy()方法中的。一般而言，依赖关系在Java语言中体现为局部变量，方法形">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/12/28/类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1)依赖依赖关系是类与类之间的联接。一个类依赖于另一个类的定义。如，一个人(Person)可以买车(Car)和房子(House),Person类依赖于Car和House的定义，因为Person引入了Car和House。与关联不同的是，Person类中没有Car和House的属性，Car和House的实例是以参量的方式传入到buy()方法中的。一般而言，依赖关系在Java语言中体现为局部变量，方法形">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101136961-696404574.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101151773-384156678.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101335851-1483683152.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101350570-1896750592.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101408773-94063945.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101435898-1130053478.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101455429-49000952.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:13.545Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别">
+<meta name="twitter:description" content="1)依赖依赖关系是类与类之间的联接。一个类依赖于另一个类的定义。如，一个人(Person)可以买车(Car)和房子(House),Person类依赖于Car和House的定义，因为Person引入了Car和House。与关联不同的是，Person类中没有Car和House的属性，Car和House的实例是以参量的方式传入到buy()方法中的。一般而言，依赖关系在Java语言中体现为局部变量，方法形">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101136961-696404574.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/12/28/类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别/">
+  <time datetime="2016-12-27T18:16:00.000Z">
+    2016-12-28
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1)依赖<br>依赖关系是类与类之间的联接。一个类依赖于另一个类的定义。如，一个人(Person)可以买车(Car)和房子(House),Person类依赖于Car和House的定义，因为Person引入了Car和House。与关联不同的是，Person类中没有Car和House的属性，Car和House的实例是以参量的方式传入到buy()方法中的。一般而言，依赖关系在Java语言中体现为局部变量，方法形参，或者对静态方法的调用。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101136961-696404574.png" alt=""></p>
+<p>2)关联<br>关联是类与类之间的联接，使一个类知道另一个类的属性和方法。关联可以是双向，也可以是单向的。一般使用成员变量来实现。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101151773-384156678.png" alt=""></p>
+<p>3)聚合<br>聚合是一种强的关联关系。是整体和个体之间的关系。例如，汽车类与引擎类，轮胎类之间的关系就是整体与个体之间的关系。与关联关系一样，聚合关系也是通过实例变量实现的。但是关联关系涉及的两个类在同一层次，而聚合关系中两个类处在不平等的层次上，一个代表整体，一个代表部分。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101335851-1483683152.png" alt=""></p>
+<p>4)组合<br>组合也是关联关系的一种，一种比聚合关系强的关系。组合关系中的部分类不能独立于整体类存在。整体类和部分类有相同的生命周期。如Person类和Leg类。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101350570-1896750592.png" alt=""></p>
+<p>5)继承/泛化<br>泛化和继承其实是一个逆过程 泛化就是有子类抽象出一个父类 而继承就是由父类具体化一个子类 例如足球比联赛跟什么西甲 意甲 英超之间就是泛化/继承的关系</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101408773-94063945.png" alt=""></p>
+<p>6)组合和聚合的区别<br>组合和聚合都属于关联，所以它们之间难免有相似之处，区别举例来说明：<br>程老师的《大话》里举大那个大雁的例子很贴切 在此我就借用一下 大雁喜欢热闹害怕孤独 所以它们一直过着群居的生活 这样就有了雁群 每一只大雁都有自己的雁群<br>每个雁群都有好多大雁 大雁与雁群的这种关系就可以称之为聚合 另外每只大雁都有两只翅膀 大雁与雁翅的关系就叫做组合 有此可见 聚合的关系明显没有组合紧密<br>大雁不会因为它们的群主将雁群解散而无法生存 而雁翅就无法脱离大雁而单独生存—-组合关系的类具有相同的生命周期<br>聚合关系图：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101435898-1130053478.png" alt=""></p>
+<p>聚合关系图：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101455429-49000952.png" alt=""></p>
+<p>雁群类：</p>
+<pre><code>public class GooseGroup
+{
+    publi Goose goose;
+    public GooseGroup(Goose goose){
+        this.goose=goose;
+    }
+}
+</code></pre><p>大雁类：</p>
+<pre><code>public class Goose{
+    public Wings wings;
+    public Goose()
+    {
+        wings=new Wings();
+    }
+}    
+</code></pre><p>从构造函数来看，GooseGroup的构造函数要用到Goose作为参数把值传进来，Goose可以脱离GooseGroup独立存在。<br>组合关系中整体类含有部分类的实例化，Goose在实例化之前，一定要先实例化Wings，两个类紧密耦合在一起，它们有相同的生命周期，Wings不能独立于Goose存在。</p>
+<p>从信息封装来看，聚合关系中，客户端同时了解GooseGroup和Goose，因为它们是独立的。<br>而在组合关系中，客户端只认识大雁类，根本不知道翅膀类的存在，因为翅膀类被严密封装在大雁类中。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/12/28/类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别/" data-title="类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别" data-url="https://shijingjing07.github.io/2016/12/28/类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

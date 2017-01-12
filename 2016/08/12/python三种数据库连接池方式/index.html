@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python三种数据库连接池方式 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="#[psycopg2.pool](http://students.mimuw.edu.pl/~jd334392/project/psycopg2-2.5.2/doc/html/pool.html
+#module-psycopg2.pool “psycopg2.pool” ) - Connections pooling
+Creating new PostgreSQL connections can">
+  
+  <meta name="description" content="#[psycopg2.pool](http://students.mimuw.edu.pl/~jd334392/project/psycopg2-2.5.2/doc/html/pool.html
+#module-psycopg2.pool “psycopg2.pool” ) - Connections pooling
+Creating new PostgreSQL connections can">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python三种数据库连接池方式">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/08/12/python三种数据库连接池方式/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="#[psycopg2.pool](http://students.mimuw.edu.pl/~jd334392/project/psycopg2-2.5.2/doc/html/pool.html
+#module-psycopg2.pool “psycopg2.pool” ) - Connections pooling
+Creating new PostgreSQL connections can">
+<meta property="og:updated_time" content="2017-01-12T01:35:22.528Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python三种数据库连接池方式">
+<meta name="twitter:description" content="#[psycopg2.pool](http://students.mimuw.edu.pl/~jd334392/project/psycopg2-2.5.2/doc/html/pool.html
+#module-psycopg2.pool “psycopg2.pool” ) - Connections pooling
+Creating new PostgreSQL connections can">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/12/python三种数据库连接池方式/">
+  <time datetime="2016-08-11T21:54:00.000Z">
+    2016-08-12
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python三种数据库连接池方式</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>#<br>[<code>psycopg2.pool</code>](<a href="http://students.mimuw.edu.pl/~jd334392/project/psycopg2-2.5.2/doc/html/pool.html" target="_blank" rel="external">http://students.mimuw.edu.pl/~jd334392/project/psycopg2-2.5.2/doc/html/pool.html</a></p>
+<p>#module-psycopg2.pool “psycopg2.pool” ) - Connections pooling</p>
+<p>Creating new PostgreSQL connections can be an expensive operation. This module<br>offers a few pure Python classes implementing simple connection pooling<br>directly in the client application.</p>
+<p><em>class </em><code>psycopg2.pool.``AbstractConnectionPool</code>(<em>minconn</em>, <em>maxconn</em>,<br><em>*args</em>, <em>**kwargs</em>)</p>
+<p>Base class implementing generic key-based pooling code.</p>
+<p>New <em>minconn</em> connections are created automatically. The pool will support a<br>maximum of about <em>maxconn</em> connections. <em>*args</em> and _**kwargs_are passed to<br>the<br><a href="http://students.mimuw.edu.pl/~jd334392/project/psycopg2-2.5.2/doc/html/module.html#psycopg2.connect" title="psycopg2.connect" target="_blank" rel="external"><code>connect()</code></a> function.</p>
+<p>The following methods are expected to be implemented by subclasses:</p>
+<p><code>getconn</code>(<em>key=None</em>)</p>
+<p>Get a free connection and assign it to <em>key</em> if not <code>None</code>.</p>
+<p><code>putconn</code>(<em>conn</em>, <em>key=None</em>, <em>close=False</em>)</p>
+<p>Put away a connection.</p>
+<p>If <em>close</em> is <code>True</code>, discard the connection from the pool.</p>
+<p><code>closeall</code>()</p>
+<p>Close all the connections handled by the pool.</p>
+<p>Note that all the connections are closed, including ones eventually in use by<br>the application.</p>
+<p>The following classes are<br><a href="http://students.mimuw.edu.pl/~jd334392/project/psycopg2-2.5.2/doc/html/pool.html#psycopg2.pool.AbstractConnectionPool" title="psycopg2.pool.AbstractConnectionPool" target="_blank" rel="external"><code>AbstractConnectionPool</code></a> subclasses ready to be used.</p>
+<p><em>class </em><code>psycopg2.pool.``SimpleConnectionPool</code>(<em>minconn</em>, <em>maxconn</em>, <em>*args</em>,<br><em>**kwargs</em>)</p>
+<p>A connection pool that can’t be shared across different threads.</p>
+<p>Note</p>
+<p>This pool class is useful only for single-threaded applications.</p>
+<p><em>class </em><code>psycopg2.pool.``ThreadedConnectionPool</code>(<em>minconn</em>, <em>maxconn</em>,<br><em>*args</em>, <em>**kwargs</em>)</p>
+<p>A connection pool that works with the threading module.</p>
+<p>Note</p>
+<p>This pool class can be safely used in multi-threaded applications.</p>
+<p><em>class </em><code>psycopg2.pool.``PersistentConnectionPool</code>(<em>minconn</em>, <em>maxconn</em>,<br><em>*args</em>, <em>**kwargs</em>)</p>
+<p>A pool that assigns persistent connections to different threads.</p>
+<p>Note that this connection pool generates by itself the required keys using the<br>current thread id. This means that until a thread puts away a connection it<br>will always get the same connection object by successive <code>getconn()</code> calls.<br>This also means that a thread can’t use more than one single connection from<br>the pool.</p>
+<p>Note</p>
+<p>This pool class is mostly designed to interact with Zope and probably not<br>useful in generic applications.</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/08/12/python三种数据库连接池方式/" data-title="python三种数据库连接池方式" data-url="https://shijingjing07.github.io/2016/08/12/python三种数据库连接池方式/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

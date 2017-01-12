@@ -1,0 +1,378 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++文件输入和输出 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.引入头文件fstreamfstream头文件定义了用于文件输入的类ifstream和文件输出的类ofstream
+2.写文件1)创建一个ofstream对象来管理输出流2)将该对象与文件关联起来3)使用cout方式使用该对象，唯一区别是输出将进入文件，而不是屏幕。4)关闭到文件的连接示例如下：
+ofstream fout;
+fout.open(&amp;quot;test.txt&amp;quot;);
+fo">
+  
+  <meta name="description" content="1.引入头文件fstreamfstream头文件定义了用于文件输入的类ifstream和文件输出的类ofstream
+2.写文件1)创建一个ofstream对象来管理输出流2)将该对象与文件关联起来3)使用cout方式使用该对象，唯一区别是输出将进入文件，而不是屏幕。4)关闭到文件的连接示例如下：
+ofstream fout;
+fout.open(&amp;quot;test.txt&amp;quot;);
+fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++文件输入和输出">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/13/C++文件输入和输出/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.引入头文件fstreamfstream头文件定义了用于文件输入的类ifstream和文件输出的类ofstream
+2.写文件1)创建一个ofstream对象来管理输出流2)将该对象与文件关联起来3)使用cout方式使用该对象，唯一区别是输出将进入文件，而不是屏幕。4)关闭到文件的连接示例如下：
+ofstream fout;
+fout.open(&amp;quot;test.txt&amp;quot;);
+fo">
+<meta property="og:updated_time" content="2017-01-12T01:35:37.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++文件输入和输出">
+<meta name="twitter:description" content="1.引入头文件fstreamfstream头文件定义了用于文件输入的类ifstream和文件输出的类ofstream
+2.写文件1)创建一个ofstream对象来管理输出流2)将该对象与文件关联起来3)使用cout方式使用该对象，唯一区别是输出将进入文件，而不是屏幕。4)关闭到文件的连接示例如下：
+ofstream fout;
+fout.open(&amp;quot;test.txt&amp;quot;);
+fo">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/13/C++文件输入和输出/">
+  <time datetime="2016-06-12T21:55:00.000Z">
+    2016-06-13
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++文件输入和输出</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.引入头文件fstream</strong><br>fstream头文件定义了用于文件输入的类ifstream和文件输出的类ofstream</p>
+<p><strong>2.写文件</strong><br>1)创建一个ofstream对象来管理输出流<br>2)将该对象与文件关联起来<br>3)使用cout方式使用该对象，唯一区别是输出将进入文件，而不是屏幕。<br>4)关闭到文件的连接<br>示例如下：</p>
+<pre><code>ofstream fout;
+fout.open(&quot;test.txt&quot;);
+fout&lt;&lt;&quot;write something&quot;;
+fout.close();
+</code></pre><p>创建对象和关联文件可使用构造函数合并到一步，以上代码等价于：</p>
+<pre><code>ofstream fout(&quot;test.txt&quot;);
+fout&lt;&lt;&quot;write something&quot;;
+fout.close();
+</code></pre><p><strong>3.读文件</strong><br>1)创建一个ifstream对象来管理输入流<br>2)将该对象与文件关联起来<br>3)使用ifstream的方法读文件<br>4)关闭到文件的连接<br>示例如下：</p>
+<pre><code>ifstream fin(&quot;test.txt&quot;);
+char ch;
+fin&gt;&gt;ch;//从文件中读取一个字符
+char buf[80];
+fin&gt;&gt;buf;//从文件中读取一个单词
+fin.getline(buf,80);//从文件中读取一行
+string line;
+getline(fin,line);//读取一行转换成字符串
+fin.close();
+</code></pre><p><strong>4.读写缓冲区</strong><br>fstream流管理对象在使用cout或cin方式，读或写时，是通过缓冲区和文件进行交互的，<br>而不是逐字节读取或写入文件的。</p>
+<p>关于close()函数，当流对象过期(如程序终止)时，到文件的连接自动关闭，<br>也可使用cose()显示关闭该连接。连接关闭后，将刷新缓冲区。</p>
+<p>与文件的连接关闭后，并不会删除流，fstream流对象和它管理的缓冲区仍然存在，<br>可以将流重新连接到文件。</p>
+<p><strong>5.一个简单的读写文件示例</strong></p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;fstream&gt;
+#include&lt;string&gt;
+using namespace std;
+const string filename=&quot;test.txt&quot;;
+int main()
+{
+ofstream fout(filename.c_str());
+if(!fout.is_open())
+{
+cerr&lt;&lt;&quot;无法打开文件 &quot;&lt;&lt;filename&lt;&lt;endl;
+exit(0);
+}
+cout&lt;&lt;&quot;输入密码：&quot;;
+float secret;
+cin&gt;&gt;secret;
+fout&lt;&lt;secret&lt;&lt;endl;
+fout.close();
+
+ifstream fin(filename.c_str());
+if(!fin.is_open())
+{
+cerr&lt;&lt;&quot;无法打开文件 &quot;&lt;&lt;filename&lt;&lt;endl;
+exit(0);
+}
+cout&lt;&lt;&quot;输入的密码为：\n&quot;;
+char ch;
+while(fin.get(ch))
+cout&lt;&lt;ch;
+fin.close();
+return 0;
+}
+</code></pre><p>程序中is_open()函数，是用来检查文件是否被打开<br>流对象的状态包括：<br>一切顺利，已达到文件尾，I/O操作失败等。如果一切顺利，流状态设置为0，否则设置为1。</p>
+<p><strong>6.打开多个文件</strong><br>1)需要同时打开多个文件，则需要为每个文件创建一个流。<br>2)需要依次打开一组文件，可以只打开一个流，将它依次关联到各个文件。</p>
+<p>如下例所示：</p>
+<pre><code>ifstream fin;
+fin.open(&quot;test.txt&quot;);
+fin.close();
+fin.clear();
+fin.open(&quot;test2.txt&quot;);
+fin.close();  
+</code></pre><p><strong>7.文件模式</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>常量</strong></th>
+<th><strong>含义</strong>  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ios_base::in</td>
+<td>打开文件，以便读取  </td>
+</tr>
+<tr>
+<td>ios_base::out</td>
+<td>打开文件，以便写入  </td>
+</tr>
+<tr>
+<td>ios_base::ate</td>
+<td>打开文件，并移到文件尾，和ios_base::app的区别是，后者只能在文件尾写入，前者只是将写入指针初始化在文件尾  </td>
+</tr>
+<tr>
+<td>ios_base::app</td>
+<td>追加到文件尾  </td>
+</tr>
+<tr>
+<td>ios_base::trunc</td>
+<td>如果文件存在，则清空文件内容  </td>
+</tr>
+<tr>
+<td>ios_base::binary</td>
+<td>二进制文件  </td>
+</tr>
+</tbody>
+</table>
+<p>对于ifstream open()，默认的模式为ios_base::in<br>对于ofstream open()，默认的模式为ios_base::out|ios_base::trunc，打开并清空文件</p>
+<p><strong>8.二进制模式 ios_base::binary </strong></p>
+<p>文件的存储类型有两种，文本格式或二进制格式。<br>文本格式便于读取，而二进制格式更加精确，占用空间小，读取速度快。<br>写操作：</p>
+<pre><code>fout.write((char*)&amp;T,sizeof T);
+</code></pre><p>读操作：</p>
+<pre><code>fin.read((char*)&amp;T,sizeof T);
+</code></pre><p>注意需要将类型实例地址，强制转换为char*类型。</p>
+<p><strong>9.随机存取</strong></p>
+<p>随机存取是指，读写指针直接移动到文件的任何位置。</p>
+<p>跳转函数：</p>
+<pre><code>istream &amp; seekg(streamoff,ios_base::seekdir);//相对地址
+istream &amp; seekg(streampos);//绝对地址
+</code></pre><p>第一个方法的意思是，离seekdir参数指定文件位置，距离streamoff的位置。<br>其中，streamoff单位的是字节，seekdir表示文件的三个位置(顶端ios_base::beg，底端ios_base::end，当前位置ios_base::cur)</p>
+<p>第二个方法的意思是，离文件开头streampos的位置<br>streampos表示文件中的绝对位置，单位是字节</p>
+<p>seekg()<br>移到文件开头</p>
+<p>tellg()<br>返回读写指针当前的位置</p>
+<p>下面，我们用二进制文件模式，写一个简单的随机存取示例：</p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;fstream&gt;
+#include&lt;iomanip&gt;
+const int LIM=20;
+struct planet
+{
+    char name[LIM];
+    double population;
+    double g;
+};
+const char *file = &quot;planets.dat&quot;;
+inline void eatline(){while(std::cin.get()!=&apos;\n&apos;) continue;}
+int main()
+{
+    using namespace std;
+    planet pl;
+    cout&lt;&lt;fixed;
+
+    fstream finout;
+    finout.open(file,ios_base::in|ios_base::out|ios_base::binary);
+    int ct = 0;
+    if(finout.is_open())
+    {
+        finout.seekg(0);
+        cout&lt;&lt;&quot;contents of file &quot;&lt;&lt;file&lt;&lt;endl;
+        while(finout.read((char *)&amp;pl,sizeof pl))
+        {
+            cout&lt;&lt;ct++&lt;&lt;&quot;:&quot;&lt;&lt;setw(20)&lt;&lt;pl.name&lt;&lt;&quot;:&quot;
+                &lt;&lt;setprecision(0)&lt;&lt;setw(12)&lt;&lt;pl.population
+                &lt;&lt;setprecision(2)&lt;&lt;setw(6)&lt;&lt;pl.g&lt;&lt;endl;
+        }
+        if(finout.eof())
+            finout.clear();
+        else{
+            cerr&lt;&lt;&quot;无法打开文件 &quot;&lt;&lt;file&lt;&lt;endl;
+            exit(0);
+        }
+    }
+    else{
+        cerr&lt;&lt;&quot;无法打开文件 &quot;&lt;&lt;file&lt;&lt;endl;
+        exit(0);
+    }
+    cout&lt;&lt;&quot;enter record number to change:&quot;;
+    long rec;
+    cin&gt;&gt;rec;
+    eatline();
+    if(rec&lt;0||rec&gt;=ct)
+    {
+        cerr&lt;&lt;&quot;无效 index number&quot;&lt;&lt;endl;
+        exit(0);
+    }
+    streampos place = rec*sizeof pl;
+    finout.seekg(place);
+    if(finout.fail())
+    {
+        cerr&lt;&lt;&quot;无法找到 index number&quot;&lt;&lt;endl;
+        exit(0);
+    }
+    finout.read((char *)&amp;pl,sizeof pl);
+    cout&lt;&lt;&quot;找到的 index number&quot;&lt;&lt;endl;
+    cout&lt;&lt;rec&lt;&lt;&quot;:&quot;&lt;&lt;setw(20)&lt;&lt;pl.name&lt;&lt;&quot;:&quot;
+                &lt;&lt;setprecision(0)&lt;&lt;setw(12)&lt;&lt;pl.population
+                &lt;&lt;setprecision(2)&lt;&lt;setw(6)&lt;&lt;pl.g&lt;&lt;endl;
+    if(finout.eof())
+        finout.clear();
+    cout&lt;&lt;&quot;输入name:&quot;;
+    cin.get(pl.name,LIM);
+    eatline();
+    cout&lt;&lt;&quot;population:&quot;;
+    cin&gt;&gt;pl.population;
+    cout&lt;&lt;&quot;g:&quot;;
+    cin&gt;&gt;pl.g;
+    finout.seekp(place);
+    finout.write((char*)&amp;pl,sizeof pl)&lt;&lt;flush;
+    if(finout.fail())
+    {
+        cerr&lt;&lt;&quot;写失败 index number&quot;&lt;&lt;endl;
+        exit(0);
+    }
+
+    ct = 0;
+    finout.seekg(0);
+    cout&lt;&lt;&quot;contents of file &quot;&lt;&lt;file&lt;&lt;endl;
+    while(finout.read((char *)&amp;pl,sizeof pl))
+    {
+        cout&lt;&lt;ct++&lt;&lt;&quot;:&quot;&lt;&lt;setw(20)&lt;&lt;pl.name&lt;&lt;&quot;:&quot;
+            &lt;&lt;setprecision(0)&lt;&lt;setw(12)&lt;&lt;pl.population
+            &lt;&lt;setprecision(2)&lt;&lt;setw(6)&lt;&lt;pl.g&lt;&lt;endl;
+    }
+    finout.close();
+    cout&lt;&lt;&quot;Done.\n&quot;;
+    return 0;
+}
+</code></pre><p>程序中，我们使用了一个特别的流管理对象fstream，<br>fstream继承子iostream,而iostream继承自istream和ostream<br>因此fstream继承了两个缓冲区，一个用于输入，一个用于输出<br>并能同步化两个缓冲区的处理。即输入指针和输出指针的位置始终相同。<br>这样用一个流管理对象，就可以同时进行读和写。</p>
+<p>参考资料：《C++ Primer.Plus》 pp.768-788</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/13/C++文件输入和输出/" data-title="C++文件输入和输出" data-url="https://shijingjing07.github.io/2016/06/13/C++文件输入和输出/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

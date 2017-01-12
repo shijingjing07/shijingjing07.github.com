@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux 数据流重定向 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.三种数据流重定向1)标准输入(stdin):代码为0，使用0&amp;lt;或0&amp;lt;&amp;lt;，其中代码0可以省略2)标准输出(stdout):代码为1，使用1&amp;gt;或1&amp;gt;&amp;gt;，其中代码1可以省略3)标准错误输出(stderr):代码为2，使用2&amp;gt;或2&amp;gt;&amp;gt;
+2.标准输出(stdout)重定向我们知道Linux中，cat命令可以将文件内容输出到屏幕。如下所示：
+
+我们可以">
+  
+  <meta name="description" content="1.三种数据流重定向1)标准输入(stdin):代码为0，使用0&amp;lt;或0&amp;lt;&amp;lt;，其中代码0可以省略2)标准输出(stdout):代码为1，使用1&amp;gt;或1&amp;gt;&amp;gt;，其中代码1可以省略3)标准错误输出(stderr):代码为2，使用2&amp;gt;或2&amp;gt;&amp;gt;
+2.标准输出(stdout)重定向我们知道Linux中，cat命令可以将文件内容输出到屏幕。如下所示：
+
+我们可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 数据流重定向">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/07/01/Linux 数据流重定向/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.三种数据流重定向1)标准输入(stdin):代码为0，使用0&amp;lt;或0&amp;lt;&amp;lt;，其中代码0可以省略2)标准输出(stdout):代码为1，使用1&amp;gt;或1&amp;gt;&amp;gt;，其中代码1可以省略3)标准错误输出(stderr):代码为2，使用2&amp;gt;或2&amp;gt;&amp;gt;
+2.标准输出(stdout)重定向我们知道Linux中，cat命令可以将文件内容输出到屏幕。如下所示：
+
+我们可以">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133103874-1115755871.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133130781-834052391.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133201390-1495529579.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133637109-1643770272.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133651609-1775141750.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133712921-1572346818.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133726171-631294718.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:31.509Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 数据流重定向">
+<meta name="twitter:description" content="1.三种数据流重定向1)标准输入(stdin):代码为0，使用0&amp;lt;或0&amp;lt;&amp;lt;，其中代码0可以省略2)标准输出(stdout):代码为1，使用1&amp;gt;或1&amp;gt;&amp;gt;，其中代码1可以省略3)标准错误输出(stderr):代码为2，使用2&amp;gt;或2&amp;gt;&amp;gt;
+2.标准输出(stdout)重定向我们知道Linux中，cat命令可以将文件内容输出到屏幕。如下所示：
+
+我们可以">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133103874-1115755871.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/01/Linux 数据流重定向/">
+  <time datetime="2016-06-30T21:42:00.000Z">
+    2016-07-01
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux 数据流重定向</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.三种数据流重定向</strong><br>1)标准输入(stdin):代码为0，使用0&lt;或0&lt;&lt;，其中代码0可以省略<br>2)标准输出(stdout):代码为1，使用1&gt;或1&gt;&gt;，其中代码1可以省略<br>3)标准错误输出(stderr):代码为2，使用2&gt;或2&gt;&gt;</p>
+<p><strong>2.标准输出(stdout)重定向</strong><br>我们知道Linux中，cat命令可以将文件内容输出到屏幕。<br>如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133103874-1115755871.png" alt=""></p>
+<p>我们可以使用&gt;将输出重定向到其他文件，如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133130781-834052391.png" alt=""></p>
+<p>可以看到，使用&gt;后，文件内容并没有输出到屏幕，而是输出到了mytxt文件。</p>
+<p>&gt;&gt;与&gt;的区别是，&gt;&gt;会把输出添加到文件的末尾，&gt;会清空文件，然后将输出写入该文件。</p>
+<p><strong>3.标准输入(stdin)重定向</strong><br>cat&gt;mytxt，表示需要从键盘输入数据到文件。如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133201390-1495529579.png" alt=""></p>
+<p>使用&lt;可以将其他文件内容输入到该文件，如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133637109-1643770272.png" alt=""></p>
+<p>使用&lt;&lt;，表示定义输入结束符，<br>从键盘输入时，输入Ctrl+D，可结束进程。<br>还可以使用&lt;&lt;自定义结束符，如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133651609-1775141750.png" alt=""></p>
+<p><strong>4.标准错误输出(stderr)重定向</strong><br>与标准输出(stdout)重定向使用相同。<br>表示重定向的是错误信息。<br>一般用来将错误信息和正确信息分开。</p>
+<p><strong>5.标准输出和标准错误输出写入同一个文件</strong><br>使用&amp;&gt;可将stdout和stderr输出到同一个文件，如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133712921-1572346818.png" alt=""></p>
+<p><strong>6.屏蔽所有输出的方法</strong><br>有时我们希望将所有的错误信息或正确信息屏蔽掉，<br>此时，可将输出重定向到设备/dev/null。如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133726171-631294718.png" alt=""></p>
+<p>将正确信息吃掉，此时屏幕输出的只有错误信息了。</p>
+<p><strong>7.为什么要用数据流重定向</strong><br>1)需要将屏幕信息保存下来的时候<br>2)不希望其他程序干扰到当前程序的屏幕输出<br>3)执行时一些已知的错误，我们可以用”2&gt;/dev/null”丢掉<br>4)正确信息和错误信息需要分开输出</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/07/01/Linux 数据流重定向/" data-title="Linux 数据流重定向" data-url="https://shijingjing07.github.io/2016/07/01/Linux 数据流重定向/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

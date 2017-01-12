@@ -1,0 +1,472 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++多继承 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.继承的三种方式：
+公有继承(public),私有继承(private),保护继承(protected)三种继承方式的说明，如下表所示：
+
+
+
+特征
+公有继承
+保护继承
+私有继承  
+
+
+
+
+公有成员变成
+派生类的公有成员
+派生类的保护成员
+派生类的私有成员  
+
+
+保护成员变成
+派生类的保护成员
+派生类的保护成员
+派生类的私有成员  
+
+
+私有成员变成
+只能通过基类接口访问
+只能通过基类接口访">
+  
+  <meta name="description" content="1.继承的三种方式：
+公有继承(public),私有继承(private),保护继承(protected)三种继承方式的说明，如下表所示：
+
+
+
+特征
+公有继承
+保护继承
+私有继承  
+
+
+
+
+公有成员变成
+派生类的公有成员
+派生类的保护成员
+派生类的私有成员  
+
+
+保护成员变成
+派生类的保护成员
+派生类的保护成员
+派生类的私有成员  
+
+
+私有成员变成
+只能通过基类接口访问
+只能通过基类接口访">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++多继承">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/06/C++多继承/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.继承的三种方式：
+公有继承(public),私有继承(private),保护继承(protected)三种继承方式的说明，如下表所示：
+
+
+
+特征
+公有继承
+保护继承
+私有继承  
+
+
+
+
+公有成员变成
+派生类的公有成员
+派生类的保护成员
+派生类的私有成员  
+
+
+保护成员变成
+派生类的保护成员
+派生类的保护成员
+派生类的私有成员  
+
+
+私有成员变成
+只能通过基类接口访问
+只能通过基类接口访">
+<meta property="og:updated_time" content="2017-01-12T01:35:38.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++多继承">
+<meta name="twitter:description" content="1.继承的三种方式：
+公有继承(public),私有继承(private),保护继承(protected)三种继承方式的说明，如下表所示：
+
+
+
+特征
+公有继承
+保护继承
+私有继承  
+
+
+
+
+公有成员变成
+派生类的公有成员
+派生类的保护成员
+派生类的私有成员  
+
+
+保护成员变成
+派生类的保护成员
+派生类的保护成员
+派生类的私有成员  
+
+
+私有成员变成
+只能通过基类接口访问
+只能通过基类接口访">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/06/C++多继承/">
+  <time datetime="2016-06-06T02:56:00.000Z">
+    2016-06-06
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++多继承</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.继承的三种方式：</strong></p>
+<p>公有继承(public),私有继承(private),保护继承(protected)<br>三种继承方式的说明，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>特征</strong></th>
+<th><strong>公有继承</strong></th>
+<th><strong>保护继承</strong></th>
+<th><strong>私有继承</strong>  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>公有成员变成</strong></td>
+<td><strong>派生类的公有成员</strong></td>
+<td><strong>派生类的保护成员</strong></td>
+<td><strong>派生类的私有成员</strong>  </td>
+</tr>
+<tr>
+<td><strong>保护成员变成</strong></td>
+<td><strong>派生类的保护成员</strong></td>
+<td><strong>派生类的保护成员</strong></td>
+<td><strong>派生类的私有成员</strong>  </td>
+</tr>
+<tr>
+<td><strong>私有成员变成</strong></td>
+<td><strong>只能通过基类接口访问</strong></td>
+<td><strong>只能通过基类接口访问</strong></td>
+<td><strong>只能通过基类接口访问</strong>  </td>
+</tr>
+<tr>
+<td><strong>能否隐式向上转换</strong></td>
+<td><strong>是</strong></td>
+<td><strong>是</strong></td>
+<td><strong>否</strong>  </td>
+</tr>
+</tbody>
+</table>
+<p><strong>2.什么是多继承</strong></p>
+<p>一个类有多个基类，那么这种继承关系就叫做多继承。<br>比如有两个类，服务员类Waiter，歌手类Singer，我们有一个类既是服务员，又是歌手，<br>那么我们可以定义类的多继承关系如下：</p>
+<pre><code>class Waiter
+{};
+class Singer
+{};
+class SingerWaiter:public Waiter,public Singer
+{};
+</code></pre><p><strong>3.使用多继承会带来哪些问题</strong><br>多继承比单继承复杂，也更容易出现问题，因此我们不建议使用多继承。<br>多继承的两个主要问题是：<br>1)从两个不同的基类，继承同名方法<br>如下例所示：</p>
+<pre><code>class Waiter
+{
+public:
+    void work(){std::cout&lt;&lt;&quot;Service&quot;&lt;&lt;std::endl;}
+};
+class Singer
+{
+public:
+    void work(){std::cout&lt;&lt;&quot;Sing&quot;&lt;&lt;std::endl;}
+};
+class SingerWaiter:public Waiter,public Singer
+{};
+int main()
+{
+    SingerWaiter singerWaiter;
+    singerWaiter.work();
+    return 0;
+}
+</code></pre><p>编译器不知道该调用哪个基类的work方法，所以会报singerWaiter.work();不明确错误。<br>2)从多个基类间接继承同一个类的多个实例<br>如下例所示：</p>
+<pre><code>class Worker
+{};
+class Waiter:public Worker
+{};
+class Singer:public Worker
+{};
+class SingerWaiter:public Waiter,public Singer
+{};
+int main()
+{
+    SingerWaiter singerWaiter;
+    Worker *pw = &amp;singerWaiter;
+    return 0;
+}
+</code></pre><p>会报错Worker *pw = &amp;singerWaiter;基类Worker不明确。<br>这是因为SingerWaiter对象创建时，会分别调用Waiter类和Singer类的构造函数，<br>Waiter类和Singer类又会分别调用Worker类的构造函数，生成了两份Worker类的实例，<br>所以pw指针，不知道该指向哪一份Worker实例。</p>
+<p><strong>4.如何解决多继承带来的问题</strong><br>对于问题一，我们在调用时，需要明确指出具体要调用哪个类的方法，如下所示：</p>
+<pre><code>int main()
+{
+    SingerWaiter singerWaiter;
+    singerWaiter.Waiter::work();//调用Waiter类的方法
+    singerWaiter.Singer::work();//调用Singer类的方法
+    return 0;
+}
+</code></pre><p>对于问题二，我们引入了虚基类的概念。如下所示：</p>
+<pre><code>class Worker
+{};
+class Waiter:virtual public Worker
+{};
+class Singer:virtual public Worker
+{};
+class SingerWaiter:public Waiter,public Singer
+{};
+int main()
+{
+    SingerWaiter singerWaiter;
+    Worker *pw = &amp;singerWaiter;
+    return 0;
+}
+</code></pre><p>我们在子类继承时，声明一个virtual关键字，这时，就表明基类Worker是一个虚基类。<br>实例化SingerWaiter时产生的Waiter对象和Singer对象，共享一个基类Worker对象。</p>
+<p><strong>5.使用虚基类需要注意的问题</strong><br>我们知道继承关系中，类的构造函数具有传递性，如以下代码所示：</p>
+<pre><code>class A
+{
+private:
+    int a;
+public:
+    A(int n=0):a(n){}
+    int get(){return a;}
+};
+class B:public A
+{
+private:
+    int b;
+public:
+    B(int m=0,int n=0):A(n),b(m){}
+    int get(){return b;}
+};
+class C:public B
+{
+private:
+    int c;
+public:
+    C(int q=0,int m=0,int n=0):B(m,n),c(q){}
+    int get(){return c;}
+    void Show()
+    {
+        std::cout&lt;&lt;A::get()&lt;&lt;&quot; &quot;&lt;&lt;B::get()&lt;&lt;&quot; &quot;&lt;&lt;C::get()&lt;&lt;std::endl;
+    }
+};
+int main()
+{
+    C c(1,2,3);
+    c.Show();
+    return 0;
+}
+</code></pre><p>输出结果为： 3 2 1<br>调用C的构造函数，则B,A构造函数都将使用传入的参数进行初始化。</p>
+<p>我们再看使用虚基类的情况：</p>
+<pre><code>class A
+{
+private:
+    int a;
+public:
+    A(int n=0):a(n){}
+    int get(){return a;}
+};
+class B:virtual public A
+{
+private:
+    int b;
+public:
+    B(int m=0,int n=0):A(n),b(m){}
+    int get(){return b;}
+};
+class C:public B
+{
+private:
+    int c;
+public:
+    C(int q=0,int m=0,int n=0):B(m,n),c(q){}
+    int get(){return c;}
+    void Show()
+    {
+        std::cout&lt;&lt;A::get()&lt;&lt;&quot; &quot;&lt;&lt;B::get()&lt;&lt;&quot; &quot;&lt;&lt;C::get()&lt;&lt;std::endl;
+    }
+};
+int main()
+{
+    C c(1,2,3);
+    c.Show();
+    return 0;
+}
+</code></pre><p>输出结果为： 0 2 1<br>说明A并没有使用传入的参数进行初始化，<br>这是因为在虚基类中，我们假想会有多个子类向虚基类传递参数，为了避免这种情况，<br>在虚基类的情况下，禁止了子类C使用中间类B向虚基类A传递参数，此时调用的是A的默认构造函数。<br>那么我们该如何使用参数，初始化虚基类呢？<br>答案是我们可以在子类C中，直接调用虚基类A的构造函数进行初始化，如以下代码所示：</p>
+<pre><code>class A
+{
+private:
+    int a;
+public:
+    A(int n=0):a(n){}
+    int get(){return a;}
+};
+class B:virtual public A
+{
+private:
+    int b;
+public:
+    B(int m=0,int n=0):A(n),b(m){}
+    int get(){return b;}
+};
+class C:public B
+{
+private:
+    int c;
+public:
+    C(int q=0,int m=0,int n=0):A(m),B(m,n),c(q){}
+    int get(){return c;}
+    void Show()
+    {
+        std::cout&lt;&lt;A::get()&lt;&lt;&quot; &quot;&lt;&lt;B::get()&lt;&lt;&quot; &quot;&lt;&lt;C::get()&lt;&lt;std::endl;
+    }
+};
+int main()
+{
+    C c(1,2,3);
+    c.Show();
+    return 0;
+}
+</code></pre><p>输出结果为： 3 2 1</p>
+<p>跳过中间类，直接调用基类的构造函数，这种方式只适合虚基类。<br>在非虚基类中会报错”不允许使用间接非虚拟基类”。</p>
+<p>参考资料：《C++ Primer.Plus》 pp.551-567</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/06/C++多继承/" data-title="C++多继承" data-url="https://shijingjing07.github.io/2016/06/06/C++多继承/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

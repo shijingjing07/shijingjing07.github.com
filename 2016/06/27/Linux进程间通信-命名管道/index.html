@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux进程间通信-命名管道 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="前面我们讲了进程间通信的一种方式，匿名管道。我们知道，匿名管道只能用于父子关系的进程之间。那么没有这种关系的进程之间该如何进行数据传递呢？
+1.什么是命名管道
+匿名管道是在缓存中开辟的输出和输入文件流的空间，只能用于父子关系的进程之间。因为父子进程的输入和输出文件描述符是一致的。命名管道是一种实际存在的FIFO文件，称作”管道文件”，用于不同进程之间，命名管道进程间打开同一个FIFO文件，进行数据">
+  
+  <meta name="description" content="前面我们讲了进程间通信的一种方式，匿名管道。我们知道，匿名管道只能用于父子关系的进程之间。那么没有这种关系的进程之间该如何进行数据传递呢？
+1.什么是命名管道
+匿名管道是在缓存中开辟的输出和输入文件流的空间，只能用于父子关系的进程之间。因为父子进程的输入和输出文件描述符是一致的。命名管道是一种实际存在的FIFO文件，称作”管道文件”，用于不同进程之间，命名管道进程间打开同一个FIFO文件，进行数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程间通信-命名管道">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/27/Linux进程间通信-命名管道/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="前面我们讲了进程间通信的一种方式，匿名管道。我们知道，匿名管道只能用于父子关系的进程之间。那么没有这种关系的进程之间该如何进行数据传递呢？
+1.什么是命名管道
+匿名管道是在缓存中开辟的输出和输入文件流的空间，只能用于父子关系的进程之间。因为父子进程的输入和输出文件描述符是一致的。命名管道是一种实际存在的FIFO文件，称作”管道文件”，用于不同进程之间，命名管道进程间打开同一个FIFO文件，进行数据">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627185210171-680796629.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627185221718-1197546836.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:32.876Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux进程间通信-命名管道">
+<meta name="twitter:description" content="前面我们讲了进程间通信的一种方式，匿名管道。我们知道，匿名管道只能用于父子关系的进程之间。那么没有这种关系的进程之间该如何进行数据传递呢？
+1.什么是命名管道
+匿名管道是在缓存中开辟的输出和输入文件流的空间，只能用于父子关系的进程之间。因为父子进程的输入和输出文件描述符是一致的。命名管道是一种实际存在的FIFO文件，称作”管道文件”，用于不同进程之间，命名管道进程间打开同一个FIFO文件，进行数据">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627185210171-680796629.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/27/Linux进程间通信-命名管道/">
+  <time datetime="2016-06-27T02:56:00.000Z">
+    2016-06-27
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux进程间通信-命名管道</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>前面我们讲了进程间通信的一种方式，<a href="http://www.cnblogs.com/shijingjing07/p/5620646.html" target="_blank" rel="external">匿名管道</a>。<br>我们知道，匿名管道只能用于父子关系的进程之间。那么没有这种关系的进程之间该如何进行数据传递呢？</p>
+<p><strong>1.什么是命名管道</strong></p>
+<p>匿名管道是在缓存中开辟的输出和输入文件流的空间，只能用于父子关系的进程之间。因为父子进程的输入和输出文件描述符是一致的。<br>命名管道是一种实际存在的FIFO文件，称作”管道文件”，用于不同进程之间，命名管道进程间打开同一个FIFO文件，进行数据传递。<br>我们可以像普通文件一样操作FIFO文件。<br>不同进程，引用同一个FIFO文件，进行数据传递。</p>
+<p><strong>2.创建命名管道</strong><br>mkfifo函数：创建一个命名管道</p>
+<pre><code>int mkfifo(const char *filename,mode_t mode);
+</code></pre><p>filename:指定FIFO文件的名称<br>mode:指定文件的读写权限</p>
+<p><strong>3.访问命名管道</strong><br>打开FIFO文件有四种方式：</p>
+<pre><code>open(const char *filename,O_RDONLY);
+open(const char *filename,O_RDONLY|O_NONBLOCK);
+open(const char *filename,O_WRONLY);
+open(const char *filename,O_WRONLY|O_NONBLOCK);
+</code></pre><p>需要注意的是，不能以O_RDWR模式打开FIFO文件，<br>因为这样一个进程写入的数据会被该进程读取，FIFO一般只用做单向的数据传递。</p>
+<p>open函数的第二个参数，表示是读管道，还是写管道。<br>O_NONBLOCK表示FIFO管道的读写是非阻塞的，默认的话，是阻塞的。<br>那么何为阻塞呢？<br>一个进程写模式打开管道的时候，必须有另一个进程以读模式打开；<br>或读模式的时候，必须有另一个进程写写模式打开，否则该进程open函数阻塞，直到满足以上关系。</p>
+<p>非阻塞，意味着open函数会立即返回，若没有其他进程以只读方式打开，open返回-1，并且FIFO也不会被打开。</p>
+<p><strong>4.FIFO管道使用示例</strong><br>下例有两个程序，fifowrite.c和fiforead.c分别写管道和读管道。<br>fifowrite.c中将一个文本文件data.txt,写到管道。<br>fiforead.c中从管道读取数据，并写到dataformfifo.txt文件中。<br>程序使用了默认的阻塞模式。<br>示例代码如下：</p>
+<p>fifowrite.c</p>
+<pre><code>#include&lt;sys/types.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;stdio.h&gt;
+#include&lt;fcntl.h&gt;
+#include&lt;limits.h&gt;
+int main()
+{
+    const char *fifo_name = &quot;/tmp/my_fifo&quot;;
+    int pipe_fd = -1;
+    int data_fd = -1;
+    int res = 0;
+    const int open_mode = O_WRONLY;
+    char buffer[PIPE_BUF+1];
+    if(access(fifo_name,F_OK)==-1)
+    {
+        res = mkfifo(fifo_name,0777);
+        if(res!=0)
+        {
+            fprintf(stderr,&quot;could not create fifo\n&quot;);
+            exit(EXIT_FAILURE);
+        }
+    }
+    printf(&quot;process %d opening fifo O_WRONLY\n&quot;,getpid());
+    pipe_fd = open(fifo_name,open_mode);
+    data_fd = open(&quot;data.txt&quot;,O_RDONLY);
+    printf(&quot;process %d result %d\n&quot;,getpid(),pipe_fd);
+    if(pipe_fd!=-1)
+    {
+        int bytes_read = 0;
+        bytes_read = read(data_fd,buffer,PIPE_BUF);
+        while(bytes_read&gt;0)
+        {
+            res = write(pipe_fd,buffer,bytes_read);
+            if(res==-1)
+            {
+                fprintf(stderr,&quot;write error\n&quot;);
+                exit(EXIT_FAILURE);
+            }
+            bytes_read = read(data_fd,buffer,PIPE_BUF);
+            buffer[bytes_read]=&apos;\0&apos;;
+        }
+        close(pipe_fd);
+        close(data_fd);
+    }
+    else{
+        exit(EXIT_FAILURE);
+    }
+    printf(&quot;process %d finished.\n&quot;,getpid());
+    exit(EXIT_SUCCESS);
+}
+</code></pre><p>fiforead.c</p>
+<pre><code>#include&lt;stdlib.h&gt;
+#include&lt;stdio.h&gt;
+#include&lt;sys/types.h&gt;
+#include&lt;fcntl.h&gt;
+#include&lt;limits.h&gt;
+int main()
+{
+    const char *fifo_name = &quot;/tmp/my_fifo&quot;;
+    int pipe_fd = -1;
+    int data_fd = -1;
+    int res = 0;
+    int open_mode = O_RDONLY;
+    char buffer[PIPE_BUF+1];
+    int bytes_read = 0;
+    int bytes_write = 0;
+    memset(buffer,&apos;\0&apos;,sizeof(buffer));
+
+    printf(&quot;process %d opening FIFO O_RDONLY\n&quot;,getpid());
+    pipe_fd = open(fifo_name,open_mode);
+    data_fd = open(&quot;dataformfifo.txt&quot;,O_WRONLY|O_CREAT,0644);
+    printf(&quot;process %d result %d\n&quot;,getpid(),pipe_fd);
+    if(pipe_fd!=-1)
+    {
+        do{
+            res = read(pipe_fd,buffer,PIPE_BUF);
+            bytes_write = write(data_fd,buffer,res);
+            bytes_read +=res;
+        }while(res&gt;0);
+        close(pipe_fd);
+        close(data_fd);
+    }
+    else{
+        exit(EXIT_FAILURE);
+    }
+    printf(&quot;process %d finished,%d bytes read\n&quot;,getpid(),bytes_read);
+    exit(EXIT_SUCCESS);
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627185210171-680796629.png" alt=""></p>
+<p>我们在shell中输入命令 ls -l /tmp/my_fifo查看FIFO管道文件的属性</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627185221718-1197546836.png" alt=""></p>
+<p>可以看到，FIFO文件生成了，第一个字符’p’，表示该文件是一个管道文件。</p>
+<p><strong>5.多个进程同时写管道</strong><br>当多个进程同时写管道时，读管道取得的数据是杂乱的。<br>此时，我们可以控制每个进程，当要写入的数据超过某个大小时，才写管道，另外要以阻塞的方式打开FIFO。确保写操作的原子性。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/27/Linux进程间通信-命名管道/" data-title="Linux进程间通信-命名管道" data-url="https://shijingjing07.github.io/2016/06/27/Linux进程间通信-命名管道/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

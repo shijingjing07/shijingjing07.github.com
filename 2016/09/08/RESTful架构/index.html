@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>RESTful架构 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="RESTful架构1.什么是RESTful API设计原则
+REST是Representational State Transfer的简写，意为”表现层状态转换”
+是一种对资源状态进行操作的设计规则，如查询，新增，删除，修改
+（1）每个URI代表一种资源
+（2）客户端和服务器之间，传递这种资源的某种表现层
+（3）客户端通过四个HTTP动作，对服务器端资源进行操作，实现”表现层状态转换”
+2.资源">
+  
+  <meta name="description" content="RESTful架构1.什么是RESTful API设计原则
+REST是Representational State Transfer的简写，意为”表现层状态转换”
+是一种对资源状态进行操作的设计规则，如查询，新增，删除，修改
+（1）每个URI代表一种资源
+（2）客户端和服务器之间，传递这种资源的某种表现层
+（3）客户端通过四个HTTP动作，对服务器端资源进行操作，实现”表现层状态转换”
+2.资源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RESTful架构">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/09/08/RESTful架构/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="RESTful架构1.什么是RESTful API设计原则
+REST是Representational State Transfer的简写，意为”表现层状态转换”
+是一种对资源状态进行操作的设计规则，如查询，新增，删除，修改
+（1）每个URI代表一种资源
+（2）客户端和服务器之间，传递这种资源的某种表现层
+（3）客户端通过四个HTTP动作，对服务器端资源进行操作，实现”表现层状态转换”
+2.资源">
+<meta property="og:updated_time" content="2017-01-12T01:35:19.010Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RESTful架构">
+<meta name="twitter:description" content="RESTful架构1.什么是RESTful API设计原则
+REST是Representational State Transfer的简写，意为”表现层状态转换”
+是一种对资源状态进行操作的设计规则，如查询，新增，删除，修改
+（1）每个URI代表一种资源
+（2）客户端和服务器之间，传递这种资源的某种表现层
+（3）客户端通过四个HTTP动作，对服务器端资源进行操作，实现”表现层状态转换”
+2.资源">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/09/08/RESTful架构/">
+  <time datetime="2016-09-08T02:46:00.000Z">
+    2016-09-08
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">RESTful架构</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id="RESTful架构"><a href="#RESTful架构" class="headerlink" title="RESTful架构"></a><strong>RESTful架构</strong></h1><p>1.什么是RESTful API设计原则</p>
+<p>REST是Representational State Transfer的简写，意为”表现层状态转换”</p>
+<p>是一种对资源状态进行操作的设计规则，如查询，新增，删除，修改</p>
+<p>（1）每个URI代表一种资源</p>
+<p>（2）客户端和服务器之间，传递这种资源的某种表现层</p>
+<p>（3）客户端通过四个HTTP动作，对服务器端资源进行操作，实现”表现层状态转换”</p>
+<p>2.资源</p>
+<p>资源即为实体，如一个文件，图片等</p>
+<p>3.表现层</p>
+<p>资源的表现形式，如文本可以用txt,html,xml,json,二进制等多种不同格式来表现。</p>
+<p>资源的具体表现形式，是在http请求头中使用Accept和Content-Type来指定的。</p>
+<p>4.状态转换</p>
+<p>操作一个资源表现层转换，只能是HTTP协议。</p>
+<p>具体，在HTTP协议里面，有四个表示操作方式的动词：GET,POST,PUT,DELETE，分别用来获取，新建，更新，删除资源。</p>
+<p>5.RESTful设计指南</p>
+<p>（1）总是使用HTTPs协议</p>
+<p>（2）域名</p>
+<p><a href="https://api.example.com" target="_blank" rel="external">https://api.example.com</a></p>
+<p>（3）版本</p>
+<p><a href="https://api.example.com/v1/" target="_blank" rel="external">https://api.example.com/v1/</a></p>
+<p>（4）路径</p>
+<p>在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表名对应，名词应该使用复数。</p>
+<p><a href="https://api.example.com/v1/zoos" target="_blank" rel="external">https://api.example.com/v1/zoos</a></p>
+<p><a href="https://api.example.com/v1/animals" target="_blank" rel="external">https://api.example.com/v1/animals</a></p>
+<p>（5）HTTP动词</p>
+<p>常用的HTTP动词有下面五个（括号里是对应的SQL命令）。</p>
+<p>GET（SELECT）：从服务器取出资源（一项或多项）。</p>
+<p>POST（CREATE）：在服务器新建一个资源。</p>
+<p>PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</p>
+<p>PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</p>
+<p>DELETE（DELETE）：从服务器删除资源。</p>
+<p>示例如下：</p>
+<p>GET /zoos：列出所有动物园</p>
+<p>POST /zoos：新建一个动物园</p>
+<p>GET /zoos/ID：获取某个指定动物园的信息</p>
+<p>PUT /zoos/ID：更新某个指定动物园的信息（提供该动物园的全部信息）</p>
+<p>PATCH /zoos/ID：更新某个指定动物园的信息（提供该动物园的部分信息）</p>
+<p>DELETE /zoos/ID：删除某个动物园</p>
+<p>GET /zoos/ID/animals：列出某个指定动物园的所有动物</p>
+<p>DELETE /zoos/ID/animals/ID：删除某个指定动物园的指定动物</p>
+<p>（6）过滤信息</p>
+<p>下面是一些常见的参数</p>
+<p>?limit=10：指定返回记录的数量</p>
+<p>?offset=10：指定返回记录的开始位置。</p>
+<p>?page=2&amp;per_page=100：指定第几页，以及每页的记录数。</p>
+<p>?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。</p>
+<p>?animal_type_id=1：指定筛选条件</p>
+<p>（7）状态码</p>
+<p>服务器向用户返回的状态码和提示信息，常见的有以下一些（方括号中是该状态码对应的HTTP动词）</p>
+<p>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。</p>
+<p>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</p>
+<p>202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）</p>
+<p>204 NO CONTENT - [DELETE]：用户删除数据成功。</p>
+<p>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</p>
+<p>401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。</p>
+<p>403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。</p>
+<p>404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</p>
+<p>406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。</p>
+<p>410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</p>
+<p>422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</p>
+<p>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。</p>
+<p>（8）错误处理</p>
+<p>如果状态码是4xx，就应该向用户返回出错信息。一般来说，返回的信息中将error作为键名，出错信息作为键值即可</p>
+<p>{</p>
+<p>error: “Invalid API key”</p>
+<p>}</p>
+<p>（9）返回结果</p>
+<p>GET /collection：返回资源对象的列表（数组）</p>
+<p>GET /collection/resource：返回单个资源对象</p>
+<p>POST /collection：返回新生成的资源对象</p>
+<p>PUT /collection/resource：返回完整的资源对象</p>
+<p>PATCH /collection/resource：返回完整的资源对象</p>
+<p>DELETE /collection/resource：返回一个空文档</p>
+<p>（10）提供Hypermedia</p>
+<p>返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。</p>
+<p>（11）其他</p>
+<p>API使用OAuth2.0框架</p>
+<p>服务器返回的数据格式，应该尽量使用JSON，避免使用XML。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/09/08/RESTful架构/" data-title="RESTful架构" data-url="https://shijingjing07.github.io/2016/09/08/RESTful架构/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

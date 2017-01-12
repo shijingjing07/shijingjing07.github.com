@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>每天一个linux命令(12)：more命令 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="more命令，功能类似 cat ，cat命令是整个文件的内容从上到下显示在屏幕上。more会以一页一页的显示方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b键就会往回（back）一页显示，而且还有搜寻字串的功能 。more命令从前向后读取文件，因此在启动时就加载整个文件。
+1．命令格式：
+more [-dlfpcsu ] [-num ] [+/ pattern]">
+  
+  <meta name="description" content="more命令，功能类似 cat ，cat命令是整个文件的内容从上到下显示在屏幕上。more会以一页一页的显示方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b键就会往回（back）一页显示，而且还有搜寻字串的功能 。more命令从前向后读取文件，因此在启动时就加载整个文件。
+1．命令格式：
+more [-dlfpcsu ] [-num ] [+/ pattern]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天一个linux命令(12)：more命令">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/25/每天一个linux命令(12)：more命令/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="more命令，功能类似 cat ，cat命令是整个文件的内容从上到下显示在屏幕上。more会以一页一页的显示方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b键就会往回（back）一页显示，而且还有搜寻字串的功能 。more命令从前向后读取文件，因此在启动时就加载整个文件。
+1．命令格式：
+more [-dlfpcsu ] [-num ] [+/ pattern]">
+<meta property="og:updated_time" content="2017-01-12T01:35:40.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每天一个linux命令(12)：more命令">
+<meta name="twitter:description" content="more命令，功能类似 cat ，cat命令是整个文件的内容从上到下显示在屏幕上。more会以一页一页的显示方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b键就会往回（back）一页显示，而且还有搜寻字串的功能 。more命令从前向后读取文件，因此在启动时就加载整个文件。
+1．命令格式：
+more [-dlfpcsu ] [-num ] [+/ pattern]">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/25/每天一个linux命令(12)：more命令/">
+  <time datetime="2016-05-25T00:40:00.000Z">
+    2016-05-25
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">每天一个linux命令(12)：more命令</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>more命令，功能类似 cat ，cat命令是整个文件的内容从上到下显示在屏幕上。<br>more会以一页一页的显示方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b<br>键就会往回（back）一页显示，而且还有搜寻字串的功能 。more命令从前向后读取文件，因此在启动时就加载整个文件。</p>
+<p><strong>1．命令格式：</strong></p>
+<p>more [-dlfpcsu ] [-num ] [+/ pattern] [+ linenum] [file … ]</p>
+<p><strong>2．命令功能：</strong></p>
+<p>more命令和cat的功能一样都是查看文件里的内容，但有所不同的是more可以按页来查看文件的内容，还支持直接跳转行等功能。</p>
+<p><strong>3．命令参数：</strong></p>
+<p>+n      从笫n行开始显示</p>
+<p>-n       定义屏幕大小为n行</p>
+<p>+/pattern 在每个档案显示前搜寻该字串（pattern），然后从该字串前两行之后开始显示  </p>
+<p>-c       从顶部清屏，然后显示</p>
+<p>-d       提示”Press space to continue，’q’ to quit（按空格键继续，按q键退出）”，禁用响铃功能</p>
+<p>-l        忽略Ctrl+l（换页）字符</p>
+<p>-p       通过清除窗口而不是滚屏来对文件进行换页，与-c选项相似</p>
+<p>-s       把连续的多个空行显示为一行</p>
+<p>-u       把文件内容中的下画线去掉</p>
+<p><strong>4．常用操作命令：</strong></p>
+<p>Enter    向下n行，需要定义。默认为1行</p>
+<p>Ctrl+F   向下滚动一屏</p>
+<p>空格键  向下滚动一屏</p>
+<p>Ctrl+B  返回上一屏</p>
+<p>=       输出当前行的行号</p>
+<p>：f     输出文件名和当前行的行号</p>
+<p>V      调用vi编辑器</p>
+<p>!命令   调用Shell，并执行命令</p>
+<p>q       退出more</p>
+<p><strong>5．命令实例：</strong></p>
+<p>实例1：显示文件中从第3行起的内容</p>
+<p>命令：</p>
+<p>more +3 log2012.log</p>
+<p>输出：</p>
+<p>[root@localhost test]# cat log2012.log</p>
+<p>2012-01</p>
+<p>2012-02</p>
+<p>2012-03</p>
+<p>2012-04-day1</p>
+<p>2012-04-day2</p>
+<p>2012-04-day3</p>
+<p>======[root@localhost test]# more +3 log2012.log</p>
+<p>2012-03</p>
+<p>2012-04-day1</p>
+<p>2012-04-day2</p>
+<p>2012-04-day3</p>
+<p>======[root@localhost test]#</p>
+<p>实例2：从文件中查找第一个出现”day3”字符串的行，并从该处前两行开始显示输出</p>
+<p>命令：</p>
+<p> more +/day3 log2012.log</p>
+<p>输出：</p>
+<p>[root@localhost test]# more +/day3 log2012.log</p>
+<p>…skipping</p>
+<p>2012-04-day1</p>
+<p>2012-04-day2</p>
+<p>2012-04-day3</p>
+<p>2012-05</p>
+<p>2012-05-day1</p>
+<p>======[root@localhost test]#</p>
+<p>实例3：设定每屏显示行数</p>
+<p>命令：</p>
+<p>more -5 log2012.log</p>
+<p>输出：</p>
+<p>[root@localhost test]# more -5 log2012.log</p>
+<p>2012-01</p>
+<p>2012-02</p>
+<p>2012-03</p>
+<p>2012-04-day1</p>
+<p>2012-04-day2</p>
+<p>说明：</p>
+<p>当前屏展示的内容占文件总行数的比例，按 Ctrl+F 或者 空格键 将会显示下一屏5条内容，百分比也会跟着变化。</p>
+<p>实例4：列一个目录下的文件，由于内容太多，我们应该学会用more来分页显示。这得和管道 | 结合起来</p>
+<p>命令：</p>
+<p>ls -l  | more -5</p>
+<p>输出：</p>
+<p>[root@localhost test]#  ls -l  | more -5</p>
+<p>总计 36</p>
+<p>-rw-r–r– 1 root root  308 11-01 16:49 log2012.log</p>
+<p>-rw-r–r– 1 root root   33 10-28 16:54 log2013.log</p>
+<p>-rw-r–r– 1 root root  127 10-28 16:51 log2014.log</p>
+<p>lrwxrwxrwx 1 root root    7 10-28 15:18 log_link.log -&gt; log.log</p>
+<p>-rw-r–r– 1 root root   25 10-28 17:02 log.log</p>
+<p>-rw-r–r– 1 root root   37 10-28 17:07 log.txt</p>
+<p>drwxr-xr-x 6 root root 4096 10-27 01:58 scf</p>
+<p>drwxrwxrwx 2 root root 4096 10-28 14:47 test3</p>
+<p>drwxrwxrwx 2 root root 4096 10-28 14:47 test4</p>
+<p>说明：</p>
+<p>每页显示5个文件信息，按 Ctrl+F 或者 空格键 将会显示下5条文件信息。</p>
+<p>转自：<a href="http://www.cnblogs.com/peida/archive/2012/11/02/2750588.html" target="_blank" rel="external">http://www.cnblogs.com/peida/archive/2012/11/02/2750588.html</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/25/每天一个linux命令(12)：more命令/" data-title="每天一个linux命令(12)：more命令" data-url="https://shijingjing07.github.io/2016/05/25/每天一个linux命令(12)：more命令/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

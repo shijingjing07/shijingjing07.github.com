@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python--类方法、对象方法、静态方法 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1、我们已经讨论了类/对象可以拥有像函数一样的方法，这些对象方法与函数的区别只是一个额外的self变量
+# -*- coding:utf-8 -*-
+#!/usr/bin/python
+# Filename: method.py
+
+class Person:
+    grade=1
+    def __init__(self,name):
+        self.name = name">
+  
+  <meta name="description" content="1、我们已经讨论了类/对象可以拥有像函数一样的方法，这些对象方法与函数的区别只是一个额外的self变量
+# -*- coding:utf-8 -*-
+#!/usr/bin/python
+# Filename: method.py
+
+class Person:
+    grade=1
+    def __init__(self,name):
+        self.name = name">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python--类方法、对象方法、静态方法">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/03/25/python--类方法、对象方法、静态方法/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1、我们已经讨论了类/对象可以拥有像函数一样的方法，这些对象方法与函数的区别只是一个额外的self变量
+# -*- coding:utf-8 -*-
+#!/usr/bin/python
+# Filename: method.py
+
+class Person:
+    grade=1
+    def __init__(self,name):
+        self.name = name">
+<meta property="og:updated_time" content="2017-01-12T01:35:48.043Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python--类方法、对象方法、静态方法">
+<meta name="twitter:description" content="1、我们已经讨论了类/对象可以拥有像函数一样的方法，这些对象方法与函数的区别只是一个额外的self变量
+# -*- coding:utf-8 -*-
+#!/usr/bin/python
+# Filename: method.py
+
+class Person:
+    grade=1
+    def __init__(self,name):
+        self.name = name">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/03/25/python--类方法、对象方法、静态方法/">
+  <time datetime="2016-03-25T05:08:00.000Z">
+    2016-03-25
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python--类方法、对象方法、静态方法</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p> 1、我们已经讨论了类/对象可以拥有像函数一样的方法，这些对象方法与函数的区别只是一个额外的self变量</p>
+<pre><code># -*- coding:utf-8 -*-
+#!/usr/bin/python
+# Filename: method.py
+
+class Person:
+    grade=1
+    def __init__(self,name):
+        self.name = name
+    def sayHi(self):#加self区别于普通函数
+        print &apos;Hello, your name is?&apos;,self.name
+
+    @staticmethod #声明静态，去掉则编译报错;还有静态方法不能访问类变量和实例变量
+    def sayName():#使用了静态方法，则不能再使用self
+        print &quot;my name is king&quot;#,grade,#self.name
+
+    @classmethod #类方法
+    def classMethod(cls):
+        print(&quot;class method&quot;)
+
+p = Person(&quot;king&quot;)
+p.sayHi()
+p.sayName()
+p.classMethod()
+Person.classMethod()
+
+输出：
+Hello, your name is? king
+my name is king
+class method
+class method
+</code></pre><p>2、静态方法<br>要在类中使用静态方法，需在类成员函数前面加上@staticmethod标记符，以表示下面的成员函数是静态函数。使用静态方法的好处是，不需要定义实例即可使用这个方法。另外，多个实例共享此静态方法。  </p>
+<p>3、 类方法<br>类方法与普通的成员函数和静态函数有不同之处，在接触的语言中好像也没见过这种语义，看它的定义：<br>一个类方法就可以通过类或它的实例来调用的方法, 不管你是用类来调用这个方法还是类实例调用这个方法,该方法的第一个参数总是定义该方法的类对象。<br>记住:方法的第一个参数都是类对象而不是实例对象.<br>按照惯例,类方法的第一个形参被命名为<br>cls.任何时候定义类方法都不是必须的（类方法能实现的功能都可以通过定义一个普通函数来实现,只要这个函数接受一个类对象做为参数就可以了）.  </p>
+<p>python中实现静态方法和类方法都是依赖于python的修饰器来实现的。 对象方法有self参数，类方法有cls参数，静态方法是不需要这些附加参数的。</p>
+<p>转自：<a href="http://blog.chinaunix.net/uid-26602509-id-3087296.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-26602509-id-3087296.html</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/03/25/python--类方法、对象方法、静态方法/" data-title="python--类方法、对象方法、静态方法" data-url="https://shijingjing07.github.io/2016/03/25/python--类方法、对象方法、静态方法/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

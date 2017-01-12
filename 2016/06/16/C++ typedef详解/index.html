@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++ typedef详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.typedef的用途1)定义一种类型的别名注意typedef并不是简单的宏替换，如下例所示：
+int main()
+{
+    char *pa,pb;//声明了一个指向字符变量的指针pa，和一个字符变量pb
+    pa = &amp;quot;hello&amp;quot;;
+    pb = &amp;quot;hello&amp;quot;;//报错,不能将const char*类型的值赋给char类型的实体">
+  
+  <meta name="description" content="1.typedef的用途1)定义一种类型的别名注意typedef并不是简单的宏替换，如下例所示：
+int main()
+{
+    char *pa,pb;//声明了一个指向字符变量的指针pa，和一个字符变量pb
+    pa = &amp;quot;hello&amp;quot;;
+    pb = &amp;quot;hello&amp;quot;;//报错,不能将const char*类型的值赋给char类型的实体">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ typedef详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/16/C++ typedef详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.typedef的用途1)定义一种类型的别名注意typedef并不是简单的宏替换，如下例所示：
+int main()
+{
+    char *pa,pb;//声明了一个指向字符变量的指针pa，和一个字符变量pb
+    pa = &amp;quot;hello&amp;quot;;
+    pb = &amp;quot;hello&amp;quot;;//报错,不能将const char*类型的值赋给char类型的实体">
+<meta property="og:updated_time" content="2017-01-12T01:35:35.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ typedef详解">
+<meta name="twitter:description" content="1.typedef的用途1)定义一种类型的别名注意typedef并不是简单的宏替换，如下例所示：
+int main()
+{
+    char *pa,pb;//声明了一个指向字符变量的指针pa，和一个字符变量pb
+    pa = &amp;quot;hello&amp;quot;;
+    pb = &amp;quot;hello&amp;quot;;//报错,不能将const char*类型的值赋给char类型的实体">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/16/C++ typedef详解/">
+  <time datetime="2016-06-16T02:30:00.000Z">
+    2016-06-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++ typedef详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.typedef的用途</strong><br>1)定义一种类型的别名<br>注意typedef并不是简单的宏替换，如下例所示：</p>
+<pre><code>int main()
+{
+    char *pa,pb;//声明了一个指向字符变量的指针pa，和一个字符变量pb
+    pa = &quot;hello&quot;;
+    pb = &quot;hello&quot;;//报错,不能将const char*类型的值赋给char类型的实体
+    pb = &apos;h&apos;;//正常
+    return 0;
+}
+</code></pre><p>再看以下示例：</p>
+<pre><code>int main()
+{
+    typedef char* PCHAR;
+    PCHAR pa,pb;
+    pa = &quot;hello&quot;;
+    pb = &quot;hello&quot;;//正常
+    pb = &apos;h&apos;;//报错，不能将char类型的值赋给PCHAR类型实体
+    return 0;
+}
+</code></pre><p>可以看出，typedef char<em> PCHAR;之后，PCHAR是char</em>类型的别名，<br>PCHAR pa,pb;将pa,pb都定义成char*类型。</p>
+<p>2)定义struct结构体别名<br>我们知道，当声明一个结构体对象时，必须要带上struct，<br>格式为：struct 结构体名 对象名;<br>如下例所示：</p>
+<pre><code>struct tagPOINT1
+{
+    int x;
+    int y;
+};
+struct tagPOINT1 p1;
+</code></pre><p>当我们用typedef定义struct的别名后，可以直接用别名 对象名来声明一个对象。<br>如下例所示：</p>
+<pre><code>typedef struct tagPOINT1
+{
+    int x;
+    int y;
+}POINT;
+POINT p1;
+</code></pre><p>3)用typedef来定义与平台无关的类型。<br>比如，某一平台支持int类型，而不支持long类型。<br>则可以使用typedef定义一个支持类型的别名，程序中使用该别名声明变量。<br>这样，我们使用极小的修改，typedef int REAL;就可以实现类型的平台无关性。</p>
+<p>标准库中广泛使用了这个技巧。</p>
+<p>4)为复杂的声明定义一个简单的别名<br>如：typedef int (*A) (char, char);<br>A是我们定义的别名，表示的是一个指向函数的指针，<br>该函数有两个char类型的参数，返回一个int类型的值。<br>则A类型的对象可以指向任何符合上述规则的函数。<br>如下例所示：</p>
+<pre><code>#include&lt;iostream&gt;
+using namespace std;
+typedef int (*A)(char,char);
+int fun0(char a,char b);
+int fun1(char a,char b);
+int main()
+{
+    A a;
+    a = fun0;
+    a(&apos;a&apos;,&apos;b&apos;);
+    a = fun1;
+    a(&apos;a&apos;,&apos;b&apos;);
+    return 0;
+}
+int fun0(char a,char b)
+{
+    cout&lt;&lt;&quot;fun0&quot;&lt;&lt;endl;
+    return 0;
+}
+int fun1(char a,char b)
+{
+    cout&lt;&lt;&quot;fun1&quot;&lt;&lt;endl;
+    return 0;
+}
+</code></pre><p>输出结果：<br>fun0<br>fun1</p>
+<p><strong>2.typedef和#define的区别</strong><br>由前面的讲解，我们知道typedef和#define有本质的区别。<br>typedef是一种类型别名，而#define只是宏定义。二者并不总是可以互换的。<br>如下例所示：</p>
+<pre><code>typedef char *pStr1;
+#define pStr2 char *;
+pStr1 s1, s2;
+pStr2 s3, s4;
+</code></pre><p>其中s1, s2, s3是char*类型，而s4是char类型。</p>
+<p><strong>3.typedef需要注意的事项。</strong><br>我们看一下下面的示例：</p>
+<pre><code>typedef char* pStr;
+const char* p1 = &quot;hello&quot;;
+const pStr p2 = &quot;hello&quot;;
+p1++;//正常
+p2++;//报错
+</code></pre><p>p1和p2都是常量指针，意思是指针指向的内容不能修改，而指针是可以修改的。<br>那为什么p1++正常，而p2++报错呢。<br>对于p1++,我们不用再解释了，因为常量指针是可变的。<br>而p2是我们定义的别名，而不是系统固有类型，编译器在编译时，会认为p2是常量，不可修改，<br>所以p2++会报错。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/16/C++ typedef详解/" data-title="C++ typedef详解" data-url="https://shijingjing07.github.io/2016/06/16/C++ typedef详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

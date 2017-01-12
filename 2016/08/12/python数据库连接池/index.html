@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>python数据库连接池 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="python数据库连接池
+
+
+import psycopg2
+import psycopg2.pool
+dbpool=psycopg2.pool.PersistentConnectionPool(1,1,dbname=&amp;apos;postgis&amp;apos;,user=&amp;apos;postgres&amp;apos;,host=&amp;apos;127.0.0.1&amp;apos;,password=&amp;apos;1&amp;a">
+  
+  <meta name="description" content="python数据库连接池
+
+
+import psycopg2
+import psycopg2.pool
+dbpool=psycopg2.pool.PersistentConnectionPool(1,1,dbname=&amp;apos;postgis&amp;apos;,user=&amp;apos;postgres&amp;apos;,host=&amp;apos;127.0.0.1&amp;apos;,password=&amp;apos;1&amp;a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python数据库连接池">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/08/12/python数据库连接池/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="python数据库连接池
+
+
+import psycopg2
+import psycopg2.pool
+dbpool=psycopg2.pool.PersistentConnectionPool(1,1,dbname=&amp;apos;postgis&amp;apos;,user=&amp;apos;postgres&amp;apos;,host=&amp;apos;127.0.0.1&amp;apos;,password=&amp;apos;1&amp;a">
+<meta property="og:updated_time" content="2017-01-12T01:35:22.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python数据库连接池">
+<meta name="twitter:description" content="python数据库连接池
+
+
+import psycopg2
+import psycopg2.pool
+dbpool=psycopg2.pool.PersistentConnectionPool(1,1,dbname=&amp;apos;postgis&amp;apos;,user=&amp;apos;postgres&amp;apos;,host=&amp;apos;127.0.0.1&amp;apos;,password=&amp;apos;1&amp;a">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/08/12/python数据库连接池/">
+  <time datetime="2016-08-11T22:57:00.000Z">
+    2016-08-12
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">python数据库连接池</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <pre><code>python数据库连接池
+
+
+import psycopg2
+import psycopg2.pool
+dbpool=psycopg2.pool.PersistentConnectionPool(1,1,dbname=&apos;postgis&apos;,user=&apos;postgres&apos;,host=&apos;127.0.0.1&apos;,password=&apos;1&apos;,port=&apos;5432&apos;)
+conn=dbpool.getconn()
+cursor=conn.cursor()
+sqlstr=&quot;select name,type,state from wy&quot;
+cursor.execute(sqlstr)
+rows=cursor.fetchall()
+for row in rows:
+   print &quot;name&quot;,row[0]
+   print &quot;type&quot;,row[1]
+   print &quot;state&quot;,row[2]
+   print &quot;***&quot;
+dbpool.putconn(conn)
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/08/12/python数据库连接池/" data-title="python数据库连接池" data-url="https://shijingjing07.github.io/2016/08/12/python数据库连接池/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

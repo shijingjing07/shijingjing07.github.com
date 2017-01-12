@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Linux文件操作 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="Linux中一切都是文件。如普通文件，目录，设备，管道等。操作这些文件有两种方式，调用系统函数和使用标准I/O库。
+一、调用系统函数1.文件描述符：数值类型，表示打开的文件标识程序运行时，会首先打开3个文件描述符，0(标准输入文件),1(标准输出文件),2(标准错误文件)
+2.系统调用常用函数1)open函数：打开文件原型为：
+int open(const char *path,int oflag">
+  
+  <meta name="description" content="Linux中一切都是文件。如普通文件，目录，设备，管道等。操作这些文件有两种方式，调用系统函数和使用标准I/O库。
+一、调用系统函数1.文件描述符：数值类型，表示打开的文件标识程序运行时，会首先打开3个文件描述符，0(标准输入文件),1(标准输出文件),2(标准错误文件)
+2.系统调用常用函数1)open函数：打开文件原型为：
+int open(const char *path,int oflag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux文件操作">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/07/01/Linux文件操作/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="Linux中一切都是文件。如普通文件，目录，设备，管道等。操作这些文件有两种方式，调用系统函数和使用标准I/O库。
+一、调用系统函数1.文件描述符：数值类型，表示打开的文件标识程序运行时，会首先打开3个文件描述符，0(标准输入文件),1(标准输出文件),2(标准错误文件)
+2.系统调用常用函数1)open函数：打开文件原型为：
+int open(const char *path,int oflag">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702005858156-1718842993.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010045749-2057295766.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010118046-665220137.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010202156-1711515887.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:31.390Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux文件操作">
+<meta name="twitter:description" content="Linux中一切都是文件。如普通文件，目录，设备，管道等。操作这些文件有两种方式，调用系统函数和使用标准I/O库。
+一、调用系统函数1.文件描述符：数值类型，表示打开的文件标识程序运行时，会首先打开3个文件描述符，0(标准输入文件),1(标准输出文件),2(标准错误文件)
+2.系统调用常用函数1)open函数：打开文件原型为：
+int open(const char *path,int oflag">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702005858156-1718842993.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/01/Linux文件操作/">
+  <time datetime="2016-07-01T09:03:00.000Z">
+    2016-07-01
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Linux文件操作</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>Linux中一切都是文件。如普通文件，目录，设备，管道等。<br>操作这些文件有两种方式，调用系统函数和使用标准I/O库。</p>
+<p><strong>一、调用系统函数</strong><br>1.文件描述符：数值类型，表示打开的文件标识<br>程序运行时，会首先打开3个文件描述符，0(标准输入文件),1(标准输出文件),2(标准错误文件)</p>
+<p>2.系统调用常用函数<br>1)open函数：打开文件<br>原型为：</p>
+<pre><code>int open(const char *path,int oflags)
+int open(const char *path,int oflags,mode_t mode)
+</code></pre><p>path:完整的文件路径<br>oflags:文件访问模式(只读，只写，可读写)<br>mode:设定文件访问权限</p>
+<p>返回值：返回与文件关联的文件描述符，失败返回-1<br>注意这个描述符是唯一的，不与其他进程共享，文件对应的文件描述符并不是固定的。</p>
+<p>2)write函数：写入文件<br>原型为：</p>
+<pre><code>size_t write(int fildes,const void *buf,size_t nbytes);
+</code></pre><p>将buf缓冲区的前nbyts个字节，写入文件描述符files关联的文件中。<br>返回值：实际写入的字节数，失败返回-1</p>
+<p>3)read函数：读取文件<br>原型为：</p>
+<pre><code>size_t read(int fildes,void *buf,szie_t nbytes);
+</code></pre><p>读取文件描述符fildes关联的文件中前nbytes个字节，到buf缓冲区<br>返回值：实际读取的字节数，失败返回-1</p>
+<p>4)close函数:关闭文件<br>原型为：</p>
+<pre><code>int close(int fildes);
+</code></pre><p>返回值：成功返回0,失败返回-1</p>
+<p><strong>3.调用系统函数示例</strong><br>从一个文件中复制数据到另一个文件，代码如下：<br>copy.c</p>
+<pre><code>#include&lt;fcntl.h&gt;
+#include&lt;stdlib.h&gt;
+int main()
+{
+    char c=&apos;\0&apos;;
+    int in=-1,out=-1;
+    in=open(&quot;myfile.txt&quot;,O_RDONLY);
+    //以只写方式创建文件，若文件不存在则新建一个文件
+    //文件所有者具有读和写权限
+    out=open(&quot;myfile2.txt&quot;,O_WRONLY|O_CREAT,S_IRUSR|S_IWUSR);
+    while(read(in,&amp;c,1)==1)
+        write(out,&amp;c,1);
+    close(in);
+    close(out);
+    return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702005858156-1718842993.png" alt=""></p>
+<p><strong>4.标准I/O库</strong><br>在标准I/O中，使用的是文件流，对应着底层的文件描述符。<br>文件流是一个指向FILE结构的指针。</p>
+<p>I/O库的函数包含在头文件stdio.h中。</p>
+<p>1)fopen函数：打开文件<br>原型为：</p>
+<pre><code>FILE* fopen(const char *filename,const char *mode);
+</code></pre><p>与底层open函数类似<br>返回值：成功返回非空指针，失败返回NULL</p>
+<p>2)fread函数：读取文件<br>原型为：</p>
+<pre><code>size_t fread(void *ptr,size_t size,size_t nitems,FILE *stream);
+</code></pre><p>与底层read函数类似<br>从stream读取nitems个长度为size的数据到ptr指向的缓冲区<br>返回值：成功读取的字节数，失败返回-1</p>
+<p>3)fwrite函数：写入文件<br>原型为：</p>
+<pre><code>size_t fwrite(const void *ptr,size_t size,size_t nitems,FILE *stream);
+</code></pre><p>与底层write函数类似<br>从ptr指向的缓存区读取nitems个长度为size的数据，并把它们写到stream对应的文件中。<br>返回值：成功写入的字节数，失败返回-1</p>
+<p>4)fclose函数：关闭文件<br>原型为:</p>
+<pre><code>int fclose(FILE *stream);
+</code></pre><p>返回值：成功返回0,失败返回-1</p>
+<p><strong>5.标准I/O使用示例</strong><br>与前例一样，从一个文件中复制数据到另一个文件，只是使用I/O库函数来实现，<br>代码如下：</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+int main()
+{
+    int c=0;
+    FILE *pfin = NULL;
+    FILE *pfout = NULL;
+    pfin = fopen(&quot;myfile.txt&quot;,&quot;r&quot;);
+    pfout = fopen(&quot;myfile2.txt&quot;,&quot;w&quot;);
+    while(fread(&amp;c,sizeof(char),1,pfin))
+        fwrite(&amp;c,sizeof(char),1,pfout);
+    fclose(pfin);
+    fclose(pfout);
+    return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010045749-2057295766.png" alt=""></p>
+<p>程序中的读和写数据可以用库中的其他函数来代替，如fget,fputc等。</p>
+<p><strong>6.文件描述符和文件流</strong><br>一般不要混合使用底层输入输出与高层文件流操作。<br>调用fileno函数，可以获得文件流使用的底层文件描述符<br>原型为：int fileno(FILE <em>stream);<br>调用fdopen函数，可以在一个已经打开的文件描述符上创建一个新的文件流<br>原型为：FILE</em> fdopen(int fildes,const char* mode);</p>
+<p>Linux下编程时，一般使用系统调用，而不使用I/O库。<br>有些操作必须使用系统调用，如创建文件读写锁等。</p>
+<p><strong>7.系统调用性能优化</strong><br>我们使用time命令测试系统调用和I/O库两种方法的运行时间，<br>结果如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010118046-665220137.png" alt=""></p>
+<p>可以看出，系统调用的效率要明显低于I/O库，这是为什么呢？<br>因为系统调用时，Linux必须从运行用户代码切换到内核代码，然后再返回用户代码。<br>而I/O库函数会自动在数据满足数据块长度时，才调用底层系统函数。</p>
+<p>系统调用代码优化如下，每次一次性读取和写入N个字节，减少系统调用次数。</p>
+<p>copyopt.c</p>
+<pre><code>#include&lt;fcntl.h&gt;
+#include&lt;stdlib.h&gt;
+int main()
+{
+    char buffer[1024];
+    int in=-1,out=-1;
+    int nread=0;
+    in=open(&quot;myfile.txt&quot;,O_RDONLY);
+    //以只写方式创建文件，若文件不存在则新建一个文件
+    //文件所有者具有读和写权限
+    out=open(&quot;myfile2.txt&quot;,O_WRONLY|O_CREAT,S_IRUSR|S_IWUSR);
+    while(nread=read(in,buffer,sizeof(buffer))&gt;0)
+        write(out,buffer,nread);
+    close(in);
+    close(out);
+    return 0;
+}
+</code></pre><p>使用time测试输出如下：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010202156-1711515887.png" alt=""></p>
+<p>可以看出，性能得到了提高，甚至超过了使用I/O的性能。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/07/01/Linux文件操作/" data-title="Linux文件操作" data-url="https://shijingjing07.github.io/2016/07/01/Linux文件操作/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

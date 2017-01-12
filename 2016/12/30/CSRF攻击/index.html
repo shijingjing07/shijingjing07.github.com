@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>CSRF攻击 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.什么是CSRF攻击CSRF(Cross-site request forgery)，跨站请求伪造。CSRF攻击的原理如下：1)用户登录正常的网站A后，在本地生成Cookie2)在不登出A的情况下，访问了危险网站B3)网站B中含有网站A的链接，点击网站A的链接，会调用本地cookie验证，自动登录网站A。
+CSRF攻击源于WEB的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于">
+  
+  <meta name="description" content="1.什么是CSRF攻击CSRF(Cross-site request forgery)，跨站请求伪造。CSRF攻击的原理如下：1)用户登录正常的网站A后，在本地生成Cookie2)在不登出A的情况下，访问了危险网站B3)网站B中含有网站A的链接，点击网站A的链接，会调用本地cookie验证，自动登录网站A。
+CSRF攻击源于WEB的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSRF攻击">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/12/30/CSRF攻击/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.什么是CSRF攻击CSRF(Cross-site request forgery)，跨站请求伪造。CSRF攻击的原理如下：1)用户登录正常的网站A后，在本地生成Cookie2)在不登出A的情况下，访问了危险网站B3)网站B中含有网站A的链接，点击网站A的链接，会调用本地cookie验证，自动登录网站A。
+CSRF攻击源于WEB的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161230105937070-1267632684.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:13.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSRF攻击">
+<meta name="twitter:description" content="1.什么是CSRF攻击CSRF(Cross-site request forgery)，跨站请求伪造。CSRF攻击的原理如下：1)用户登录正常的网站A后，在本地生成Cookie2)在不登出A的情况下，访问了危险网站B3)网站B中含有网站A的链接，点击网站A的链接，会调用本地cookie验证，自动登录网站A。
+CSRF攻击源于WEB的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161230105937070-1267632684.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/12/30/CSRF攻击/">
+  <time datetime="2016-12-29T19:00:00.000Z">
+    2016-12-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">CSRF攻击</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>1.什么是CSRF攻击<br>CSRF(Cross-site request forgery)，跨站请求伪造。<br>CSRF攻击的原理如下：<br>1)用户登录正常的网站A后，在本地生成Cookie<br>2)在不登出A的情况下，访问了危险网站B<br>3)网站B中含有网站A的链接，点击网站A的链接，会调用本地cookie验证，自动登录网站A。</p>
+<p>CSRF攻击源于WEB的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于某个用户的浏览器，但却无法保证该请求是用户批准发送的。</p>
+<p>2.原理图如下：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161230105937070-1267632684.png" alt=""></p>
+<p>3.CSRF的防御<br>1)Cookie Hashing(所有表单都包含同一个伪随机值)：<br>CSRF的问题在于网站验证cookie存在的情况下，黑客可以直接登录网站。<br>我们可以在访问网站时，生成一个伪随机数，访问网站每个页面时带上这个伪随机数，服务端验证cookie和伪随机数是否一致。<br>这样可以确保网站A的链接不是由第三方网站直接跳转过来的，因为第三方网站是无法获得网站的cookie伪随机数的。</p>
+<p>2)验证码<br>登录网站时设置验证码，是很常用的方式，可以完全解决CSRF的问题。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/12/30/CSRF攻击/" data-title="CSRF攻击" data-url="https://shijingjing07.github.io/2016/12/30/CSRF攻击/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

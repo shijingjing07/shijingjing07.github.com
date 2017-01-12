@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++ Dll 编写入门 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="一、前言  
+　　自从微软推出16位的Windows操作系统起，此后每种版本的Windows操作系统都非常依赖于动态链接库(DLL)中的函数和数据，实际上Windows操作系统中几乎所有的内容都由DLL以一种或另外一种形式代表着，例如显示的字体和图标存储在GDIDLL中、显示Windows桌面和处理用户的输入所需要的代码被存储在一个User DLL中、Windows编程所需要的大量的API函数也被">
+  
+  <meta name="description" content="一、前言  
+　　自从微软推出16位的Windows操作系统起，此后每种版本的Windows操作系统都非常依赖于动态链接库(DLL)中的函数和数据，实际上Windows操作系统中几乎所有的内容都由DLL以一种或另外一种形式代表着，例如显示的字体和图标存储在GDIDLL中、显示Windows桌面和处理用户的输入所需要的代码被存储在一个User DLL中、Windows编程所需要的大量的API函数也被">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ Dll 编写入门">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/26/C++ Dll 编写入门/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="一、前言  
+　　自从微软推出16位的Windows操作系统起，此后每种版本的Windows操作系统都非常依赖于动态链接库(DLL)中的函数和数据，实际上Windows操作系统中几乎所有的内容都由DLL以一种或另外一种形式代表着，例如显示的字体和图标存储在GDIDLL中、显示Windows桌面和处理用户的输入所需要的代码被存储在一个User DLL中、Windows编程所需要的大量的API函数也被">
+<meta property="og:updated_time" content="2017-01-12T01:35:44.040Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ Dll 编写入门">
+<meta name="twitter:description" content="一、前言  
+　　自从微软推出16位的Windows操作系统起，此后每种版本的Windows操作系统都非常依赖于动态链接库(DLL)中的函数和数据，实际上Windows操作系统中几乎所有的内容都由DLL以一种或另外一种形式代表着，例如显示的字体和图标存储在GDIDLL中、显示Windows桌面和处理用户的输入所需要的代码被存储在一个User DLL中、Windows编程所需要的大量的API函数也被">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/26/C++ Dll 编写入门/">
+  <time datetime="2016-04-26T01:36:00.000Z">
+    2016-04-26
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++ Dll 编写入门</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>一、前言  </p>
+<p>　　自从微软推出16位的Windows操作系统起，此后每种版本的Windows操作系统都非常依赖于动态链接库(DLL)中的函数和数据，实际上<br>Windows操作系统中几乎所有的内容都由DLL以一种或另外一种形式代表着，例如显示的字体和图标存储在GDI<br>DLL中、显示Windows桌面和处理用户的输入所需要的代码被存储在一个User DLL中、Windows编程所需要的大量的API函数也被包含在Kernel<br>DLL中。  </p>
+<p>在Windows操作系统中使用DLL有很多优点，最主要的一点是多个应用程序、甚至是不同语言编写的应用程序可以共享一个DLL文件，真正实现了资源”共享”，大大缩小了应用程序的执行代码，更加有效的利用了内存；使用DLL的另一个优点是DLL文件作为一个单独的程序模块，封装性、独立性好，在软件需要升级的时候，开发人员只需要修改相应的DLL文件就可以了，而且，当DLL中的函数改变后，只要不是参数的改变,程序代码并不需要重新编译。这在编程时十分有用，大大提高了软件开发和维护的效率。  </p>
+<p>既然DLL那么重要，所以搞清楚什么是DLL、如何在Windows操作系统中开发使用DLL是程序开发人员不得不解决的一个问题。本文针对这些问题，通过一个简单的例子，即在一个DLL中实现比较最大、最小整数这两个简单函数，全面地解析了在Visual<br>C++编译环境下编程实现DLL的过程，文章中所用到的程序代码在Windows98系统、Visual C++6.0编译环境下通过。  </p>
+<p>　　二、DLL的概念  </p>
+<p>DLL是建立在客户/服务器通信的概念上，包含若干函数、类或资源的库文件，函数和数据被存储在一个DLL（服务器）上并由一个或多个客户导出而使用，这些客户可以是应用程序或者是其它的DLL。DLL库不同于静态库，在静态库情况下，函数和数据被编译进一个二进制文件（通常扩展名为*.LIB），<br>Visual<br>C++的编译器在处理程序代码时将从静态库中恢复这些函数和数据并把他们和应用程序中的其他模块组合在一起生成可执行文件。这个过程称为”静态链接”，此时因为应用程序所需的全部内容都是从库中复制了出来，所以静态库本身并不需要与可执行文件一起发行。  </p>
+<p>在动态库的情况下，有两个文件，一个是引入库（.LIB）文件，一个是DLL文件，引入库文件包含被DLL导出的函数的名称和位置，DLL包含实际的函数和数据，应用程序使用LIB文件链接到所需要使用的DLL文件，库中的函数和数据并不复制到可执行文件中，因此在应用程序的可执行文件中，存放的不是被调用的函数代码，而是DLL中所要调用的函数的内存地址，这样当一个或多个应用程序运行是再把程序代码和被调用的函数代码链接起来，从而节省了内存资源。从上面的说明可以看出，DLL和.LIB文件必须随应用程序一起发行，否则应用程序将会产生错误。  </p>
+<p>　　微软的Visual C++支持三种DLL，它们分别是Non-MFC Dll（非MFC动态库）、Regular Dll（常规DLL）、Extension<br>Dll（扩展DLL）。Non-MFC<br>DLL指的是不用MFC的类库结构，直接用C语言写的DLL，其导出的函数是标准的C接口，能被非MFC或MFC编写的应用程序所调用。Regular<br>DLL:和下述的Extension<br>Dlls一样，是用MFC类库编写的，它的一个明显的特点是在源文件里有一个继承CWinApp的类（注意：此类DLL虽然从CWinApp派生，但没有消息循环）,被导出的函数是C函数、C++类或者C++成员函数（注意不要把术语C++类与MFC的微软基础C++类相混淆），调用常规DLL的应用程序不必是MFC应用程序，只要是能调用类C函数的应用程序就可以，它们可以是在Visual<br>C++、Dephi、Visual Basic、Borland C等编译环境下利用DLL开发应用程序。  </p>
+<p>常规DLL又可细分成静态链接到MFC和动态链接到MFC上的，这两种常规DLL的区别将在下面介绍。与常规DLL相比，使用扩展DLL用于导出增强MFC基础类的函数或子类，用这种类型的动态链接库，可以用来输出一个从MFC所继承下来的类。  </p>
+<p>扩展DLL是使用MFC的动态链接版本所创建的，并且它只被用MFC类库所编写的应用程序所调用。例如你已经创建了一个从MFC的CtoolBar类的派生类用于创建一个新的工具栏，为了导出这个类，你必须把它放到一个MFC扩展的DLL中。扩展DLL<br>和常规DLL不一样，它没有一个从CWinApp继承而来的类的对象，所以，开发人员必须在DLL中的DllMain函数添加初始化代码和结束代码。<br>三、动态链接库的创建  </p>
+<p>　　在Visual C++6.0开发环境下，打开File\New\Project选项，可以选择Win32 Dynamic-Link Library或MFC<br>AppWizard[dll]来以不同的方式来创建Non-MFC Dll、Regular Dll、Extension Dll等不同种类的动态链接库。  </p>
+<p>　　1． Win32 Dynamic-Link Library方式创建Non-MFC DLL动态链接库  </p>
+<p>　　每一个DLL必须有一个入口点，这就象我们用C编写的应用程序一样，必须有一个WINMAIN函数一样。在Non-MFC<br>DLL中DllMain是一个缺省的入口函数，你不需要编写自己的DLL入口函数，用这个缺省的入口函数就能使动态链接库被调用时得到正确的初始化。如果应用程序的DLL需要分配额外的内存或资源时，或者说需要对每个进程或线程初始化和清除操作时，需要在相应的DLL工程的.CPP文件中对DllMain<br>()函数按照下面的格式书写。  </p>
+<p>BOOL APIENTRY DllMain(HANDLE hModule,DWORD ul_reason_for_call,LPVOID<br>lpReserved)<br>{<br>switch( ul_reason_for_call )<br>{<br>case DLL_PROCESS_ATTACH:<br>…….<br>case DLL_THREAD_ATTACH:<br>…….<br>case DLL_THREAD_DETACH:<br>…….<br>case DLL_PROCESS_DETACH:<br>…….<br>}<br>return TRUE;<br>}  </p>
+<p>　　参数中，hMoudle是动态库被调用时所传递来的一个指向自己的句柄(实际上，它是指向_DGROUP段的一个选择符)；<br>ul_reason_for_call是一个说明动态库被调原因的标志，当进程或线程装入或卸载动态链接库的时候，操作系统调用入口函数，并说明动态链接库被调用的原因，它所有的可能值为：DLL_PROCESS_ATTACH:<br>进程被调用、DLL_THREAD_ATTACH: 线程被调用、DLL_PROCESS_DETACH: 进程被停止、DLL_THREAD_DETACH:<br>线程被停止；lpReserved为保留参数。到此为止，DLL的入口函数已经写了，剩下部分的实现也不难，你可以在DLL工程中加入你所想要输出的函数或变量了。  </p>
+<p>我们已经知道DLL是包含若干个函数的库文件，应用程序使用DLL中的函数之前，应该先导出这些函数，以便供给应用程序使用。要导出这些函数有两种方法，一是在定义函数时使用导出关键字_declspec(dllexport)，另外一种方法是在创建DLL文件时使用模块定义文件.Def。需要读者注意的是在使用第一种方法的时候，不能使用DEF文件。下面通过两个例子来说明如何使用这两种方法创建DLL文件。  </p>
+<p>1）使用导出函数关键字_declspec(dllexport)创建MyDll.dll，该动态链接库中有两个函数，分别用来实现得到两个数的最大和最小数。在MyDll.h和MyDLL.cpp文件中分别输入如下原代码：  </p>
+<p>//MyDLL.h<br>extern “C” _declspec(dllexport) int Max(int a, int b);<br>extern “C” _declspec(dllexport) int Min(int a, int b);<br>//MyDll.cpp  </p>
+<p>#include  </p>
+<p>#include”MyDll.h”<br>int Max(int a, int b)<br>{<br>if(a&gt;=b)return a;<br>else<br>return b;<br>}<br>int Min(int a, int b)<br>{<br>if(a&gt;=b)return b;<br>else<br>return a;<br>}  </p>
+<p>　　该动态链接库编译成功后，打开MyDll工程中的debug目录，可以看到MyDll.dll、MyDll.lib两个文件。LIB文件中包含DLL<br>文件名和DLL文件中的函数名等，该LIB文件只是对应该DLL文件的”映像文件”，与DLL文件中，LIB文件的长度要小的多，在进行隐式链接DLL时要用到它。读者可能已经注意到在MyDll.h中有关键字”extern<br>C”，它可以使其他编程语言访问你编写的DLL中的函数。  </p>
+<p>　　2）用.def文件创建工程MyDll  </p>
+<p>　　为了用.def文件创建DLL，请先删除上个例子创建的工程中的MyDll.h文件，保留MyDll.cpp并在该文件头删除#include<br>MyDll.h语句，同时往该工程中加入一个文本文件，命名为MyDll.def，再在该文件中加入如下代码：  </p>
+<p>LIBRARY MyDll  //注意这里的MyDll是工程名如果不同则应用程序连接库时会发生连接错误<br>EXPORTS<br>Max @1,<br>Min @2,  </p>
+<p>　　其中LIBRARY语句说明该def文件是属于相应DLL的，EXPORTS语句下列出要导出的函数名称。我们可以在.def文件中的导出函数后加<br>@n，如Max@1，Min@2，表示要导出的函数顺序号，在进行显式连时可以用到它。该DLL编译成功后，打开工程中的Debug目录，同样也会看到<br>MyDll.dll和MyDll.lib文件。  </p>
+<p>　　2．MFC AppWizard[dll]方式生成常规/扩展DLL  </p>
+<p>　　在MFC<br>AppWizard[dll]下生成DLL文件又有三种方式，在创建DLL是，要根据实际情况选择创建DLL的方式。一种是常规DLL静态链接到MFC，另一种是常规DLL动态链接到MFC。两者的区别是：前者使用的是MFC的静态链接库，生成的DLL文件长度大，一般不使用这种方式，后者使用MFC的动态链接库，生成的DLL文件长度小；动态链接到MFC的规则DLL所有输出的函数应该以如下语句开始：  </p>
+<p>AFX_MANAGE_STATE(AfxGetStaticModuleState( )) //此语句用来正确地切换MFC模块状态  </p>
+<p>　　最后一种是MFC扩展DLL，这种DLL特点是用来建立MFC的派生类，Dll只被用MFC类库所编写的应用程序所调用。前面我们已经介绍过，<br>Extension DLLs 和Regular<br>DLLs不一样，它没有一个从CWinApp继承而来的类的对象，编译器默认了一个DLL入口函数DLLMain()作为对DLL的初始化，你可以在此函数中实现初始化,代码如下：  </p>
+<p>BOOL WINAPI APIENTRY DLLMain(HINSTANCE hinstDll，DWORD reason ，LPVOID flmpload)<br>{<br>switch(reason)<br>{<br>……………//初始化代码；<br>}<br>return true;<br>}  </p>
+<p>参数hinstDll存放DLL的句柄，参数reason指明调用函数的原因，lpReserved是一个被系统所保留的参数。对于隐式链接是一个非零值，对于显式链接值是零。  </p>
+<p>　　在MFC下建立DLL文件，会自动生成def文件框架，其它与建立传统的Non-MFC<br>DLL没有什么区别，只要在相应的头文件写入关键字_declspec(dllexport)函数类型和函数名等，或在生成的def文件中EXPORTS<br>下输入函数名就可以了。需要注意的是在向其它开发人员分发MFC扩展DLL<br>时，不要忘记提供描述DLL中类的头文件以及相应的.LIB文件和DLL本身，此后开发人员就能充分利用你开发的扩展DLL了。<br>四、动态链接库DLL的链接  </p>
+<p>　　应用程序使用DLL可以采用两种方式：一种是隐式链接，另一种是显式链接。在使用DLL之前首先要知道DLL中函数的结构信息。Visual<br>C++6.0在VC\bin目录下提供了一个名为Dumpbin.exe的小程序，用它可以查看DLL文件中的函数结构。另外，Windows系统将遵循下面的搜索顺序来定位DLL：<br>1．包含EXE文件的目录，2．进程的当前工作目录，3．Windows系统目录， 4．Windows目录，5．列在Path环境变量中的一系列目录。  </p>
+<p>　　1．隐式链接  </p>
+<p>　　隐式链接就是在程序开始执行时就将DLL文件加载到应用程序当中。实现隐式链接很容易，只要将导入函数关键字_declspec<br>(dllimport)函数名等写到应用程序相应的头文件中就可以了。下面的例子通过隐式链接调用MyDll.dll库中的Min函数。首先生成一个项目为TestDll，在DllTest.h、DllTest.cpp文件中分别输入如下代码：  </p>
+<p>//Dlltest.h  </p>
+<p>#pragma comment(lib，”MyDll.lib”)<br>extern “C”_declspec(dllimport) int Max(int a,int b);<br>extern “C”_declspec(dllimport) int Min(int a,int b);<br>//TestDll.cpp  </p>
+<p>#include  </p>
+<p>#include”Dlltest.h”<br>void main()<br>{int a;<br>a=min(8,10)<br>printf(“比较的结果为%d\n”，a);<br>}  </p>
+<p>//注意如果程序发生连接错误则要把lib文件加要工程里去  </p>
+<p>　　在创建DllTest.exe文件之前，要先将MyDll.dll和MyDll.lib拷贝到当前工程所在的目录下面，也可以拷贝到windows的<br>System目录下。如果DLL使用的是def文件，要删除TestDll.h文件中关键字extern “C”。TestDll.h文件中的关键字Progam<br>commit是要Visual C+的编译器在link时，链接到MyDll.lib文件，当然，开发人员也可以不使用#pragma<br>comment(lib，”MyDll.lib”)语句，而直接在工程的Setting-&gt;Link页的Object/Moduls栏填入<br>MyDll.lib既可。  </p>
+<p>　　2．显式链接  </p>
+<p>显式链接是应用程序在执行过程中随时可以加载DLL文件，也可以随时卸载DLL文件，这是隐式链接所无法作到的，所以显式链接具有更好的灵活性，对于解释性语言更为合适。不过实现显式链接要麻烦一些。在应用程序中用LoadLibrary或MFC提供的AfxLoadLibrary显式的将自己所做的动态链接库调进来，动态链接库的文件名即是上述两个函数的参数，此后再用GetProcAddress()获取想要引入的函数。自此，你就可以象使用如同在应用程序自定义的函数一样来调用此引入函数了。在应用程序退出之前，应该用FreeLibrary或MFC提供的AfxFreeLibrary释放动态链接库。下面是通过显式链接调用DLL中的Max函数的例子。  </p>
+<p>#include  </p>
+<p>#include<br>void main(void)<br>{<br>typedef int(<em>pMax)(int a,int b);<br>typedef int(</em>pMin)(int a,int b);<br>HINSTANCE hDLL;<br>PMax Max<br>HDLL=LoadLibrary(“MyDll.dll”);//加载动态链接库MyDll.dll文件；<br>Max=(pMax)GetProcAddress(hDLL,”Max”);<br>A=Max(5,8);<br>Printf(“比较的结果为%d\n”，a);<br>FreeLibrary(hDLL);//卸载MyDll.dll文件；<br>}  </p>
+<p>在上例中使用类型定义关键字typedef，定义指向和DLL中相同的函数原型指针，然后通过LoadLibray()将DLL加载到当前的应用程序中并返回当前DLL文件的句柄，然后通过GetProcAddress()函数获取导入到应用程序中的函数指针，函数调用完毕后，使用<br>FreeLibrary()卸载DLL文件。在编译程序之前，首先要将DLL文件拷贝到工程所在的目录或Windows系统目录下。  </p>
+<p>　　使用显式链接应用程序编译时不需要使用相应的Lib文件。另外，使用GetProcAddress()函数时，可以利用<br>MAKEINTRESOURCE()函数直接使用DLL中函数出现的顺序号，如将GetProcAddress(hDLL,”Min”)改为<br>GetProcAddress(hDLL,<br>MAKEINTRESOURCE(2))（函数Min()在DLL中的顺序号是2），这样调用DLL中的函数速度很快，但是要记住函数的使用序号，否则会发生错误。  </p>
+<p>本文通过通俗易懂的方式，全面介绍了动态链接库的概念、动态链接库的创建和动态链接库的链接，并给出个简单明了的例子，相信读者看了本文后，能够创建自己的动态链接库并应用到后续的软件开发当中去了，当然，读者要熟练操作DLL，还需要在大量的实践中不断摸索，希望本文能起到抛砖引玉的作用。</p>
+<pre><code>转自：&lt;http://www.cnblogs.com/daocaoren/archive/2012/05/30/2526495.html&gt;
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/26/C++ Dll 编写入门/" data-title="C++ Dll 编写入门" data-url="https://shijingjing07.github.io/2016/04/26/C++ Dll 编写入门/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

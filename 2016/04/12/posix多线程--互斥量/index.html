@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>posix多线程--互斥量 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="多线程程序在线程间共享数据时，如果多个线程同时访问共享数据就可能有问题。互斥量是解决多个线程间共享数据的方法之一。
+1.互斥量初始化两种方式：（1）静态初始化
+#include &amp;lt;pthread.h&amp;gt;
+
+typedef struct my_struct_tag {
+pthread_mutex_t mutex; /* Protects access to value */
+int val">
+  
+  <meta name="description" content="多线程程序在线程间共享数据时，如果多个线程同时访问共享数据就可能有问题。互斥量是解决多个线程间共享数据的方法之一。
+1.互斥量初始化两种方式：（1）静态初始化
+#include &amp;lt;pthread.h&amp;gt;
+
+typedef struct my_struct_tag {
+pthread_mutex_t mutex; /* Protects access to value */
+int val">
+<meta property="og:type" content="article">
+<meta property="og:title" content="posix多线程--互斥量">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/12/posix多线程--互斥量/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="多线程程序在线程间共享数据时，如果多个线程同时访问共享数据就可能有问题。互斥量是解决多个线程间共享数据的方法之一。
+1.互斥量初始化两种方式：（1）静态初始化
+#include &amp;lt;pthread.h&amp;gt;
+
+typedef struct my_struct_tag {
+pthread_mutex_t mutex; /* Protects access to value */
+int val">
+<meta property="og:updated_time" content="2017-01-12T01:35:46.339Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="posix多线程--互斥量">
+<meta name="twitter:description" content="多线程程序在线程间共享数据时，如果多个线程同时访问共享数据就可能有问题。互斥量是解决多个线程间共享数据的方法之一。
+1.互斥量初始化两种方式：（1）静态初始化
+#include &amp;lt;pthread.h&amp;gt;
+
+typedef struct my_struct_tag {
+pthread_mutex_t mutex; /* Protects access to value */
+int val">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/12/posix多线程--互斥量/">
+  <time datetime="2016-04-11T18:09:00.000Z">
+    2016-04-12
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">posix多线程--互斥量</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>多线程程序在线程间共享数据时，如果多个线程同时访问共享数据就可能有问题。互斥量是解决多个线程间共享数据的方法之一。</p>
+<p>1.互斥量初始化两种方式：<br>（1）静态初始化</p>
+<pre><code>#include &lt;pthread.h&gt;
+
+typedef struct my_struct_tag {
+pthread_mutex_t mutex; /* Protects access to value */
+int value; /* Access protected by mutex */
+} my_struct_t;
+
+my_struct_t data = {PTHREAD_MUTEX_INITIALIZER, 0};
+
+int main (int argc, char *argv[])
+{
+return 0;
+}
+</code></pre><p>（2）动态初始化</p>
+<pre><code>#include &lt;pthread.h&gt;
+
+typedef struct my_struct_tag {
+pthread_mutex_t mutex; /* Protects access to value */
+int value; /* Access protected by mutex */
+} my_struct_t;
+
+int main (int argc, char *argv[])
+{
+my_struct_t *data;
+data = malloc (sizeof (my_struct_t));
+pthread_mutex_init (&amp;data-&gt;mutex, NULL);
+pthread_mutex_destroy (&amp;data-&gt;mutex);
+(void)free (data);
+return 0;
+}
+</code></pre><p>2.加锁和解锁<br>int pthread_mutex_lock(pthread_mutex_t <em>mutex)<br>int pthread_mutex_trylock(pthread_mutex_t </em>mutex)<br>int pthread_mutex_unlock(pthread_mutex_t *mutex)</p>
+<p>3.非阻塞式互斥量锁<br>int pthread_mutex_trylock(pthread_mutex_t *mutex)</p>
+<p>4.使用多个互斥量<br>使用多个互斥量易发生死锁的问题，如一个线程锁住互斥量A后，加锁互斥量B；同时另一个线程锁住互斥量B而等待互斥量A，则发生死锁现象。针对死锁，有两种解决方法：<br>（1）固定加锁层次：即所有同时需要加锁互斥量A和互斥量B的代码，必须先加锁A，后加锁B<br>（2）试加锁和回退：在锁住某个集合中的第一个互斥量后，使用pthread_mutex_trylock来加锁集合中的其他互斥量，如果失败，则将集合中所有已加锁互斥量释放，并重新加锁。</p>
+<p>5.链锁<br>链锁的作用范围互相交叠。当锁住第一个互斥量后，代码进入一个区域，该区域需要另一个互斥量。当锁住另一个互斥量后，第一个互斥量就不再需要，可以释放它了。<br>链锁在遍历如树型结构或链表结构是很有用。</p>
+<p>参考资料：《POSIX多线程程序设计》 pp.39-59</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/12/posix多线程--互斥量/" data-title="posix多线程--互斥量" data-url="https://shijingjing07.github.io/2016/04/12/posix多线程--互斥量/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

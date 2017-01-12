@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>在Windows上开发PHP扩展模块 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="环境: window + php + apache + vc6 + cygwin
+下载：php二进制文件： php-5.3.10-Win32-VC9-x86        php源码包：php-5.3.10
+操作第一步:PHP源代码生成 main/config.w32.h详见：http://www.cnblogs.com/shijingjing07/p/5420902.html
+操作第二步:把PH">
+  
+  <meta name="description" content="环境: window + php + apache + vc6 + cygwin
+下载：php二进制文件： php-5.3.10-Win32-VC9-x86        php源码包：php-5.3.10
+操作第一步:PHP源代码生成 main/config.w32.h详见：http://www.cnblogs.com/shijingjing07/p/5420902.html
+操作第二步:把PH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Windows上开发PHP扩展模块">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/26/在Windows上开发PHP扩展模块/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="环境: window + php + apache + vc6 + cygwin
+下载：php二进制文件： php-5.3.10-Win32-VC9-x86        php源码包：php-5.3.10
+操作第一步:PHP源代码生成 main/config.w32.h详见：http://www.cnblogs.com/shijingjing07/p/5420902.html
+操作第二步:把PH">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142103533-311736746.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142808830-541720256.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142936267-2055583038.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143000236-1532883051.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143019455-258945384.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143039877-726059326.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143101595-1915175175.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143153830-836596253.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:44.158Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在Windows上开发PHP扩展模块">
+<meta name="twitter:description" content="环境: window + php + apache + vc6 + cygwin
+下载：php二进制文件： php-5.3.10-Win32-VC9-x86        php源码包：php-5.3.10
+操作第一步:PHP源代码生成 main/config.w32.h详见：http://www.cnblogs.com/shijingjing07/p/5420902.html
+操作第二步:把PH">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142103533-311736746.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/26/在Windows上开发PHP扩展模块/">
+  <time datetime="2016-04-25T22:35:00.000Z">
+    2016-04-26
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">在Windows上开发PHP扩展模块</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>环境: window + php + apache + vc6 + cygwin</p>
+<p>下载：php二进制文件： php-5.3.10-Win32-VC9-x86<br>        php源码包：php-5.3.10</p>
+<p><strong>操作第一步:</strong><br>PHP源代码生成 main/config.w32.h<br>详见：<a href="http://www.cnblogs.com/shijingjing07/p/5420902.html" target="_blank" rel="external">http://www.cnblogs.com/shijingjing07/p/5420902.html</a></p>
+<p><strong>操作第二步:</strong><br>把PHP二进制根目录加入到环境变量下。在cmd命令行,进入PHP源码包中ext文件下。<br>执行php ext_skel_win32.php –extname=test命令生成扩展骨架。</p>
+<p>把PHP二进制包中dev目录php5ts.lib文件复制到你扩展目录test中。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142103533-311736746.png" alt=""></p>
+<p>命令执行后,生成如下图示的文件:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142808830-541720256.png" alt=""></p>
+<p><strong>操作第三步:</strong></p>
+<p>编辑php_test.h内容,找到:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142936267-2055583038.png" alt=""></p>
+<pre><code>在下面编写:
+</code></pre><p>   PHP_FUNCTION(hello);   //添加方法</p>
+<p>编辑test.c内容,找到:  </p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143000236-1532883051.png" alt=""></p>
+<pre><code>在里面添加你的要的添加的方法:
+
+   PHP_FE(hello,NULL)  //最好的跟上面写的一样。
+
+   变为:
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143019455-258945384.png" alt=""></p>
+<pre><code>再找到:
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143039877-726059326.png" alt=""></p>
+<p>在下面实现你的方法:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143101595-1915175175.png" alt=""></p>
+<pre><code>简单些。你我需要更深入php内核才能写好的php扩展。
+</code></pre><p><strong>操作第四步:</strong></p>
+<p> 接下来就是对扩展文件进行编译。</p>
+<p> 进入扩展的目录，执行以下命令。</p>
+<p>  msdev test.dsp /MAKE “test - Win32 Release_TS”  //命令</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143153830-836596253.png" alt=""></p>
+<p>如果没有错误,在D:/PHP目录中会产生一个Release_TS目录,php_test.dll就在其中。</p>
+<p><strong>操作第五步:</strong></p>
+<p>把php_test.dll复制到二进制PHP中的etc文件中.</p>
+<pre><code> 修改php.ini文件,添加extension=php_test.dll文件。
+
+ 重启服务。
+
+ &amp;lt;?php
+
+       echo hello();//test
+
+?&amp;gt;
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/26/在Windows上开发PHP扩展模块/" data-title="在Windows上开发PHP扩展模块" data-url="https://shijingjing07.github.io/2016/04/26/在Windows上开发PHP扩展模块/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

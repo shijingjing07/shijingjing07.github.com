@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>C++虚函数表与虚析构函数 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.静态联编和动态联编联编：将源代码中的函数调用解释为要执行函数代码。  
+静态联编：编译时能确定唯一函数。在C中，每个函数名都能确定唯一的函数代码。在C++中，因为有函数重载，编译器须根据函数名，参数才能确定唯一的函数代码。  
+动态联编：编译时不能确定调用的函数代码，运行时才能。C++中因为多态的存在，有时编译器不知道用户将选择哪种类型的对象，因此无法确定调用的唯一性，只有在运行时才能确定。">
+  
+  <meta name="description" content="1.静态联编和动态联编联编：将源代码中的函数调用解释为要执行函数代码。  
+静态联编：编译时能确定唯一函数。在C中，每个函数名都能确定唯一的函数代码。在C++中，因为有函数重载，编译器须根据函数名，参数才能确定唯一的函数代码。  
+动态联编：编译时不能确定调用的函数代码，运行时才能。C++中因为多态的存在，有时编译器不知道用户将选择哪种类型的对象，因此无法确定调用的唯一性，只有在运行时才能确定。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++虚函数表与虚析构函数">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/04/C++虚函数表与虚析构函数/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.静态联编和动态联编联编：将源代码中的函数调用解释为要执行函数代码。  
+静态联编：编译时能确定唯一函数。在C中，每个函数名都能确定唯一的函数代码。在C++中，因为有函数重载，编译器须根据函数名，参数才能确定唯一的函数代码。  
+动态联编：编译时不能确定调用的函数代码，运行时才能。C++中因为多态的存在，有时编译器不知道用户将选择哪种类型的对象，因此无法确定调用的唯一性，只有在运行时才能确定。">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160605012038071-1297873383.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:38.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++虚函数表与虚析构函数">
+<meta name="twitter:description" content="1.静态联编和动态联编联编：将源代码中的函数调用解释为要执行函数代码。  
+静态联编：编译时能确定唯一函数。在C中，每个函数名都能确定唯一的函数代码。在C++中，因为有函数重载，编译器须根据函数名，参数才能确定唯一的函数代码。  
+动态联编：编译时不能确定调用的函数代码，运行时才能。C++中因为多态的存在，有时编译器不知道用户将选择哪种类型的对象，因此无法确定调用的唯一性，只有在运行时才能确定。">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160605012038071-1297873383.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/04/C++虚函数表与虚析构函数/">
+  <time datetime="2016-06-04T09:23:00.000Z">
+    2016-06-04
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">C++虚函数表与虚析构函数</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.静态联编和动态联编</strong><br>联编：将源代码中的函数调用解释为要执行函数代码。  </p>
+<p>静态联编：编译时能确定唯一函数。<br>在C中，每个函数名都能确定唯一的函数代码。<br>在C++中，因为有函数重载，编译器须根据函数名，参数才能确定唯一的函数代码。  </p>
+<p>动态联编：编译时不能确定调用的函数代码，运行时才能。<br>C++中因为多态的存在，有时编译器不知道用户将选择哪种类型的对象，因此无法确定调用的唯一性，只有在运行时才能确定。</p>
+<p><strong>2.虚成员函数，指针或引用，动态联编</strong><br>指针或引用才能展现类的多态性。<br>当类中的方法声明为virtual时，使用指针或引用调用该方法，就是动态联编。<br>若是普通方法，则为静态联编。<br>示例如下：</p>
+<pre><code>class Test
+{
+public:
+    virtual show()
+    {
+        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
+    }
+};
+class SubTest:public Test
+{
+public:
+    virtual show()
+    {
+        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
+    }
+};
+int main()
+{
+    SubTest subTest;
+    Test * p = &amp;subTest;//指向子类的指针
+    Test &amp; a = subTest;//子类的引用
+    Test * p2 = new Test;//指向父类的指针
+    p-&gt;show();
+    a.show();
+    p2-&gt;show();
+    return 0;
+}
+</code></pre><p>程序没有释放内存，我们将在后面析构函数的时候，完善该程序。</p>
+<p><strong>3.动态联编使用原则</strong><br>动态联编，需要跟踪基类指针或引用指向的实际对象类型，因此效率低于静态联编。<br>1)当类不会用作基类时，成员函数不要声明为virtual<br>2)当成员函数不重新定义基类的方法，成员函数不要声明为virtual</p>
+<p><strong>4.关于虚函数</strong><br>1)父类成员函数若声明为virtual，则子类中也是虚的，若要重新定义该方法，可显式加上virtual关键字，也可不加，编译器编译时会自动加上。<br>2)使用指向对象的引用或指针来调用虚方法，将使用具体对象类型定义的方法，而不一定是引用或指针类型定义的方法。<br>SubTest subTest;<br>Test * p = &amp;subTest;//指向子类的指针<br>p-&gt;show();//将调用SubTest对象定义的show()方法</p>
+<p><strong>5.虚函数的工作原理</strong><br>当类中存在虚函数时，编译器默认会给对象添加一个隐藏成员。该成员为一个指向虚函数表(virtual function table,vtbl)的指针。<br>虚函数表是一个保存了虚函数地址的数组。编译器会检查类中所有的虚函数，依次将每个虚函数的地址，存入虚函数表。</p>
+<pre><code>class Test
+{
+public:
+    virtual show()
+    {
+        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
+    }
+private:
+    int a;
+};
+class SubTest:public Test
+{
+public:
+    virtual show()
+    {
+        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
+    }
+};
+</code></pre><p>内存结构图如下所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160605012038071-1297873383.png" alt=""></p>
+<p>可以看出，父类和子类有独立的虚函数表，且虚函数表中虚函数指针也指向各自的虚函数地址，<br>若子类没有覆盖父类中的show方法，则虚函数指针show_ptr指向的虚函数show()的地址是一样的，均指向父类show()函数地址。虚函数表的存在和动态联编，就是多态的原理。</p>
+<p><strong>6.虚析构函数</strong><br>1)构造函数是特殊的，是没有虚函数的概念的。<br>构造函数是不继承的，创建子类对象时，将调用子类的构造函数，子类的构造函数将自动调用父类的构造函数。  </p>
+<p>2)析构函数应是虚函数，除非类不用做基类。<br>我们看下面的代码：<br>Test *p = new SubTest;<br>delete p;<br>p=NULL;</p>
+<p>由虚函数表，我们知道，若析构函数不声明为virtual，则调用的将是Test类的析构函数，而没有调用SubTest类的析构函数，此时造成了内存泄露。<br>所以析构函数必须声明为虚函数，调用的将是子类SubTest的析构函数，<br>我们还需要知道的一点是，子类析构函数，一定会调用父类析构函数，释放父类对象，则内存安全释放。<br>我们第一个例子的完整的示例代码如下：</p>
+<pre><code>class Test
+{
+public:
+    virtual show()
+    {
+        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
+    }
+    virtual ~Test(){}
+};
+class SubTest:public Test
+{
+public:
+    virtual show()
+    {
+        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
+    }
+};
+int main()
+{
+    SubTest subTest;
+    Test * p = &amp;subTest;//指向子类的指针
+    Test &amp; a = subTest;//子类的引用
+    Test * p2 = new Test;//指向父类的指针
+    p-&gt;show();
+    a.show();
+    p2-&gt;show();
+    delete p;
+    p=NULL;
+    delete p2;
+    p2=NULL;
+    return 0;
+}
+</code></pre><p>参考资料：《C++ Primer.Plus》 pp.490-507<br>                  <a href="http://www.cnblogs.com/%20http:/www.imooc.com/video/9199" target="_blank" rel="external"> http://www.imooc.com/video/9199</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/04/C++虚函数表与虚析构函数/" data-title="C++虚函数表与虚析构函数" data-url="https://shijingjing07.github.io/2016/06/04/C++虚函数表与虚析构函数/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>虚拟内存机制 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="1.为什么要有虚拟内存在早期的计算机中，是没有虚拟内存的概念的。我们要运行一个程序，会把程序全部装入内存，然后运行。当运行多个程序时，经常会出现以下问题：1)进程地址空间不隔离，没有权限保护。由于程序都是直接访问物理内存，所以一个进程可以修改其他进程的内存数据，甚至修改内核地址空间中的数据。2)内存使用效率低当内存空间不足时，要将其他程序暂时拷贝到硬盘，然后将新的程序装入内存运行。由于大量的数据装">
+  
+  <meta name="description" content="1.为什么要有虚拟内存在早期的计算机中，是没有虚拟内存的概念的。我们要运行一个程序，会把程序全部装入内存，然后运行。当运行多个程序时，经常会出现以下问题：1)进程地址空间不隔离，没有权限保护。由于程序都是直接访问物理内存，所以一个进程可以修改其他进程的内存数据，甚至修改内核地址空间中的数据。2)内存使用效率低当内存空间不足时，要将其他程序暂时拷贝到硬盘，然后将新的程序装入内存运行。由于大量的数据装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚拟内存机制">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/06/23/虚拟内存机制/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="1.为什么要有虚拟内存在早期的计算机中，是没有虚拟内存的概念的。我们要运行一个程序，会把程序全部装入内存，然后运行。当运行多个程序时，经常会出现以下问题：1)进程地址空间不隔离，没有权限保护。由于程序都是直接访问物理内存，所以一个进程可以修改其他进程的内存数据，甚至修改内核地址空间中的数据。2)内存使用效率低当内存空间不足时，要将其他程序暂时拷贝到硬盘，然后将新的程序装入内存运行。由于大量的数据装">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171752625-325593160.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171815625-1644110249.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623173846485-1317297798.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171927344-1692955841.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:34.222Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="虚拟内存机制">
+<meta name="twitter:description" content="1.为什么要有虚拟内存在早期的计算机中，是没有虚拟内存的概念的。我们要运行一个程序，会把程序全部装入内存，然后运行。当运行多个程序时，经常会出现以下问题：1)进程地址空间不隔离，没有权限保护。由于程序都是直接访问物理内存，所以一个进程可以修改其他进程的内存数据，甚至修改内核地址空间中的数据。2)内存使用效率低当内存空间不足时，要将其他程序暂时拷贝到硬盘，然后将新的程序装入内存运行。由于大量的数据装">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171752625-325593160.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/06/23/虚拟内存机制/">
+  <time datetime="2016-06-23T01:31:00.000Z">
+    2016-06-23
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">虚拟内存机制</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><strong>1.为什么要有虚拟内存</strong><br>在早期的计算机中，是没有虚拟内存的概念的。我们要运行一个程序，会把程序全部装入内存，然后运行。<br>当运行多个程序时，经常会出现以下问题：<br>1)进程地址空间不隔离，没有权限保护。<br>由于程序都是直接访问物理内存，所以一个进程可以修改其他进程的内存数据，<br>甚至修改内核地址空间中的数据。<br>2)内存使用效率低<br>当内存空间不足时，要将其他程序暂时拷贝到硬盘，然后将新的程序装入内存运行。<br>由于大量的数据装入装出，内存使用效率会十分低下。<br>3)程序运行的地址不确定<br>因为内存地址是随机分配的，所以程序运行的地址也是不确定的。</p>
+<p><strong>2.虚拟地址和物理地址</strong><br>对于32位系统，寻址指针为4字节，对应的虚拟地址空间为0-2^32，即0-4G。<br>对于64位系统，寻址指针为8字节，对应的虚拟地址空间为0-2^64，即0-16G。<br>要注意的是，这个地址空间是虚拟的，并非实际存在的。<br>Linux内核把虚拟地址空间分为两部分：用户进程空间，内核进程空间。<br>如下入所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171752625-325593160.png" alt=""></p>
+<p>在缓存原理中，换入/换出的数据以块为最小单位。在内存管理时，页是地址空间的最小单位。<br>虚拟地址空间划分为多个固定大小的虚拟页(VP),物理地址空间(DRAM内存)划分为多个固定大小的物理页(PP),<br>虚拟页和物理页的大小是一样的，通常为4KB。</p>
+<p>虚拟页和物理页存在着以下关系：<br>虚拟页和磁盘文件映射，然后缓存到物理页。<br>根据是否映射，是否缓存，可以将虚拟页的状态分为以下三种：<br>1)未映射的页<br>即虚拟页没有映射到磁盘文件<br>2)未缓存的页<br>虚拟页映射到了磁盘文件，但是没有缓存到物理页，也就是内存上。<br>3)缓存的页<br>虚拟页映射到了磁盘文件，并且缓存到物理页<br>如下图所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171815625-1644110249.png" alt=""></p>
+<p><strong>3.虚拟地址的工作原理</strong><br>对于进程来说，使用的都是虚拟地址。每个进程维护一个单独的页表。何为页表？<br>页表是一种数组结构，存放着各虚拟页的状态，是否映射，是否缓存。</p>
+<p>1)数组的索引号，表示虚拟页号<br>2)数组的值<br>若为null，表示未映射的页<br>若非null，第一位表示有效位，为1，表明缓存的页；为0，表明未缓存的页。<br>其余位表示缓存到的物理页号。</p>
+<p>页表结构图如下：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623173846485-1317297798.png" alt=""></p>
+<p>进程执行时，当需要访问虚拟地址中存放的值时，步骤如下：<br>1)CPU会先找到虚拟地址所在的虚拟页(VP3)，根据页表，找出页表中第3条的值。<br>判断有效位，为1，DRMA缓存命中，获根据物理页号，找到物理页中的内容，返回。<br>2)若有效位为0，产生缺页异常，调用内核缺页异常处理程序。<br>它会选择一个物理页(如PP4)，作为牺牲页，将该页的内容刷新到磁盘文件。然后，把VP3映射的磁盘文件，缓存到该物理页。<br>页表中的第3条，有效位变1，同时，物理页号表号变为PP4。<br>3)缺页异常处理完毕后，返回中断前的指令，重新执行，此时缓存命中，执行1)<br>4)将找到的内容映射到高速缓存，CPU从高速缓存中获取该值，结束。</p>
+<p><strong>4.使用虚拟地址需要注意的问题</strong><br>1)磁盘和主存传送页的活动叫做页面调度。页面调度会引起磁盘流量，如果程序的局部性不好，会频繁进行页面调度，叫做”缓存颠簸”。<br>操作系统会在内存中分配一块交换区作为缓冲区，来加速页面的调度。<br>2)一级页表占用的空间是比较大的，根据按需调度的原则，一般使用的是多级页表，即一级页表指向二级页表，这样大大压缩了页表的大小。</p>
+<p><strong>5.地址翻译</strong><br>地址翻译指的是DRAM缓存命中时，由虚拟地址找到物理地址的过程。<br>该过程是完全由硬件来完成的。<br>1)CPU有一个专门的页表基地址寄存器(PTBR)指向当前页表的基地址，快速定位到该进程的页表。<br>2)根据虚拟页号，找到虚拟地址在页表的值。<br>3)根据值中的物理页号，找到物理地址。</p>
+<p><strong>6.Linux中的虚拟内存机制</strong></p>
+<p>Linux把虚拟内存划分成区域area的集合，一个area包括连续的多个页。<br>area的数据结构如下所示：<br>1)内核为每个进程维护了一个单独的任务结果task_struct<br>2)task_struct的mm指针，指向了mm_struct，该结构描述虚拟内存的运行状态。<br>3)mm_struct的pgd指针指向进程的一级页表的基地址。<br>mmap指针，指向vm_area_struct链表。<br>4)vm_area_struct描述area的结构，vm_start表示area的开始位置，vm_end表示area的结束位置，vm_prot表示area内的页的读写权限，vm_flags表示area内的页面是进程私有还是共享，vm_next指向下一个area节点。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171927344-1692955841.png" alt=""></p>
+<p>在Linux中，当发生缺页异常时，步骤如下：<br>1)缺页异常程序，检查虚拟地址在哪个area内。<br>2)访问的虚拟页若没有读写权限，则触发一个保护异常，终止进程。<br>3)选择牺牲页，刷新到磁盘，从磁盘加载缺失的内容到物理页，更新页表。</p>
+<p><strong>7.Linux虚拟内存需要注意的问题</strong><br>内存映射机制:初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。</p>
+<p>由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。<br>当共享访问时，一个进程的对该对象的修改会显示到其他进程。<br>当私有访问时，修改时会产生保护故障，内核会拷贝这个私有对象，修改的是这个新对象，其他进程指向的是原来的对象。</p>
+<p>fork函数是说明内存映射机制很好的例子：<br>fork函数会创建带有独立虚拟地址空间的新进程，内核会把当前进程的虚拟内存中数据结构复制一份给新进程。虚拟内存area包括共享区域和私有区域，新建的进程对私有区域做修改时，会触发写时拷贝，为新进程维护私有的虚拟地址空间。</p>
+<p><strong>8.虚拟地址作用总结</strong><br>1)虚拟内存管理可以控制物理内存的访问权限<br>访问的虚拟页若没有读写权限，则触发一个保护异常，终止进程。<br>2)虚拟内存让每个进程有独立的地址空间<br>对于私有区域来说，当不同进程对该区域做修改时，会触发写时拷贝，为新进程维护私有的虚拟地址空间。<br>3)VA到PA的映射会给分配和释放内存带来方便。<br>物理内存不连续的地址，可映射到连续的虚拟内存地址。<br>4)内存效率高<br>使用了页面调度，不会造成大量的数据装入装出。</p>
+<p>参考资料: 《深入理解计算机系统》</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/06/23/虚拟内存机制/" data-title="虚拟内存机制" data-url="https://shijingjing07.github.io/2016/06/23/虚拟内存机制/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

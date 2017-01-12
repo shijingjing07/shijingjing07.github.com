@@ -1,0 +1,600 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>posix多线程--三种基本线程编程模型 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="本文介绍了三种构建线程解决方案的方式。
+一、流水线：每个线程执行同一种操作，并把操作结果传递给下一步骤的线程。
+
+代码示例如下：终端输入一个int值，每个线程将该值加1，并将结果传给下一个线程。
+
+#include&amp;lt;stdio.h&amp;gt;                                                                
+#include&amp;lt;p">
+  
+  <meta name="description" content="本文介绍了三种构建线程解决方案的方式。
+一、流水线：每个线程执行同一种操作，并把操作结果传递给下一步骤的线程。
+
+代码示例如下：终端输入一个int值，每个线程将该值加1，并将结果传给下一个线程。
+
+#include&amp;lt;stdio.h&amp;gt;                                                                
+#include&amp;lt;p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="posix多线程--三种基本线程编程模型">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/04/15/posix多线程--三种基本线程编程模型/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="本文介绍了三种构建线程解决方案的方式。
+一、流水线：每个线程执行同一种操作，并把操作结果传递给下一步骤的线程。
+
+代码示例如下：终端输入一个int值，每个线程将该值加1，并将结果传给下一个线程。
+
+#include&amp;lt;stdio.h&amp;gt;                                                                
+#include&amp;lt;p">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151918473-1467930339.png">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151935551-2032798922.png">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151946160-1569950158.png">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:updated_time" content="2017-01-12T01:35:46.055Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="posix多线程--三种基本线程编程模型">
+<meta name="twitter:description" content="本文介绍了三种构建线程解决方案的方式。
+一、流水线：每个线程执行同一种操作，并把操作结果传递给下一步骤的线程。
+
+代码示例如下：终端输入一个int值，每个线程将该值加1，并将结果传给下一个线程。
+
+#include&amp;lt;stdio.h&amp;gt;                                                                
+#include&amp;lt;p">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151918473-1467930339.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/04/15/posix多线程--三种基本线程编程模型/">
+  <time datetime="2016-04-14T23:20:00.000Z">
+    2016-04-15
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">posix多线程--三种基本线程编程模型</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>本文介绍了三种构建线程解决方案的方式。</p>
+<p>一、流水线：每个线程执行同一种操作，并把操作结果传递给下一步骤的线程。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151918473-1467930339.png" alt=""></p>
+<p>代码示例如下：<br>终端输入一个int值，每个线程将该值加1，并将结果传给下一个线程。</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+typedef struct stage_tag
+ {
+          pthread_mutex_t mutex;
+          pthread_cond_t cond;
+          int data;
+          int ready;
+          pthread_t tid;
+          struct stage_tag *next;
+}stage_t;
+typedef struct pipe_tag
+{
+        pthread_mutex_t mutex;
+        stage_t *head;
+        stage_t *tail;
+        int stages;
+}pipe_t;
+void pipe_send(stage_t *stage,int data)
+{
+        stage-&gt;data =data;
+        stage-&gt;ready = 1;
+        pthread_cond_signal(&amp;stage-&gt;cond);
+}
+void *thread_route(void *arg)
+{
+        stage_t *stage = (stage_t *)arg;
+        while(!stage-&gt;ready)
+        {
+                pthread_cond_wait(&amp;stage-&gt;cond,&amp;stage-&gt;mutex);
+ }
+        int data = stage-&gt;data+1;
+        stage_t *next = stage-&gt;next;
+        if(next!=NULL)
+        {
+                pipe_send(next,data);
+        }
+        return NULL;
+}
+void create_pipe(pipe_t *pipe,int stages)
+{
+//      pipe = (pipe_t *)malloc(sizeof(pipe_t));
+        pipe-&gt;stages = stages;
+        int i;
+        stage_t *stage;
+        stage_t *last;
+        for(i=0;i&lt;=stages;i++)
+        {
+                stage = (stage_t *)malloc(sizeof(stage_t));
+                stage-&gt;data = i;
+                if(i==0)
+                {
+                        pipe-&gt;head = stage;
+                }
+                if(last!=NULL)
+                {
+                        last-&gt;next = stage;
+                }
+last = stage;
+        }
+        last-&gt;next=NULL;
+        pipe-&gt;tail = last;
+        for(stage=pipe-&gt;head;stage-&gt;next!=NULL;stage=stage-&gt;next)
+        {
+                pthread_create(&amp;stage-&gt;tid,NULL,thread_route,(void *)stage);
+                printf(&quot;stage %d\n&quot;,stage-&gt;data);
+        }
+/*      free(pipe);
+        for(stage=pipe-&gt;head;stage!=NULL;stage=stage-&gt;next)
+        {
+                  free(stage);
+        }       
+        */
+}
+int main(void)
+{
+        pipe_t my_pipe;
+        long value,result;
+        char line[128];
+        create_pipe(&amp;my_pipe,10);
+        pipe_send(my_pipe.head,5);
+        sleep(10);
+        printf(&quot;result is %d\n&quot;,my_pipe.tail-&gt;data);
+        return 0;
+} 
+</code></pre><p>View Code</p>
+<p>二、工作组：数据由一组线程分别独立地处理。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151935551-2032798922.png" alt=""></p>
+<p>代码示例如下：<br>程序有两个参数：filepath：文件或目录路径；search：待查找字符串</p>
+<p>程序将文件路径排队给工作组，工作组线程判断该路径是文件还是目录，如果是文件，它将在文件中搜索字符串；如果是目录，它将使用readdir_r查找该目录中的所有子目录和文件，并将每一项添加到工作队列。</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+#include&lt;dirent.h&gt;
+#include&lt;sys/stat.h&gt;
+typedef struct work_tag
+{
+        struct work_tag *next;
+        char *path;
+        char *search;
+}work_t,*work_p;
+typedef struct worker_tag
+{
+        int index;
+        pthread_t tid;
+        struct crew_tag *crew;
+
+}worker_t,*worker_p;
+typedef struct crew_tag
+{
+        pthread_mutex_t mutex;
+        pthread_cond_t cond;
+        pthread_cond_t done;
+        long work_count;
+        work_t *first,*last;
+        worker_t workers[4];
+}crew_t,*crew_p;
+void *thread_route(void *arg)
+{
+worker_p worker = (worker_t *)arg;
+        crew_p crew = worker-&gt;crew;
+struct dirent *entry;
+        entry = (struct dirent*)malloc(sizeof(struct dirent)+sizeof(size_t));   
+pthread_mutex_lock(&amp;crew-&gt;mutex);
+while(crew-&gt;work_count ==0)
+        {
+                pthread_cond_wait(&amp;crew-&gt;cond,&amp;crew-&gt;mutex);
+        }
+        pthread_mutex_unlock(&amp;crew-&gt;mutex);
+        printf(&quot;worker is running: %d\n&quot;,worker-&gt;index);
+        while(1)
+        {
+                pthread_mutex_lock(&amp;crew-&gt;mutex);
+                while(crew-&gt;first==NULL)
+                {
+                        pthread_cond_wait(&amp;crew-&gt;cond,&amp;crew-&gt;mutex);
+                }
+                printf(&quot;worker %d woke %#lx %d\n&quot;,worker-&gt;index,crew-&gt;first,crew-&gt;work_count);
+                work_p work = crew-&gt;first;
+                crew-&gt;first = work-&gt;next;
+                if(crew-&gt;first==NULL)
+                        crew-&gt;last = NULL;
+                printf(&quot;worker %d took %#lx,leave first %#lx,last %#lx\n&quot;,worker-&gt;index,work,crew-&gt;first,crew-&gt;last);
+                pthread_mutex_unlock(&amp;crew-&gt;mutex);
+                struct stat filestat;
+                lstat(work-&gt;path,&amp;filestat);
+                if(S_ISLNK(filestat.st_mode))
+printf(&quot;worker %d:%s is a link,skipping.\n&quot;,worker-&gt;index,work-&gt;path);
+                else if(S_ISDIR(filestat.st_mode)){
+                        DIR *dir;
+                        struct dirent *result;
+                        dir = opendir(work-&gt;path);
+                        while(1){
+                                readdir_r(dir,entry,&amp;result);
+                if(result==NULL)
+                                        break;
+                                if(strcmp(entry-&gt;d_name,&quot;.&quot;)==0)
+                                        continue;
+                                if(strcmp(entry-&gt;d_name,&quot;..&quot;)==0)
+
+                                        continue;
+                                work_p new_work = (work_p)malloc(sizeof(work_t));
+                printf(&quot;test\n&quot;);
+                 path_max = pathconf (work-&gt;path, _PC_PATH_MAX);
+new_work-&gt;path = (char*)malloc (path_max);
+strcpy (new_work-&gt;path, work-&gt;path);
+                strcat (new_work-&gt;path, &quot;/&quot;);
+                strcat (new_work-&gt;path, entry-&gt;d_name);                 
+//       char *new_dir = strcat(work-&gt;path,entry-&gt;d_name);
+                                //new_work-&gt;path = new_dir;
+                                 new_work-&gt;search = work-&gt;search;
+                                 new_work-&gt;next = NULL;
+                                 pthread_mutex_lock(&amp;crew-&gt;mutex);
+                                 if(crew-&gt;first==NULL)
+{
+                                        crew-&gt;first = new_work;
+                                        crew-&gt;last = new_work;
+                                 }
+                                 else{
+                                        crew-&gt;last-&gt;next = new_work;
+                                        crew-&gt;last = new_work;
+                                 }
+                                 crew-&gt;work_count++;
+                                 printf(&quot;worker %d add work %#lx,first %#lx,last %#lx,%d\n&quot;,worker-&gt;index,new_work,crew-&gt;first,crew-&gt;last,crew-&gt;work_count);
+                                 pthread_cond_signal(&amp;crew-&gt;cond);
+                                 pthread_mutex_unlock(&amp;crew-&gt;mutex);
+                        }
+                        closedir(dir);
+                }
+                else if(S_ISREG(filestat.st_mode)){
+                        FILE *file;
+                        char buffer[256];
+                        file = fopen(work-&gt;path,&quot;r&quot;);
+                        fgets(buffer,sizeof(buffer),file);
+                        char *search_ptr;
+                        search_ptr = strstr(buffer,work-&gt;search);
+                        if(search_ptr!=NULL){
+                                printf(&quot;worker %d found \&quot;%s\&quot; in %s\n &quot;,worker-&gt;index,work-&gt;search,work-&gt;path);              
+                                 }
+                        fclose(file);
+
+                }
+                else{
+                        printf(&quot;worker %d:%s format is error.\n&quot;,worker-&gt;index,work-&gt;path);
+                }
+                free(work-&gt;path);
+                free(work);
+
+                pthread_mutex_lock(&amp;crew-&gt;mutex);
+                crew-&gt;work_count--;
+                printf(&quot;worker %d decremented work to %d\n&quot;,worker-&gt;index,crew-&gt;work_count);
+                if(crew-&gt;work_count&lt;=0){
+                        pthread_cond_broadcast(&amp;crew-&gt;done);
+                }                                                                
+                pthread_mutex_unlock(&amp;crew-&gt;mutex);
+        }
+        free(entry);
+        return NULL;
+}
+void crew_create(crew_t *crew)
+{
+        int worker_index;
+        crew-&gt;work_count = 0;
+        crew-&gt;first = NULL;
+        crew-&gt;last = NULL;
+        pthread_mutex_init(&amp;crew-&gt;mutex,NULL);
+pthread_cond_init(&amp;crew-&gt;cond,NULL);
+        pthread_cond_init(&amp;crew-&gt;done,NULL);
+        for(worker_index=0;worker_index&lt;4;worker_index++){
+                crew-&gt;workers[worker_index].index = worker_index;
+                crew-&gt;workers[worker_index].crew = crew;
+                pthread_create(&amp;crew-&gt;workers[worker_index].tid,
+                NULL,thread_route,(void *)&amp;crew-&gt;workers[worker_index]);
+        }
+}
+void crew_start(crew_t *crew,char *filepath,char *search)
+{
+        pthread_mutex_lock(&amp;crew-&gt;mutex);
+        work_p work = (work_p)malloc(sizeof(work_t));
+        work-&gt;path = filepath;
+        work-&gt;search = search;
+        work-&gt;next = NULL;
+        crew-&gt;first = work;
+        crew-&gt;last = work;
+        crew-&gt;work_count++;
+        pthread_cond_signal(&amp;crew-&gt;cond);
+        while(crew-&gt;work_count&gt;0)
+        {
+                pthread_cond_wait(&amp;crew-&gt;done,&amp;crew-&gt;mutex);
+        }
+        printf(&quot;crew is done!\n&quot;);
+        pthread_mutex_unlock(&amp;crew-&gt;mutex);
+}
+int main(void)             
+{
+        crew_t crew;
+        crew_create(&amp;crew);
+        char *filepath = &quot;/home/ubuntu/programs&quot;;
+        char *search = &quot;errno&quot;;
+        crew_start(&amp;crew,filepath,search);
+        return 0;
+}   
+</code></pre><p>View Code</p>
+<p>三、客户端/服务器：客户端线程将工作排队，交给一个服务器线程去处理。客户端或者以同步方式等待服务器执行，或异步执行并在后面需要时查找结果。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151946160-1569950158.png" alt=""></p>
+<p>代码示例如下：<br>一组线程都需要从stdin中读取输入，这将导致提示-读(prompt-and-<br>read)操作可能有些混乱。一个方法是使用flockfile和funlockfile函数来锁住stdin和stdout。，另一个方式是，使用服务器线程，将客户端读写操作排队，由服务器线程依次处理读写操作队列。</p>
+<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
+<pre><code>#include&lt;stdio.h&gt;                                                                
+#include&lt;pthread.h&gt;
+#define REQ_READ 1
+#define REQ_WRITE 2
+#define REQ_QUIT 3
+typedef struct client_tag
+{
+        struct client_tag *next;
+        int oper;
+        int sync;
+        int done_flag;
+        char prompt[32];
+        char text[128];
+        pthread_mutex_t mutex;
+        pthread_cond_t mutex;
+}client_t;
+typedef struct server_tag
+{
+        client_t *first,*last;
+        pthread_mutex_t mutex;
+        pthread_cond_t cond;
+}server_t;
+server_t server={NULL,NULL,PTHREAD_MUTEX_INITIALIZER,PTHREAD_COND_INITIALIZER};
+pthread_mutex_t main_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t main_cond = PTHREAD_COND_INITIALIZER;
+int thread_count = 4;
+void client_request(int oper,int sync,const char *prompt,char *string)
+{
+        pthread_mutex_lock(&amp;server.mutex);
+        client_t *client;
+client = (client_t *)malloc(sizeof(client_t));
+        client-&gt;next = NULL;
+        client-&gt;oper  = oper;
+        client-&gt;sync = sync;
+        if(prompt!=NULL)
+                strncpy(client-&gt;prompt,prompt,32);
+        if(oper==REQ_WRITE&amp;&amp;string!=NULL)
+                strncpy(client-&gt;text,string,128);
+        if(server.first==NULL)
+        {
+                server.first = client;
+                server.last = client;
+        }else{
+                server.last-&gt;next = client;
+                server.last = client;
+        }
+        pthread_cond_signal(&amp;server.cond);
+        if(sync)
+        {
+                while(!client-&gt;done_flag)
+                {
+                        pthread_cond_wait(&amp;client-&gt;cond,&amp;server.mutex);
+                }
+                if(oper==REQ_READ)
+                {
+                        if(strlen(client-&gt;text)&gt;0)
+                                strcpy(string,client-&gt;text);
+                }
+}
+                pthread_cond_destroy(&amp;client-&gt;cond);
+                free(request);
+        }
+        pthread_mutex_unlock(&amp;server.mutex);
+}
+void *client_route(void *arg)
+{
+        int index = (int)arg;
+        int loops;
+        char prompt[32];
+        char string[128],formatted[128];
+        sprintf(prompt,&quot;Client %d&gt;&quot;,index);
+        while(1)
+        {
+                client_request(REQ_READ,1,prompt,string);
+                if(strlen(string)==0)
+                        break;
+                for(loops=0;loops&lt;4;loops++)
+                {
+                        sprintf(formatted,&quot;(%d#%d) %s&quot;,index,loops,string);
+                        client_request(REQ_WRITE,0,NULL,formatted);
+                        sleep(1);
+                }                 
+ }
+}
+void *server_route(void *arg)
+{
+        client_t *client;
+        int oper;
+        while(1)
+        {
+                pthread_mutex_lock(&amp;server.mutex);
+                while(server.first==NULL)
+                {
+                        pthread_cond_wait(&amp;server.cond,&amp;server.mutex);
+                }
+                client = server.first;
+                server.first = client.next;
+                if(server.first==NULL)
+                        server.last = NULL;
+                pthread_mutex_unlock(&amp;server.mutex);
+                oper = client-&gt;oper;
+                switch(oper){
+                        case REQ_QUIT:
+                                break;
+                        case REQ_READ:
+                                if(strlen(client-&gt;prompt)&gt;0)
+                                        printf(client-&gt;prompt);
+                                fgets(client-&gt;text,128,stdin);
+                                break;
+                        case REQ_WRITE:       
+                                puts(client-&gt;text);
+                                break;
+                        default:
+                                break;
+                }
+                free(client);
+                if(oper==REQ_QUIT)
+                        break;
+        }
+        return NULL;
+}
+int main(void)
+{
+        pthread_t sid;
+        pthread_create(&amp;sid,NULL,server_route,NULL);
+
+        pthread_t cid;
+        int i;
+        for(i=0;i&lt;thread_count;i++)
+        {
+                pthread_create(&amp;cid,NULL,client_route,(void *)count);
+        }
+        pthread_mutex_lock(&amp;main_mutex);
+        while(thread_count&gt;0)
+        {
+                pthread_cond_wait(&amp;main_cond,&amp;main_mutex);
+        }
+        pthread_mutex_unlock(&amp;main_mutex);        
+        printf(&quot;Done!\n&quot;);
+        client_request(REQ_QUIT,1,NULL,NULL);
+        return 0;
+}    
+</code></pre><p>View Code</p>
+<p>参考资料：《POSIX多线程程序设计》 pp.81-110</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/04/15/posix多线程--三种基本线程编程模型/" data-title="posix多线程--三种基本线程编程模型" data-url="https://shijingjing07.github.io/2016/04/15/posix多线程--三种基本线程编程模型/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

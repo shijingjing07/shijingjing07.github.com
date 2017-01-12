@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>timestamp 与 rowversion | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="联机丛书：
+timestamp
+timestamp 这种数据类型表现自动生成的二进制数，确保这些数在数据库中是唯一的。timestamp 一般用作给表行加版本戳的机制。存储大小为 8字节。
+注释
+Transact-SQL timestamp 数据类型与在 SQL-92 标准中定义的 timestamp 数据类型不同。SQL-92 timestamp数据类型等价于 Transact-SQL date">
+  
+  <meta name="description" content="联机丛书：
+timestamp
+timestamp 这种数据类型表现自动生成的二进制数，确保这些数在数据库中是唯一的。timestamp 一般用作给表行加版本戳的机制。存储大小为 8字节。
+注释
+Transact-SQL timestamp 数据类型与在 SQL-92 标准中定义的 timestamp 数据类型不同。SQL-92 timestamp数据类型等价于 Transact-SQL date">
+<meta property="og:type" content="article">
+<meta property="og:title" content="timestamp 与 rowversion">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/07/30/timestamp 与 rowversion/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="联机丛书：
+timestamp
+timestamp 这种数据类型表现自动生成的二进制数，确保这些数在数据库中是唯一的。timestamp 一般用作给表行加版本戳的机制。存储大小为 8字节。
+注释
+Transact-SQL timestamp 数据类型与在 SQL-92 标准中定义的 timestamp 数据类型不同。SQL-92 timestamp数据类型等价于 Transact-SQL date">
+<meta property="og:updated_time" content="2017-01-12T01:35:29.254Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="timestamp 与 rowversion">
+<meta name="twitter:description" content="联机丛书：
+timestamp
+timestamp 这种数据类型表现自动生成的二进制数，确保这些数在数据库中是唯一的。timestamp 一般用作给表行加版本戳的机制。存储大小为 8字节。
+注释
+Transact-SQL timestamp 数据类型与在 SQL-92 标准中定义的 timestamp 数据类型不同。SQL-92 timestamp数据类型等价于 Transact-SQL date">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/07/30/timestamp 与 rowversion/">
+  <time datetime="2016-07-29T20:40:00.000Z">
+    2016-07-30
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">timestamp 与 rowversion</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>联机丛书：</p>
+<p>timestamp</p>
+<p>timestamp 这种数据类型表现自动生成的二进制数，确保这些数在数据库中是唯一的。timestamp 一般用作给表行加版本戳的机制。存储大小为 8<br>字节。</p>
+<p>注释</p>
+<p>Transact-SQL timestamp 数据类型与在 SQL-92 标准中定义的 timestamp 数据类型不同。SQL-92 timestamp<br>数据类型等价于 Transact-SQL datetime 数据类型。</p>
+<p>Microsoft® SQL Server™ 将来的版本可能会修改 Transact-SQL timestamp<br>数据类型的行为，使它与在标准中定义的行为一致。到那时，当前的 timestamp 数据类型将用 rowversion 数据类型替换。</p>
+<p>Microsoft® SQL Server™ 2000 引入了 timestamp 数据类型的 rowversion 同义词。在 DDL 语句中尽可能使用<br>rowversion 而不使用 timestamp。rowversion 受数据类型同义词行为的制约。有关更多信息，请参见数据类型同义词。</p>
+<p>在 CREATE TABLE 或 ALTER TABLE 语句中，不必为 timestamp 数据类型提供列名：</p>
+<p>CREATE TABLE ExampleTable (PriKey int PRIMARY KEY, timestamp)</p>
+<p>如果没有提供列名，SQL Server 将生成 timestamp 的列名。rowversion 数据类型同义词不具有这样的行为。指定 rowversion<br>时必须提供列名。</p>
+<p>一个表只能有一个 timestamp 列。每次插入或更新包含 timestamp 列的行时，timestamp 列中的值均会更新。这一属性使<br>timestamp 列不适合作为键使用，尤其是不能作为主键使用。对行的任何更新都会更改 timestamp<br>值，从而更改键值。如果该列属于主键，那么旧的键值将无效，进而引用该旧值的外键也将不再有效。如果该表在动态游标中引用，则所有更新均会更改游标中行的位置。如果该列属于索引键，则对数据行的所有更新还将导致索引更新。</p>
+<p>不可为空的 timestamp 列在语义上等价于 binary(8) 列。可为空的 timestamp 列在语义上等价于 varbinary(8) 列。</p>
+<pre><code>IF OBJECT_ID(&apos;test_timestamp&apos;) IS NOT NULL  
+BEGIN  
+    DROP TABLE test_timestamp  
+END  
+GO  
+CREATE TABLE test_timestamp  
+(  
+    id INT PRIMARY KEY IDENTITY(1,1),  
+    tname NVARCHAR(20),  
+    [rowversion] TIMESTAMP    
+)  
+GO  
+INSERT INTO test_timestamp (tname)  
+SELECT &apos;t1&apos; UNION  
+SELECT &apos;t2&apos; UNION  
+SELECT &apos;t3&apos; UNION  
+SELECT &apos;t4&apos;  
+
+SELECT * FROM test_timestamp tt  
+
+UPDATE test_timestamp  
+SET tname = &apos;t1_update&apos;  
+WHERE id=1  
+--1. 仅仅获取已更新的行  
+--   但之前的最大的那个 rowversion 要另外记录  
+SELECT * FROM test_timestamp tt WHERE tt.rowversion&gt;0x00000000000007DC  
+
+--2. 在两人同时修改同一条数据时，避免 先取出/后保存 覆盖前面的记录  
+DECLARE @rowversion TIMESTAMP  
+SELECT @rowversion = rowversion FROM test_timestamp tt WHERE tt.id=1;  
+--过了 5 秒后再修改, 在这 5　秒之内如果有其它update语句修改过此行则此修改无效了.  
+waitfor delay &apos;00:00:05&apos;  
+update test_timestamp set tname=&apos;t1_u01&apos; where id=1 AND rowversion=@rowversion  
+
+SELECT * FROM test_timestamp tt WHERE tt.id=1  
+</code></pre><p>转自：<a href="http://blog.csdn.net/yenange/article/details/14450691" target="_blank" rel="external">http://blog.csdn.net/yenange/article/details/14450691</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/07/30/timestamp 与 rowversion/" data-title="timestamp 与 rowversion" data-url="https://shijingjing07.github.io/2016/07/30/timestamp 与 rowversion/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

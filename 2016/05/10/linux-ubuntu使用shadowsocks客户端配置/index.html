@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>linux-ubuntu使用shadowsocks客户端配置 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="之前介绍过用搬瓦工的vps可以轻松的搭建shadowsocks服务，然后在windows上和安卓手机平板等上轻松科学上网，只要下载对应的程序即可，当来到ubuntu上怎么配置shadowsocks来科学上网呢？有两种方法可行
+1.安装shadowsocks命令行程序，配置命令。
+2.安装shadowsocks GUI图形界面程序，配置。
+个人推荐第一种，配置好后基本不用管。但使用的前提是 你的服">
+  
+  <meta name="description" content="之前介绍过用搬瓦工的vps可以轻松的搭建shadowsocks服务，然后在windows上和安卓手机平板等上轻松科学上网，只要下载对应的程序即可，当来到ubuntu上怎么配置shadowsocks来科学上网呢？有两种方法可行
+1.安装shadowsocks命令行程序，配置命令。
+2.安装shadowsocks GUI图形界面程序，配置。
+个人推荐第一种，配置好后基本不用管。但使用的前提是 你的服">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-ubuntu使用shadowsocks客户端配置">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/05/10/linux-ubuntu使用shadowsocks客户端配置/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="之前介绍过用搬瓦工的vps可以轻松的搭建shadowsocks服务，然后在windows上和安卓手机平板等上轻松科学上网，只要下载对应的程序即可，当来到ubuntu上怎么配置shadowsocks来科学上网呢？有两种方法可行
+1.安装shadowsocks命令行程序，配置命令。
+2.安装shadowsocks GUI图形界面程序，配置。
+个人推荐第一种，配置好后基本不用管。但使用的前提是 你的服">
+<meta property="og:image" content="https://aitanlu.com/wp-content/uploads/2016/04/sslocal.png">
+<meta property="og:image" content="https://aitanlu.com/wp-
+content/uploads/2016/04/sslocal-1.png">
+<meta property="og:image" content="https://aitanlu.com/wp-
+content/uploads/2016/04/shadowsocks-0.png">
+<meta property="og:image" content="https://aitanlu.com/wp-
+content/uploads/2016/04/shadowsocks-1.png">
+<meta property="og:image" content="https://aitanlu.com/wp-
+content/uploads/2016/04/shadowsocks-2.png">
+<meta property="og:image" content="https://aitanlu.com/wp-
+content/uploads/2016/04/shadowsocks-3.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:42.714Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-ubuntu使用shadowsocks客户端配置">
+<meta name="twitter:description" content="之前介绍过用搬瓦工的vps可以轻松的搭建shadowsocks服务，然后在windows上和安卓手机平板等上轻松科学上网，只要下载对应的程序即可，当来到ubuntu上怎么配置shadowsocks来科学上网呢？有两种方法可行
+1.安装shadowsocks命令行程序，配置命令。
+2.安装shadowsocks GUI图形界面程序，配置。
+个人推荐第一种，配置好后基本不用管。但使用的前提是 你的服">
+<meta name="twitter:image" content="https://aitanlu.com/wp-content/uploads/2016/04/sslocal.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/05/10/linux-ubuntu使用shadowsocks客户端配置/">
+  <time datetime="2016-05-10T05:49:00.000Z">
+    2016-05-10
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">linux-ubuntu使用shadowsocks客户端配置</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id=""><a href="#" class="headerlink" title=" "></a> </h1><p>之前介绍过用<a href="http://aitanlu.com/vps-bandwagonhost-openvpn-shadowsocks-
+server.html" target="_blank" rel="external">搬瓦工的vps</a>可以轻松的搭建shadowsocks服务，然后在windows上和安卓手机平板等上轻松科学上网，只要下载对应的程序即可，当来到ubuntu上怎么配置shadowsocks来科学上网呢？有两种方法可行</p>
+<p>1.安装shadowsocks命令行程序，配置命令。</p>
+<p>2.安装shadowsocks GUI图形界面程序，配置。</p>
+<p>个人推荐第一种，配置好后基本不用管。但使用的前提是 你的服务端已经搭建好或者你有别人提供的SS 服务（我也不知道该不该写这文章…）</p>
+<h2 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h2><h3 id="ubuntu安装shadowsocks"><a href="#ubuntu安装shadowsocks" class="headerlink" title="ubuntu安装shadowsocks"></a>ubuntu安装shadowsocks</h3><p>用PIP安装很简单</p>
+<p><code>apt-get install python-pip</code></p>
+<p>接着安装shadowsocks</p>
+<p><code>pip install shadowsocks</code></p>
+<p>当然你在安装时候肯定有提示需要安装一些依赖比如python-setuptools m2crypto<br>，依照提示安装然后再安装就好。也可以网上搜索有很多教程的。</p>
+<h3 id="启动shadowsocks"><a href="#启动shadowsocks" class="headerlink" title="启动shadowsocks"></a>启动shadowsocks</h3><p>安装好后，在本地我们要用到sslocal ，终端输入sslocal –help 可以查看帮助，像这样</p>
+<p><img src="https://aitanlu.com/wp-content/uploads/2016/04/sslocal.png" alt="sslocal"></p>
+<p>通过帮助提示我们知道各个参数怎么配置，比如 sslocal -c 后面加上我们的json配置文件，或者像下面这样直接命令参数写上运行。</p>
+<p>比如 sslocal -s 11.22.33.44 -p 50003 -k “123456” -l 1080 -t 600 -m aes-256-cfb</p>
+<p>-s表示服务IP, -p指的是服务端的端口，-l是本地端口默认是1080, -k 是密码（要加””）, -t超时默认300,-m是加密方法默认aes-256-cfb，</p>
+<p><strong>为了方便我推荐直接用sslcoal -c 配置文件路径 这样的方式，简单好用。</strong></p>
+<p>我们可以在/home/mudao/ 下新建个文件shadowsocks.json  (mudao是我在我电脑上的用户名，这里路径你自己看你的)。内容是这样：</p>
+<ol>
+<li><p><code>{</code></p>
+</li>
+<li><p><code>&quot;server&quot;:&quot;11.22.33.44&quot;,</code></p>
+</li>
+<li><p><code>&quot;server_port&quot;:50003,</code></p>
+</li>
+<li><p><code>&quot;local_port&quot;:1080,</code></p>
+</li>
+<li><p><code>&quot;password&quot;:&quot;123456&quot;,</code></p>
+</li>
+<li><p><code>&quot;timeout&quot;:600,</code></p>
+</li>
+<li><p><code>&quot;method&quot;:&quot;aes-256-cfb&quot;</code></p>
+</li>
+<li><p><code>}</code></p>
+</li>
+</ol>
+<p>server  你服务端的IP<br>servier_port  你服务端的端口<br>local_port  本地端口，一般默认1080<br>passwd  ss服务端设置的密码<br>timeout  超时设置 和服务端一样<br>method  加密方法 和服务端一样</p>
+<p>确定上面的配置文件没有问题，然后我们就可以在终端输入 sslocal -c /home/mudao/shadowsocks.json<br>回车运行。如果没有问题的话，下面会是这样…</p>
+<p><img src="https://aitanlu.com/wp-
+content/uploads/2016/04/sslocal-1.png" alt="sslocal">（如果继续请不要关闭这个终端）</p>
+<p>如果你选择这一种请跳过第二种。你可以去系统的代理设置按照说明设置代理，但一般是全局的，<br>然而我们访问baidu,taobao等着些网站如果用代理就有点绕了，而且还会浪费服务器流量。我们最好配置我们的浏览器让它可以自动切换，该用代理用<br>代理该直接连接自动直接连接。所以请看配置浏览器。</p>
+<h2 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h2><p>安装GUI 图形界面程序，然后按照提示配置相对应的参数。安装教程地址：<a href="https://github.com/shadowsocks/shadowsocks-
+qt5/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97" target="_blank" rel="external">shadowsocks-qt5<br>安装指南</a></p>
+<p>在ubuntu上可以这样，通过PPA源安装，仅支持Ubuntu 14.04或更高版本。</p>
+<ol>
+<li><p><code>sudo add-apt-repository ppa:hzwhuang/ss-qt5</code></p>
+</li>
+<li><p><code>sudo apt-get update</code></p>
+</li>
+<li><p><code>sudo apt-get install shadowsocks-qt5</code></p>
+</li>
+</ol>
+<p>由于是图形界面，配置和windows基本没啥差别就不赘述了。经过上面的配置，你只是启动了sslocal<br>但是要上网你还需要配置下浏览器到指定到代理端口比如1080才可以正式上网。</p>
+<h2 id="配置浏览器"><a href="#配置浏览器" class="headerlink" title="配置浏览器"></a>配置浏览器</h2><p>假如你上面任选一种方式已经开始运行sslocal了，火狐那个代理插件老是订阅不了gfwlist所以配置自动模式的话不好使。这里用的是chrome，你可以在Ubuntu软件中心下载得到。</p>
+<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>我们需要给chrome安装SwitchyOmega插件，但是没有代理之前是不能从谷歌商店安装这个插件的，但是我们可以从Github上直接下载最新版<br><a href="https://github.com/FelisCatus/SwitchyOmega/releases/" target="_blank" rel="external">https://github.com/FelisCatus/SwitchyOmega/releases/</a><br>（这个是chrome的）然后浏览器地址打开chrome://extensions/，将下载的插件托进去安装。</p>
+<h3 id="设置代理地址"><a href="#设置代理地址" class="headerlink" title="设置代理地址"></a>设置代理地址</h3><p>安装好插件会自动跳到设置选项，有提示你可以跳过。左边新建情景模式-选择代理服务器-<br>比如命名为SS（叫什么无所谓）其他默认之后创建，之后在代理协议选择SOCKS5，地址为127.0.0.1,端口默认1080 。然后保存即应用选项。</p>
+<p><img src="https://aitanlu.com/wp-
+content/uploads/2016/04/shadowsocks-0.png" alt="shadowsocks-0"></p>
+<p><img src="https://aitanlu.com/wp-
+content/uploads/2016/04/shadowsocks-1.png" alt="shadowsocks-1"></p>
+<h3 id="设置自动切换"><a href="#设置自动切换" class="headerlink" title="设置自动切换"></a>设置自动切换</h3><p>接着点击自动切换 ( Auto<br>switch）上面的不用管，在按照规则列表匹配请求后面选择刚才新建的SS，默认情景模式选择直接连接。点击应用选项保存。再往下规则列表设置选择AutoProxy<br>然后将<strong><a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external">这个地址</a></strong>填进去，点击下面的立即更新情景模式，会有提示更新成功！</p>
+<p><img src="https://aitanlu.com/wp-
+content/uploads/2016/04/shadowsocks-2.png" alt="shadowsocks-2">sorry编辑图片时候少了一步，就是填好规则列表地址后先点击立即更新情景模式<br>后再应用选项保存</p>
+<p><a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</a></p>
+<p>点击浏览器右上角的SwitchyOmega图标，下面选择自动切换，然后打开google.com试试，其他的就不在这贴图了。</p>
+<p><img src="https://aitanlu.com/wp-
+content/uploads/2016/04/shadowsocks-3.png" alt="shadowsocks-3"></p>
+<h2 id="开机后台自动运行ss"><a href="#开机后台自动运行ss" class="headerlink" title="开机后台自动运行ss"></a>开机后台自动运行ss</h2><p>如果你选择了第二种可以不管这个</p>
+<p>如果你上面可以代理上网了可以进行这一步，之前我让你不要关掉终端，因为关掉终端的时候代理就随着关闭了，之后你每次开机或者关掉终端之后，下次你再想用代理就要重新在终端输入这样的命令<br>sslocal  -c /home/mudao/shadowsocks.json ，挺麻烦是不？</p>
+<p>我们现在可以在你的ubuntu上安装一个叫做supervisor的程序来管理你的sslocal启动。关于supervisor更多点击这</p>
+<p><code>sudo apt-get install supervisor</code></p>
+<p>安装好后我们可以在/etc/supervisor/目录下找到supervisor.conf配置文件，我们可以用以下命令来编辑</p>
+<p><code>sudo gedit /etc/supervisor/supervisor.conf</code></p>
+<p>在这个文件的最后加上以下内容</p>
+<ol>
+<li><p><code>[program:shadowsocks]</code></p>
+</li>
+<li><p><code>command=sslocal -c /home/mudao/shadowsocks.json</code></p>
+</li>
+<li><p><code>autostart=true</code></p>
+</li>
+<li><p><code>autorestart=true</code></p>
+</li>
+<li><p><code>user=root</code></p>
+</li>
+<li><p><code>log_stderr=true</code></p>
+</li>
+<li><p><code>logfile=/var/log/shadowsocks.log</code></p>
+</li>
+</ol>
+<p>command = 这里json文件的路径根据你的文件路径来填写。确认无误后记得保存。sslocal 和ssserver这两个命令是被存在<br>/usr/local/bin/下面的，我们要拷贝一份命令文件到/bin</p>
+<p><code>sudo cp /usr/local/bin/sslocal /bin</code>(注意空格)</p>
+<p>现在关掉你之前运行sslocal命令的终端，再打开终端输入sudo service supervisor restart<br>然后去打开浏览器看看可不可以继续代理上网。你也可以用ps -ef|grep sslocal命令查看sslocal是否在运行。</p>
+<p>这个时候我们需要在/etc下编辑一个叫rc.local的文件 ，让supervisor开机启动。</p>
+<p><code>sudo gedit /etc/rc.local</code></p>
+<p>在这个配置文件的exit 0前面一行加上 service supervisor start<br>保存。看你是否配置成功你可以在现在关机重启之后直接打开浏览器看是否代理成功。</p>
+<p>转自：<a href="https://aitanlu.com/ubuntu-shadowsocks-ke-
+hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsocks客户端配置</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/05/10/linux-ubuntu使用shadowsocks客户端配置/" data-title="linux-ubuntu使用shadowsocks客户端配置" data-url="https://shijingjing07.github.io/2016/05/10/linux-ubuntu使用shadowsocks客户端配置/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

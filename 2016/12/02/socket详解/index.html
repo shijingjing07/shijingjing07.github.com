@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>socket详解 | 迪米特</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="迪米特">
+  
+  
+    <meta name="description" content="socket网络编程1.进程间如何通信本地进程间通信我们知道有以下几种方式：1)消息传递(管道，FIFO，消息队列)管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。2)共享内存不同进程访问同一个逻辑内存3)同步互斥量，条件变量，读写锁，信号量4)远程过程调用但是网络间的进程是如何通信的呢？如浏览器进程如何与web服务器通信，QQ聊天时，">
+  
+  <meta name="description" content="socket网络编程1.进程间如何通信本地进程间通信我们知道有以下几种方式：1)消息传递(管道，FIFO，消息队列)管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。2)共享内存不同进程访问同一个逻辑内存3)同步互斥量，条件变量，读写锁，信号量4)远程过程调用但是网络间的进程是如何通信的呢？如浏览器进程如何与web服务器通信，QQ聊天时，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="socket详解">
+<meta property="og:url" content="https://shijingjing07.github.io/2016/12/02/socket详解/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="socket网络编程1.进程间如何通信本地进程间通信我们知道有以下几种方式：1)消息传递(管道，FIFO，消息队列)管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。2)共享内存不同进程访问同一个逻辑内存3)同步互斥量，条件变量，读写锁，信号量4)远程过程调用但是网络间的进程是如何通信的呢？如浏览器进程如何与web服务器通信，QQ聊天时，">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161202213659849-1737384138.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161202213749927-565791155.png">
+<meta property="og:updated_time" content="2017-01-12T01:35:15.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="socket详解">
+<meta name="twitter:description" content="socket网络编程1.进程间如何通信本地进程间通信我们知道有以下几种方式：1)消息传递(管道，FIFO，消息队列)管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。2)共享内存不同进程访问同一个逻辑内存3)同步互斥量，条件变量，读写锁，信号量4)远程过程调用但是网络间的进程是如何通信的呢？如浏览器进程如何与web服务器通信，QQ聊天时，">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/300946/201612/300946-20161202213659849-1737384138.png">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">迪米特</a></h1>
+    <p><a href="/">路过秋天</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+        <li><a href="/atom.xml">rss</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/12/02/socket详解/">
+  <time datetime="2016-12-02T05:39:00.000Z">
+    2016-12-02
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">socket详解</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>socket网络编程<br>1.进程间如何通信<br>本地进程间通信我们知道有以下几种方式：<br>1)消息传递(管道，FIFO，消息队列)<br>管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。<br>2)共享内存<br>不同进程访问同一个逻辑内存<br>3)同步<br>互斥量，条件变量，读写锁，信号量<br>4)远程过程调用<br>但是网络间的进程是如何通信的呢？如浏览器进程如何与web服务器通信，QQ聊天时，QQ进程如何与服务器或你好友所在的QQ进程通信？<br>答案是socket，网络间的进程通信几乎都是用的socket.  </p>
+<p>2.如何识别网络中唯一进程<br>本地进程间可以通过PID来唯一标识一个进程<br>网络中我们根据TCP/IP协议族来标识唯一进程，网络层的”IP地址”可唯一标识网络中的主机，而传输层的”协议+端口”可唯一标识主机中的进程。”IP地址+协议+端口”就可以确定唯一进程了。<br>3.进程间如何通过socket进行通讯<br>Linux的哲学是一切皆文件，socket也是一种文件。可以使用”打开-读写-关闭”来操作。socket是应用层和运输层之间的一个抽象层。<br>socket通信流程：<br>1)服务端创建socket<br>socket()<br>2)服务端绑定端口号<br>bind()<br>3)服务端监听端口号<br>listen()<br>4)客户端创建socket<br>socket()<br>5)客户端主动打开socket,连接服务器端socket<br>connect()<br>6)服务端接收客户端请求，socket被动打开<br>同步：accept() 异步：beginaccept()<br>7)客户端socket向服务端socket写信息<br>send()<br>8)服务端socket读取信息<br>9)客户端socket关闭<br>10)服务端socket关闭  </p>
+<p>4.socket建立连接的三次握手</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161202213659849-1737384138.png" alt=""></p>
+<p>第一步，客户端调用connect，向服务器发送SYN J包，connect阻塞<br>第二步，服务端收到SYN J包，调用accept函数接收请求，向客户端发送 SYN K,ACK J+1<br>        accept函数阻塞<br>第三步，客户端收到服务器的SYN K,ACK J+1后，connect返回，进行SYN K确认，服务端收到ACK<br>K+1时，accept返回，三次握手完成，连接建立。</p>
+<p>5.socket释放连接的四次握手</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161202213749927-565791155.png" alt=""><br>第一步，客户端关闭连接，发送一个FIN M到服务端<br>第二步，服务端接收到FIN M后，执行被动关闭，对这个FIN M进行确认ACK M+1。<br>第三步，当服务端发送完毕后，再发送FIN N到客户端<br>第四步，客户端接收到FIN N调用close关闭它的socket,发送一个ACK N+1到服务端<br>服务端接收到这个ACK N+1关闭它的socket</p>
+<p>6.为什么建立连接是三次握手，释放连接需要四次<br>这是因为进行释放连接的第二步时，有可能服务端仍有数据发送给客户端，因此，需要分开，先对客户端FIN报文应答，当服务端数据发送完毕后，再发送FIN报文到客户端。  </p>
+<p>7.socket连接示例<br>服务器端</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;string.h&gt;
+#include&lt;errno.h&gt;
+#include&lt;sys/types.h&gt;
+#include&lt;sys/socket.h&gt;
+#include&lt;netinet/in.h&gt;
+
+#define MAXLINE 4096
+
+int main(int argc, char** argv)
+{
+    int    listenfd, connfd;
+    struct sockaddr_in     servaddr;
+    char    buff[4096];
+    int     n;
+
+    if( (listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1 ){
+    printf(&quot;create socket error: %s(errno: %d)\n&quot;,strerror(errno),errno);
+    exit(0);
+    }
+
+    memset(&amp;servaddr, 0, sizeof(servaddr));
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servaddr.sin_port = htons(6666);
+
+    if( bind(listenfd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) == -1){
+    printf(&quot;bind socket error: %s(errno: %d)\n&quot;,strerror(errno),errno);
+    exit(0);
+    }
+
+    if( listen(listenfd, 10) == -1){
+    printf(&quot;listen socket error: %s(errno: %d)\n&quot;,strerror(errno),errno);
+    exit(0);
+    }
+
+    printf(&quot;======waiting for client&apos;s request======\n&quot;);
+    while(1){
+    if( (connfd = accept(listenfd, (struct sockaddr*)NULL, NULL)) == -1){
+        printf(&quot;accept socket error: %s(errno: %d)&quot;,strerror(errno),errno);
+        continue;
+    }
+    n = recv(connfd, buff, MAXLINE, 0);
+    buff[n] = &apos;\0&apos;;
+    printf(&quot;recv msg from client: %s\n&quot;, buff);
+    close(connfd);
+    }
+
+    close(listenfd);
+}
+</code></pre><p>客户端</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;string.h&gt;
+#include&lt;errno.h&gt;
+#include&lt;sys/types.h&gt;
+#include&lt;sys/socket.h&gt;
+#include&lt;netinet/in.h&gt;
+
+#define MAXLINE 4096
+
+int main(int argc, char** argv)
+{
+    int    sockfd, n;
+    char    recvline[4096], sendline[4096];
+    struct sockaddr_in    servaddr;
+
+    if( argc != 2){
+    printf(&quot;usage: ./client &lt;ipaddress&gt;\n&quot;);
+    exit(0);
+    }
+
+    if( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) &lt; 0){
+    printf(&quot;create socket error: %s(errno: %d)\n&quot;, strerror(errno),errno);
+    exit(0);
+    }
+
+    memset(&amp;servaddr, 0, sizeof(servaddr));
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_port = htons(6666);
+    if( inet_pton(AF_INET, argv[1], &amp;servaddr.sin_addr) &lt;= 0){
+    printf(&quot;inet_pton error for %s\n&quot;,argv[1]);
+    exit(0);
+    }
+
+    if( connect(sockfd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) &lt; 0){
+    printf(&quot;connect error: %s(errno: %d)\n&quot;,strerror(errno),errno);
+    exit(0);
+    }
+
+    printf(&quot;send msg to server: \n&quot;);
+    fgets(sendline, 4096, stdin);
+    if( send(sockfd, sendline, strlen(sendline), 0) &lt; 0)
+    {
+    printf(&quot;send msg error: %s(errno: %d)\n&quot;, strerror(errno), errno);
+    exit(0);
+    }
+
+    close(sockfd);
+    exit(0);
+}
+</code></pre>
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2016/12/02/socket详解/" data-title="socket详解" data-url="https://shijingjing07.github.io/2016/12/02/socket详解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijingjing07"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2017 <a href="/">迪米特</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'shijingjing07' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>
