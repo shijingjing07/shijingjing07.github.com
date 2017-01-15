@@ -1,19 +1,92 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <title>PostgreSQL9.6新功能 | 迪米特</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
-    <meta name="author" content="迪米特">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
   
   
-    <meta name="description" content="PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功能。
-纵向扩展的并行查询9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内">
   
-  <meta name="description" content="PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功能。
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="迪米特" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功能。
 纵向扩展的并行查询9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL9.6新功能">
@@ -26,59 +99,228 @@
 <meta name="twitter:title" content="PostgreSQL9.6新功能">
 <meta name="twitter:description" content="PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功能。
 纵向扩展的并行查询9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内">
-  
-  
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://shijingjing07.github.io/2016/09/30/PostgreSQL9.6新功能/"/>
+
+
+
+
+
+  <title> PostgreSQL9.6新功能 | 迪米特 </title>
 </head>
 
-<body>
-  <div class="wrapper">
-    <header id="header">
-  <div class="title">
-    <h1><a href="/">迪米特</a></h1>
-    <p><a href="/">路过秋天</a></p>
-  </div>
-  <nav class="nav">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives">Archives</a></li>
-      
-        <li><a href="/about">About</a></li>
-      
-        <li><a href="/atom.xml">rss</a></li>
-      
-      
-    </ul>
-    <div class="clearfix"></div>
-  </nav>
-  <div class="clearfix"></div>
-</header>
-    <div class="content"><article class="post">
-  <header>
-    
-      <div class="icon"></div>
-      <a href="/2016/09/30/PostgreSQL9.6新功能/">
-  <time datetime="2016-09-29T21:20:00.000Z">
-    2016-09-30
-  </time>
-</a>
-    
-    
-  
-    <h1 class="title">PostgreSQL9.6新功能</h1>
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
   
 
-  </header>
+
+
+
+
+
+
+
+
+
   
-  <div class="entry">
+  
     
-      <p>PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-<br>up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、<br>性能和易用性方面的改进，并提供了其他许多方面的功能。</p>
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">迪米特</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">路过秋天</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/09/30/PostgreSQL9.6新功能/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                PostgreSQL9.6新功能
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-30T05:20:00+08:00">
+                2016-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-<br>up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、<br>性能和易用性方面的改进，并提供了其他许多方面的功能。</p>
 <h3 id="纵向扩展的并行查询"><a href="#纵向扩展的并行查询" class="headerlink" title="纵向扩展的并行查询"></a>纵向扩展的并行查询</h3><p>9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内核来进行运算，这样返回查询结果更快。<br>此版本的并行功能包括并行顺序表扫描、聚合和联接。根据详细信息和可用内核，并行性可以加快大数据查询，最快时可高达32倍。</p>
 <p>Synthetic Genomics的首席数据库架构师Mike Sofen表示， “我们将我们整个基因组数据平台-<br>250亿行旧的MySQL数据迁移到一个Postgres数据库， 利用了 JSONB 数据类型的行压缩功能，以及优秀的GIN,BRIN和B-Tree索引模式。<br>期待在9.6版本中，利用并行查询功能，在我们查询大表数据时，拥有更强劲的伸缩性，更优的查询性能”</p>
 <h3 id="横向扩展的同步复制与postgres-fdw"><a href="#横向扩展的同步复制与postgres-fdw" class="headerlink" title="横向扩展的同步复制与postgres_fdw"></a>横向扩展的同步复制与postgres_fdw</h3><p>PostgreSQL的同步复制功能,添加了两个选项，使它能够用于数据库集群一致读取维护。 首先，它现在允许配置一组的同步的复制数据库。<br>第二，”remote_apply”模式创建多个跨数据节点的一致的读视图。 这些功能使用内置的复制来维护一组的”相同的”节点实现，可以用于数据库的读负载均衡。</p>
@@ -108,76 +350,319 @@
 </li>
 </ul>
 
-    
-  </div>
-  <footer>
-    
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/30/python程序的调试方法/" rel="next" title="python程序的调试方法">
+                <i class="fa fa-chevron-left"></i> python程序的调试方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/02/数字证书/" rel="prev" title="数字证书">
+                数字证书 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
       
       
-    
-    <div class="clearfix"></div>
-  </footer>
-</article>
+    </footer>
+  </article>
 
 
-<section id="comment">
-<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="2016/09/30/PostgreSQL9.6新功能/" data-title="PostgreSQL9.6新功能" data-url="https://shijingjing07.github.io/2016/09/30/PostgreSQL9.6新功能/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"shijingjing07"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</section>
-</div>
+
+    <div class="post-spread">
+      
+    </div>
   </div>
-  <footer id="footer"><div class="copyright">
-  
-  &copy; 2017 <a href="/">迪米特</a>
-  
-</div>
-<div class="theme-copyright">
-  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
-   | 
-  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
-</div>
-<div class="clearfix"></div></footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-<script src="/js/scale.fix.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
 
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="迪米特" />
+          <p class="site-author-name" itemprop="name">迪米特</p>
+          <p class="site-description motion-element" itemprop="description">路过秋天</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#纵向扩展的并行查询"><span class="nav-number">1.</span> <span class="nav-text">纵向扩展的并行查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#横向扩展的同步复制与postgres-fdw"><span class="nav-number">2.</span> <span class="nav-text">横向扩展的同步复制与postgres_fdw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更好的文本短语搜索"><span class="nav-number">3.</span> <span class="nav-text">更好的文本短语搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更畅、更快和更易使用"><span class="nav-number">4.</span> <span class="nav-text">更畅、更快和更易使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他功能"><span class="nav-number">5.</span> <span class="nav-text">其他功能</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迪米特</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
 
 <script type="text/javascript">
-  var duoshuoQuery = { short_name: 'shijingjing07' };
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';
-    ds.async = true;
-    ds.src = 'http://static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
 </script>
 
 
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-  (function($){
-    $('.fancybox').fancybox();
-  })(jQuery);
-</script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
 
 </body>
 </html>
