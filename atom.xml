@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shijingjing07.github.io/"/>
-  <updated>2017-01-16T09:36:16.490Z</updated>
+  <updated>2017-01-16T09:41:42.807Z</updated>
   <id>https://shijingjing07.github.io/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="https://shijingjing07.github.io/2017/01/16/webapi%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/"/>
     <id>https://shijingjing07.github.io/2017/01/16/webapi应用架构详解/</id>
     <published>2017-01-16T09:23:46.000Z</published>
-    <updated>2017-01-16T09:36:16.490Z</updated>
+    <updated>2017-01-16T09:41:42.807Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="1-webapi适用场景"><a href="#1-webapi适用场景" class="headerlink" title="1.webapi适用场景"></a>1.webapi适用场景</h2><p>常见的应用包括以下四类，PC客户端程序，APP程序，网站程序，H5程序。<br>这些应用需要的数据，服务可由同一个接口服务程序提供，这样，大大提高了产品多平台设计开发的效率，避免了重复的编码。</p>
-<h2 id="2-什么是webapi"><a href="#2-什么是webapi" class="headerlink" title="2.什么是webapi"></a>2.什么是webapi</h2><p>webapi一般采用restful风格。以tornado为例,url路由配置如下：  </p>
+    <content type="html"><![CDATA[<h2 id="webapi适用场景"><a href="#webapi适用场景" class="headerlink" title="webapi适用场景"></a>webapi适用场景</h2><p>常见的应用包括以下四类，PC客户端程序，APP程序，网站程序，H5程序。<br>这些应用需要的数据，服务可由同一个接口服务程序提供，这样，大大提高了产品多平台设计开发的效率，避免了重复的编码。</p>
+<h2 id="什么是webapi"><a href="#什么是webapi" class="headerlink" title="什么是webapi"></a>什么是webapi</h2><p>webapi一般采用restful风格。以tornado为例,url路由配置如下：  </p>
 <pre><code>url = [
     (r&apos;/test&apos;, testfc.testHandler)
 ]
@@ -47,11 +47,11 @@
 <pre><code>http://127.0.0.1:9999/test
 </code></pre><p>返回结果：</p>
 <pre><code>{&quot;status&quot;: &quot;true&quot;, &quot;code&quot;: &quot;200&quot;, &quot;result&quot;: &quot;success&quot;}
-</code></pre><h2 id="3-webapi架构设计"><a href="#3-webapi架构设计" class="headerlink" title="3.webapi架构设计"></a>3.webapi架构设计</h2><p>如何确认一个app能够访问webapi?<br>使用AppID验证app访问webapi的合法性，AppID为服务端给出的一个ID标志。<br>我们可以为web/app/winform分别分配一个ID，从而可以确定访问的合法性，和访问的渠道。  </p>
+</code></pre><h2 id="webapi架构设计"><a href="#webapi架构设计" class="headerlink" title="webapi架构设计"></a>webapi架构设计</h2><p>如何确认一个app能够访问webapi?<br>使用AppID验证app访问webapi的合法性，AppID为服务端给出的一个ID标志。<br>我们可以为web/app/winform分别分配一个ID，从而可以确定访问的合法性，和访问的渠道。  </p>
 <p>如何保证app参数的正确性，没有被篡改？<br>客户端使用AppID对应的AppSecert，对参数进行签名(MD5/SHA等)<br>服务端使用同样的方式签名，和客户端签名校验。  </p>
 <p>如何防止webapi url被截获，重新访问？<br>客户端访问webapi时带上时间戳参数，服务端对时间戳进行校验，如10分钟内的访问才是有效的。  </p>
 <p>涉及具体用户的操作时，如何验证用户？<br>可以使用username,psw参数的方式访问webapi。但是这种方式很不安全。<br>使用授权token是很好的解决办法。在用户登录成功时，服务端生成一个授权码，对应用户信息。<br>访问时带上token参数，服务端查询token有效性，和token对应的用户信息。  </p>
-<h2 id="4-使用示例"><a href="#4-使用示例" class="headerlink" title="4.使用示例"></a>4.使用示例</h2><p>登录代码如下：  </p>
+<h2 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h2><p>登录代码如下：  </p>
 <pre><code>import uuid
 import redis
 class testLoginHandler(BaseHandler):
@@ -89,7 +89,7 @@ class testLoginHandler(BaseHandler):
     
     <summary type="html">
     
-      &lt;h2 id=&quot;1-webapi适用场景&quot;&gt;&lt;a href=&quot;#1-webapi适用场景&quot; class=&quot;headerlink&quot; title=&quot;1.webapi适用场景&quot;&gt;&lt;/a&gt;1.webapi适用场景&lt;/h2&gt;&lt;p&gt;常见的应用包括以下四类，PC客户端程序，APP程序，网站程序
+      &lt;h2 id=&quot;webapi适用场景&quot;&gt;&lt;a href=&quot;#webapi适用场景&quot; class=&quot;headerlink&quot; title=&quot;webapi适用场景&quot;&gt;&lt;/a&gt;webapi适用场景&lt;/h2&gt;&lt;p&gt;常见的应用包括以下四类，PC客户端程序，APP程序，网站程序，H5程序。&lt;b
     
     </summary>
     
