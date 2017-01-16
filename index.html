@@ -190,7 +190,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -200,7 +200,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -283,7 +283,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T17:23:46+08:00">
                 2017-01-16
@@ -304,7 +304,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -374,7 +374,108 @@
 <p>如何保证app参数的正确性，没有被篡改？<br>客户端使用AppID对应的AppSecert，对参数进行签名(MD5/SHA等)<br>服务端使用同样的方式签名，和客户端签名校验。  </p>
 <p>如何防止webapi url被截获，重新访问？<br>客户端访问webapi时带上时间戳参数，服务端对时间戳进行校验，如10分钟内的访问才是有效的。  </p>
 <p>涉及具体用户的操作时，如何验证用户？<br>可以使用username,psw参数的方式访问webapi。但是这种方式很不安全。<br>使用授权token是很好的解决办法。在用户登录成功时，服务端生成一个授权码，对应用户信息。<br>访问时带上token参数，服务端查询token有效性，和token对应的用户信息。  </p>
-<h2 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h2><p>登录代码如下：  </p>
+<h2 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h2><p>签名代码如下:</p>
+<pre><code>#coding:utf-8
+
+__author__ = &apos;jy&apos;
+
+import sys
+reload(sys)
+sys.setdefaultencoding(&apos;utf-8&apos;)
+sys.path.append(&apos;..&apos;)
+import datetime
+import time
+import math
+import hashlib
+import urllib
+def md5encode(source):
+    m2 = hashlib.md5()
+    m2.update(source)
+    return m2.hexdigest()
+def dataSort(data):
+    dataKeys=data.keys()
+    dataKeys.sort()
+    result=&quot;&quot;
+    for key in dataKeys:
+        result+=key.strip()
+        result+=data[key].strip()
+    return result 
+def dataSecret(data):
+    secret=&quot;af4d2c92-4bb7-11e5-8111-00163e001071&quot;
+    data=secret+data+secret
+    return data 
+def getSign(postdata):
+    try:
+        #升序排列,合并为字符串
+        dataSign=dataSort(postdata)
+        #加密钥
+        dataSign=dataSecret(dataSign)
+        #md5编码
+        dataSign=md5encode(dataSign)
+        return dataSign
+    except Exception as error:
+        pass
+</code></pre><p>验证url参数代码如下：</p>
+<pre><code>#coding:utf-8
+__author__ = &apos;haoy&apos;
+
+import sys
+reload(sys)
+sys.setdefaultencoding(&apos;utf-8&apos;)
+sys.path.append(&apos;..&apos;)
+from tornado.escape import json_decode, json_encode
+import datetime
+import time
+import math
+from utils.sign import *
+def valiUrldata(data):
+    result={}
+    try:
+        #判断appKey是否合法
+        appKey=data.get(&quot;appKey&quot;,&quot;&quot;) 
+        if appKey!=&quot;21ec85ec-30ca-491b-8bfb-c05e479eadc0&quot;:
+            result[&quot;code&quot;]=&quot;300&quot;
+            result[&quot;status&quot;]=&quot;false&quot;
+            result[&quot;result&quot;]=&quot;账号不合法&quot;
+            return result
+        #appKey对应的secret
+        appSecret=&quot;af4d2c92-4bb7-11e5-8111-00163e001071&quot;
+        #检验时间
+        timeStamp=data.get(&quot;timeStamp&quot;,&quot;0&quot;)
+        timeStamp=int(timeStamp)
+        nowtime=int(round(time.time()))
+
+        if abs(timeStamp-nowtime)&gt;600:
+            result[&quot;code&quot;]=&quot;300&quot;
+            result[&quot;status&quot;]=&quot;false&quot;
+            result[&quot;result&quot;]=&quot;请求时间戳不合法&quot;
+            return result
+
+        #校验签名
+        clientSign=data.get(&quot;sign&quot;,&quot;&quot;)
+        if clientSign==&quot;&quot;:
+            result[&quot;code&quot;]=&quot;300&quot;
+            result[&quot;status&quot;]=&quot;false&quot;
+            result[&quot;result&quot;]=&quot;请求参数签名不能为空&quot;
+            return result
+        data.pop(&quot;sign&quot;)
+        serverSign=getSign(data)
+        print serverSign
+        if clientSign!=serverSign:
+            result[&quot;code&quot;]=&quot;300&quot;
+            result[&quot;status&quot;]=&quot;false&quot;
+            result[&quot;result&quot;]=&quot;请求参数签名不合法&quot;
+            return result
+        result[&quot;code&quot;]=&quot;200&quot;
+        result[&quot;status&quot;]=&quot;true&quot;
+        result[&quot;result&quot;]=&quot;通过验证&quot;
+        return result
+    except Exception as error:
+        result[&quot;code&quot;]=&quot;300&quot;
+        result[&quot;status&quot;]=&quot;false&quot;
+        result[&quot;result&quot;]=&quot;异常:&quot;+error.message
+        return result
+</code></pre><p>登录代码如下：  </p>
 <pre><code>import uuid
 import redis
 class testLoginHandler(BaseHandler):
@@ -486,7 +587,7 @@ class testLoginHandler(BaseHandler):
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-06T07:55:00+08:00">
                 2017-01-06
@@ -631,7 +732,7 @@ class testLoginHandler(BaseHandler):
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-30T09:43:00+08:00">
                 2016-12-30
@@ -768,7 +869,7 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-30T03:00:00+08:00">
                 2016-12-30
@@ -892,7 +993,7 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-28T11:21:00+08:00">
                 2016-12-28
@@ -1020,7 +1121,7 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-28T02:16:00+08:00">
                 2016-12-28
@@ -1170,7 +1271,7 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-27T14:19:00+08:00">
                 2016-12-27
@@ -1781,7 +1882,7 @@ class CompanyManager{
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T13:42:00+08:00">
                 2016-12-20
@@ -2006,7 +2107,7 @@ class CompanyManager{
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T13:04:00+08:00">
                 2016-12-20
@@ -2215,7 +2316,7 @@ GIL.html</a></p>
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-19T05:37:00+08:00">
                 2016-12-19
@@ -2432,7 +2533,7 @@ logger.critical(&apos;critical message dict&apos;)
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -2441,7 +2542,7 @@ logger.critical(&apos;critical message dict&apos;)
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -2498,7 +2599,7 @@ logger.critical(&apos;critical message dict&apos;)
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
