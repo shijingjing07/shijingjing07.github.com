@@ -243,6 +243,161 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/04/12/posix多线程--互斥量/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/12/posix多线程--互斥量/" itemprop="url">
+                  posix多线程--互斥量
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-12T02:09:00+08:00">
+                2016-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>多线程程序在线程间共享数据时，如果多个线程同时访问共享数据就可能有问题。互斥量是解决多个线程间共享数据的方法之一。</p>
+<p>1.互斥量初始化两种方式：<br>（1）静态初始化</p>
+<pre><code>#include &lt;pthread.h&gt;
+
+typedef struct my_struct_tag {
+pthread_mutex_t mutex; /* Protects access to value */
+int value; /* Access protected by mutex */
+} my_struct_t;
+
+my_struct_t data = {PTHREAD_MUTEX_INITIALIZER, 0};
+
+int main (int argc, char *argv[])
+{
+return 0;
+}
+</code></pre><p>（2）动态初始化</p>
+<pre><code>#include &lt;pthread.h&gt;
+
+typedef struct my_struct_tag {
+pthread_mutex_t mutex; /* Protects access to value */
+int value; /* Access protected by mutex */
+} my_struct_t;
+
+int main (int argc, char *argv[])
+{
+my_struct_t *data;
+data = malloc (sizeof (my_struct_t));
+pthread_mutex_init (&amp;data-&gt;mutex, NULL);
+pthread_mutex_destroy (&amp;data-&gt;mutex);
+(void)free (data);
+return 0;
+}
+</code></pre><p>2.加锁和解锁<br>int pthread_mutex_lock(pthread_mutex_t <em>mutex)<br>int pthread_mutex_trylock(pthread_mutex_t </em>mutex)<br>int pthread_mutex_unlock(pthread_mutex_t *mutex)</p>
+<p>3.非阻塞式互斥量锁<br>int pthread_mutex_trylock(pthread_mutex_t *mutex)</p>
+<p>4.使用多个互斥量<br>使用多个互斥量易发生死锁的问题，如一个线程锁住互斥量A后，加锁互斥量B；同时另一个线程锁住互斥量B而等待互斥量A，则发生死锁现象。针对死锁，有两种解决方法：<br>（1）固定加锁层次：即所有同时需要加锁互斥量A和互斥量B的代码，必须先加锁A，后加锁B<br>（2）试加锁和回退：在锁住某个集合中的第一个互斥量后，使用pthread_mutex_trylock来加锁集合中的其他互斥量，如果失败，则将集合中所有已加锁互斥量释放，并重新加锁。</p>
+<p>5.链锁<br>链锁的作用范围互相交叠。当锁住第一个互斥量后，代码进入一个区域，该区域需要另一个互斥量。当锁住另一个互斥量后，第一个互斥量就不再需要，可以释放它了。<br>链锁在遍历如树型结构或链表结构是很有用。</p>
+<p>参考资料：《POSIX多线程程序设计》 pp.39-59</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/04/07/c--日期和时间函数/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1921,12 +2076,19 @@ test.speak()#方法名同，默认调用的是在括号中排前地父类的方�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
 
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
           
 
           

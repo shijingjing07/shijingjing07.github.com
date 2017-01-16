@@ -243,6 +243,125 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/12/14/postgresql修改最大连接数/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/14/postgresql修改最大连接数/" itemprop="url">
+                  postgresql修改最大连接数
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-14T05:03:00+08:00">
+                2016-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.合适的最大连接数<br>used_connections/max_connections在85%左右<br>2.修改最大连接数<br>postgresql最大连接数默认为100<br>1)打开postgresql配置文件<br>vim /var/lib/pgsql/9.4/data/postgresql.conf<br>2)修改最大连接数<br>max_connections = 100<br>3)重启postgresql服务<br>在CentOS 6.x系统中<br>service postgresql-9.4 restart<br>在CentOS 7系统中<br>systemctl restart postgresql-9.4</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/12/02/socket详解/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1648,143 +1767,6 @@ $ supervisorctl update
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/10/15/公钥与私钥，HTTPS详解/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="迪米特">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="迪米特">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/15/公钥与私钥，HTTPS详解/" itemprop="url">
-                  公钥与私钥，HTTPS详解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-15T16:59:00+08:00">
-                2016-10-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.公钥与私钥原理<br>1)鲍勃有两把钥匙，一把是公钥，另一把是私钥<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005356828-1950036474.png" alt=""><br>2)鲍勃把公钥送给他的朋友们—-帕蒂、道格、苏珊—-每人一把。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005403984-463869082.png" alt=""><br>3)苏珊要给鲍勃写一封保密的信。她写完后用鲍勃的公钥加密，就可以达到保密的效果。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005412500-863295437.png" alt=""><br>4)鲍勃收信后，用私钥解密，就看到了信件内容。这里要强调的是，只要鲍勃的私钥不泄露，这封信就是安全的，即使落在别人手里，也无法解密。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005419500-1822328322.png" alt=""><br>5)鲍勃给苏珊回信，决定采用”数字签名”。他写完后先用Hash函数，生成信件的摘要（digest）。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005515359-1934644907.png" alt=""></p>
-<p>6)然后，鲍勃使用私钥，对这个摘要加密，生成”数字签名”（signature）。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005524484-949087182.png" alt=""></p>
-<p>7)鲍勃将这个签名，附在信件下面，一起发给苏珊。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005532796-1863329312.png" alt=""></p>
-<p>8)苏珊收信后，取下数字签名，用鲍勃的公钥解密，得到信件的摘要。由此证明，这封信确实是鲍勃发出的。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005603921-819577677.png" alt=""></p>
-<p>9)苏珊再对信件本身使用Hash函数，将得到的结果，与上一步得到的摘要进行对比。如果两者一致，就证明这封信未被修改过。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005612421-407782857.png" alt=""></p>
-<p>10)复杂的情况出现了。道格想欺骗苏珊，他偷偷使用了苏珊的电脑，用自己的公钥换走了鲍勃的公钥。此时，苏珊实际拥有的是道格的公钥，但是还以为这是鲍勃的公钥。因此，道格就可以冒充鲍勃，用自己的私钥做成”数字签名”，写信给苏珊，让苏珊用假的鲍勃公钥进行解密。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005620921-1494099994.png" alt=""></p>
-<p>11)后来，苏珊感觉不对劲，发现自己无法确定公钥是否真的属于鲍勃。她想到了一个办法，要求鲍勃去找”证书中心”（certificate<br>authority，简称CA），为公钥做认证。证书中心用自己的私钥，对鲍勃的公钥和一些相关信息一起加密，生成”数字证书”（Digital<br>Certificate）。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005629812-1464508028.png" alt=""></p>
-<p>12)鲍勃拿到数字证书以后，就可以放心了。以后再给苏珊写信，只要在签名的同时，再附上数字证书就行了。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005638625-1123889882.png" alt=""></p>
-<p>13)苏珊收信后，用CA的公钥解开数字证书，就可以拿到鲍勃真实的公钥了，然后就能证明”数字签名”是否真的是鲍勃签的。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005649046-1806234010.png" alt=""></p>
-<p>2.HTTPS详解<br>HTTP协议的网站容易被篡改和劫持，如一些不良的运营商会通过代理服务器在你的页面中植入广告等。<br>因此很多网站选择使用HTTPS协议。HTTPS协议通过TLS层和证书机制提供了内容加密，身份认证，数据完整性三大功能。</p>
-<p>1)下面，我们看一个应用”数字证书”的实例：https协议。这个协议主要用于网页加密。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005657562-174775354.png" alt=""></p>
-<p>2)首先，客户端向服务器发出加密请求。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005715031-1269092932.png" alt=""></p>
-<p>3)服务器用自己的私钥加密网页以后，连同本身的数字证书，一起发送给客户端。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005722375-1161331441.png" alt=""></p>
-<p>4)客户端（浏览器）的”证书管理器”，有”受信任的根证书颁发机构”列表。客户端会根据这张列表，查看解开数字证书的公钥是否在列表之内。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005734640-106282859.png" alt=""></p>
-<p>5)如果数字证书记载的网址，与你正在浏览的网址不一致，就说明这张证书可能被冒用，浏览器会发出警告。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005743453-2106220000.png" alt=""></p>
-<p>6)如果这张数字证书不是由受信任的机构颁发的，浏览器会发出另一种警告</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005800859-1519540213.png" alt=""></p>
-<p>原文网址：<a href="http://www.youdzone.com/signature.html" target="_blank" rel="external">http://www.youdzone.com/signature.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1832,12 +1814,19 @@ $ supervisorctl update
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
 
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
           
 
           

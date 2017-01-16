@@ -243,6 +243,161 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/06/15/C++ vector和list的区别/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/06/15/C++ vector和list的区别/" itemprop="url">
+                  C++ vector和list的区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-15T07:39:00+08:00">
+                2016-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>1.vector数据结构</strong><br>vector和数组类似，拥有一段连续的内存空间，并且起始地址不变。<br>因此能高效的进行随机存取，时间复杂度为o(1);<br>但因为内存空间是连续的，所以在进行插入和删除操作时，会造成内存块的拷贝，时间复杂度为o(n)。<br>另外，当数组中内存空间不够时，会重新申请一块内存空间并进行内存拷贝。</p>
+<p><strong>2.list数据结构</strong><br>list是由双向链表实现的，因此内存空间是不连续的。<br>只能通过指针访问数据，所以list的随机存取非常没有效率，时间复杂度为o(n);<br>但由于链表的特点，能高效地进行插入和删除。</p>
+<p><strong>3.vector和list的区别</strong><br>我们看一个简单的vector和list使用示例：</p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;list&gt;
+using namespace std;
+int main()
+{
+    vector&lt;int&gt; v;
+    list&lt;int&gt; l;
+    for(int i=0;i&lt;8;i++) ////往v和l中分别添加元素
+    {
+        v.push_back(i);
+        l.push_back(i);
+    }
+    cout&lt;&lt;&quot;v[2]=&quot;&lt;&lt;v[2]&lt;&lt;endl;
+    //cout&lt;&lt;&quot;l[2]=&quot;&lt;&lt;l[2]&lt;&lt;endl;  //编译错误,list没有重载[]
+    cout&lt;&lt;(v.begin()&lt;v.end())&lt;&lt;endl; 
+    //cout&lt;&lt;(l.begin()&lt;l.end())&lt;&lt;endl; /编译错误,list::iterator没有重载&lt;或&gt;
+    cout&lt;&lt;*(v.begin()+1)&lt;&lt;endl;
+    //cout&lt;&lt;*(l.begin()+1)&lt;&lt;endl; //编译错误,list::iterator没有重载+
+    vector&lt;int&gt;::iterator itv=v.begin();
+    list&lt;int&gt;::iterator itl=l.begin();
+    itv = itv+2;
+    //itl=itl+2; //编译错误,list::iterator没有重载+
+    itl++; //list::iterator中重载了++，只能使用++进行迭代访问。
+    itl++;
+    cout&lt;&lt;*itv&lt;&lt;endl;
+    cout&lt;&lt;*itl&lt;&lt;endl;
+    getchar();
+    return 0;
+}
+</code></pre><p>vector拥有一段连续的内存空间，能很好的支持随机存取，<br>因此vector&lt;int&gt;::iterator支持”+”，”+=”，”&lt;”等操作符。</p>
+<p>list的内存空间可以是不连续，它不支持随机访问，<br>因此list&lt;int&gt;::iterator则不支持”+”、”+=”、”&lt;”等</p>
+<p>vector&lt;int&gt;::iterator和list&lt;int&gt;::iterator都重载了”++”运算符。</p>
+<p>总之，如果需要高效的随机存取，而不在乎插入和删除的效率，使用vector;<br>如果需要大量的插入和删除，而不关心随机存取，则应使用list。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/06/15/C++静态存储，动态存储/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2152,256 +2307,6 @@ int main()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/06/01/C++ 初始化列表/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="迪米特">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="迪米特">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/01/C++ 初始化列表/" itemprop="url">
-                  C++ 初始化列表
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-01T10:11:00+08:00">
-                2016-06-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>1.初始化列表的写法</strong></p>
-<p>初始化列表，写在类的构造函数后面，以冒号开头，后跟一系列用逗号分隔的初始化字段。如下列所示：  </p>
-<pre><code>class Person
-{
-public:
-    Person(std::string s, int i):name(s), age(i)
-    {
-    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
-    } ;
-private:
-    std::string name ;
-    int age;   
-};
-</code></pre><p>其中的:name(s), age(i){} 即为初始化列表，创建对象时，有两个步骤：<br>成员变量初始化阶段：会将对象中的变量进行初始化，就是初始化列表，示例中我们自定义了部分变量初始化的方式。<br>构造函数执行阶段：执行构造函数中的代码。</p>
-<p>下面的示例说明了以上的两个步骤，我们给Person类增加一个Pet字段，</p>
-<p>这样在创建Person对象时，会先初始化成员变量，执行Pet的构造函数，再执行Person的构造函数：</p>
-<pre><code>class Pet
-{
-public:
-Pet()
-{
-    std::cout&lt;&lt;&quot;Pet()&quot;&lt;&lt;std::endl;
-}
-private:
-    std::string  category;
-};
-class Person
-{
-public:
-    Person(std::string s, int i):name(s), age(i)
-    {
-    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
-    } ;
-private:
-    std::string name ;
-    int age;
-    Pet pet;   
-};
-int main()
-{
-    Person(&quot;Jack&quot;,20);
-    return 0;
-}
-</code></pre><p>输出结果：<br>Pet()<br>Person(std::string s, int i)</p>
-<p><strong>2.使用初始化列表的好处</strong><br>在上例中，每次初始化Person对象时都会调用Pet的构造函数，如果使用初始化列表，则在成员变量初始化步骤时，可以用一个已经存在的Pet对象，直接赋给Person的Pet字段，省略了调用Pet构造函数的过程，提高了效率。</p>
-<p>代码示例如下：</p>
-<pre><code>class Pet
-{
-public:
-Pet()
-{
-    std::cout&lt;&lt;&quot;Pet()&quot;&lt;&lt;std::endl;
-}
-private:
-    std::string  category;
-};
-class Person
-{
-public:
-    Person(std::string s,int i,Pet p):name(s), age(i),pet(p)
-    {
-    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
-    } ;
-private:
-    std::string name ;
-    int age;
-    Pet pet;   
-};
-int main()
-{
-    Pet pet;
-    Person(&quot;Jack&quot;,20,pet);
-    return 0;
-}
-</code></pre><p><strong>3.必须使用初始化列表的几种情况</strong><br>1)常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</p>
-<pre><code>class Test
-{
-public:
-    Test(int i):a(i){};
-private:
-    const int a;
-}
-</code></pre><p>2)引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面</p>
-<pre><code>class Test
-{
-public:
-    Test(int i):a(i){};
-private:
-    int&amp; a;
-}
-</code></pre><p>3)没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化。</p>
-<pre><code>class Test
-{
-public:
-    Test(int i):a(i){};
-private:
-    int a;
-}
-</code></pre><p>4)类继承中，基类私有字段的初始化有时必须通过在初始化列表中调用基类的构造函数</p>
-<pre><code>#include&lt;iostream&gt;
-class Test
-{
-public:
-        Test(int i):a(i){};
-        void Show()
-        {
-                std::cout&lt;&lt;a&lt;&lt;std::endl;
-        }
-private:
-        int a;
-};
-class SubTest:public Test
-{
-public:
-        SubTest(int i):Test(i){}
-};
-int main()
-{
-        SubTest subtest(5);
-        subtest.Show();
-        return 0;
-}
-</code></pre><p><strong>4.成员变量的初始化顺序</strong><br>成员是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的，看代码。</p>
-<pre><code>class Test
-{
-public:
-    Test(int x):j(x), i(j){} 
-private:
-    int i ;
-    int j ;
-};
-</code></pre><p>代码会报错，因为类中i限于j定义，所以用j初始化i时，会报错j还没有初始化。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2449,12 +2354,19 @@ private:
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
 
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
           
 
           

@@ -243,6 +243,209 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2017/01/16/webapi应用架构详解/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/16/webapi应用架构详解/" itemprop="url">
+                  webapi应用架构详解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T17:23:46+08:00">
+                2017-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-webapi适用场景"><a href="#1-webapi适用场景" class="headerlink" title="1.webapi适用场景"></a>1.webapi适用场景</h2><p>常见的应用包括以下四类，PC客户端程序，APP程序，网站程序，H5程序。<br>这些应用需要的数据，服务可由同一个接口服务程序提供，这样，大大提高了产品多平台设计开发的效率，避免了重复的编码。</p>
+<p>##2.什么是webapi  ##<br>webapi一般采用restful风格。以tornado为例,url路由配置如下：  </p>
+<pre><code>url = [
+    (r&apos;/test&apos;, testfc.testHandler)
+]
+</code></pre><p>业务逻辑层,返回数据一般为json格式：  </p>
+<pre><code>class testHandler(RequestHandler):
+    def get(self):
+        self.post()
+    def post(self):
+        result={}
+        if True:
+            result[&quot;code&quot;]=&quot;200&quot;
+            result[&quot;status&quot;]=&quot;true&quot;
+            result[&quot;result&quot;]=&quot;success&quot;
+        else:
+            result[&quot;code&quot;]=&quot;300&quot;
+            result[&quot;status&quot;]=&quot;false&quot;
+            result[&quot;result&quot;]=&quot;fail&quot;
+        self.write(json_encode(result))
+        return
+</code></pre><p>webapi访问方式如下：</p>
+<pre><code>http://127.0.0.1:9999/test
+</code></pre><p>返回结果：</p>
+<pre><code>{&quot;status&quot;: &quot;true&quot;, &quot;code&quot;: &quot;200&quot;, &quot;result&quot;: &quot;success&quot;}
+</code></pre><p>##3.webapi架构设计  ##<br>如何确认一个app能够访问webapi?<br>使用AppID验证app访问webapi的合法性，AppID为服务端给出的一个ID标志。<br>我们可以为web/app/winform分别分配一个ID，从而可以确定访问的合法性，和访问的渠道。  </p>
+<p>如何保证app参数的正确性，没有被篡改？<br>客户端使用AppID对应的AppSecert，对参数进行签名(MD5/SHA等)<br>服务端使用同样的方式签名，和客户端签名校验。  </p>
+<p>如何防止webapi url被截获，重新访问？<br>客户端访问webapi时带上时间戳参数，服务端对时间戳进行校验，如10分钟内的访问才是有效的。  </p>
+<p>涉及具体用户的操作时，如何验证用户？<br>可以使用username,psw参数的方式访问webapi。但是这种方式很不安全。<br>使用授权token是很好的解决办法。在用户登录成功时，服务端生成一个授权码，对应用户信息。<br>访问时带上token参数，服务端查询token有效性，和token对应的用户信息。  </p>
+<p>##4.使用示例  ##<br>登录代码如下：  </p>
+<pre><code>import uuid
+import redis
+class testLoginHandler(BaseHandler):
+    def get(self):
+        self.post()
+    def post(self):
+        #获取url参数
+        args=self.request.arguments
+        data={}
+        for key in args:
+            data[key]=self.get_argument(key,&quot;&quot;)
+        #验证url参数
+        valiResult=valiUrldata(data)
+        if valiResult[&quot;code&quot;]==&quot;300&quot;:
+            self.write(json_encode(valiResult).decode(&quot;unicode_escape&quot;))
+            return
+        username=self.get_argument(&quot;username&quot;,&quot;&quot;)
+        psw=self.get_argument(&quot;psw&quot;,&quot;&quot;)
+        if username==&quot;shijingjing07&quot; and psw==&quot;123456&quot;:
+            token = uuid.uuid1()
+            redisPool = redis.ConnectionPool(host=&apos;127.0.0.1&apos;,password=&apos;123456&apos;, port=6379, db=0)
+            cache = redis.Redis(connection_pool=redisPool)
+            cache.setex(token,username,300)
+            result[&quot;code&quot;] = 200
+            result[&quot;status&quot;] = &quot;true&quot;
+            result[&quot;result&quot;] = token
+        else:
+            result[&quot;code&quot;] = 300
+            result[&quot;status&quot;] = &quot;false&quot;
+            result[&quot;result&quot;] = &quot;account illegal&quot;
+        self.write(json_encode(result))
+</code></pre><p>返回结果：  </p>
+<pre><code>{&quot;status&quot;: &quot;true&quot;, &quot;code&quot;: 200, &quot;result&quot;: &quot;5720c334-dbcc-11e6-84f1-00163e001071&quot;}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2017/01/06/cookie欺骗/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2181,125 +2384,6 @@ logger.critical(&apos;critical message dict&apos;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/12/14/postgresql修改最大连接数/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="迪米特">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="迪米特">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/14/postgresql修改最大连接数/" itemprop="url">
-                  postgresql修改最大连接数
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-14T05:03:00+08:00">
-                2016-12-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.合适的最大连接数<br>used_connections/max_connections在85%左右<br>2.修改最大连接数<br>postgresql最大连接数默认为100<br>1)打开postgresql配置文件<br>vim /var/lib/pgsql/9.4/data/postgresql.conf<br>2)修改最大连接数<br>max_connections = 100<br>3)重启postgresql服务<br>在CentOS 6.x系统中<br>service postgresql-9.4 restart<br>在CentOS 7系统中<br>systemctl restart postgresql-9.4</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2347,12 +2431,19 @@ logger.critical(&apos;critical message dict&apos;)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
 
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
           
 
           

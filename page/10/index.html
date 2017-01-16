@@ -243,6 +243,256 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/06/01/C++ 初始化列表/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/06/01/C++ 初始化列表/" itemprop="url">
+                  C++ 初始化列表
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-01T10:11:00+08:00">
+                2016-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>1.初始化列表的写法</strong></p>
+<p>初始化列表，写在类的构造函数后面，以冒号开头，后跟一系列用逗号分隔的初始化字段。如下列所示：  </p>
+<pre><code>class Person
+{
+public:
+    Person(std::string s, int i):name(s), age(i)
+    {
+    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
+    } ;
+private:
+    std::string name ;
+    int age;   
+};
+</code></pre><p>其中的:name(s), age(i){} 即为初始化列表，创建对象时，有两个步骤：<br>成员变量初始化阶段：会将对象中的变量进行初始化，就是初始化列表，示例中我们自定义了部分变量初始化的方式。<br>构造函数执行阶段：执行构造函数中的代码。</p>
+<p>下面的示例说明了以上的两个步骤，我们给Person类增加一个Pet字段，</p>
+<p>这样在创建Person对象时，会先初始化成员变量，执行Pet的构造函数，再执行Person的构造函数：</p>
+<pre><code>class Pet
+{
+public:
+Pet()
+{
+    std::cout&lt;&lt;&quot;Pet()&quot;&lt;&lt;std::endl;
+}
+private:
+    std::string  category;
+};
+class Person
+{
+public:
+    Person(std::string s, int i):name(s), age(i)
+    {
+    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
+    } ;
+private:
+    std::string name ;
+    int age;
+    Pet pet;   
+};
+int main()
+{
+    Person(&quot;Jack&quot;,20);
+    return 0;
+}
+</code></pre><p>输出结果：<br>Pet()<br>Person(std::string s, int i)</p>
+<p><strong>2.使用初始化列表的好处</strong><br>在上例中，每次初始化Person对象时都会调用Pet的构造函数，如果使用初始化列表，则在成员变量初始化步骤时，可以用一个已经存在的Pet对象，直接赋给Person的Pet字段，省略了调用Pet构造函数的过程，提高了效率。</p>
+<p>代码示例如下：</p>
+<pre><code>class Pet
+{
+public:
+Pet()
+{
+    std::cout&lt;&lt;&quot;Pet()&quot;&lt;&lt;std::endl;
+}
+private:
+    std::string  category;
+};
+class Person
+{
+public:
+    Person(std::string s,int i,Pet p):name(s), age(i),pet(p)
+    {
+    std::cout&lt;&lt;&quot;Person(std::string s, int i)&quot;&lt;&lt;std::endl;
+    } ;
+private:
+    std::string name ;
+    int age;
+    Pet pet;   
+};
+int main()
+{
+    Pet pet;
+    Person(&quot;Jack&quot;,20,pet);
+    return 0;
+}
+</code></pre><p><strong>3.必须使用初始化列表的几种情况</strong><br>1)常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</p>
+<pre><code>class Test
+{
+public:
+    Test(int i):a(i){};
+private:
+    const int a;
+}
+</code></pre><p>2)引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面</p>
+<pre><code>class Test
+{
+public:
+    Test(int i):a(i){};
+private:
+    int&amp; a;
+}
+</code></pre><p>3)没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化。</p>
+<pre><code>class Test
+{
+public:
+    Test(int i):a(i){};
+private:
+    int a;
+}
+</code></pre><p>4)类继承中，基类私有字段的初始化有时必须通过在初始化列表中调用基类的构造函数</p>
+<pre><code>#include&lt;iostream&gt;
+class Test
+{
+public:
+        Test(int i):a(i){};
+        void Show()
+        {
+                std::cout&lt;&lt;a&lt;&lt;std::endl;
+        }
+private:
+        int a;
+};
+class SubTest:public Test
+{
+public:
+        SubTest(int i):Test(i){}
+};
+int main()
+{
+        SubTest subtest(5);
+        subtest.Show();
+        return 0;
+}
+</code></pre><p><strong>4.成员变量的初始化顺序</strong><br>成员是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的，看代码。</p>
+<pre><code>class Test
+{
+public:
+    Test(int x):j(x), i(j){} 
+private:
+    int i ;
+    int j ;
+};
+</code></pre><p>代码会报错，因为类中i限于j定义，所以用j初始化i时，会报错j还没有初始化。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/05/31/C++类的构造函数详解/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1962,217 +2212,6 @@ class B
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/05/23/C++ new操作符详解/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="迪米特">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="迪米特">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/23/C++ new操作符详解/" itemprop="url">
-                  C++ new操作符详解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-23T02:58:00+08:00">
-                2016-05-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一.new操作符的概念</p>
-<p>我们通常讲的new是指的是new operator，其实还有另外两个概念，operator new 和 placement new。</p>
-<p>1、new operator  </p>
-<p>我们在使用new operator的时候，实际上是执行了三个步骤:</p>
-<p>1）调用operator new分配内存 ；2）调用构造函数生成类对象；3）返回相应指针。</p>
-<p>2、operator new</p>
-<p>所以说operator new做的事情是new operator的一部分。</p>
-<p>operator new的原型是</p>
-<p>Void* operator new(size_t size);</p>
-<p>参数size指定待分配的内存大小，函数内部调用malloc初始化内存，返回指向这个内存的指针。</p>
-<p>你可以重载这个函数(注意是重载operator new，而不能重载new operator)。operator<br>new默认情况下首先调用分配内存的代码，尝试得到一段堆上的空间，如果成功就返回，如果失败，则转而去调用一个new_hander(异常处理函数)，若没有定义new_hander，则抛出异常，否则执行new_hander，然后继续重复前面过程。你可以在重载的时候加上额外的参数，但是第一个参数类型必须是size_t.例如：</p>
-<pre><code>class A
-{
-public:
-   void* operator new(size_t size)
-   {
-       printf(&quot;operator new calledn&quot;);
-       return ::operator new(size);
-   }
-};
-A* a = new A();
-</code></pre><p>这里通过::operator new调用了原有的全局的new，实现了在分配内存之前输出一句话。全局的operator<br>new也是可以重载的，但这样一来就不能再递归的使用new来分配内存，而只能使用malloc了：</p>
-<pre><code>void* operator new(size_t size)
-{
-   printf(&quot;global newn&quot;);
-   return malloc(size);
-}
-</code></pre><p>相应的，delete也有delete operator和operator delete之分，后者也是可以重载的。并且，如果重载了operator<br>new，就应该也相应的重载operator delete，这是良好的编程习惯。</p>
-<p>3、placement new</p>
-<p>placement new是用来实现定位构造的，因此可以实现new operator三步操作中的第二步。</p>
-<p>其实它也只是operator<br>new的一个重载的版本，只是我们很少用到它。如果你想在已经分配的内存中创建一个对象，使用new时行不通的。也就是说placement<br>new允许你在一个已经分配好的内存中（栈或者堆中）构造一个新的对象。原型中void*p实际上就是指向一个已经分配好的内存缓冲区的的首地址。</p>
-<p>我 们知道使用new操作符分配内存需要在堆中查找足够大的剩余空间，这个操作速度是很慢的，而且有可能出现无法分配内存的异常（空间不够）。 placement<br>new就可以解决这个问题。我们构造对象都是在一个预先准备好了的内存缓冲区中进行，不需要查找内存，内存分配的时间是常数；而且不会出现在程序运行中途<br>出现内存不足的异常。所以，placement new非常适合那些对时间要求比较高，长时间运行不希望被打断的应用程序。</p>
-<p>使用方法如下：<br>1. 缓冲区提前分配<br>可以使用堆的空间，也可以使用栈的空间，所以分配方式有如下两种：</p>
-<pre><code>class MyClass {…};
-char *buf=new char[N*sizeof(MyClass)+sizeof(int)];或者char buf[N*sizeof(MyClass)+sizeof(int)];
-</code></pre><p>2. 对象的构造</p>
-<pre><code>MyClass * pClass=new(buf) MyClass;
-</code></pre><p>3. 对象的销毁<br>一旦这个对象使用完毕，你必须显式的调用类的析构函数进行销毁对象。但此时内存空间不会被释放，以便其他的对象的构造。</p>
-<pre><code>pClass-&gt;~MyClass();
-</code></pre><p>4. 内存的释放<br>如果缓冲区在堆中，那么调用delete[] buf;进行内存的释放；如果在栈中，那么在其作用域内有效，跳出作用域，内存自动释放。</p>
-<p>注意：</p>
-<pre><code>* 在C++标准中，对于placement operator new []有如下的说明： placement operator new[] needs implementation-defined amount of additional storage to save a size of array. 所以我们必须申请比原始对象大小多出sizeof(int)个字节来存放对象的个数，或者说数组的大小。
-* 使用方法第二步中的new才是placement new，其实是没有申请内存的，只是调用了构造函数，返回一个指向已经分配好的内存的一个指针，所以对象销毁的时候不需要调用delete释放空间，但必须调用析构函数销毁对象。
-</code></pre><p>placement new 是重载operator new 的一个标准、全局的版本，它不能够被自定义的版本代替（不像普通版本的operator new 和<br>operator delete能够被替换）。<br>void <em>operator new( size_t, void </em>p ) throw()     { return p; }<br>placement new的执行忽略了size_t参数，只使用第二个参数。其结果是允许用户把一个对象放到一个特定的地方，达到调用构造函数的效果。<br>和其他普通的new不同的是，它在括号里多了另外一个参数。比如：<br>Widget * p = new Widget; - - - - - - - - - //ordinary new<br>pi = new (ptr) int; pi = new (ptr) int;     //placement new  </p>
-<p>括号里的参数ptr是一个指针，它指向一个内存缓冲器，placement new将在这个缓冲器上分配一个对象。Placement<br>new的返回值是这个被构造对象的地址(比如括号中的传递参数)。placement<br>new主要适用于：在对时间要求非常高的应用程序中，因为这些程序分配的时间是确定的；长时间运行而不被打断的程序；</p>
-<p>三、处理内存分配异常</p>
-<p>正如前面所说，operator<br>new的默认行为是请求分配内存，如果成功就返回，如果失败，则转而去调用一个new_hander(异常处理函数)，若没有定义new_hander，则抛出异常，否则执行new_hander，然后继续重复前面过程。于是，想要从operator<br>new的执行过程中返回，则必然需要满足下列条件之一：</p>
-<p>1）分配内存成功</p>
-<p>2）new_handler中抛出bad_alloc异常</p>
-<p>3）new_handler中调用exit()或类似的函数，使程序结束</p>
-<p>于是，我们可以假设默认情况下operator new的行为是这样的：</p>
-<pre><code>void* operator new(size_t size)  
-{  
-   void* p = null  
-   while(!(p = malloc(size)))  
-   {  
-       if(null == new_handler)  
-          throw bad_alloc();  
-       try  
-       {  
-          new_handler();  
-       }  
-       catch(bad_alloc e)  
-       {  
-          throw e;  
-       }  
-       catch(…)  
-       {}  
-   }  
-   return p;  
-}  
-</code></pre><p>当operator new不能满足一个内存分配请求的时候，默认会抛出一个异常，我们可以通过设置new_handler定义处置策略。</p>
-<p>new_handler的模型为：void (*new_handler)()</p>
-<p>可以通过”void set_new_handler( void(*new_handler)())<br>throw();”设置这个处理函数（new_handler），它定义在&lt;new&gt;标准函数库中：</p>
-<pre><code>namespace std
-{
-    void (*new_handler)();
-    void set_new_handler( new_handler )throw();
-}
-
-
-//error-handling function
-void MemErrorHandling()
-{
-    std::cerr &lt;&lt; &quot;Failed to allocate memory.\n&quot;;
-    std::abort();
-}
-... ...
-std::set_new_handler(MemErrorHandling);
-</code></pre><p>现在我们知道了new操作失败后，系统地大概处理流程，以及怎么设置用户自定义处理函数，但是我们究竟可以在new_handler中做些什么处理呢？</p>
-<p>1、删除其它无用的内存，使系统具有可以更多的内存可以使用，为下一步的内存申请作准备。<br>2、设置另外一个new_handler。如果当前的new_handler不能够做到更多的内存申请操作，或者它知道另外一个new_handler可<br>以做到，则可以调用set_new_handler函数设置另外一个new_handler，这样在operator<br>new下一次调用的时候，可以使用这个新的new_handler。<br>3、卸载new_handler（通过set_new_handler(0)），使operator<br>new在下一次调用的时候，因为new_handler为空抛出内存申请异常。<br>4、抛出自定义异常。<br>5、不再返回，调用abort或者exit退出程序。</p>
-<p>参考：<br>1、<a href="http://www.bc-cn.net/Article/kfyy/cjj/jszl/200604/4002.html" target="_blank" rel="external">http://www.bc-cn.net/Article/kfyy/cjj/jszl/200604/4002.html</a></p>
-<p>2、<a href="http://blog.csdn.net/youdianmengxiangba/article/details/8233651" target="_blank" rel="external">http://blog.csdn.net/youdianmengxiangba/article/details/8233651</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2220,12 +2259,19 @@ std::set_new_handler(MemErrorHandling);
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
 
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
           
 
           

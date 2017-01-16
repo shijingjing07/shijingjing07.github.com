@@ -243,6 +243,210 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/07/07/指针函数和函数指针的区别/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/07/07/指针函数和函数指针的区别/" itemprop="url">
+                  指针函数和函数指针的区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-07T16:19:00+08:00">
+                2016-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>1.指针函数</strong><br>指针函数是一个函数，函数的返回值是一个指针。<br>格式如下：</p>
+<pre><code>类型标识符 *函数名(参数表)
+如 double *myfunc(double x,double y);
+</code></pre><p>myfunc即为一个指针函数。</p>
+<p>代码示例如下：<br>pfunc.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+double *myfunc(double x,double y);
+int main()
+{
+    double *p = myfunc(2.5,4.3);
+    printf(&quot;%f\n&quot;,*p);
+    return 0;
+}
+double *myfunc(double x,double y)
+{
+    double result = x+y;
+    return &amp;result;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001412327-1346732365.png" alt=""></p>
+<p><strong>2.函数指针</strong><br>函数指针是一个指针，它指向函数地址<br>格式如下：</p>
+<pre><code>类型标识符 (*指针名)(参数表)
+如 double (*myfuncp)(double x,double y);
+</code></pre><p>myfuncp是一个指针，*myfuncp为指针指向的函数的地址。</p>
+<p>我们有以下函数<br>double myfunc(double x,double y);<br>则可将函数的地址赋给指针<br>myfuncp = &amp;myfunc或myfuncp=myfunc(取地址运算符不是必需的)</p>
+<p>代码示例如下：<br>funcp.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+double (*myfuncp)(double x,double y);
+double myfunc(double x,double y);
+int main()
+{
+    myfuncp = &amp;myfunc;
+    double result = (*myfunc)(2.5,4.3);
+    printf(&quot;%f\n&quot;,result);
+    return 0;
+}
+double myfunc(double x,double y)
+{
+    return x+y;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001457811-2041478665.png" alt=""></p>
+<p><strong>3.指针的指针</strong><br>表示指针指向的值，是一个指针类型。<br>如 int i=5;<br>int <em>p = &amp;i;<br>int *</em>pp = &amp;p;<br>其中pp即为一个指向指针的指针。<br>可以用以下示意图来标识。</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001516452-748101375.png" alt=""></p>
+<p>再看下面的图</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001549155-1269840008.png" alt=""></p>
+<p>若<em>pp=p2;会发生什么？</em>pp即p=p2,那么p将指向p2所指的地方，即p指向j。<br>如下图所示：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001616311-903524457.png" alt=""></p>
+<p><strong>4.指针的指针的作用</strong><br>1)调用函数修改局部指针变量<br>2)处理指针数组</p>
+<p>代码示例如下：<br>从一个int类型数组中，找出第一个负数。<br>pptest2.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+    int vals[]={7,6,5,-4,3,2,1,0};
+    int *p=vals;
+    getnegative(&amp;p);
+    printf(&quot;%d\n&quot;,*p);
+    return 0;
+}
+void getnegative(int **pp)
+{
+    while(**pp!=0)
+    {
+        if(**pp&lt;0)
+            break;
+        else
+            (*pp)++;
+    }
+}
+</code></pre><p>输出结果:</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001715546-1319494951.png" alt=""></p>
+<p>我们可以用指针数组来代替多维数组，<br>代码示例如下：<br>arrayp.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+        char* names[]={&quot;Bill&quot;,&quot;Sam&quot;,&quot;Jim&quot;,&quot;Paul&quot;,&quot;Jack&quot;,&quot;0&quot;};
+        char **namesp = names;
+        while(*namesp!=&quot;0&quot;)
+        {
+                printf(&quot;%s &quot;,*namesp++);
+        }
+        return 0;
+}
+</code></pre><p>输出结果：</p>
+<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001801046-2004231501.png" alt=""></p>
+<p>其中*namesp++表示先取得指针指向的内容，然后使指针自增。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/07/06/Linux启动新进程的三种方法/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1952,255 +2156,6 @@ int main()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/06/27/Linux进程间通信-匿名管道/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="迪米特">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="迪米特">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/27/Linux进程间通信-匿名管道/" itemprop="url">
-                  Linux进程间通信-匿名管道
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-27T08:44:00+08:00">
-                2016-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前面我们讲了进程间通信的一种方式，<a href="http://www.cnblogs.com/shijingjing07/p/5619308.html" target="_blank" rel="external">共享内存</a>。下面看一看另一种机制，匿名管道。<br><strong>1.什么是管道</strong><br>管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。<br>比如，在shell中输入命令:ls -l|grep string，ls和grep是两个进程，”|”符号表示管道，意思是执行ls<br>-l进程，并将输出结果result_1，作为grep<br>string进程的输入result_0，grep进程将result_0中存在字符串string的信息打印到屏幕。</p>
-<p><strong>2.管道的使用</strong><br>1)popen函数：启用一个新进程，并可以向它传递数据，或者通过它接受数据。</p>
-<pre><code>FILE *popen(const char *command,conse char *open_mode);
-</code></pre><p>command:运行的程序名和参数<br>open_mode:有两个值”r(只读)”,”w(只写)”<br>　　　　　　“r”:可以获取新进程的输出<br>　　　　　　“w”:可以向新进程发送数据<br>返回值：返回输入输出文件流指针</p>
-<p>2)pclose函数：关闭输入输出文件流指针<br>若调用该函数时，新进程仍然在运行，则pclose将等待，直至新进程结束。<br>返回值：返回新进程的退出码。</p>
-<p><strong>3.popen函数使用示例</strong><br>下例循环读取read_fp输出文件流的内容，写入write_fp的输入文件流，直到输出流内容读完。</p>
-<pre><code>#include&lt;stdlib.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-int main()
-{
-    FILE *read_fp = NULL;
-    FILE *write_fp = NULL;
-    char buffer[BUFSIZ+1];
-    int chars_read = 0;
-
-    //初始化缓冲区
-    memset(buffer,&apos;\0&apos;,sizeof(buffer));
-    read_fp = popen(&quot;ls -l&quot;,&quot;r&quot;);
-    write_fp = popen(&quot;grep rwxrwxr-x&quot;,&quot;w&quot;);
-    if(read_fp &amp;&amp; write_fp)
-    {
-
-        chars_read = fread(buffer,sizeof(char),BUFSIZ,read_fp);
-        while(chars_read)
-        {
-            buffer[chars_read]=&apos;\0&apos;;
-            //把数据写入grep进程
-            fwrite(buffer,sizeof(char),chars_read,write_fp);
-            chars_read = fread(buffer,sizeof(char),BUFSIZ,read_fp);
-        }
-        //关闭文件流
-        pclose(read_fp);
-        pclose(write_fp);
-        exit(EXIT_SUCCESS);
-    }
-    printf(&quot;%d\n&quot;,2);
-    exit(EXIT_FAILURE);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627163409968-520447755.png" alt=""></p>
-<p><strong>3、popen的原理及优缺点</strong><br>当调用popen运行一个新进程时，它首先启动shell，然后将command参数传递给它。<br>优点：可以使用shell来分析命令字符串，启动非常复杂的shell命令。<br>缺点：不仅要启动一个新进程，还要启动一个shell，效率会比较低。</p>
-<p><strong>4.pipe函数的使用</strong></p>
-<pre><code>int pipe(int file_description[2]);
-</code></pre><p>file_description[2]:表示管道的输出输入端，输出端数据经过管道流到输入端，函数执行完后， 会将这个数组赋值。<br>　　　　　　　　　　file_description[1]表示管道输出端文件描述符<br>　　　　　　　　　　file_description[0]表示管道输入端文件描述符<br>返回值：0成功，-1失败</p>
-<p>与popen不同的是，pipe函数是一个底层调用，不会启动shell。<br>popen是使用文件流(FILE)工作的，pipe使用的是文件描述符，相应的数据要用底层的read和write来读取和发送。</p>
-<p><strong>5.pipe函数使用示例</strong><br>下例中，我们在父进程中创建一个管道，然后调用fork创建一个子进程。<br>此时，父进程的file_description[1]输出端，对应着子进程file_description[0]的输入端。<br>数据通过管道由父进程传到子进程。示例如下：</p>
-<pre><code>#include&lt;stdlib.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-int main()
-{
-    int data_processed = 0;
-    const char data[]=&quot;Hello pipe!&quot;;
-    char buffer[BUFSIZ+1];
-    pid_t pid;
-    memset(buffer,&apos;\0&apos;,sizeof(buffer));
-    int filedes[2];
-    if(pipe(filedes)==0)
-    {
-        //创建管道成功
-        //fork子进程
-        pid=fork();
-        if(pid==-1)
-        {
-            fprintf(stderr,&quot;Fork failure&quot;);
-            exit(EXIT_FAILURE);
-        }
-        if(pid==0)
-        {
-            data_processed = read(filedes[0],buffer,BUFSIZ);
-            printf(&quot;read %d bytes:%s\n&quot;,data_processed,buffer);
-            exit(EXIT_SUCCESS);
-        }
-        else
-        {
-            data_processed = write(filedes[1],data,strlen(data));
-            printf(&quot;wrote %d bytes:%s\n&quot;,data_processed,data);
-            exit(EXIT_SUCCESS);
-        }
-    }
-    exit(EXIT_FAILURE);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627163702187-1041429383.png" alt=""></p>
-<p><strong>6.管道用作标准输入和输出</strong><br>我们知道标准的输入描述符为0，输出描述符为1，<br>为了使用已经定义好的标准程序，如od命令，从标准输入读入数据。<br>需要将管道的输入端描述符置为0,此时，我们需要用到一个辅助函数dup</p>
-<p>dup函数：创建一个描述符，复制原有描述符参数的结构到新建的描述符。</p>
-<pre><code>int dup(int file_descriptor);
-</code></pre><p>新的描述符规则是，使用最小的可用值。</p>
-<p>要想使管道的输入描述符为标准输入描述符，我们可以先关闭文件描述符0，然后调用dup，<br>此时新建的描述符即为最小可用值0，标准输入描述符。</p>
-<pre><code>close(0);
-dup(file_description[0]);
-</code></pre><p>上例使用标准输入描述符改造后的示例如下：</p>
-<pre><code>#include&lt;stdlib.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-int main()
-{
-    int data_processed = 0;
-    const char data[]=&quot;Hello pipe!&quot;;
-    int filedes[2];
-    pid_t pid;
-    if(pipe(filedes)==0)
-    {
-        pid = fork();
-        if(pid==-1)
-        {
-            fprintf(&quot;stderr&quot;,&quot;fork failure!\n&quot;);
-            exit(EXIT_FAILURE);
-        }
-        if(pid==0)
-        {
-            close(0);
-            dup(filedes[0]);
-            close(filedes[0]);
-            close(filedes[1]);
-            execlp(&quot;od&quot;,&quot;od&quot;,&quot;-c&quot;,0);
-            exit(EXIT_FAILURE);
-        }
-        else
-        {
-            close(filedes[0]);
-            data_processed = write(filedes[1],data,strlen(data));
-            close(filedes[1]);
-            printf(&quot;wrote %d bytes:%s\n&quot;,data_processed,data);
-        }
-    }
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627163629468-1977430404.png" alt=""></p>
-<p><strong>7.匿名管道需要注意的问题</strong><br>1)当管道没有关闭时，若没有数据可读，read调用会阻塞<br>2)当管道关闭时，read调用会返回0<br>3)匿名管道通信，进程间必须是父子关系。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2248,12 +2203,19 @@ int main()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
 
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
           
 
           

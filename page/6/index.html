@@ -243,6 +243,240 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/08/09/Ubuntu 安装和配置redis数据库/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/09/Ubuntu 安装和配置redis数据库/" itemprop="url">
+                  Ubuntu 安装和配置redis数据库
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-09T08:30:00+08:00">
+                2016-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Ubuntu-14-04下安装和配置redis数据库"><a href="#Ubuntu-14-04下安装和配置redis数据库" class="headerlink" title="Ubuntu 14.04下安装和配置redis数据库"></a>Ubuntu 14.04下安装和配置redis数据库</h1><p>小编现在在写一个分布式爬虫，要用到这个数据库，所以分享一下小编是如何安装和配置的，希望对大家有帮助。</p>
+<h2 id="工具-原料"><a href="#工具-原料" class="headerlink" title="工具/原料"></a>工具/原料</h2><ul>
+<li><p>Ubuntu 系统电脑一台</p>
+</li>
+<li><p>网络</p>
+</li>
+</ul>
+<h2 id="方法-步骤"><a href="#方法-步骤" class="headerlink" title="方法/步骤"></a>方法/步骤</h2><ol>
+<li></li>
+</ol>
+<p>以root权限登录，切换到/usr目录下.</p>
+<ol>
+<li></li>
+</ol>
+<p>接下来输入命令，apt-get install redis-server,如图：</p>
+<p><a href="http://jingyan.baidu.com/album/948f592401d172d80ff5f99a.html?picindex=1" target="_blank" rel="external"><img src="http://e.hiphotos.baidu.com/exp/w=500/sign=544ce8da0ff3d7ca0cf63f76c21ebe3c/b17eca8065380cd75d4d0d09a244ad3458828187.jpg" alt="Ubuntu
+14.04下安装和配置redis数据库"></a></p>
+<ol>
+<li></li>
+</ol>
+<p>安装完成后，Redis服务器会自动启动，我们检查Redis服务器程序,执行ps -aux|grep redis，如图：</p>
+<p><a href="http://jingyan.baidu.com/album/948f592401d172d80ff5f99a.html?picindex=2" target="_blank" rel="external"><img src="http://f.hiphotos.baidu.com/exp/w=500/sign=f070ad07d639b6004dce0fb7d9523526/55e736d12f2eb9387eeed416d6628535e4dd6f57.jpg" alt="Ubuntu
+14.04下安装和配置redis数据库"></a></p>
+<ol>
+<li></li>
+</ol>
+<p>通过启动命令检查Redis服务器状态,执行：netstat -nlt|grep 6379，如图：</p>
+<p><a href="http://jingyan.baidu.com/album/948f592401d172d80ff5f99a.html?picindex=3" target="_blank" rel="external"><img src="http://e.hiphotos.baidu.com/exp/w=500/sign=f3870d3b75c6a7efb926a826cdfbafe9/a71ea8d3fd1f4134839cad9a261f95cad0c85eae.jpg" alt="Ubuntu
+14.04下安装和配置redis数据库"></a></p>
+<ol>
+<li></li>
+</ol>
+<p>安装Redis服务器，会自动地一起安装Redis命令行客户端程序。在本机输入redis-cli命令就可以启动，客户端程序访问Redis服务器。执行<br>：redis-cli，如图：</p>
+<p><a href="http://jingyan.baidu.com/album/948f592401d172d80ff5f99a.html?picindex=4" target="_blank" rel="external"><img src="http://c.hiphotos.baidu.com/exp/w=500/sign=dd043a167e1ed21b79c92ee59d6fddae/aec379310a55b319b154299140a98226cefc17a0.jpg" alt="Ubuntu
+14.04下安装和配置redis数据库"></a></p>
+<ol>
+<li>6</li>
+</ol>
+<p>这样就安装好了，接下来就是如何使用了。。</p>
+<h1 id="设置密码"><a href="#设置密码" class="headerlink" title="设置密码"></a>设置密码</h1><p>redis配置密码  </p>
+<p><strong>1.通过配置文件进行配置</strong><br>yum方式安装的redis配置文件通常在/etc/redis.conf中，打开配置文件找到</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. #requirepass foobared  
+</code></pre><p>去掉行前的注释，并修改密码为所需的密码,保存文件</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. requirepass myRedis  
+</code></pre><p>重启redis</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. sudo service redis restart  
+2. #或者  
+3. sudo service redis stop  
+4. sudo redis-server /etc/redis.conf  
+</code></pre><p>这个时候尝试登录redis，发现可以登上，但是执行具体命令是提示操作不允许</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. redis-cli -h 127.0.0.1 -p 6379  
+2. redis 127.0.0.1:6379&amp;gt;  
+3. redis 127.0.0.1:6379&amp;gt; keys *  
+4. (error) ERR operation not permitted  
+5. redis 127.0.0.1:6379&amp;gt; select 1  
+6. (error) ERR operation not permitted  
+7. redis 127.0.0.1:6379[1]&amp;gt;   
+</code></pre><p>尝试用密码登录并执行具体的命令看到可以成功执行</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. redis-cli -h 127.0.0.1 -p 6379 -a myRedis  
+2. redis 127.0.0.1:6379&amp;gt; keys *  
+3. 1) &quot;myset&quot;  
+4. 2) &quot;mysortset&quot;  
+5. redis 127.0.0.1:6379&amp;gt; select 1  
+6. OK  
+7. redis 127.0.0.1:6379[1]&amp;gt; config get requirepass  
+8. 1) &quot;requirepass&quot;  
+9. 2) &quot;myRedis&quot;  
+</code></pre><p>2.通过命令行进行配置</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. redis 127.0.0.1:6379[1]&amp;gt; config set requirepass my_redis  
+2. OK  
+3. redis 127.0.0.1:6379[1]&amp;gt; config get requirepass  
+4. 1) &quot;requirepass&quot;  
+5. 2) &quot;my_redis&quot;  
+</code></pre><p>无需重启redis<br>使用第一步中配置文件中配置的老密码登录redis，会发现原来的密码已不可用，操作被拒绝</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. redis-cli -h 127.0.0.1 -p 6379 -a myRedis  
+2. redis 127.0.0.1:6379&amp;gt; config get requirepass  
+3. (error) ERR operation not permitted  
+</code></pre><p>使用修改后的密码登录redis，可以执行相应操作</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. redis-cli -h 127.0.0.1 -p 6379 -a my_redis  
+2. redis 127.0.0.1:6379&amp;gt; config get requirepass  
+3. 1) &quot;requirepass&quot;  
+4. 2) &quot;my_redis  
+</code></pre><p>尝试重启一下redis，用新配置的密码登录redis执行操作，发现新的密码失效，redis重新使用了配置文件中的密码</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. sudo service redis restart  
+2. Stopping redis-server:                                     [  OK  ]  
+3. Starting redis-server:                                     [  OK  ]  
+4. redis-cli -h 127.0.0.1 -p 6379 -a my_redis  
+5. redis 127.0.0.1:6379&amp;gt; config get requirepass  
+6. (error) ERR operation not permitted  
+7. redis-cli -h 127.0.0.1 -p 6379 -a myRedis  
+8. redis 127.0.0.1:6379&amp;gt; config get requirepass  
+9. 1) &quot;requirepass&quot;  
+10. 2) &quot;myRedis&quot;  
+</code></pre><p>除了在登录时通过 -a 参数制定密码外，还可以登录时不指定密码，而在执行操作前进行认证。</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. redis-cli -h 127.0.0.1 -p 6379  
+2. redis 127.0.0.1:6379&amp;gt; config get requirepass  
+3. (error) ERR operation not permitted  
+4. redis 127.0.0.1:6379&amp;gt; auth myRedis  
+5. OK  
+6. redis 127.0.0.1:6379&amp;gt; config get requirepass  
+7. 1) &quot;requirepass&quot;  
+8. 2) &quot;myRedis&quot;  
+</code></pre><p>3.master配置了密码，slave如何配置</p>
+<p>若master配置了密码则slave也要配置相应的密码参数否则无法进行正常复制的。<br>slave中配置文件内找到如下行，移除注释，修改密码即可</p>
+<p><strong>[plain]</strong> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/zyz511919766/article/details/42268219#" title="copy" target="_blank" rel="external">copy</a></p>
+<pre><code>1. #masterauth  mstpassword  
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/08/09/python时间处理之datetime/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2253,210 +2487,6 @@ int main()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2016/07/07/指针函数和函数指针的区别/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="迪米特">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="迪米特">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/07/指针函数和函数指针的区别/" itemprop="url">
-                  指针函数和函数指针的区别
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-07T16:19:00+08:00">
-                2016-07-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>1.指针函数</strong><br>指针函数是一个函数，函数的返回值是一个指针。<br>格式如下：</p>
-<pre><code>类型标识符 *函数名(参数表)
-如 double *myfunc(double x,double y);
-</code></pre><p>myfunc即为一个指针函数。</p>
-<p>代码示例如下：<br>pfunc.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-double *myfunc(double x,double y);
-int main()
-{
-    double *p = myfunc(2.5,4.3);
-    printf(&quot;%f\n&quot;,*p);
-    return 0;
-}
-double *myfunc(double x,double y)
-{
-    double result = x+y;
-    return &amp;result;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001412327-1346732365.png" alt=""></p>
-<p><strong>2.函数指针</strong><br>函数指针是一个指针，它指向函数地址<br>格式如下：</p>
-<pre><code>类型标识符 (*指针名)(参数表)
-如 double (*myfuncp)(double x,double y);
-</code></pre><p>myfuncp是一个指针，*myfuncp为指针指向的函数的地址。</p>
-<p>我们有以下函数<br>double myfunc(double x,double y);<br>则可将函数的地址赋给指针<br>myfuncp = &amp;myfunc或myfuncp=myfunc(取地址运算符不是必需的)</p>
-<p>代码示例如下：<br>funcp.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-double (*myfuncp)(double x,double y);
-double myfunc(double x,double y);
-int main()
-{
-    myfuncp = &amp;myfunc;
-    double result = (*myfunc)(2.5,4.3);
-    printf(&quot;%f\n&quot;,result);
-    return 0;
-}
-double myfunc(double x,double y)
-{
-    return x+y;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001457811-2041478665.png" alt=""></p>
-<p><strong>3.指针的指针</strong><br>表示指针指向的值，是一个指针类型。<br>如 int i=5;<br>int <em>p = &amp;i;<br>int *</em>pp = &amp;p;<br>其中pp即为一个指向指针的指针。<br>可以用以下示意图来标识。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001516452-748101375.png" alt=""></p>
-<p>再看下面的图</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001549155-1269840008.png" alt=""></p>
-<p>若<em>pp=p2;会发生什么？</em>pp即p=p2,那么p将指向p2所指的地方，即p指向j。<br>如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001616311-903524457.png" alt=""></p>
-<p><strong>4.指针的指针的作用</strong><br>1)调用函数修改局部指针变量<br>2)处理指针数组</p>
-<p>代码示例如下：<br>从一个int类型数组中，找出第一个负数。<br>pptest2.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-int main()
-{
-    int vals[]={7,6,5,-4,3,2,1,0};
-    int *p=vals;
-    getnegative(&amp;p);
-    printf(&quot;%d\n&quot;,*p);
-    return 0;
-}
-void getnegative(int **pp)
-{
-    while(**pp!=0)
-    {
-        if(**pp&lt;0)
-            break;
-        else
-            (*pp)++;
-    }
-}
-</code></pre><p>输出结果:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001715546-1319494951.png" alt=""></p>
-<p>我们可以用指针数组来代替多维数组，<br>代码示例如下：<br>arrayp.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-int main()
-{
-        char* names[]={&quot;Bill&quot;,&quot;Sam&quot;,&quot;Jim&quot;,&quot;Paul&quot;,&quot;Jack&quot;,&quot;0&quot;};
-        char **namesp = names;
-        while(*namesp!=&quot;0&quot;)
-        {
-                printf(&quot;%s &quot;,*namesp++);
-        }
-        return 0;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001801046-2004231501.png" alt=""></p>
-<p>其中*namesp++表示先取得指针指向的内容，然后使指针自增。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2504,12 +2534,19 @@ int main()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
 
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
           
 
           
