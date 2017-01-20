@@ -105,7 +105,7 @@ if ( __name__ == &quot;__main__&quot;):
 </code></pre><h2 id="重新生成静态文件"><a href="#重新生成静态文件" class="headerlink" title="重新生成静态文件"></a>重新生成静态文件</h2><pre><code>hexo c
 hexo g
 hexo s
-</code></pre><p>在浏览器中打开 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a><br>结果如下：<br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/3.png" alt=""></p>
+</code></pre><p>在浏览器中打开 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a><br>结果如下：<br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/3.PNG" alt=""></p>
 <h2 id="备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"><a href="#备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。" class="headerlink" title="备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"></a>备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。</h2>]]></content>
     </entry>
     
