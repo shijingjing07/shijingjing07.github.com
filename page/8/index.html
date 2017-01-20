@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-27T08:44:00+08:00">
                 2016-06-27
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/27/Linux进程间通信-匿名管道/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/27/Linux进程间通信-匿名管道/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,139 +348,15 @@
       
         
           
-            <p>前面我们讲了进程间通信的一种方式，<a href="http://www.cnblogs.com/shijingjing07/p/5619308.html" target="_blank" rel="external">共享内存</a>。下面看一看另一种机制，匿名管道。<br><strong>1.什么是管道</strong><br>管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。<br>比如，在shell中输入命令:ls -l|grep string，ls和grep是两个进程，”|”符号表示管道，意思是执行ls<br>-l进程，并将输出结果result_1，作为grep<br>string进程的输入result_0，grep进程将result_0中存在字符串string的信息打印到屏幕。</p>
-<p><strong>2.管道的使用</strong><br>1)popen函数：启用一个新进程，并可以向它传递数据，或者通过它接受数据。</p>
-<pre><code>FILE *popen(const char *command,conse char *open_mode);
-</code></pre><p>command:运行的程序名和参数<br>open_mode:有两个值”r(只读)”,”w(只写)”<br>　　　　　　“r”:可以获取新进程的输出<br>　　　　　　“w”:可以向新进程发送数据<br>返回值：返回输入输出文件流指针</p>
-<p>2)pclose函数：关闭输入输出文件流指针<br>若调用该函数时，新进程仍然在运行，则pclose将等待，直至新进程结束。<br>返回值：返回新进程的退出码。</p>
-<p><strong>3.popen函数使用示例</strong><br>下例循环读取read_fp输出文件流的内容，写入write_fp的输入文件流，直到输出流内容读完。</p>
-<pre><code>#include&lt;stdlib.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-int main()
-{
-    FILE *read_fp = NULL;
-    FILE *write_fp = NULL;
-    char buffer[BUFSIZ+1];
-    int chars_read = 0;
-
-    //初始化缓冲区
-    memset(buffer,&apos;\0&apos;,sizeof(buffer));
-    read_fp = popen(&quot;ls -l&quot;,&quot;r&quot;);
-    write_fp = popen(&quot;grep rwxrwxr-x&quot;,&quot;w&quot;);
-    if(read_fp &amp;&amp; write_fp)
-    {
-
-        chars_read = fread(buffer,sizeof(char),BUFSIZ,read_fp);
-        while(chars_read)
-        {
-            buffer[chars_read]=&apos;\0&apos;;
-            //把数据写入grep进程
-            fwrite(buffer,sizeof(char),chars_read,write_fp);
-            chars_read = fread(buffer,sizeof(char),BUFSIZ,read_fp);
-        }
-        //关闭文件流
-        pclose(read_fp);
-        pclose(write_fp);
-        exit(EXIT_SUCCESS);
-    }
-    printf(&quot;%d\n&quot;,2);
-    exit(EXIT_FAILURE);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627163409968-520447755.png" alt=""></p>
-<p><strong>3、popen的原理及优缺点</strong><br>当调用popen运行一个新进程时，它首先启动shell，然后将command参数传递给它。<br>优点：可以使用shell来分析命令字符串，启动非常复杂的shell命令。<br>缺点：不仅要启动一个新进程，还要启动一个shell，效率会比较低。</p>
-<p><strong>4.pipe函数的使用</strong></p>
-<pre><code>int pipe(int file_description[2]);
-</code></pre><p>file_description[2]:表示管道的输出输入端，输出端数据经过管道流到输入端，函数执行完后， 会将这个数组赋值。<br>　　　　　　　　　　file_description[1]表示管道输出端文件描述符<br>　　　　　　　　　　file_description[0]表示管道输入端文件描述符<br>返回值：0成功，-1失败</p>
-<p>与popen不同的是，pipe函数是一个底层调用，不会启动shell。<br>popen是使用文件流(FILE)工作的，pipe使用的是文件描述符，相应的数据要用底层的read和write来读取和发送。</p>
-<p><strong>5.pipe函数使用示例</strong><br>下例中，我们在父进程中创建一个管道，然后调用fork创建一个子进程。<br>此时，父进程的file_description[1]输出端，对应着子进程file_description[0]的输入端。<br>数据通过管道由父进程传到子进程。示例如下：</p>
-<pre><code>#include&lt;stdlib.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-int main()
-{
-    int data_processed = 0;
-    const char data[]=&quot;Hello pipe!&quot;;
-    char buffer[BUFSIZ+1];
-    pid_t pid;
-    memset(buffer,&apos;\0&apos;,sizeof(buffer));
-    int filedes[2];
-    if(pipe(filedes)==0)
-    {
-        //创建管道成功
-        //fork子进程
-        pid=fork();
-        if(pid==-1)
-        {
-            fprintf(stderr,&quot;Fork failure&quot;);
-            exit(EXIT_FAILURE);
-        }
-        if(pid==0)
-        {
-            data_processed = read(filedes[0],buffer,BUFSIZ);
-            printf(&quot;read %d bytes:%s\n&quot;,data_processed,buffer);
-            exit(EXIT_SUCCESS);
-        }
-        else
-        {
-            data_processed = write(filedes[1],data,strlen(data));
-            printf(&quot;wrote %d bytes:%s\n&quot;,data_processed,data);
-            exit(EXIT_SUCCESS);
-        }
-    }
-    exit(EXIT_FAILURE);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627163702187-1041429383.png" alt=""></p>
-<p><strong>6.管道用作标准输入和输出</strong><br>我们知道标准的输入描述符为0，输出描述符为1，<br>为了使用已经定义好的标准程序，如od命令，从标准输入读入数据。<br>需要将管道的输入端描述符置为0,此时，我们需要用到一个辅助函数dup</p>
-<p>dup函数：创建一个描述符，复制原有描述符参数的结构到新建的描述符。</p>
-<pre><code>int dup(int file_descriptor);
-</code></pre><p>新的描述符规则是，使用最小的可用值。</p>
-<p>要想使管道的输入描述符为标准输入描述符，我们可以先关闭文件描述符0，然后调用dup，<br>此时新建的描述符即为最小可用值0，标准输入描述符。</p>
-<pre><code>close(0);
-dup(file_description[0]);
-</code></pre><p>上例使用标准输入描述符改造后的示例如下：</p>
-<pre><code>#include&lt;stdlib.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-int main()
-{
-    int data_processed = 0;
-    const char data[]=&quot;Hello pipe!&quot;;
-    int filedes[2];
-    pid_t pid;
-    if(pipe(filedes)==0)
-    {
-        pid = fork();
-        if(pid==-1)
-        {
-            fprintf(&quot;stderr&quot;,&quot;fork failure!\n&quot;);
-            exit(EXIT_FAILURE);
-        }
-        if(pid==0)
-        {
-            close(0);
-            dup(filedes[0]);
-            close(filedes[0]);
-            close(filedes[1]);
-            execlp(&quot;od&quot;,&quot;od&quot;,&quot;-c&quot;,0);
-            exit(EXIT_FAILURE);
-        }
-        else
-        {
-            close(filedes[0]);
-            data_processed = write(filedes[1],data,strlen(data));
-            close(filedes[1]);
-            printf(&quot;wrote %d bytes:%s\n&quot;,data_processed,data);
-        }
-    }
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627163629468-1977430404.png" alt=""></p>
-<p><strong>7.匿名管道需要注意的问题</strong><br>1)当管道没有关闭时，若没有数据可读，read调用会阻塞<br>2)当管道关闭时，read调用会返回0<br>3)匿名管道通信，进程间必须是父子关系。</p>
-
-          
+          前面我们讲了进程间通信的一种方式，共享内存。下面看一看另一种机制，匿名管道。1.什么是管道管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。比如，在shell中输入命令:ls -l|grep string，ls和grep是两个进程，”|”符
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/27/Linux进程间通信-匿名管道/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -532,7 +433,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-27T01:57:00+08:00">
                 2016-06-27
@@ -547,6 +448,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/27/Linux共享内存/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/27/Linux共享内存/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -572,235 +483,15 @@ int main()
       
         
           
-            <p><strong>1.什么是共享内存</strong><br>在前面讲<a href="http://www.cnblogs.com/shijingjing07/p/5611579.html" target="_blank" rel="external">虚拟内存机制</a>时，有讲到Linux的内存映射机制：<br>初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。<br>由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。<br>当共享访问时，一个进程的对该对象的修改会显示到其他进程。<br>当私有访问时，修改时会产生保护故障，内核会拷贝这个私有对象，修改的是这个新对象，其他进程指向的是原来的对象。<br>所以，共享内存是指不同进程访问同一个逻辑内存。</p>
-<p><strong>2.共享内存的使用</strong><br>Linux提供了一组共享内存API，声明在头文件sys/shm.h中。<br>1)shmget函数：新建共享内存<br>int shmget(key_t key,size_t size,int shmflg);<br>key:共享内存键值，可以理解为共享内存的唯一性标记。<br>size：共享内存大小<br>shmflag：创建进程和其他进程的读写权限标识。<br>返回值：相应的共享内存标识符，失败返回-1</p>
-<p>2)shmat函数：连接共享内存到当前进程的地址空间<br>void <em>shmat(int shm_id,const void </em>shm_addr,int shmflg);<br>shm_id：共享内存标识符<br>shm_addr：指定共享内存连接到当前进程的地址，通常为0，表示由系统来选择。<br>shmflg：通常为0<br>返回值：指向共享内存第一个字节的指针，失败返回-1</p>
-<p>3)shmdt函数：当前进程分离共享内存<br>int shmdt(const void *shmaddr);</p>
-<p>4)shmctl函数<br>和信号量的semctl函数类似，控制共享内存<br>int shmctl(int shm_id,int command,struct shmid_ds *buf);<br>shm_id：共享内存标识符<br>command: 有三个值<br>　　　　　　IPC_STAT:获取共享内存的状态，把共享内存的shmid_ds结构复制到buf中。<br>　　　　　　IPC_SET:设置共享内存的状态，把buf复制到共享内存的shmid_ds结构。<br>　　　　　　IPC_RMID:删除共享内存<br>buf：共享内存管理结构体。具体结构可参考定义。</p>
-<p><strong>3.共享内存需要注意的问题</strong><br>共享内存没有同步机制，当多个进程同时向共享内存读写数据时，我们需要使用互斥锁，读写锁，信号量，条件变量等来确保数据的一致性。</p>
-<p><strong>4.共享内存使用示例</strong></p>
-<p>我们编写了两个程序shmread.c,shmwrite.c分别对共享内存读和写。<br>需要做到可写，然后可读，然后可写，然后可读，循环下去，直到写入的是”end”，结束写读进程。<br>我们使用了前面讲的<a href="http://www.cnblogs.com/shijingjing07/p/5615084.html" target="_blank" rel="external">信号量</a>来处理读写同步的问题。<br>示例代码如下：</p>
-<p>shm_data.h</p>
-<pre><code>#pragma once                                                                    
-#define TEXT_SZ 2048
-struct shared_use_st
-{
-        char text[TEXT_SZ];
-};
-</code></pre><p>shmread.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-#include&lt;sys/shm.h&gt;
-#include&lt;sys/sem.h&gt;
-#include&quot;shmdata.h&quot;
-union semun  
-{  
-    int val;  
-    struct semid_ds *buf;  
-    unsigned short *arry;  
-}; 
-int sem_id;
-int set_semvalue()  
-{  
-    //用于初始化信号量，在使用信号量前必须这样做  
-    union semun sem_union;  
-
-    sem_union.val = 1;  
-    if(semctl(sem_id, 0, SETVAL, sem_union) == -1)  
-        return 0;  
-    return 1;  
-}  
-
-void del_semvalue()  
-{  
-    //删除信号量  
-    union semun sem_union;  
-
-    if(semctl(sem_id, 0, IPC_RMID, sem_union) == -1)  
-        fprintf(stderr, &quot;Failed to delete semaphore\n&quot;);  
-}  
-int semaphore_p()
-{
-    struct sembuf sem_b;  
-    sem_b.sem_num = 0;  
-    sem_b.sem_op = -1;//P()  
-    sem_b.sem_flg = SEM_UNDO;  
-    if(semop(sem_id, &amp;sem_b, 1) == -1)  
-    {  
-        fprintf(stderr, &quot;semaphore_p failed\n&quot;);  
-        return 0;  
-    }  
-    return 1;   
-}
-int semaphore_v()
-{
-    struct sembuf sem_b;  
-    sem_b.sem_num = 0;  
-    sem_b.sem_op = 1;//V()  
-    sem_b.sem_flg = SEM_UNDO;  
-    if(semop(sem_id, &amp;sem_b, 1) == -1)  
-    {  
-        fprintf(stderr, &quot;semaphore_v failed\n&quot;);  
-        return 0;  
-    }  
-    return 1;  
-}
-int main()
-{
-    void *shm=NULL;
-    struct shared_use_st *shared;
-    int shmid;//共享内存标识符
-    //创建共享内存
-    shmid = shmget((key_t)1234,sizeof(struct shared_use_st),0666|IPC_CREAT);
-    if(shmid==-1)
-    {
-        fprintf(stderr,&quot;shmget failed\n&quot;);
-        exit(EXIT_FAILURE);
-    }
-    //将共享内存连接到当前进程的地址空间
-    shm = shmat(shmid,0,0);
-    if(shm==(void*)-1)
-    {
-        fprintf(stderr,&quot;shmat failed\n&quot;);
-        exit(EXIT_FAILURE);
-    }
-    printf(&quot;memory attached at %x\n&quot;,(int)shm);
-    //设置共享内存
-    shared = (struct shared_use_st*)shm;
-
-    //新建信号量
-    sem_id = semget((key_t)1234,1,0666|IPC_CREAT);
-
-    //信号量初始化
-    if(!set_semvalue())
-    {
-        fprintf(stderr,&quot;init failed.\n&quot;);
-        exit(EXIT_FAILURE);
-    }
-
-    while(1)
-    {
-        if(!semaphore_p())
-            exit(EXIT_FAILURE);
-        fflush(stdout);
-        printf(&quot;you wrote:%s&quot;,shared-&gt;text);
-        if(!semaphore_v())
-            exit(EXIT_FAILURE);
-        if(strncmp(shared-&gt;text,&quot;end&quot;,3)==0)
-            break;
-        sleep(1);
-    }
-
-     //删除信号量
-    del_semvalue();
-
-    //把共享内存从当前进程中分离
-    if(shmdt(shm)==-1)
-    {
-        fprintf(stderr,&quot;shmdt failed\n&quot;);
-        exit(EXIT_FAILURE);
-    }
-    //删除共享内存
-    if(shmctl(shmid,IPC_RMID,0)==-1)
-    {
-        fprintf(stderr,&quot;shmctl(IPC_RMID) failed&quot;);
-        exit(EXIT_FAILURE);
-    }
-    exit(EXIT_SUCCESS);
-}
-</code></pre><p>shmwrite.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-#include&lt;sys/shm.h&gt;
-#include&lt;sys/sem.h&gt;
-#include&lt;string.h&gt;
-#include&quot;shmdata.h&quot;
-int sem_id;
-int semaphore_p()
-{
-    //对信号量做减1操作，即等待P（sv）  
-    struct sembuf sem_b;  
-    sem_b.sem_num = 0;  
-    sem_b.sem_op = -1;//P()  
-    sem_b.sem_flg = SEM_UNDO;  
-    if(semop(sem_id, &amp;sem_b, 1) == -1)  
-    {  
-        fprintf(stderr, &quot;semaphore_p failed\n&quot;);  
-        return 0;  
-    }  
-    return 1;  
-}  
-int semaphore_v()  
-{  
-    //这是一个释放操作，它使信号量变为可用，即发送信号V（sv）  
-    struct sembuf sem_b;  
-    sem_b.sem_num = 0;  
-    sem_b.sem_op = 1;//V()  
-    sem_b.sem_flg = SEM_UNDO;  
-    if(semop(sem_id, &amp;sem_b, 1) == -1)  
-    {  
-        fprintf(stderr, &quot;semaphore_v failed\n&quot;);  
-        return 0;  
-    }  
-    return 1;  
-}  
-int main()
-{
-    sem_id = semget((key_t)1234,1,0666|IPC_CREAT);
-
-    void *shm = NULL;
-    struct shared_use_st *shared = NULL;
-    char buffer[200];
-    int shmid;
-
-    //创建共享内存
-    shmid = shmget((key_t)1234,sizeof(struct shared_use_st),0666|IPC_CREAT);
-    if(shm==-1)
-    {
-        fprintf(stderr,&quot;shmget failed\n&quot;);
-        exit(EXIT_FAILURE);
-    }
-    //将共享内存连接到当前进程的地址空间
-    shm = shmat(shmid,(void*)0,0);
-    if(shm == (void*)-1)
-    {
-        fprintf(stderr,&quot;shmat failed\n&quot;);
-        exit(EXIT_FAILURE);
-    }
-    printf(&quot;memory attached at %x\n&quot;,(int)shm);
-    //设置共享内存
-    shared = (struct shared_use_st*)shm;
-    while(1)
-    {
-        if(!semaphore_p())
-            exit(EXIT_FAILURE);
-        //向共享内存中写入数据
-        fflush(stdout);
-        printf(&quot;Enter some text...\n&quot;);
-        fgets(buffer,200,stdin);
-        strncpy(shared-&gt;text,buffer,TEXT_SZ);
-        if(!semaphore_v())
-            exit(EXIT_FAILURE);
-        if(strncmp(shared-&gt;text,&quot;end&quot;,3)==0)
-            break;
-        sleep(1);
-    }
-    //把共享内存从当前进程中分离
-    if(shmdt(shm)==-1)
-    {
-        fprintf(stderr,&quot;shmdt failed\n&quot;);
-        exit(EXIT_FAILURE);
-    }
-    sleep(2);
-    exit(EXIT_SUCCESS);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095232531-98650326.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095248421-314034952.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627095259265-723118106.png" alt=""></p>
-<p><strong>5.共享内存的优缺点</strong><br>1)进程间通信方便，快速。<br>2)没有提供同步机制，我们需要使用互斥锁，读写锁，信号量，条件变量等来确保数据的一致性。</p>
-
-          
+          1.什么是共享内存在前面讲虚拟内存机制时，有讲到Linux的内存映射机制：初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。当共享访问时，一个进程的对该对象的修改会显示到其他进程。当私有访问时，修改时会产生保护故
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/27/Linux共享内存/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -877,7 +568,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-24T10:20:00+08:00">
                 2016-06-24
@@ -892,6 +583,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/24/Linux信号量详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/Linux信号量详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -917,125 +618,17 @@ int main()
       
         
           
-            <p><strong>1.什么是信号量</strong><br>信号量是一种特殊的变量，访问具有原子性。<br>只允许对它进行两个操作：<br>1)等待信号量<br>当信号量值为0时，程序等待；当信号量值大于0时，信号量减1，程序继续运行。<br>2)发送信号量<br>将信号量值加1。</p>
-<p>我们使用信号量，来解决进程或线程间共享资源引发的同步问题。</p>
-<p><strong>2.Linux中信号量的使用</strong><br>Linux提供了一组信号量API，声明在头文件sys/sem.h中。<br>1)semget函数：新建信号量</p>
-<pre><code>int semget(key_t key,int num_sems,int sem_flags);
-</code></pre><p>key:信号量键值，可以理解为信号量的唯一性标记。<br>num_sems:信号量的数目，一般为1<br>sem_flags:有两个值，IPC_CREATE和IPC_EXCL，<br>IPC_CREATE表示若信号量已存在，返回该信号量标识符。<br>IPC_EXCL表示若信号量已存在，返回错误。  </p>
-<p>返回值：相应的信号量标识符，失败返回-1</p>
-<p>2)semop函数：修改信号量的值</p>
-<pre><code>int semop(int sem_id,struct sembuf *sem_opa,size_t num_sem_ops);
-</code></pre><p>sem_id:信号量标识符<br>sem_opa:结构如下</p>
-<pre><code>struct sembuf{  
-    short sem_num;//除非使用一组信号量，否则它为0  
-    short sem_op;//信号量在一次操作中需要改变的数据，通常是两个数，一个是-1，即P（等待）操作，  
-                    //一个是+1，即V（发送信号）操作。  
-    short sem_flg;//通常为SEM_UNDO,使操作系统跟踪信号，  
-                    //并在进程没有释放该信号量而终止时，操作系统释放信号量  
-}; 
-</code></pre><p>3)semctl函数：用于信号量的初始化和删除</p>
-<pre><code>int semctl(int sem_id,int sem_num,int command,[union semun sem_union]);
-</code></pre><p>command:有两个值SETVAL,IPC_RMID，分别表示初始化和删除信号量。<br>sem_union:可选参数，结构如下：</p>
-<pre><code>union semun{  
-    int val; 
-    struct semid_ds *buf;  
-    unsigned short *arry;  
-}; 
-</code></pre><p>一般用到的是val,表示要传给信号量的初始值。</p>
-<p><strong>3.Linux信号量使用示例</strong><br>下例中，我们写了一个程序，程序中有一个char类型的字符,char message=’x’<br>然后同时运行这个程序的两个实例。<br>第一个实例，带一个参数，将参数的第一个字符赋给message，比如为’0’<br>第二个实例，使用默认message值’x’<br>我们的目的是，使用信号量，循环执行这两个实例，<br>我们可以看到执行结果应该是’x0x0x0x0x0x0’</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-#include&lt;sys/sem.h&gt;
-union semun
-{
-    int val;
-    struct semid_ds *buf;
-    unsigned short *array;
-};
-int sem_id;
-int set_semvalue()
-{
-    union semun sem_union;    
-    sem_union.val = 1;
-    if(semctl(sem_id,0,SETVAL,sem_union)==-1)
-        return 0;
-    return 1;
-}
-int semaphore_p()
-{
-    struct sembuf sem_b;
-    sem_b.sem_num = 0;
-    sem_b.sem_op = -1;
-    sem_b.sem_flg = SEM_UNDO;
-    if(semop(sem_id,&amp;sem_b,1)==-1)
-    {
-        fprintf(stderr,&quot;semaphore_p failed\n&quot;);
-        return 0;
-    }
-    return 1;
-}
-int semaphore_v()
-{
-    struct sembuf sem_b;
-    sem_b.sem_num = 0;
-    sem_b.sem_op = 1;
-    sem_b.sem_flg = SEM_UNDO;
-    if(semop(sem_id,&amp;sem_b,1)==-1)
-    {
-        fprintf(stderr,&quot;semaphore_v failed\n&quot;);
-        return 0;
-    }
-    return 1;
-}
-void del_semvalue()
-{
-    //删除信号量
-    union semun sem_union;
-    if(semctl(sem_id,0,IPC_RMID,sem_union)==-1)
-        fprintf(stderr,&quot;Failed to delete semaphore\n&quot;);
-}
-int main(int argc,char *argv[])
-{
-    char message = &apos;x&apos;;
-    //创建信号量
-     sem_id = semget((key_t)1234,1,0666|IPC_CREAT);
-    if(argc&gt;1)
-    {
-        //初始化信号量
-        if(!set_semvalue())
-        {
-            fprintf(stderr,&quot;init failed\n&quot;);
-            exit(EXIT_FAILURE);
-        }
-        //参数的第一个字符赋给message
-        message = argv[1][0];
-    }
-    int i=0;
-    for(i=0;i&lt;5;i++)
-    {
-        //等待信号量
-        if(!semaphore_p())
-            exit(EXIT_FAILURE);
-        printf(&quot;%c&quot;,message);
-        fflush(stdout);
-        sleep(1);
-        //发送信号量
-        if(!semaphore_v())
-            exit(EXIT_FAILURE);
-        sleep(1);
-    }
-    printf(&quot;\n%d-finished\n&quot;,getpid());
-    if(argc&gt;1)
-    {
-        //退出前删除信号量
-        del_semvalue();
-    }
-    exit(EXIT_SUCCESS);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160624181814063-1372067931.png" alt=""></p>
-
-          
+          1.什么是信号量信号量是一种特殊的变量，访问具有原子性。只允许对它进行两个操作：1)等待信号量当信号量值为0时，程序等待；当信号量值大于0时，信号量减1，程序继续运行。2)发送信号量将信号量值加1。
+我们使用信号量，来解决进程或线程间共享资源引发的同步问题。
+2.Linux中信号量的使用Linux提
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/24/Linux信号量详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1112,7 +705,7 @@ int main(int argc,char *argv[])
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-23T09:31:00+08:00">
                 2016-06-23
@@ -1127,6 +720,16 @@ int main(int argc,char *argv[])
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/23/虚拟内存机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/23/虚拟内存机制/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1152,30 +755,15 @@ int main(int argc,char *argv[])
       
         
           
-            <p><strong>1.为什么要有虚拟内存</strong><br>在早期的计算机中，是没有虚拟内存的概念的。我们要运行一个程序，会把程序全部装入内存，然后运行。<br>当运行多个程序时，经常会出现以下问题：<br>1)进程地址空间不隔离，没有权限保护。<br>由于程序都是直接访问物理内存，所以一个进程可以修改其他进程的内存数据，<br>甚至修改内核地址空间中的数据。<br>2)内存使用效率低<br>当内存空间不足时，要将其他程序暂时拷贝到硬盘，然后将新的程序装入内存运行。<br>由于大量的数据装入装出，内存使用效率会十分低下。<br>3)程序运行的地址不确定<br>因为内存地址是随机分配的，所以程序运行的地址也是不确定的。</p>
-<p><strong>2.虚拟地址和物理地址</strong><br>对于32位系统，寻址指针为4字节，对应的虚拟地址空间为0-2^32，即0-4G。<br>对于64位系统，寻址指针为8字节，对应的虚拟地址空间为0-2^64，即0-16G。<br>要注意的是，这个地址空间是虚拟的，并非实际存在的。<br>Linux内核把虚拟地址空间分为两部分：用户进程空间，内核进程空间。<br>如下入所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171752625-325593160.png" alt=""></p>
-<p>在缓存原理中，换入/换出的数据以块为最小单位。在内存管理时，页是地址空间的最小单位。<br>虚拟地址空间划分为多个固定大小的虚拟页(VP),物理地址空间(DRAM内存)划分为多个固定大小的物理页(PP),<br>虚拟页和物理页的大小是一样的，通常为4KB。</p>
-<p>虚拟页和物理页存在着以下关系：<br>虚拟页和磁盘文件映射，然后缓存到物理页。<br>根据是否映射，是否缓存，可以将虚拟页的状态分为以下三种：<br>1)未映射的页<br>即虚拟页没有映射到磁盘文件<br>2)未缓存的页<br>虚拟页映射到了磁盘文件，但是没有缓存到物理页，也就是内存上。<br>3)缓存的页<br>虚拟页映射到了磁盘文件，并且缓存到物理页<br>如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171815625-1644110249.png" alt=""></p>
-<p><strong>3.虚拟地址的工作原理</strong><br>对于进程来说，使用的都是虚拟地址。每个进程维护一个单独的页表。何为页表？<br>页表是一种数组结构，存放着各虚拟页的状态，是否映射，是否缓存。</p>
-<p>1)数组的索引号，表示虚拟页号<br>2)数组的值<br>若为null，表示未映射的页<br>若非null，第一位表示有效位，为1，表明缓存的页；为0，表明未缓存的页。<br>其余位表示缓存到的物理页号。</p>
-<p>页表结构图如下：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623173846485-1317297798.png" alt=""></p>
-<p>进程执行时，当需要访问虚拟地址中存放的值时，步骤如下：<br>1)CPU会先找到虚拟地址所在的虚拟页(VP3)，根据页表，找出页表中第3条的值。<br>判断有效位，为1，DRMA缓存命中，获根据物理页号，找到物理页中的内容，返回。<br>2)若有效位为0，产生缺页异常，调用内核缺页异常处理程序。<br>它会选择一个物理页(如PP4)，作为牺牲页，将该页的内容刷新到磁盘文件。然后，把VP3映射的磁盘文件，缓存到该物理页。<br>页表中的第3条，有效位变1，同时，物理页号表号变为PP4。<br>3)缺页异常处理完毕后，返回中断前的指令，重新执行，此时缓存命中，执行1)<br>4)将找到的内容映射到高速缓存，CPU从高速缓存中获取该值，结束。</p>
-<p><strong>4.使用虚拟地址需要注意的问题</strong><br>1)磁盘和主存传送页的活动叫做页面调度。页面调度会引起磁盘流量，如果程序的局部性不好，会频繁进行页面调度，叫做”缓存颠簸”。<br>操作系统会在内存中分配一块交换区作为缓冲区，来加速页面的调度。<br>2)一级页表占用的空间是比较大的，根据按需调度的原则，一般使用的是多级页表，即一级页表指向二级页表，这样大大压缩了页表的大小。</p>
-<p><strong>5.地址翻译</strong><br>地址翻译指的是DRAM缓存命中时，由虚拟地址找到物理地址的过程。<br>该过程是完全由硬件来完成的。<br>1)CPU有一个专门的页表基地址寄存器(PTBR)指向当前页表的基地址，快速定位到该进程的页表。<br>2)根据虚拟页号，找到虚拟地址在页表的值。<br>3)根据值中的物理页号，找到物理地址。</p>
-<p><strong>6.Linux中的虚拟内存机制</strong></p>
-<p>Linux把虚拟内存划分成区域area的集合，一个area包括连续的多个页。<br>area的数据结构如下所示：<br>1)内核为每个进程维护了一个单独的任务结果task_struct<br>2)task_struct的mm指针，指向了mm_struct，该结构描述虚拟内存的运行状态。<br>3)mm_struct的pgd指针指向进程的一级页表的基地址。<br>mmap指针，指向vm_area_struct链表。<br>4)vm_area_struct描述area的结构，vm_start表示area的开始位置，vm_end表示area的结束位置，vm_prot表示area内的页的读写权限，vm_flags表示area内的页面是进程私有还是共享，vm_next指向下一个area节点。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160623171927344-1692955841.png" alt=""></p>
-<p>在Linux中，当发生缺页异常时，步骤如下：<br>1)缺页异常程序，检查虚拟地址在哪个area内。<br>2)访问的虚拟页若没有读写权限，则触发一个保护异常，终止进程。<br>3)选择牺牲页，刷新到磁盘，从磁盘加载缺失的内容到物理页，更新页表。</p>
-<p><strong>7.Linux虚拟内存需要注意的问题</strong><br>内存映射机制:初始化虚拟内存区域时，会把虚拟内存和磁盘文件对象对应起来。</p>
-<p>由于内存映射机制，一个磁盘文件对象可被多个进程共享访问，也可被多个进程私有访问。<br>当共享访问时，一个进程的对该对象的修改会显示到其他进程。<br>当私有访问时，修改时会产生保护故障，内核会拷贝这个私有对象，修改的是这个新对象，其他进程指向的是原来的对象。</p>
-<p>fork函数是说明内存映射机制很好的例子：<br>fork函数会创建带有独立虚拟地址空间的新进程，内核会把当前进程的虚拟内存中数据结构复制一份给新进程。虚拟内存area包括共享区域和私有区域，新建的进程对私有区域做修改时，会触发写时拷贝，为新进程维护私有的虚拟地址空间。</p>
-<p><strong>8.虚拟地址作用总结</strong><br>1)虚拟内存管理可以控制物理内存的访问权限<br>访问的虚拟页若没有读写权限，则触发一个保护异常，终止进程。<br>2)虚拟内存让每个进程有独立的地址空间<br>对于私有区域来说，当不同进程对该区域做修改时，会触发写时拷贝，为新进程维护私有的虚拟地址空间。<br>3)VA到PA的映射会给分配和释放内存带来方便。<br>物理内存不连续的地址，可映射到连续的虚拟内存地址。<br>4)内存效率高<br>使用了页面调度，不会造成大量的数据装入装出。</p>
-<p>参考资料: 《深入理解计算机系统》</p>
-
-          
+          1.为什么要有虚拟内存在早期的计算机中，是没有虚拟内存的概念的。我们要运行一个程序，会把程序全部装入内存，然后运行。当运行多个程序时，经常会出现以下问题：1)进程地址空间不隔离，没有权限保护。由于程序都是直接访问物理内存，所以一个进程可以修改其他进程的内存数据，甚至修改内核地址空间中的数据。2)内存
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/23/虚拟内存机制/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1252,7 +840,7 @@ int main(int argc,char *argv[])
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-22T10:07:00+08:00">
                 2016-06-22
@@ -1267,6 +855,16 @@ int main(int argc,char *argv[])
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/22/Linux静态库和共享库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/22/Linux静态库和共享库/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1292,108 +890,19 @@ int main(int argc,char *argv[])
       
         
           
-            <p><strong>1.什么是静态库</strong><br>静态库类似windows中的静态lib</p>
-<p>关于windows中的静态lib，可参考<br><a href="http://www.cnblogs.com/shijingjing07/p/5606930.html" target="_blank" rel="external">Windows动态链接库DLL</a></p>
-<p>特点：包含函数代码声明和实现，链接后所有代码都嵌入到宿主程序中。<br>只在编译时使用，执行时不再需要该静态库。</p>
-<p><strong>2.静态库编写</strong><br>示例如下：<br>addvec.c</p>
-<pre><code>void addvec(int* x, int* y, int*z, int n)  
-{  
-     int i=0;  
-     for(; i&lt; n;++i)  
-          z[i] = x[i] + y[i];  
-}  
-</code></pre><p>multvec.c</p>
-<pre><code>void multvec(int*x, int* y, int*  z, int n)  
-{  
-     int i = 0;  
-     for(; i &lt; n; ++i)  
-          z[i] = x[i] * y[i];  
-}
-</code></pre><p>使用AR工具创建静态库文件：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175529406-1385482834.png" alt=""></p>
-<p><strong>3.静态库使用</strong><br>示例如下：<br>test2.c</p>
-<pre><code>#include &lt;stdio.h&gt;    
-int x[2] = {1, 2};  
-int y[2] = {3, 4};  
-int z[2]={0};   
-int main()  
-{  
-    addvec(x, y, z, 2);  
-    printf(&quot;z = [%d %d]\n&quot;, z[0], z[1]);  
-    return 0;  
-}
-</code></pre><p>编译-链接-运行程序</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175600813-1259104162.png" alt=""></p>
-<p>1)-static参数，表明是静态链接，编译出的是完整的可执行目标文件。<br>2)当链接器进行链接时，会判断main函数里调用了addvec.o中的addvec函数，<br>没有调用multvec.o中的任何函数，所以，链接器只会拷贝addvec.o到可执行文件。</p>
-<p><strong>4.什么是共享库</strong><br>共享库类似windows中的动态链接库dll</p>
-<p>特点：包含函数代码声明和实现。<br>只在运行时使用，由动态链接器链接和加载。  </p>
-<p>根据链接和加载共享库的时机可分为以下两类：<br>1)自身加载型共享库。<br>2)运行时加载型共享库</p>
-<p><strong>5.自身加载型共享库。</strong><br>类似windows中的隐式链接<br>链接时，将共享库的声明信息链接到可执行文件，<br>应用程序加载时，动态链接库解析声明信息，加载共享库的实现到存储器，重定位应用程序中声明信息到实际地址。</p>
-<p><strong>6.自身加载型共享库使用示例</strong><br>使用-shared参数，指示编译器创建一个共享库。<br>如下所示，我们创建了一个共享库，并通过自身加载型来使用该共享库。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175642485-1797416922.png" alt=""></p>
-<p>1)-fPIC参数，指示编译器生成代码无关的代码<br>2)在链接时，没有拷贝共享库libvec.so的实现，只拷贝了一些重定位和符号表信息<br>3)程序加载时，动态链接器会解析共享库libvec.so中代码和数据的引用，重定位完成链接任务。<br>重定位libvec.so的文本和数据到存储器段<br>重定位p2中引用的libvec.so到以上存储器段<br>最后链接器将控制传递给程序，此时，共享库的位置就固定了。</p>
-<p><strong>7.运行时加载型共享库</strong><br>类似windows中的显式链接<br>无需编译时链接，可在运行过程中加载和卸载共享库。</p>
-<p><strong>8.运行时加载型共享库使用示例</strong><br>Linux提供了一组运行过程中加载和卸载共享库的API，如下所示：  </p>
-<p>#include&lt;dlfcn.h&gt;</p>
-<pre><code>/* 加载和链接共享库 filename 
-    filename：共享库的名字 
-    flag有：RTLD_LAZY, RTLD_NOW,二者均可以和RTLD_GLOBAL表示取或 
-*/  
-void *dlopen(const char *filename, int flag); // 若成功则返回执行句柄的指针，否则返回NULL  
-
-/*根据共享库操作句柄与符号，返回符号对应的地址 
-    handle:共享库操作句柄 
-    symbol：需要引用的符号名字 
-*/  
-void *dlsym(void *handle, char *symbol); // 若成功则返回执行符号的指针（即地址），若出错则返回NULL  
-
-/* 如果没有程序正在使用这个共享库，卸载该共享库 */  
-int dlclose(void *handle); // 若卸载成功，则返回0，否则返回-1  
-
-/* 捕捉最近发生的错误 */  
-const char *dlerror(void); // 若前面对dlopen，dlsym或dlclose调用失败，则返回错误消息，否则返回NULL  
-</code></pre><p>根据以上API，我们可以方便地加载和卸载共享库，如下所示：</p>
-<pre><code>#include &lt;stdio.h&gt;  
-#include &lt;stdlib.h&gt;  
-#include &lt;dlfcn.h&gt;  
-
-int x[2] = {1, 2};  
-int y[2] = {3, 4};  
-int z[2] ={0};  
-
-int main()  
-{  
-    void *handle;  
-    void (*addvec)(int *, int *, int *,int);  
-    char *error;  
-
-    handle = dlopen(&quot;./libvector.so&quot;, RTLD_LAZY);  
-    if(!handle){  
-        fprintf(stderr, &quot;%s\n&quot;, dlerror());  
-        exit(1);  
-    }  
-
-    addvec = dlsym(handle, &quot;addvec&quot;);  
-    if((error = dlerror()) != NULL){  
-        fprintf(stderr, &quot;%s\n&quot;, dlerror());  
-        exit(1);  
-    }  
-
-    addvec(x, y, z, 2);  
-    printf(&quot;z = [%d %d]\n&quot;, z[0], z[1]);  
-
-    if(dlclose(handle) &lt; 0){  
-        fprintf(stderr, &quot;%s\n&quot;, dlerror());  
-        exit(1);  
-    }  
-
-    return 0;  
-}  
-</code></pre><p>运行程序：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160622175741203-318389061.png" alt=""></p>
-<p>其中，-ldl参数，表示程序运行时需要用到共享库</p>
-
-          
+          1.什么是静态库静态库类似windows中的静态lib
+关于windows中的静态lib，可参考Windows动态链接库DLL
+特点：包含函数代码声明和实现，链接后所有代码都嵌入到宿主程序中。只在编译时使用，执行时不再需要该静态库。
+2.静态库编写示例如下：addvec.c
+void addvec(
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/22/Linux静态库和共享库/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1470,7 +979,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-22T06:08:00+08:00">
                 2016-06-22
@@ -1485,6 +994,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/22/Windows动态链接库DLL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/22/Windows动态链接库DLL/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1510,51 +1029,17 @@ int main()
       
         
           
-            <p><strong>1.什么是DLL</strong><br>DLL，即动态链接库，是包含若干个函数的库文件，可供其他程序运行时调用。</p>
-<p><strong>2.DLL的优缺点</strong><br>优点：代码重用，可供多个程序同时调用</p>
-<p>缺点：易发生版本冲突<br>当新版本的动态链接库不兼容旧版本时，其他使用该DLL的程序可能无法正常工作。<br>针对这一问题，我们需要在程序中加上一个manifest文件，指明该程序所使用的DLL版本号。<br>此时，程序将根据manifest加载指定版本的DLL，否则按默认版本加载。</p>
-<p><strong>3.关于LIB和DLL</strong><br>LIB，是静态链接库，分为静态lib和动态lib。<br>静态lib:包含函数代码声明和实现，编译后所有代码都嵌入到宿主程序中。不需要再另行调用DLL。<br>动态lib:相当于一个.h头文件，它是对实现部分（.DLL）的导出部分的声明。编译后宿主程序也只包括声明部分。运行时需调用相应的DLL文件。</p>
-<p><strong>4.DLL编写</strong><br>1)在vs中，选择”文件”-》”新建”-》”项目”，选择”Visual C++”-》”win32项目”，来创建DLL类库。<br>如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160621180959975-426197335.png" alt=""></p>
-<p>2)添加头文件(.h)和源文件(.cpp)<br>mydll.h</p>
-<pre><code>extern &quot;C&quot; _declspec(dllexport) int add(int a, int b); 
-</code></pre><p>extern关键字：函数可以在本模块或其他模块中使用；<br>“C”：表明函数必须按C语言方式进行编译，因为C++支持函数的重载，编译时会对函数名进行更改（按照函数名+参数类型），<br>       所以需要声明”C”，以便链接时能正确找到相应的函数。<br>_declspec(dllexport)关键字：该函数可以从DLL中导出，程序引入DLL时，只有声明了该关键字的函数，才能导入使用</p>
-<p>mydll.cpp</p>
-<pre><code>#include &quot;mydll.h&quot; 
-int add(int a, int b) //该DLL需要导出的函数功能：加法 
-{ 
-     return a + b; 
-}
-</code></pre><p>编译后，我们可以在生成目录中找到相应的DLL文件和LIB文件。</p>
-<p>_mydll.dll，<em>mydll.lib</em><br>_</p>
-<p><strong>5.DLL调用</strong><br>调用DLL有两种方式。<br>1)显式链接（只使用DLL）</p>
-<p>特点：不需要使用相应的lib文件，可随时加载和卸载DLL，方便灵活。</p>
-<pre><code>void main(void)
-{
-    typedef int(*padd)(int a,int b);
-    HINSTANCE hDLL;
-    padd add;
-    HDLL=LoadLibrary(&quot;MyDll.dll&quot;);//加载动态链接库MyDll.dll文件；
-    add=(padd)GetProcAddress(hDLL,&quot;add&quot;);
-    int result=add(5,8);
-    Printf(&quot;计算的结果为%d\n&quot;，result);
-    FreeLibrary(hDLL);//卸载MyDll.dll文件；
-} 
-</code></pre><p>上例通过LoadLibray()将DLL加载到当前的应用程序，并返回当前DLL文件的句柄。<br>然后通过GetProcAddress()函数获取导入到应用程序中的函数指针，<br>函数调用完毕后，使用FreeLibrary()卸载DLL文件。</p>
-<p>2)隐式链接（使用LIB,DLL）<em>  
-</em></p>
-<p>特点：程序开始执行时将DLL文件加载到应用程序中，程序结束后，释放DLL。</p>
-<pre><code>#pragma comment(lib，&quot;MyDll.lib&quot;)
-extern &quot;C&quot;_declspec(dllimport) int add(int a,int b);
-void main()
-{
-    int a;
-    a=add(8,10)
-    printf(&quot;计算的结果为%d\n&quot;，a);
-}
-</code></pre><p>#pragma comment是预处理指令，使得链接器在链接库的时候去找”MyDll.lib”这个库。</p>
-
-          
+          1.什么是DLLDLL，即动态链接库，是包含若干个函数的库文件，可供其他程序运行时调用。
+2.DLL的优缺点优点：代码重用，可供多个程序同时调用
+缺点：易发生版本冲突当新版本的动态链接库不兼容旧版本时，其他使用该DLL的程序可能无法正常工作。针对这一问题，我们需要在程序中加上一个manifest文件
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/22/Windows动态链接库DLL/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1631,7 +1116,7 @@ void main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-17T09:49:00+08:00">
                 2016-06-17
@@ -1646,6 +1131,16 @@ void main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/17/linux grep命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/17/linux grep命令/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1671,70 +1166,18 @@ void main()
       
         
           
-            <p><strong>1.作用</strong></p>
-<p>Linux系统中grep命令是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹 配的行打印出来。grep全称是Global Regular<br>Expression Print，表示全局正则表达式版本，它的使用权限是所有用户。</p>
-<p><strong>2.格式</strong><br>grep [options]</p>
-<p><strong>3.主要参数</strong><br>[options]主要参数：<br>－c：只输出匹配行的计数。<br>－I：不区分大 小写(只适用于单字符)。<br>－h：查询多文件时不显示文件名。<br>－l：查询多文件时只输出包含匹配字符的文件名。<br>－n：显示匹配行及 行号。<br>－s：不显示不存在或无匹配文本的错误信息。<br>－v：显示不包含匹配文本的所有行。<br>pattern正则表达式主要参数：<br>\： 忽略正则表达式中特殊字符的原有含义。<br>^：匹配正则表达式的开始行。<br>$: 匹配正则表达式的结束行。<br>\&lt;：从匹配正则表达 式的行开始。<br>\&gt;：到匹配正则表达式的行结束。<br>[ ]：单个字符，如[A]即A符合要求 。<br>[ - ]：范围，如[A-Z]，即A、B、C一直到Z都符合要求 。<br>。：所有的单个字符。  </p>
-<ul>
-<li>：有字符，长度可以为0。</li>
-</ul>
-<p><strong>4.grep命令使用简单实例</strong><br>$ grep ‘test’ d<em><br>显示所有以d开头的文件中包含 test的行。<br>$ grep ‘test’ aa bb cc<br>显示在aa，bb，cc文件中匹配test的行。<br>$ grep ‘[a-z]\{5\}’ aa<br>显示所有包含每个字符串至少有5个连续小写字符的字符串的行。<br>$ grep ‘w\(es\)t.</em>\1′ aa<br>如果west被匹配，则es就被存储到内存中，并标记为1，然后搜索任意个字符(.<em>)，这些字符后面紧跟着<br>另外一个es(\1)，找到就显示该行。如果用egrep或grep -E，就不用”\”号进行转义，直接写成’w(es)t.</em>\1′就可以了。</p>
-<p><strong>5.grep命令使用复杂实例</strong><br>假设您正在’/usr/src/Linux/Doc’目录下搜索带字符 串’magic’的文件：<br>$ grep magic /usr/src/Linux/Doc/<em><br>sysrq.txt:</em> How do I enable the magic SysRQ key?<br>sysrq.txt:<em> How do I use the magic SysRQ key?<br>其中文件’sysrp.txt’包含该字符串，讨论的是 SysRQ 的功能。<br>默认情况下，’grep’只搜索当前目录。如果 此目录下有许多子目录，’grep’会以如下形式列出：<br>grep: sound: Is a directory<br>这可能会使’grep’ 的输出难于阅读。这里有两种解决的办法：<br>明确要求搜索子目录：grep -r<br>或忽略子目录：grep -d skip<br>如果有很多 输出时，您可以通过管道将其转到’less’上阅读：<br>$ grep magic /usr/src/Linux/Documentation/</em> | less<br>这样，您就可以更方便地阅读。</p>
-<p>有一点要注意，您必需提供一个文件过滤方式(搜索全部文件的话用 *)。如果您忘了，’grep’会一直等着，直到该程序被中断。如果您遇到了这样的情况，按<br>&lt;CTRL c&gt; ，然后再试。</p>
-<p>下面还有一些有意思的命令行参数：<br>grep -i pattern files ：不区分大小写地搜索。默认情况区分大小写，<br>grep -l pattern files ：只列出匹配的文件名，<br>grep -L pattern files ：列出不匹配的文件名，<br>grep -w pattern files ：只匹配整个单词，而不是字符串的一部分(如匹配’magic’，而不是’magical’)，<br>grep -C number pattern files ：匹配的上下文分别显示[number]行，<br>grep pattern1 | pattern2 files ：显示匹配 pattern1 或 pattern2 的行，<br>grep pattern1 files | grep pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。</p>
-<p>grep -n pattern files  即可显示行号信息</p>
-<p>grep -c pattern files  即可查找总行数</p>
-<p>这里还有些用于搜索的特殊符号：<br>\&lt; 和 \&gt; 分别标注单词的开始与结尾。<br>例如：<br>grep man <em> 会匹配 ‘Batman’、’manic’、’man’等，<br>grep ‘\&lt;man’ </em> 匹配’manic’和’man’，但不是’Batman’，<br>grep ‘\&lt;man\&gt;’ 只匹配’man’，而不是’Batman’或’manic’等其他的字符串。<br>‘^’：指匹配的字符串在行首，<br>‘$’：指匹配的字符串在行 尾，</p>
-<h2 id="Grep-命令-用法大全"><a href="#Grep-命令-用法大全" class="headerlink" title="Grep 命令 用法大全"></a>Grep 命令 用法大全</h2><p>1、 参数：<br>-I ：忽略大小写<br>-c ：打印匹配的行数<br>-l ：从多个文件中查找包含匹配项<br>-v ：查找不包含匹配项的行<br>-n：打印包含匹配项的行和行标   </p>
-<p>2、RE（正则表达式）<br>\ 忽略正则表达式中特殊字符的原有含义<br>^ 匹配正则表达式的开始行<br>$ 匹配正则表达式的结束行<br>\&lt; 从匹配正则表达式的行开始<br>\&gt; 到匹配正则表达式的行结束<br>[ ] 单个字符；如[A] 即A符合要求<br>[ - ] 范围 ；如[A-Z]即A，B，C一直到Z都符合要求<br>. 所有的单个字符  </p>
-<ul>
-<li>所有字符，长度可以为0   </li>
-</ul>
-<p>3、举例  </p>
-<h1 id="ps-ef-grep-in-telnetd"><a href="#ps-ef-grep-in-telnetd" class="headerlink" title="ps -ef | grep in.telnetd"></a>ps -ef | grep in.telnetd</h1><p>root 19955 181 0 13:43:53 ? 0:00 in.telnetd  </p>
-<h1 id="more-size-txt-size文件的内容"><a href="#more-size-txt-size文件的内容" class="headerlink" title="more size.txt size文件的内容"></a>more size.txt size文件的内容</h1><p>b124230<br>b034325<br>a081016<br>m7187998<br>m7282064<br>a022021<br>a061048<br>m9324822<br>b103303<br>a013386<br>b044525<br>m8987131<br>B081016<br>M45678<br>B103303<br>BADc2345  </p>
-<h1 id="more-size-txt-grep-‘-a-b-’-范围-；如-A-Z-即A，B，C一直到Z都符合要求"><a href="#more-size-txt-grep-‘-a-b-’-范围-；如-A-Z-即A，B，C一直到Z都符合要求" class="headerlink" title="more size.txt | grep ‘[a-b]’ 范围 ；如[A-Z]即A，B，C一直到Z都符合要求"></a>more size.txt | grep ‘[a-b]’ 范围 ；如[A-Z]即A，B，C一直到Z都符合要求</h1><p>b124230<br>b034325<br>a081016<br>a022021<br>a061048<br>b103303<br>a013386<br>b044525  </p>
-<h1 id="more-size-txt-grep-‘-a-b-’"><a href="#more-size-txt-grep-‘-a-b-’" class="headerlink" title="more size.txt | grep ‘[a-b]’*"></a>more size.txt | grep ‘[a-b]’*</h1><p>b124230<br>b034325<br>a081016<br>m7187998<br>m7282064<br>a022021<br>a061048<br>m9324822<br>b103303<br>a013386<br>b044525<br>m8987131<br>B081016<br>M45678<br>B103303<br>BADc2345  </p>
-<h1 id="more-size-txt-grep-‘-b’-单个字符；如-A-即A符合要求"><a href="#more-size-txt-grep-‘-b’-单个字符；如-A-即A符合要求" class="headerlink" title="more size.txt | grep ‘**b’ 单个字符；如[A] 即A符合要求"></a>more size.txt | grep ‘**b’ 单个字符；如[A] 即A符合要求</h1><p>b124230<br>b034325<br>b103303<br>b044525  </p>
-<h1 id="more-size-txt-grep-‘-bB-’"><a href="#more-size-txt-grep-‘-bB-’" class="headerlink" title="more size.txt | grep ‘[bB]’"></a>more size.txt | grep ‘[bB]’</h1><p>b124230<br>b034325<br>b103303<br>b044525<br>B081016<br>B103303<br>BADc2345  </p>
-<h1 id="grep-‘root’-etc-group"><a href="#grep-‘root’-etc-group" class="headerlink" title="grep ‘root’ /etc/group"></a>grep ‘root’ /etc/group</h1><p>root::0:root<br>bin::2:root,bin,daemon<br>sys::3:root,bin,sys,adm<br>adm::4:root,adm,daemon<br>uucp::5:root,uucp<br>mail::6:root<br>tty::7:root,tty,adm<br>lp::8:root,lp,adm<br>nuucp::9:root,nuucp<br>daemon::12:root,daemon  </p>
-<h1 id="grep-‘-root’-etc-group-匹配正则表达式的开始行"><a href="#grep-‘-root’-etc-group-匹配正则表达式的开始行" class="headerlink" title="grep ‘^root’ /etc/group 匹配正则表达式的开始行"></a>grep ‘^root’ /etc/group 匹配正则表达式的开始行</h1><p>root::0:root  </p>
-<h1 id="grep-‘uucp’-etc-group"><a href="#grep-‘uucp’-etc-group" class="headerlink" title="grep ‘uucp’ /etc/group"></a>grep ‘uucp’ /etc/group</h1><p>uucp::5:root,uucp<br>nuucp::9:root,nuucp  </p>
-<h1 id="grep-‘-lt-uucp’-etc-group"><a href="#grep-‘-lt-uucp’-etc-group" class="headerlink" title="grep ‘\&lt;uucp’ /etc/group"></a>grep ‘\&lt;uucp’ /etc/group</h1><p>uucp::5:root,uucp  </p>
-<h1 id="grep-‘root-’-etc-group-匹配正则表达式的结束行"><a href="#grep-‘root-’-etc-group-匹配正则表达式的结束行" class="headerlink" title="grep ‘root$’ /etc/group 匹配正则表达式的结束行"></a>grep ‘root$’ /etc/group 匹配正则表达式的结束行</h1><p>root::0:root<br>mail::6:root  </p>
-<h1 id="more-size-txt-grep-i-‘b1-3’-i-：忽略大小写"><a href="#more-size-txt-grep-i-‘b1-3’-i-：忽略大小写" class="headerlink" title="more size.txt | grep -i ‘b1..*3’ -i ：忽略大小写"></a>more size.txt | grep -i ‘b1..*3’ -i ：忽略大小写</h1><p>b124230<br>b103303<br>B103303  </p>
-<h1 id="more-size-txt-grep-iv-‘b1-3’-v-：查找不包含匹配项的行"><a href="#more-size-txt-grep-iv-‘b1-3’-v-：查找不包含匹配项的行" class="headerlink" title="more size.txt | grep -iv ‘b1..*3’ -v ：查找不包含匹配项的行"></a>more size.txt | grep -iv ‘b1..*3’ -v ：查找不包含匹配项的行</h1><p>b034325<br>a081016<br>m7187998<br>m7282064<br>a022021<br>a061048<br>m9324822<br>a013386<br>b044525<br>m8987131<br>B081016<br>M45678<br>BADc2345  </p>
-<h1 id="more-size-txt-grep-in-‘b1-3’"><a href="#more-size-txt-grep-in-‘b1-3’" class="headerlink" title="more size.txt | grep -in ‘b1..*3’"></a>more size.txt | grep -in ‘b1..*3’</h1><p>1:b124230<br>9:b103303<br>15:B103303  </p>
-<h1 id="grep-‘-’-etc-init-d-nfs-server-wc-l"><a href="#grep-‘-’-etc-init-d-nfs-server-wc-l" class="headerlink" title="grep ‘$’ /etc/init.d/nfs.server | wc -l"></a>grep ‘$’ /etc/init.d/nfs.server | wc -l</h1><p>128  </p>
-<h1 id="grep-‘-’-etc-init-d-nfs-server-wc-l-忽略正则表达式中特殊字符的原有含义"><a href="#grep-‘-’-etc-init-d-nfs-server-wc-l-忽略正则表达式中特殊字符的原有含义" class="headerlink" title="grep ‘\$’ /etc/init.d/nfs.server | wc -l 忽略正则表达式中特殊字符的原有含义"></a>grep ‘\$’ /etc/init.d/nfs.server | wc -l 忽略正则表达式中特殊字符的原有含义</h1><p>15  </p>
-<h1 id="grep-‘-’-etc-init-d-nfs-server"><a href="#grep-‘-’-etc-init-d-nfs-server" class="headerlink" title="grep ‘\$’ /etc/init.d/nfs.server"></a>grep ‘\$’ /etc/init.d/nfs.server</h1><p>case “$1” in<br>&gt;/tmp/sharetab.$$<br>[ “x$fstype” != xnfs ] &amp;&amp;<br>echo “$path\t$res\t$fstype\t$opts\t$desc”<br>&gt;&gt;/tmp/sharetab.$$<br>/usr/bin/touch -r /etc/dfs/sharetab /tmp/sharetab.$$<br>/usr/bin/mv -f /tmp/sharetab.$$ /etc/dfs/sharetab<br>if [ -f /etc/dfs/dfstab ] &amp;&amp; /usr/bin/egrep -v ‘^[ ]*(#|$)’<br>if [ $startnfsd -eq 0 -a -f /etc/rmmount.conf ] &amp;&amp;<br>if [ $startnfsd -ne 0 ]; then<br>elif [ ! -n “$_INIT_RUN_LEVEL” ]; then<br>while [ $wtime -gt 0 ]; do<br>wtime=<code>expr $wtime - 1</code><br>if [ $wtime -eq 0 ]; then<br>echo “Usage: $0 { start | stop }”  </p>
-<h1 id="more-size-txt"><a href="#more-size-txt" class="headerlink" title="more size.txt"></a>more size.txt</h1><p>the test file<br>their are files<br>The end  </p>
-<h1 id="grep-‘the’-size-txt"><a href="#grep-‘the’-size-txt" class="headerlink" title="grep ‘the’ size.txt"></a>grep ‘the’ size.txt</h1><p>the test file<br>their are files  </p>
-<h1 id="grep-‘-lt-the’-size-txt"><a href="#grep-‘-lt-the’-size-txt" class="headerlink" title="grep ‘\&lt;the’ size.txt"></a>grep ‘\&lt;the’ size.txt</h1><p>the test file<br>their are files  </p>
-<h1 id="grep-‘the-gt-’-size-txt"><a href="#grep-‘the-gt-’-size-txt" class="headerlink" title="grep ‘the\&gt;’ size.txt"></a>grep ‘the\&gt;’ size.txt</h1><p>the test file  </p>
-<h1 id="grep-‘-lt-the-gt-’-size-txt"><a href="#grep-‘-lt-the-gt-’-size-txt" class="headerlink" title="grep ‘\&lt;the\&gt;’ size.txt"></a>grep ‘\&lt;the\&gt;’ size.txt</h1><p>the test file  </p>
-<h1 id="grep-‘-lt-Tt-he-gt-’-size-txt"><a href="#grep-‘-lt-Tt-he-gt-’-size-txt" class="headerlink" title="grep ‘\&lt;[Tt]he\&gt;’ size.txt"></a>grep ‘\&lt;[Tt]he\&gt;’ size.txt</h1><p>the test file  </p>
-<p>==================================================================  </p>
-<p>1,简介<br>使用正则表达式的一个多用途文本搜索工具.这个php?name=%C3%FC%C1%EE” onclick=”tagshow(event)”<br>class=”t_tag”&gt;命令本来是ed行编辑器中的一个php?name=%C3%FC%C1%EE”<br>onclick=”tagshow(event)” class=”t_tag”&gt;命令/过滤器:<br>        g/re/p – global - regular expression - print.<br>基本格式<br>grep pattern [file…]<br>(1)grep 搜索字符串 [filename]<br>(2)grep 正则表达式 [filename]<br>在文件中搜索所有 pattern 出现的位置, pattern 既可以是要搜索的字符串,也可以是一个正则表达式.<br>注意：在输入要搜索的字符串时最好使用双引号/而在模式匹配使用正则表达式时，注意使用单引号  </p>
-<p>2,grep的选项<br>    -c 只输出匹配行的计数<br>    -i 不区分大小写（用于单字符）<br>    -n 显示匹配的行号<br>    -v 不显示不包含匹配文本的所以有行<br>    -s 不显示错误信息<br>    -E 使用扩展正则表达式<br>    更多的选项请查看：man grep  </p>
-<p>3,常用grep实例  </p>
-<p>(1)多个文件查询<br>    grep “sort” *.doc       #见文件名的匹配  </p>
-<p>(2)行匹配:输出匹配行的计数<br>    grep -c “48” data.doc   #输出文档中含有48字符的行数  </p>
-<p>(3)显示匹配行和行数<br>    grep -n “48” data.doc       #显示所有匹配48的行和行号  </p>
-<p>(4)显示非匹配的行<br>    grep -vn “48” data.doc      #输出所有不包含48的行  </p>
-<p>(4)显示非匹配的行<br>    grep -vn “48” data.doc      #输出所有不包含48的行  </p>
-<p>(5)大小写敏感<br>    grep -i “ab” data.doc       #输出所有含有ab或Ab的字符串的行  </p>
-<p>4, 正则表达式的应用  </p>
-<p>(1)正则表达式的应用 (注意：最好把正则表达式用单引号括起来)<br>    grep ‘[239].’ data.doc      #输出所有含有以2,3或9开头的，并且是两个数字的行  </p>
-<p>(2)不匹配测试<br>    grep ‘^[^48]’ data.doc      #不匹配行首是48的行  </p>
-<p>(3)使用扩展模式匹配<br>    grep -E ‘219|216’ data.doc  </p>
-<p>(4) …<br>    这需要在实践中不断应用和总结，熟练掌握正则表达式。  </p>
-<p>5, 使用类名<br>可以使用国际模式匹配的类名：<br>[[:upper:]]   [A-Z]<br>[[:lower:]]   [a-z]<br>[[:digit:]]   [0-9]<br>[[:alnum:]]   [0-9a-zA-Z]<br>[[:space:]]   空格或tab<br>[[:alpha:]]   [a-zA-Z]  </p>
-<p>(1)使用<br>    grep ‘5[[:upper:]][[:upper:]]’ data.doc     #查询以5开头以两个大写字母结尾的行  **</p>
-<p><strong>  
-</strong>转自：<a href="http://www.cnblogs.com/end/archive/2012/02/21/2360965.html" target="_blank" rel="external">http://www.cnblogs.com/end/archive/2012/02/21/2360965.html</a></p>
-
-          
+          1.作用
+Linux系统中grep命令是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹 配的行打印出来。grep全称是Global RegularExpression Print，表示全局正则表达式版本，它的使用权限是所有用户。
+2.格式grep [options]
+3.主要参数[opt
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/17/linux grep命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1811,7 +1254,7 @@ void main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-17T03:09:00+08:00">
                 2016-06-17
@@ -1826,6 +1269,16 @@ void main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/17/C++泛型编程原理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/17/C++泛型编程原理/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1851,77 +1304,16 @@ void main()
       
         
           
-            <p><strong>1.什么是泛型编程</strong><br>前面我们介绍的vector,list,map都是一种数据结构容器，<br>容器本身的存储结构不同，各容器中存在的数据类型也可以不同。<br>但我们在访问这些容器中数据时，拥有相同的方式。<br>这种方式就叫做”泛型编程”，顾名思义，不同的类型采用相同的方式来操作。</p>
-<p><strong>2.泛型编程的原理。</strong><br>我们先看下面的两个分别访问数组和链表中元素的示例。<br>示例1，数组类型遍历</p>
-<pre><code>void show(double* arr,int n)
-{
-    for(int i=0;i&lt;n;i++)
-        cout&lt;&lt;arr[i]&lt;&lt;&quot; &quot;;
-}
-</code></pre><p>示例2，链表类型遍历</p>
-<pre><code>struct Node
-{
-    double item;
-    Node * p_next;
-};
-void show(Node* head)
-{
-    for(Node* start=head;start!=0;start=start-&gt;p_next)
-        cout&lt;&lt;start.item&lt;&lt;&quot; &quot;;
-}
-</code></pre><p>我们可以看到，数组和链表的访问方式是完全不同的。<br>那么，如何使用相同的方式去访问呢？<br>这两种数据结构的共同点是，它们都是一个顺序存储数据的容器，<br>所以我们可为每一种容器中定义一个相应的指针类p，在泛型编程中，叫做”迭代器类(iterator)”<br>该指针类中需要重载两个操作符，<br>1)<em>p，访问数据元素内容<br>2)p++，访问下一个数据元素<br>示例1，数组容器(double </em>本身具有*p,p++操作符)：</p>
-<pre><code>typedef double* iterator;
-void show(iterator head,int n)
-{
-    int i=0;
-    for(iterator start=head;i&lt;n;++start)
-    {
-        cout&lt;&lt;*start&lt;&lt;&quot; &quot;;
-        i++
-    }
-}
-</code></pre><p>示例2，链表容器：</p>
-<pre><code>struct Node
-{
-    double item;
-    Node * p_next;
-};
-class iterator
-{
-    Node *pt;
-public:
-    double operator*()
-    {
-        return pt-&gt;item;
-    }
-    iterator&amp; operator++()
-    {
-        pt=pt-&gt;p_next;
-        return *this;
-    }
-};
-void show(iterator head)
-{
-    for(iterator start=head;start!=0;++start)
-    {
-        cout&lt;&lt;*start&lt;&lt;&quot; &quot;;
-    }
-}
-</code></pre><p>我们看到这两种容器的show()方法已基本相同，唯一的区别是结束判断。<br>在数组中，根据数组长度来判断结尾。<br>在链表中，根据最后一个元素指向的下一个元素指针为空来判断。<br>链表比数组多出来一个指向null的指针。</p>
-<p>在泛型编程中，使用了”超尾”的概率来解决这个问题，<br>“超尾”是指在容器的最后一个元素后面，还有一个额外的元素，该元素表示结束。<br>这样数组和链表都有这个超尾指针。我们统一使用这个超尾指针来判断结尾。</p>
-<p><strong>3.泛型编程中迭代器的使用</strong><br>C++为每个容器类(vector,list,deque等)定义了相应的迭代器类型，<br>其begin()返回指向第一个元素的迭代器，end()返回指向超尾元素(额外添加的元素)的迭代器。<br>如下例所示：</p>
-<pre><code>vector&lt;double&gt;::iterator pr;
-for(pr=scores.begin();pr!=scores.end();pr++)
-    cout&lt;&lt;*pr&lt;&lt;endl;
-</code></pre><p>在C++11中，简化了迭代器类型的定义，使用auto自动类型</p>
-<pre><code>for(auto pr=scores.begin();pr!=scores.end();pr++)
-    cout&lt;&lt;*pr&lt;&lt;endl;
-</code></pre><p><strong>4.建议使用的遍历方式</strong><br>很多语言，如C#，并没有使用迭代器iterator，而是使用for,foreach等来遍历数据元素。<br>所以，C++中最好也避免直接使用迭代器，而尽可能使用for_each()。<br>C++11中，新增了for循环，如下例所示：</p>
-<pre><code>for(auto x:scores)
-    cout&lt;&lt;x&lt;&lt;endl;
-</code></pre><p>参考资料：《C++ Primer.Plus》 pp.685-688</p>
-
-          
+          1.什么是泛型编程前面我们介绍的vector,list,map都是一种数据结构容器，容器本身的存储结构不同，各容器中存在的数据类型也可以不同。但我们在访问这些容器中数据时，拥有相同的方式。这种方式就叫做”泛型编程”，顾名思义，不同的类型采用相同的方式来操作。
+2.泛型编程的原理。我们先看下面的两个分
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/17/C++泛型编程原理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1998,7 +1390,7 @@ for(pr=scores.begin();pr!=scores.end();pr++)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-16T10:30:00+08:00">
                 2016-06-16
@@ -2013,6 +1405,16 @@ for(pr=scores.begin();pr!=scores.end();pr++)
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/16/C++ typedef详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/16/C++ typedef详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2038,83 +1440,20 @@ for(pr=scores.begin();pr!=scores.end();pr++)
       
         
           
-            <p><strong>1.typedef的用途</strong><br>1)定义一种类型的别名<br>注意typedef并不是简单的宏替换，如下例所示：</p>
-<pre><code>int main()
+          1.typedef的用途1)定义一种类型的别名注意typedef并不是简单的宏替换，如下例所示：
+int main()
 {
     char *pa,pb;//声明了一个指向字符变量的指针pa，和一个字符变量pb
     pa = &quot;hello&quot;;
-    pb = &quot;hello&quot;;//报错,不能将const char*类型的值赋给char类型的实体
-    pb = &apos;h&apos;;//正常
-    return 0;
-}
-</code></pre><p>再看以下示例：</p>
-<pre><code>int main()
-{
-    typedef char* PCHAR;
-    PCHAR pa,pb;
-    pa = &quot;hello&quot;;
-    pb = &quot;hello&quot;;//正常
-    pb = &apos;h&apos;;//报错，不能将char类型的值赋给PCHAR类型实体
-    return 0;
-}
-</code></pre><p>可以看出，typedef char<em> PCHAR;之后，PCHAR是char</em>类型的别名，<br>PCHAR pa,pb;将pa,pb都定义成char*类型。</p>
-<p>2)定义struct结构体别名<br>我们知道，当声明一个结构体对象时，必须要带上struct，<br>格式为：struct 结构体名 对象名;<br>如下例所示：</p>
-<pre><code>struct tagPOINT1
-{
-    int x;
-    int y;
-};
-struct tagPOINT1 p1;
-</code></pre><p>当我们用typedef定义struct的别名后，可以直接用别名 对象名来声明一个对象。<br>如下例所示：</p>
-<pre><code>typedef struct tagPOINT1
-{
-    int x;
-    int y;
-}POINT;
-POINT p1;
-</code></pre><p>3)用typedef来定义与平台无关的类型。<br>比如，某一平台支持int类型，而不支持long类型。<br>则可以使用typedef定义一个支持类型的别名，程序中使用该别名声明变量。<br>这样，我们使用极小的修改，typedef int REAL;就可以实现类型的平台无关性。</p>
-<p>标准库中广泛使用了这个技巧。</p>
-<p>4)为复杂的声明定义一个简单的别名<br>如：typedef int (*A) (char, char);<br>A是我们定义的别名，表示的是一个指向函数的指针，<br>该函数有两个char类型的参数，返回一个int类型的值。<br>则A类型的对象可以指向任何符合上述规则的函数。<br>如下例所示：</p>
-<pre><code>#include&lt;iostream&gt;
-using namespace std;
-typedef int (*A)(char,char);
-int fun0(char a,char b);
-int fun1(char a,char b);
-int main()
-{
-    A a;
-    a = fun0;
-    a(&apos;a&apos;,&apos;b&apos;);
-    a = fun1;
-    a(&apos;a&apos;,&apos;b&apos;);
-    return 0;
-}
-int fun0(char a,char b)
-{
-    cout&lt;&lt;&quot;fun0&quot;&lt;&lt;endl;
-    return 0;
-}
-int fun1(char a,char b)
-{
-    cout&lt;&lt;&quot;fun1&quot;&lt;&lt;endl;
-    return 0;
-}
-</code></pre><p>输出结果：<br>fun0<br>fun1</p>
-<p><strong>2.typedef和#define的区别</strong><br>由前面的讲解，我们知道typedef和#define有本质的区别。<br>typedef是一种类型别名，而#define只是宏定义。二者并不总是可以互换的。<br>如下例所示：</p>
-<pre><code>typedef char *pStr1;
-#define pStr2 char *;
-pStr1 s1, s2;
-pStr2 s3, s4;
-</code></pre><p>其中s1, s2, s3是char*类型，而s4是char类型。</p>
-<p><strong>3.typedef需要注意的事项。</strong><br>我们看一下下面的示例：</p>
-<pre><code>typedef char* pStr;
-const char* p1 = &quot;hello&quot;;
-const pStr p2 = &quot;hello&quot;;
-p1++;//正常
-p2++;//报错
-</code></pre><p>p1和p2都是常量指针，意思是指针指向的内容不能修改，而指针是可以修改的。<br>那为什么p1++正常，而p2++报错呢。<br>对于p1++,我们不用再解释了，因为常量指针是可变的。<br>而p2是我们定义的别名，而不是系统固有类型，编译器在编译时，会认为p2是常量，不可修改，<br>所以p2++会报错。</p>
-
-          
+    pb = &quot;
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/16/C++ typedef详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2191,7 +1530,7 @@ p2++;//报错
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-15T10:41:00+08:00">
                 2016-06-15
@@ -2206,6 +1545,16 @@ p2++;//报错
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/15/C++ map详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/15/C++ map详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2231,135 +1580,17 @@ p2++;//报错
       
         
           
-            <p><strong>1.什么是map</strong><br>map是一个键值对容器。在处理一对一数据是，很有用。</p>
-<p><strong>2.map数据结构的特点</strong><br>map内部自建一颗红黑树，这棵树具有对数据自动排序的功能，<br>因此，map内的数据都是按key的值排好序的。</p>
-<p><strong>3.map数据插入</strong><br>数据的插入有三种方法：<br>第一种，调用insert函数，插入pair类型数据<br>示例如下所示：</p>
-<pre><code>#include &lt;map&gt;
-#include &lt;string&gt;
-#include &lt;iostream&gt;
-Using namespace std;
-int main()
-{
-       map&lt;int, string&gt; mapStudent;
-       mapStudent.insert(pair&lt;int, string&gt;(1, &quot;student_one&quot;));
-       mapStudent.insert(pair&lt;int, string&gt;(2, &quot;student_two&quot;));
-       mapStudent.insert(pair&lt;int, string&gt;(3, &quot;student_three&quot;));
-       map&lt;int, string&gt;::iterator  iter;
-       for(iter = mapStudent.begin(); iter != mapStudent.end(); iter++)
-       {
-            cout&lt;&lt;iter-&gt;first&lt;&lt;&quot;   &quot;&lt;&lt;iter-&gt;second&lt;&lt;end;
-       }
-       return 0;
-}
-</code></pre><p>第二种，调用insert插入value_type类型数据<br>示例如下所示：</p>
-<pre><code>#include &lt;map&gt;
-#include &lt;string&gt;
-#include &lt;iostream&gt;
-Using namespace std;
-int main()
-{
-       map&lt;int, string&gt; mapStudent;
-       mapStudent.insert(map&lt;int, string&gt;::value_type(1, &quot;student_one&quot;));
-       mapStudent.insert(map&lt;int, string&gt;::value_type(2, &quot;student_two&quot;));
-       mapStudent.insert(map&lt;int, string&gt;::value_type(3, &quot;student_three&quot;));
-       map&lt;int, string&gt;::iterator  iter;
-       for(iter = mapStudent.begin(); iter != mapStudent.end(); iter++)
-       {
-            cout&lt;&lt;iter-&gt;first&lt;&lt;&quot;   &quot;&lt;&lt;iter-&gt;second&lt;&lt;end;
-       }
-       return 0;
-}
-</code></pre><p>第三种，使用数组赋值方式</p>
-<pre><code>#include &lt;map&gt;
-#include &lt;string&gt;
-#include &lt;iostream&gt;
-Using namespace std;
-int main()
-{
-       map&lt;int, string&gt; mapStudent;
-       mapStudent[1]=&quot;student_one&quot;;
-       mapStudent[2]=&quot;student_two&quot;;
-       mapStudent[3]=&quot;student_three&quot;;
-       map&lt;int, string&gt;::iterator  iter;
-       for(iter = mapStudent.begin(); iter != mapStudent.end(); iter++)
-       {
-            cout&lt;&lt;iter-&gt;first&lt;&lt;&quot;   &quot;&lt;&lt;iter-&gt;second&lt;&lt;end;
-       }
-       return 0;
-}
-</code></pre><p>如何判断数据是否插入成功？<br>insert函数的返回值类型为：Pair&lt;map&lt;int,string&gt;::iterator,bool&gt;<br>返回值的key值表示，返回map的迭代器<br>返回值的value值表示，是否插入成功<br>因此，我们可以使用以下代码来判断，map键值对是否插入成功</p>
-<pre><code>Pair&lt;map&lt;int,string&gt;::iterator,bool&gt; Insert_Pair=mapStudent.insert(pair&lt;int, string&gt;(1, &quot;student_one&quot;));
-if(Insert_Pair.second)
-    cout&lt;&lt;&quot;success.\n&quot;;
-else
-    cout&lt;&lt;&quot;failed.\n&quot;;
-</code></pre><p><strong>4.map数据查找</strong><br>第一种，使用count方法判定是否存在<br>第二种，使用find方法，定位key出现的位置，该方法返回一个迭代器。<br>当数据出现时，返回数据所在位置的迭代器；<br>否则，返回的迭代器等于end方法返回的迭代器。<br>示例代码如下：</p>
-<pre><code>map&lt;int,string&gt;::iterator iter;
-iter=mapStudent.find(1);
-if(iter!=mapStudent.end())
-    cout&lt;&lt;&quot;success find.\n&quot;;
-else    
-    cout&lt;&lt;&quot;failed.\n&quot;;
-</code></pre><p>第三种，使用Lower_bound，Upper_bound方法，返回key的边界，在此，不再详细介绍。</p>
-<p><strong>5.map数据删除</strong><br>使用了我们很熟悉的erase函数，map中该函数有三个重载。<br>1)使用迭代器删除</p>
-<pre><code>map&lt;int,string&gt;::iterator iter;
-iter = mapStudent.find(1);
-mapStudent.erase(iter);
-</code></pre><p>2)使用关键字key删除</p>
-<pre><code>int result = mapStudent.erase(1);
-</code></pre><p>成功返回1，否则返回0</p>
-<p>3)使用迭代器，删除区间内的数据</p>
-<pre><code>mapStudent.erase(mapStudent.begin(),mapStudent.end());
-</code></pre><p><strong>6.关于map的自动排序</strong><br>前面我们说过，map内的数据会根据key值由大到小排序,<br>也就是说key值必须支持小于&lt;运算，否则无法插入map。<br>对于上面的示例，我们知道int类型本身是支持小于运算的。<br>但是对于不支持小于运算的key类型，我们该如何插入map呢？<br>很显然，我们需要自定义该类型的&lt;操作符。<br>如下例所示，我们要建立一个map&lt;学生信息,分数&gt;：</p>
-<pre><code>typedef struct tagStudentInfo
-{
-    int nID;
-    string strName;
-    bool operator&lt;(tagStudentInfo const &amp;_A) const
-    {
-        if(nID&lt;_A.nID) 
-            return true;
-        return false;
-    }
-}StudentInfo,*PStudentInfo;
-int main()
-{
-    map&lt;StudentInfo,int&gt; mapStudent;
-    StudentInfo studentInfo;
-    studentInfo.nID=1;
-    studentInfo.strName=&quot;student_one&quot;;
-    mapStudent.insert(pair&lt;StudentInfo, int&gt;(studentInfo,80));
-    return 0;
-}
-</code></pre><p>另外一种方式是，定义一个单独的类，类中定义key类型的比较函数<br>示例代码如下：</p>
-<pre><code>typedef struct tagStudentInfo
-{
-    int nID;
-    string strName;
-
-}StudentInfo,*PStudentInfo;
-class sort
-{
-public:
-    bool operator()(tagStudentInfo const &amp;_A,tagStudentInfo const &amp;_B) const
-    {
-        if(_A.nID&lt;_B.nID) 
-            return true;
-        return false;
-    }
-}
-int main()
-{
-    map&lt;StudentInfo,int,sort&gt; mapStudent;
-    StudentInfo studentInfo;
-    studentInfo.nID=1;
-    studentInfo.strName=&quot;student_one&quot;;
-    mapStudent.insert(pair&lt;StudentInfo, int&gt;(studentInfo,80));
-    return 0;
-}
-</code></pre><p><strong>7.map内存占用</strong><br>前面我们介绍过，map的数据结构为一颗红黑树，<br>该树的一个节点在不保存数据时，占用16字节的空间，<br>包括一个父节点指针，左右孩子指针，还有一个枚举值(标示红黑的，相当于平衡二叉树中的平衡因子)，<br>可见，map还是很耗内存的。</p>
-
-          
+          1.什么是mapmap是一个键值对容器。在处理一对一数据是，很有用。
+2.map数据结构的特点map内部自建一颗红黑树，这棵树具有对数据自动排序的功能，因此，map内的数据都是按key的值排好序的。
+3.map数据插入数据的插入有三种方法：第一种，调用insert函数，插入pair类型数据示例如下所
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/15/C++ map详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2435,7 +1666,7 @@ int main()
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -2444,7 +1675,7 @@ int main()
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -2463,6 +1694,26 @@ int main()
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -2501,11 +1752,11 @@ int main()
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -2586,34 +1837,167 @@ int main()
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

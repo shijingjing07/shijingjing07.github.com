@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-15T16:59:00+08:00">
                 2016-10-15
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/15/公钥与私钥，HTTPS详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/15/公钥与私钥，HTTPS详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,27 +348,15 @@
       
         
           
-            <p>1.公钥与私钥原理<br>1)鲍勃有两把钥匙，一把是公钥，另一把是私钥<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005356828-1950036474.png" alt=""><br>2)鲍勃把公钥送给他的朋友们—-帕蒂、道格、苏珊—-每人一把。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005403984-463869082.png" alt=""><br>3)苏珊要给鲍勃写一封保密的信。她写完后用鲍勃的公钥加密，就可以达到保密的效果。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005412500-863295437.png" alt=""><br>4)鲍勃收信后，用私钥解密，就看到了信件内容。这里要强调的是，只要鲍勃的私钥不泄露，这封信就是安全的，即使落在别人手里，也无法解密。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005419500-1822328322.png" alt=""><br>5)鲍勃给苏珊回信，决定采用”数字签名”。他写完后先用Hash函数，生成信件的摘要（digest）。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005515359-1934644907.png" alt=""></p>
-<p>6)然后，鲍勃使用私钥，对这个摘要加密，生成”数字签名”（signature）。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005524484-949087182.png" alt=""></p>
-<p>7)鲍勃将这个签名，附在信件下面，一起发给苏珊。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005532796-1863329312.png" alt=""></p>
-<p>8)苏珊收信后，取下数字签名，用鲍勃的公钥解密，得到信件的摘要。由此证明，这封信确实是鲍勃发出的。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005603921-819577677.png" alt=""></p>
-<p>9)苏珊再对信件本身使用Hash函数，将得到的结果，与上一步得到的摘要进行对比。如果两者一致，就证明这封信未被修改过。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005612421-407782857.png" alt=""></p>
-<p>10)复杂的情况出现了。道格想欺骗苏珊，他偷偷使用了苏珊的电脑，用自己的公钥换走了鲍勃的公钥。此时，苏珊实际拥有的是道格的公钥，但是还以为这是鲍勃的公钥。因此，道格就可以冒充鲍勃，用自己的私钥做成”数字签名”，写信给苏珊，让苏珊用假的鲍勃公钥进行解密。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005620921-1494099994.png" alt=""></p>
-<p>11)后来，苏珊感觉不对劲，发现自己无法确定公钥是否真的属于鲍勃。她想到了一个办法，要求鲍勃去找”证书中心”（certificate<br>authority，简称CA），为公钥做认证。证书中心用自己的私钥，对鲍勃的公钥和一些相关信息一起加密，生成”数字证书”（Digital<br>Certificate）。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005629812-1464508028.png" alt=""></p>
-<p>12)鲍勃拿到数字证书以后，就可以放心了。以后再给苏珊写信，只要在签名的同时，再附上数字证书就行了。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005638625-1123889882.png" alt=""></p>
-<p>13)苏珊收信后，用CA的公钥解开数字证书，就可以拿到鲍勃真实的公钥了，然后就能证明”数字签名”是否真的是鲍勃签的。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005649046-1806234010.png" alt=""></p>
-<p>2.HTTPS详解<br>HTTP协议的网站容易被篡改和劫持，如一些不良的运营商会通过代理服务器在你的页面中植入广告等。<br>因此很多网站选择使用HTTPS协议。HTTPS协议通过TLS层和证书机制提供了内容加密，身份认证，数据完整性三大功能。</p>
-<p>1)下面，我们看一个应用”数字证书”的实例：https协议。这个协议主要用于网页加密。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005657562-174775354.png" alt=""></p>
-<p>2)首先，客户端向服务器发出加密请求。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005715031-1269092932.png" alt=""></p>
-<p>3)服务器用自己的私钥加密网页以后，连同本身的数字证书，一起发送给客户端。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005722375-1161331441.png" alt=""></p>
-<p>4)客户端（浏览器）的”证书管理器”，有”受信任的根证书颁发机构”列表。客户端会根据这张列表，查看解开数字证书的公钥是否在列表之内。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005734640-106282859.png" alt=""></p>
-<p>5)如果数字证书记载的网址，与你正在浏览的网址不一致，就说明这张证书可能被冒用，浏览器会发出警告。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005743453-2106220000.png" alt=""></p>
-<p>6)如果这张数字证书不是由受信任的机构颁发的，浏览器会发出另一种警告</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161016005800859-1519540213.png" alt=""></p>
-<p>原文网址：<a href="http://www.youdzone.com/signature.html" target="_blank" rel="external">http://www.youdzone.com/signature.html</a></p>
-
-          
+          1.公钥与私钥原理1)鲍勃有两把钥匙，一把是公钥，另一把是私钥2)鲍勃把公钥送给他的朋友们—-帕蒂、道格、苏珊—-每人一把。3)苏珊要给鲍勃写一封保密的信。她写完后用鲍勃的公钥加密，就可以达到保密的效果。4)鲍勃收信后，用私钥解密，就看到了信件内容。这里要强调的是，只要鲍勃的私钥不泄露，这封信就是安
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/15/公钥与私钥，HTTPS详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -420,7 +433,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-15T14:02:00+08:00">
                 2016-10-15
@@ -435,6 +448,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/15/持续集成详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/15/持续集成详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -460,13 +483,17 @@
       
         
           
-            <p>持续集成</p>
-<p>1.什么是持续集成<br>针对系统的开发和发布，形成的一套标准流程。<br>持续集成指的是，频繁地（一天多次）将代码集成到主干<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161015220148390-1415314161.png" alt=""></p>
-<p>2.持续集成的流程<br>1)开发者向代码仓库提交代码<br>本地代码commit到代码仓库<br>2)代码仓库对提交的代码进行测试<br>代码仓库对commit操作配置了钩子(hook)，只要提交代码或者合并进主干，就会跑自动化测试。<br>测试的种类如下：<br>单元测试：测试函数或模块功能<br>集成测试：针对整个产品的某个功能的测试，又称功能测试<br>端对端测试：从用户界面直达数据库的全链路测试<br>3)持续交付<br>通过上步测试后，代码就可以合并进主干了，此时称作可交付。<br>4)构建<br>构建指的是，交付后的源代码转为运行的实际代码，比如安装依赖，配置各种资源（样式表，js脚本，图片）等等。<br>5)测试<br>构建完毕后，会进入测试。以自动化测试为主，无法自动化的测试用例，需要人工跑。<br>6)部署到生产服务器<br>通过上步测试后，当前代码就是一个可以直接部署的版本。将这个版本的所有文件打包存档，发到生产服务器上。<br>生产服务器解包文件，再将运行路径符号链接指向文件目录，然后重新启动应用。<br>部署工具有Ansible,Chef,Puppet等。<br>7)回滚<br>若当前版本有问题，需要回滚上一个版本的构建结果。最简单的做法就是修改运行路径符号链接，指向上次构建的目录。</p>
-<p>3.持续集成的优点<br>1)快速发现发错<br>每完成一点更新，就集成到主干，可快速发现和定位错误<br>2)防止分支大幅偏离主干<br>主干不断更新，会导致分支集成难度变大或难以集成。</p>
-<p>4.持续集成的目的<br>让产品可以快速迭代，同时还能保持高质量。</p>
-
-          
+          持续集成
+1.什么是持续集成针对系统的开发和发布，形成的一套标准流程。持续集成指的是，频繁地（一天多次）将代码集成到主干
+2.持续集成的流程1)开发者向代码仓库提交代码本地代码commit到代码仓库2)代码仓库对提交的代码进行测试代码仓库对commit操作配置了钩子(hook)，只要提交代码或者合并
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/15/持续集成详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -543,7 +570,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-14T08:56:00+08:00">
                 2016-10-14
@@ -558,6 +585,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/14/python datetime/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/14/python datetime/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -583,72 +620,19 @@
       
         
           
-            <p>不管何时何地，只要我们编程时遇到了跟时间有关的问题，都要想到 datetime 和 time<br>标准库模块，今天我们就用它内部的方法，详解python操作日期和时间的方法。<br><strong>1.将字符串的时间转换为时间戳  
-</strong></p>
-<p>复制代码代码如下:</p>
-<p>方法:<br>a = “2013-10-10 23:40:00”  </p>
-<p>#将其转换为时间数组<br>import time<br>timeArray = time.strptime(a, “%Y-%m-%d %H:%M:%S”)  </p>
-<p>#转换为时间戳:<br>timeStamp = int(time.mktime(timeArray))<br>timeStamp == 1381419600</p>
-<p><strong>2.格式更改</strong><br>如a = “2013-10-10 23:40:00”,想改为 a = “2013/10/10 23:40:00”<br>方法:先转换为时间数组,然后转换为其他格式</p>
-<p>复制代码代码如下:</p>
-<p>timeArray = time.strptime(a, “%Y-%m-%d %H:%M:%S”)<br>otherStyleTime = time.strftime(“%Y/%m/%d %H:%M:%S”, timeArray)</p>
-<p><strong>3.时间戳转换为指定格式日期</strong><br>方法一:利用localtime()转换为时间数组,然后格式化为需要的格式,如：</p>
-<p>复制代码代码如下:</p>
-<p>timeStamp = 1381419600<br>timeArray = time.localtime(timeStamp)<br>otherStyleTime = time.strftime(“%Y-%m-%d %H:%M:%S”, timeArray)<br>otherStyletime == “2013-10-10 23:40:00”</p>
-<p>方法二:</p>
-<p>复制代码代码如下:</p>
-<p>import datetime<br>timeStamp = 1381419600<br>dateArray = datetime.datetime.utcfromtimestamp(timeStamp)<br>otherStyleTime = dateArray.strftime(“%Y-%m-%d %H:%M:%S”)<br>otherStyletime == “2013-10-10 23:40:00”</p>
-<p><strong>4.获取当前时间并转换为指定日期格式  
-</strong>方法一:</p>
-<p>复制代码代码如下:</p>
-<p>import time  </p>
-<p>#获得当前时间时间戳<br>now = int(time.time())  -&gt;这是时间戳  </p>
-<p>#转换为其他日期格式,如:”%Y-%m-%d %H:%M:%S”<br>timeArray = time.localtime(timeStamp)<br>otherStyleTime = time.strftime(“%Y-%m-%d %H:%M:%S”, timeArray)</p>
-<p>方法二:</p>
-<p>复制代码代码如下:</p>
-<p>import datetime  </p>
-<p>#获得当前时间<br>now = datetime.datetime.now()  -&gt;这是时间数组格式  </p>
-<p>#转换为指定的格式:<br>otherStyleTime = now.strftime(“%Y-%m-%d %H:%M:%S”)</p>
-<p><strong>5.获得三天前的时间的方法</strong></p>
-<p>复制代码代码如下:</p>
-<p>import time<br>import datetime  </p>
-<p>#先获得时间数组格式的日期<br>threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 3))  </p>
-<p>#转换为时间戳:<br>timeStamp = int(time.mktime(threeDayAgo.timetuple()))  </p>
-<p>#转换为其他字符串格式:<br>otherStyleTime = threeDayAgo.strftime(“%Y-%m-%d %H:%M:%S”)<br>注:timedelta()的参数有:days,hours,seconds,microseconds</p>
-<p><strong>6.给定时间戳,计算该时间的几天前时间</strong></p>
-<p>复制代码代码如下:</p>
-<p>timeStamp = 1381419600  </p>
-<p>#先转换为datetime<br>import datetime<br>import time<br>dateArray = datetime.datetime.utcfromtimestamp(timeStamp)<br>threeDayAgo = dateArray - datetime.timedelta(days = 3)  </p>
-<p>#参考5,可以转换为其他的任意格式了</p>
-<p><strong>7、用Python计算昨天和明天的日期</strong></p>
-<p>复制代码代码如下:</p>
-<p>&gt;&gt;&gt; import datetime #导入日期时间模块<br>&gt;&gt;&gt; today = datetime.date.today() #获得今天的日期<br>&gt;&gt;&gt; print today #输出今天日期<br>2014-01-04<br>&gt;&gt;&gt; yesterday = today - datetime.timedelta(days=1)</p>
-<p>#用今天日期减掉时间差，参数为1天，获得昨天的日期<br>&gt;&gt;&gt; print yesterday<br>2014-01-03<br>&gt;&gt;&gt; tomorrow = today + datetime.timedelta(days=1)</p>
-<p>#用今天日期加上时间差，参数为1天，获得明天的日期<br>&gt;&gt;&gt; print tomorrow<br>2014-01-05<br>&gt;&gt;&gt;<br>&gt;&gt;&gt; print “昨天:%s， 今天:%s， 明天：%s” % (yesterday, today, tomorrow)</p>
-<p>#字符串拼接在一起输出，这3天的日期</p>
-<p>昨天:2014-01-03， 今天:2014-01-04， 明天：2014-01-05<br><strong>8、python里使用time模块来获取当前的时间</strong></p>
-<p>复制代码代码如下:</p>
-<p>#!/usr/bin/python<br>import time<br>print (time.strftime(“%H:%M:%S”))  </p>
-<h2 id="12-hour-format"><a href="#12-hour-format" class="headerlink" title="12 hour format"></a>12 hour format</h2><p>print (time.strftime(“%I:%M:%S”))  </p>
-<p>#：输出  </p>
-<p>#18:11:30  </p>
-<p>#6：11:30</p>
-<p><strong>9、打印出当前的日期的python程序  
-</strong></p>
-<p>复制代码代码如下:</p>
-<p>!/usr/bin/python</p>
-<p>import time  </p>
-<h2 id="dd-mm-yyyy格式"><a href="#dd-mm-yyyy格式" class="headerlink" title="dd/mm/yyyy格式"></a>dd/mm/yyyy格式</h2><p>print (time.strftime(“%d/%m/%Y”))</p>
-<p>#输出：<br>11/03/2014</p>
-<p><strong>10、使用datetime模块来获取当前的日期和时间  
-</strong></p>
-<p>复制代码代码如下:</p>
-<p>#!/usr/bin/python<br>import datetime<br>i = datetime.datetime.now()<br>print (“当前的日期和时间是 %s” % i)<br>print (“ISO格式的日期和时间是 %s” % i.isoformat() )<br>print (“当前的年份是 %s” %i.year)<br>print (“当前的月份是 %s” %i.month)<br>print (“当前的日期是  %s” %i.day)<br>print (“dd/mm/yyyy 格式是  %s/%s/%s” % (i.day, i.month, i.year) )<br>print (“当前小时是 %s” %i.hour)<br>print (“当前分钟是 %s” %i.minute)<br>print (“当前秒是  %s” %i.second)</p>
-<p><strong>附：日期和时间的格式化参数</strong></p>
-<p>复制代码代码如下:</p>
-<p>%a 星期几的简写<br>%A 星期几的全称<br>%b 月分的简写<br>%B 月份的全称<br>%c 标准的日期的时间串<br>%C 年份的后两位数字<br>%d 十进制表示的每月的第几天<br>%D 月/天/年<br>%e 在两字符域中，十进制表示的每月的第几天<br>%F 年-月-日<br>%g 年份的后两位数字，使用基于周的年<br>%G 年分，使用基于周的年<br>%h 简写的月份名<br>%H 24小时制的小时<br>%I 12小时制的小时<br>%j 十进制表示的每年的第几天<br>%m 十进制表示的月份<br>%M 十时制表示的分钟数<br>%n 新行符<br>%p 本地的AM或PM的等价显示<br>%r 12小时的时间<br>%R 显示小时和分钟：hh:mm<br>%S 十进制的秒数<br>%t 水平制表符<br>%T 显示时分秒：hh:mm:ss<br>%u 每周的第几天，星期一为第一天 （值从0到6，星期一为0）<br>%U 第年的第几周，把星期日做为第一天（值从0到53）<br>%V 每年的第几周，使用基于周的年<br>%w 十进制表示的星期几（值从0到6，星期天为0）<br>%W 每年的第几周，把星期一做为第一天（值从0到53）<br>%x 标准的日期串<br>%X 标准的时间串<br>%y 不带世纪的十进制年份（值从0到99）<br>%Y 带世纪部分的十制年份<br>%z，%Z 时区名称，如果不能得到时区名称则返回空字符。<br>%% 百分号</p>
+          不管何时何地，只要我们编程时遇到了跟时间有关的问题，都要想到 datetime 和 time标准库模块，今天我们就用它内部的方法，详解python操作日期和时间的方法。1.将字符串的时间转换为时间戳  
 
-          
+复制代码代码如下:
+方法:a = “2013-10-10 23:40:00”  
+#将其转换为
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/14/python datetime/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -725,7 +709,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-03T05:08:00+08:00">
                 2016-10-03
@@ -740,6 +724,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/03/JSONP详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/03/JSONP详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -765,103 +759,16 @@
       
         
           
-            <p>1.什么是ajax跨域请求<br>当通过ajax异步请求其他域名的服务时，存在跨域无权限访问的问题。<br>此时，可以通过JSONP来实现跨域请求。</p>
-<p>2.JSONP原理<br>ajax异步请求无权限访问。但我们发现，web页面调用js文件时不存在跨域问题(如在我们的页面中引入百度地图API， &lt;script<br>type=”text/javascript”<br>src=”<a href="http://api.map.baidu.com/api?v=2.0&amp;ak=e3ZohdqyB0RL98hFOiC29xqh&quot;&gt;&lt;/script&gt;)，总结发现，凡是拥有&quot;src&quot;属性的标签都拥有跨域的能力，如&lt;script&gt;,&lt;img&gt;,&lt;iframe&gt;等。" target="_blank" rel="external">http://api.map.baidu.com/api?v=2.0&amp;ak=e3ZohdqyB0RL98hFOiC29xqh&quot;&gt;&lt;/script&gt;)，总结发现，凡是拥有&quot;src&quot;属性的标签都拥有跨域的能力，如&lt;script&gt;,&lt;img&gt;,&lt;iframe&gt;等。</a><br>这种非正式的传输协议，就是JSONP。JSONP的一个要点是允许客户端传一个callback参数给服务器，然后服务器返回数据时会用这个callback参数作为函数名，包裹住JSON数据，返回客户端，客户端执行返回函数。</p>
-<p>3.JSONP客户端具体实现<br>1)直接执行返回函数<br>本地服务器local.com下有个jsonp.html页面代码如下：</p>
-<pre><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;http://remote.com/remote.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>远程服务器remote.com下有个remote.js文件代码如下：</p>
-<pre><code>alert(&apos;我是远程文件&apos;);
-</code></pre><p>运行jsonp.html，会弹出”我是远程文件”，显示跨域调用成功。</p>
-<p>2)客户端执行回调函数<br>jsonp.html页面代码如下：</p>
-<pre><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-    var localHandler = function(data){
-        alert(&apos;我是本地函数，可以被跨域的remote.js文件调用，远程js带来的数据是：&apos; + data.result);
-    };
-    &lt;/script&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;http://remoteserver.com/remote.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>remote.js文件代码如下：</p>
-<pre><code>localHandler({&quot;result&quot;:&quot;我是远程js带来的数据&quot;});
-</code></pre><p>运行jsonp.html，会弹出”我是远程js带来的数据”，显示跨域调用成功。</p>
-<p>3)客户端传递回调函数<br>jsonp.html页面代码如下：</p>
-<pre><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-    // 得到航班信息查询结果后的回调函数
-    var flightHandler = function(data){
-        alert(&apos;你查询的航班结果是：票价 &apos; + data.price + &apos; 元，&apos; + &apos;余票 &apos; + data.tickets + &apos; 张。&apos;);
-    };
-    // 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）
-    var url = &quot;http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&amp;callback=flightHandler&quot;;
-    // 创建script标签，设置其属性
-    var script = document.createElement(&apos;script&apos;);
-    script.setAttribute(&apos;src&apos;, url);
-    // 把script标签加入head，此时调用开始
-    document.getElementsByTagName(&apos;head&apos;)[0].appendChild(script); 
-    &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>flightResult.aspx的页面生成了一段这样的代码提供给jsonp.html</p>
-<pre><code>flightHandler({
-    &quot;code&quot;: &quot;CA1998&quot;,
-    &quot;price&quot;: 1780,
-    &quot;tickets&quot;: 5
-});
-</code></pre><p>运行jsonp.html，成功弹出提示窗口。</p>
-<p>4)JSONP封装了3)中的代码，以方便客户端使用。<br>jsonp.html页面代码如下：</p>
-<pre><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
- &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; &gt;
- &lt;head&gt;
-     &lt;title&gt;Untitled Page&lt;/title&gt;
-      &lt;script type=&quot;text/javascript&quot; src=jquery.min.js&quot;&gt;&lt;/script&gt;
-      &lt;script type=&quot;text/javascript&quot;&gt;
-     jQuery(document).ready(function(){ 
-        $.ajax({
-             type: &quot;get&quot;,
-             async: false,
-             url: &quot;http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&quot;,
-             dataType: &quot;jsonp&quot;,
-             jsonp: &quot;callback&quot;,//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
-             jsonpCallback:&quot;flightHandler&quot;,//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写&quot;?&quot;，jQuery会自动为你处理数据
-             success: function(json){
-                 alert(&apos;您查询到航班信息：票价： &apos; + json.price + &apos; 元，余票： &apos; + json.tickets + &apos; 张。&apos;);
-             },
-             error: function(){
-                 alert(&apos;fail&apos;);
-             }
-         });
-     });
-     &lt;/script&gt;
-     &lt;/head&gt;
-  &lt;body&gt;
-  &lt;/body&gt;
- &lt;/html&gt;
-</code></pre><p>示例中没有定义flightHandler函数，但代码成功运行了。<br>这是因为jquery自动把success属性方法作为了回调函数。</p>
-<p>4.JSONP总结<br>由上面的讲解可知，ajax和jsonp两种技术看起来很像，但实质上是完全不同。</p>
-<p>5.JSON格式数据优点补充<br>1)基于纯文本，跨平台传递简单<br>2)javascript原生支持，后台语言几乎全部支持<br>3)可读性强<br>4)容易编写和解析</p>
-
-          
+          1.什么是ajax跨域请求当通过ajax异步请求其他域名的服务时，存在跨域无权限访问的问题。此时，可以通过JSONP来实现跨域请求。
+2.JSONP原理ajax异步请求无权限访问。但我们发现，web页面调用js文件时不存在跨域问题(如在我们的页面中引入百度地图API， &lt;scripttype=
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/03/JSONP详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -938,7 +845,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-02T19:38:00+08:00">
                 2016-10-02
@@ -953,6 +860,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/02/数字证书/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/02/数字证书/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -978,27 +895,20 @@
       
         
           
-            <p>1.什么是数字证书</p>
-<p>证书用来证明某个网站或文件。<br>简单可以理解为类似公司公章，用来证明合同文件等是该公司的。</p>
-<p>2.什么是CA证书</p>
-<p>CA是”证书授权中心”的简称，是负责管理和签发证书的第三方机构。<br>CA证书即为CA颁发的证书。<br>证书人人都可以制作，但只有权威机构颁发的证书，大家才能一致认可。</p>
-<p>3.根证书</p>
-<p>如下图所示，假设C证书信任A证书，A证书信任A1证书，证书之间的关系构成一个树。<br>根节点的证书即为”根证书”，根证书是不需要证明的，其他证书都需要上一级去证明可靠性。<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033138765-602752021.png" alt=""></p>
-<p>4.证书的作用<br>1)验证网站是否可信(针对HTTPS)</p>
-<p>因为HTTP协议是明文的，如果有人偷窥你的网络通讯，他就可以看到通讯的内容。而HTTPS是加密协议。<br>但是光有加密是不够的，比如有人伪造了一个HTTPS站点，就可能获取到你的账户密码信息。<br>为了防止伪造站点，HTTPS协议除了加密机制，还有一套证书机制。<br>有了证书以后，当访问这个HTTPS网站时，会验证该站点上的CA证书。<br>如果浏览器发现该证书没有问题(证书被某个根证书信任，证书上绑定的域名和该网站的域名一致，证书没有过期)，那么页面直接打开。否则浏览器会弹出警告，下图是IE和Firefox的抓图：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033304005-1939107415.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033313709-540663648.png" alt=""></p>
-<p>2)验证文件是否可信</p>
-<p>证书还可以用来验证某个文件是否被篡改。<br>具体是通过证书来制作文件的数字签名。<br>如Firefox的安装文件，右键点击”属性”，会看到有个”数字签名”的标签页。<br>如果没有，说明该文件没有附带数字签名。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033444481-454542060.png" alt=""></p>
-<p>点击”详细信息”，可以看到”数字签名信息”，<br>若为”该数字签名正常”，说明该文件从出厂到你手里，中途没有被篡改过。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033518639-851094955.png" alt=""></p>
-<p>若为”该数字签名无效”，说明该文件被篡改过了（比如感染了病毒，被注入木马等）<br><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033555642-1430002718.png" alt=""></p>
-<p>点击”查看证书”，会 弹出证书对话框，点击”证书路径”，可看到证书信任链。如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201610/300946-20161003033625332-2141633884.png" alt=""></p>
-<p>第一层为根证书Thawte<br>第二层为Thawte用来签名的证书<br>第三层为Mozilla自己的证书</p>
-
-          
+          1.什么是数字证书
+证书用来证明某个网站或文件。简单可以理解为类似公司公章，用来证明合同文件等是该公司的。
+2.什么是CA证书
+CA是”证书授权中心”的简称，是负责管理和签发证书的第三方机构。CA证书即为CA颁发的证书。证书人人都可以制作，但只有权威机构颁发的证书，大家才能一致认可。
+3.根证书
+如
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/02/数字证书/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1075,7 +985,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-30T05:20:00+08:00">
                 2016-09-30
@@ -1090,6 +1000,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/30/PostgreSQL9.6新功能/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/30/PostgreSQL9.6新功能/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1115,37 +1035,15 @@
       
         
           
-            <p>PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-<br>up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、<br>性能和易用性方面的改进，并提供了其他许多方面的功能。</p>
-<h3 id="纵向扩展的并行查询"><a href="#纵向扩展的并行查询" class="headerlink" title="纵向扩展的并行查询"></a>纵向扩展的并行查询</h3><p>9.6版本现支持一些并行查询操作，因而能够利用服务器上的几个或所有的CPU内核来进行运算，这样返回查询结果更快。<br>此版本的并行功能包括并行顺序表扫描、聚合和联接。根据详细信息和可用内核，并行性可以加快大数据查询，最快时可高达32倍。</p>
-<p>Synthetic Genomics的首席数据库架构师Mike Sofen表示， “我们将我们整个基因组数据平台-<br>250亿行旧的MySQL数据迁移到一个Postgres数据库， 利用了 JSONB 数据类型的行压缩功能，以及优秀的GIN,BRIN和B-Tree索引模式。<br>期待在9.6版本中，利用并行查询功能，在我们查询大表数据时，拥有更强劲的伸缩性，更优的查询性能”</p>
-<h3 id="横向扩展的同步复制与postgres-fdw"><a href="#横向扩展的同步复制与postgres-fdw" class="headerlink" title="横向扩展的同步复制与postgres_fdw"></a>横向扩展的同步复制与postgres_fdw</h3><p>PostgreSQL的同步复制功能,添加了两个选项，使它能够用于数据库集群一致读取维护。 首先，它现在允许配置一组的同步的复制数据库。<br>第二，”remote_apply”模式创建多个跨数据节点的一致的读视图。 这些功能使用内置的复制来维护一组的”相同的”节点实现，可以用于数据库的读负载均衡。</p>
-<p>postgres_fdw(PostgreSQL-to-PostgreSQL数据外部表驱动程序)提供了新的功能， 支持在远程服务器上执行操作。<br>通过”下推”(Push Down)排序(sort),Join联接，批量数据更新(update)任务,<br>用户可以调度多个PostgreSQL服务器来完成数据查询。 这些功能很快会添加到其他fdw模块中。</p>
-<p>Equnix商务解决方案主管Julyanto Sutandang表示， “fdw支持远程联接，更新和删除的功能，是当下其他数据库和<br>PostgreSQL共享数据的完整解决方案。 比如，PostgreSQL可以实现所录入的数据保存到两个或多个不同类型的数据库的功能”</p>
-<h3 id="更好的文本短语搜索"><a href="#更好的文本短语搜索" class="headerlink" title="更好的文本短语搜索"></a>更好的文本短语搜索</h3><p>PostgreSQL的全文搜索功能,现在支持短语搜索。 这允许用户搜索精确的短语，或是搜索有一定相似性的短语，<br>使用快速的GIN索引中的单词，结合可精细调整的文本搜索选项的新功能， PostgreSQL是”混合搜索”的超优选择，集成了关系表，JSON和全文的搜索支持。</p>
-<h3 id="更畅、更快和更易使用"><a href="#更畅、更快和更易使用" class="headerlink" title="更畅、更快和更易使用"></a>更畅、更快和更易使用</h3><p>感谢大批PostgreSQL 用户使用他们的包含大量数据生产数据库来进行PostgreSQL的反馈和测试，<br>这个版本包括了大量有关性能提升和可用性等方面的内容。复制、聚合、索引、 排序和存储过程变得更加高效，<br>在新的Linux内核上，PostgreSQL现在可以可以更好的利用资源，降低了大型表查询和复杂查询的系统负载， 尤其是VACUUM的改进。</p>
-<h3 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h3><p>9.6版本累计近一年来的很多新特性，主要包括︰</p>
-<ul>
-<li><p>新的系统视图和函数:pg_stat_wal_receiver，pg_visbility，pg_config，pg_blocking_pids，pg_notification_queue_usage</p>
-</li>
-<li><p>支持命令执行进度状态报告</p>
-</li>
-<li><p>支持级联操作(需安装扩展模块实现)</p>
-</li>
-<li><p>支持pg_basebackup的并发</p>
-</li>
-<li><p>逻辑复制插槽</p>
-</li>
-<li><p>等待事件支持</p>
-</li>
-<li><p>在psql中编辑视图和crosstabs</p>
-</li>
-<li><p>用户定义旧快照过期</p>
-</li>
-<li><p>只扫描局部索引</p>
-</li>
-</ul>
-
-          
+          PostgreSQL是世界上最先进的开源数据库，9.6最新版本由PostgreSQL全球开发者今天发布。 此版本将允许用户纵向扩展(scale-up)和横向扩展(scale-out)来提高数据库的查询性能。 新功能包括并行查询、同步复制改进、短语搜索、性能和易用性方面的改进，并提供了其他许多方面的功
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/30/PostgreSQL9.6新功能/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1222,7 +1120,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-30T02:09:00+08:00">
                 2016-09-30
@@ -1237,6 +1135,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/30/python程序的调试方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/30/python程序的调试方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1262,41 +1170,19 @@
       
         
           
-            <h1 id=""><a href="#" class="headerlink" title=" "></a> </h1><p>【转自：<a href="http://blog.csdn.net/luckeryin/article/details/4477233" target="_blank" rel="external">http://blog.csdn.net/luckeryin/article/details/4477233</a>】</p>
-<p>本文讨论在没有方便的IDE工具可用的情况下，使用pdb调试python程序</p>
-<p><strong>源码例子</strong></p>
-<p>例如，有模拟税收计算的程序：</p>
-<p>#!/usr/bin/python<br>def debug_demo(val):<br>                if val &lt;= 1600 :<br>                                print “level 1”<br>                                print 0<br>                elif val &lt;= 3500 :<br>                                print “level 2”<br>                                print (val - 1600) <em> 0.05<br>                elif val &lt;= 6500 :<br>                                print “level 3”<br>                                print (val - 3500) </em> 0.10 + (3500-1600) <em> 0.05<br>                else:<br>                                print “level 4”<br>                                print (val - 6500) </em> 0.20 + (6500-3500) <em> 0.10 + (3500-1600) </em> 0.05   </p>
-<p>#~def debug_demo<br>if <strong>name</strong> == “<strong>main</strong>“:<br>                debug_demo(4500)</p>
-<p>debug_demo函数计算4500的入账所需的税收。</p>
-<p><strong>如何调试?</strong></p>
-<p><strong>1.加入断点</strong></p>
-<p>在需要插入断点的地方，加入红色部分代码：如果_DEBUG值为True，则在该处开始调试（加入_DEBUG的原因是为了方便打开/关闭调试）。</p>
-<p>#!/usr/bin/python<br>_DEBUG=True<br>def debug_demo(val):<br>                if _DEBUG == True:<br>                                import pdb<br>                                pdb.set_trace()<br>                if val &lt;= 1600 :<br>                                print “level 1”<br>                                print 0<br>                elif val &lt;= 3500 :<br>                                print “level 2”<br>                                print (val - 1600) <em> 0.05<br>                elif val &lt;= 6500 :<br>                                print “level 3”<br>                                print (val - 3500) </em> 0.10 + (3500-1600) <em> 0.05<br>                else:<br>                                print “level 4”<br>                                print (val - 6500) </em> 0.20 + (6500-3500) <em> 0.10 + (3500-1600) </em> 0.05   </p>
-<p>#~def debug_demo<br>if <strong>name</strong> == “<strong>main</strong>“:<br>                debug_demo(4500)</p>
-<p><strong>2.开始运行调试</strong></p>
-<p>  运行程序./debug_demo.py,得到</p>
-<p>&gt; /usr/local/qspace/user_network/debug_demo.py(7)debug_demo()<br>-&gt; if val &lt;= 1600 :<br>(Pdb)</p>
-<p>-&gt; val &lt;= 1600 : 指示当前执行的语句，（Pdb）等待你的调试指令. pdb的指令很丰富，输入h指令可以查看指令的使用方法。下面简单介绍常用指令：</p>
-<p>  查看代码上下文，l（小写L）</p>
-<p>(Pdb) l<br>    2         _DEBUG=True<br>    3         def debug_demo(val):<br>    4                         if _DEBUG == True:<br>    5                                         import pdb<br>    6                                         pdb.set_trace()<br>    7    -&gt;                 if val &lt;= 1600 :<br>    8                                         print “level 1”<br>    9                                         print 0<br>  10                         elif val &lt;= 3500 :<br>  11                                         print “level 2”<br>  12                                         print (val - 1600) * 0.05<br>(Pdb)  </p>
-<p>左边是行号，右边是代码正文。</p>
-<p>  监视变量：p 变量名</p>
-<p>(Pdb) p val<br>4500<br>(Pdb)  </p>
-<p>单步执行: n</p>
-<p>-&gt; elif val &lt;= 3500 :<br>(Pdb) l<br>  5                                         import pdb<br>  6                                         pdb.set_trace()<br>  7                         if val &lt;= 1600 :<br>  8                                         print “level 1”<br>  9                                         print 0<br>10    -&gt;                 elif val &lt;= 3500 :<br>11                                         print “level 2”<br>12                                         print (val - 1600) <em> 0.05<br>13                         elif val &lt;= 6500 :<br>14                                         print “level 3”<br>15                                         print (val - 3500) </em> 0.10 +<br>(3500-1600) * 0.05</p>
-<p>加入断点:b 行号</p>
-<p>(Pdb) b 14</p>
-<p>运行到断点: c</p>
-<p>(Pdb) c<br>&gt; /<strong>*</strong><br>-&gt; print “level 3”<br>(Pdb) l<br>  9                                         print 0<br>10                         elif val &lt;= 3500 :<br>11                                         print “level 2”<br>12                                         print (val - 1600) <em> 0.05<br>13                         elif val &lt;= 6500 :<br>14 B-&gt;                                 print “level 3”<br>15                                         print (val - 3500) </em> 0.10 +<br>(3500-1600) <em> 0.05<br>16                         else:<br>17                                         print “level 4”<br>18                                         print (val - 6500) </em> 0.20 +<br>(6500-3500) <em> 0.10 + (3500-1600) </em> 0.05<br>19  </p>
-<p>执行到函数返回前: r</p>
-<p>(Pdb) r<br>level 3<br>195.0<br>--Return–<br>&gt; /<em>**</em>()</p>
-<p>-&gt;None<br>-&gt; print (val - 3500) <em> 0.10 + (3500-1600) </em> 0.05<br>(Pdb)  </p>
-<p><strong>说明：</strong></p>
-<p>  pdb还有很多其他很多有用的指令，读者可以自行探索。输入h，h 命令。就可以得到命令的详细帮助。</p>
-<p>  不过，我个人认为一般无需启动这种调试方法，一般使用日志输出进行调试即可，除非遇到了非常微妙的错误。这时，单步调试的威力便显示出来了</p>
-
-          
+           【转自：http://blog.csdn.net/luckeryin/article/details/4477233】
+本文讨论在没有方便的IDE工具可用的情况下，使用pdb调试python程序
+源码例子
+例如，有模拟税收计算的程序：
+#!/usr/bin/pythondef debug_demo
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/30/python程序的调试方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1373,7 +1259,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-23T09:04:00+08:00">
                 2016-09-23
@@ -1388,6 +1274,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/23/Linux ps命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/23/Linux ps命令/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1413,9 +1309,15 @@
       
         
           
-            <p>1.什么是ps命令<br>ps命令是Process Status的缩写。用来显示当前进程的快照，若想动态显示进程信息，可使用top命令。<br>2.Linux进程的5中状态<br>1)运行：R<br>2)中断：S<br>3)不可中断：D<br>4)僵死：Z<br>5)停止：T<br>3.使用示例：<br>ps -ef<br>输出：<br><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160923170245934-1089472555.png" alt=""><br>输出信息含义：<br>UID:进程拥有者<br>PID：进程ID<br>PPID:上级父进程ID<br>C：CPU使用百分比<br>TTY：登入者终端机位置<br>TIME：使用掉的CPU时间<br>CMD：进程命令位置</p>
-
-          
+          1.什么是ps命令ps命令是Process Status的缩写。用来显示当前进程的快照，若想动态显示进程信息，可使用top命令。2.Linux进程的5中状态1)运行：R2)中断：S3)不可中断：D4)僵死：Z5)停止：T3.使用示例：ps -ef输出：输出信息含义：UID:进程拥有者PID：进程ID
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/23/Linux ps命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1492,7 +1394,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-21T01:20:00+08:00">
                 2016-09-21
@@ -1507,6 +1409,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/21/http,ftp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/21/http,ftp/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1532,32 +1444,21 @@
       
         
           
-            <p>#<br><a href="http://blog.csdn.net/xiaoxiangzhu660810/article/details/8291656" target="_blank" rel="external">HTTP和FTP的区别</a></p>
-<p>标签：<br><a href="http://www.csdn.net/tag/ftp" target="_blank" rel="external">ftp</a><a href="http://www.csdn.net/tag/FTP" target="_blank" rel="external">FTP</a><a href="http://www.csdn.net/tag/http" target="_blank" rel="external">http</a><a href="http://www.csdn.net/tag/Http" target="_blank" rel="external">Http</a><a href="http://www.csdn.net/tag/HTTP" target="_blank" rel="external">HTTP</a></p>
-<p>2012-12-13 19:51 10544人阅读<br><a href="http://blog.csdn.net/xiaoxiangzhu660810/article/details/8291656#comments" target="_blank" rel="external">评论</a>(1)<br>收藏 <a href="http://blog.csdn.net/xiaoxiangzhu660810/article/details/8291656#report" title="举报" target="_blank" rel="external">举报</a></p>
-<p><img src="http://static.blog.csdn.net/images/category_icon.jpg" alt=""> 分类：</p>
-<p>网络（2） <img src="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg" alt=""></p>
-<p>目录<a href="http://blog.csdn.net/xiaoxiangzhu660810/article/details/8291656#" title="系统根据文章中H1到H6标签自动生成文章目录" target="_blank" rel="external">(?)</a><a href="http://blog.csdn.net/xiaoxiangzhu660810/article/details/8291656#" title="展开" target="_blank" rel="external">[+]</a></p>
-<p>今天去面试，面试官问我这个问题，好吧，我好不容易记起来两个协议的中文名字，又含糊其辞地说FTP是传输文件的，很怂，回来补补课，每次面试完都觉得啥啥都不懂，大家共勉吧^_^</p>
-<h2 id="一、字面上来看"><a href="#一、字面上来看" class="headerlink" title="一、字面上来看"></a>一、字面上来看</h2><p>HTTP是Hyper Text Transfer Protocol，超文本传输协议；</p>
-<p>FTP是File Transfer Protocol,文件传输协议；</p>
-<p>简单说HTTP是面向网页的，而FTP是面向文件的。</p>
-<h2 id="二、复杂点儿"><a href="#二、复杂点儿" class="headerlink" title="二、复杂点儿"></a>二、复杂点儿</h2><h3 id="1-FTP"><a href="#1-FTP" class="headerlink" title="1.FTP"></a>1.FTP</h3><h4 id="1-FTP比HTTP复杂"><a href="#1-FTP比HTTP复杂" class="headerlink" title="(1)FTP比HTTP复杂"></a>(1)FTP比HTTP复杂</h4><p>FTP和HTTP一样都是Internet上广泛使用的协议，用来在两台计算机之间互相传送文件。相比于HTTP，FTP协议要复杂得多。复杂的原因，是因为FTP协议要用到两个TCP连接，一个是命令链路，用来在FTP客户端与服务器之间传递命令；另一个是数据链路，用来上传或下载数据。</p>
-<h4 id="2-FTP协议有两种工作方式：PORT方式和PASV方式，中文意思为主动式和被动式。"><a href="#2-FTP协议有两种工作方式：PORT方式和PASV方式，中文意思为主动式和被动式。" class="headerlink" title="(2)FTP协议有两种工作方式：PORT方式和PASV方式，中文意思为主动式和被动式。"></a>(2)FTP协议有两种工作方式：PORT方式和PASV方式，中文意思为主动式和被动式。</h4><p>PORT（主动）方式的连接过程是：客户端向服务器的FTP端口（默认是21）发送连接请求，服务器接受连接，建立一条命令链路。当需要传送数据时，客户端在命令链上用PORT命令告诉服务器：”我打开了XXXX端口，你过来连接我”。于是服务器从20端口向客户端的XXXX端口发送连接请求，建立一条数据链路来传送数据。  </p>
-<p>PASV（被动）方式的连接过程是：客户端向服务器的FTP端口（默认是21）发送连接请求，服务器接受连接，建立一条命令链路。当需要传送数据时，服务器在命令链上用PASV命令告诉客户端：”我打开了XXXX端口，你过来连接我”。于是客户端向服务器的XXXX端口发送连接请求，建立一条数据链路来传送数据。  </p>
-<p>从上面可以看出，两种方式的命令链路连接方法是一样的，而数据链路的建立方法就完全不同。而FTP的复杂性就在于此。</p>
-<h3 id="2-HTTP"><a href="#2-HTTP" class="headerlink" title="2.HTTP"></a>2.HTTP</h3><p>当我们想浏览一个网站的时候，只要在浏览器的地址栏里输入网站的地址就可以了，例如<a href="http://www.microsoft.com,但是在浏览...w.microsoft.com" target="_blank" rel="external">http://www.microsoft.com,但是在浏览...w.microsoft.com</a><br>,你知道为什么会多出一个”http”吗？</p>
-<h4 id="1-HTTP协议是什么"><a href="#1-HTTP协议是什么" class="headerlink" title="(1)HTTP协议是什么"></a>(1)HTTP协议是什么</h4><p>我们在浏览器的地址栏里输入的网站地址叫做URL (Uniform Resource<br>Locator，统一资源定位符)。就像每家每户都有一个门牌地址一样，每个网页也都有一个Internet地址。当你在浏览器的地址框中输入一个URL或是单击一个超级链接时，URL就确定了要浏览的地址。浏览器通过超文本传输协议(HTTP)，将Web服务器上站点的网页代码提取出来，并翻译成漂亮的网页。因此，在我们认识HTTP之前，有必要先弄清楚URL的组成,例如：<a href="http://www.microsoft.com/china/index.htm。它的含义如下：" target="_blank" rel="external">http://www.microsoft.com/china/index.htm。它的含义如下：</a><br>1. <a href="http://：代表超文本传输协议，通知microsoft.com服务器显示Web页，通常不用输入；" target="_blank" rel="external">http://：代表超文本传输协议，通知microsoft.com服务器显示Web页，通常不用输入；</a><br>2. www：代表一个Web（万维网）服务器；<br>3. Microsoft.com/：这是装有网页的服务器的域名，或站点服务器的名称；<br>4. China/：为该服务器上的子目录，就好像我们的文件夹；<br>5. Index.htm：index.htm是文件夹中的一个HTML文件（网页）。  </p>
-<p>我们知道，Internet的基本协议是TCP/IP协议，然而在TCP/IP模型最上层的是应用层（Application<br>layer），它包含所有高层的协议。高层协议有：文件传输协议FTP、电子邮件传输协议SMTP、域名系统服务DNS、网络新闻传输协议NNTP和HTTP协议等。</p>
-<p>HTTP协议（Hypertext Transfer<br>Protocol，超文本传输协议）是用于从WWW服务器传输超文本到本地浏览器的传送协议。它可以使浏览器更加高效，使网络传输减少。它不仅保证计算机正确快速地传输超文本文档，还确定传输文档中的哪一部分，以及哪部分内容首先显示(如文本先于图形)等。这就是你为什么在浏览器中看到的网页地址都是以<a href="http://开头的原因。" target="_blank" rel="external">http://开头的原因。</a><br>自WWW诞生以来，一个多姿多彩的资讯和虚拟的世界便出现在我们眼前，可是我们怎么能够更加容易地找到我们需要的资讯呢？当决定使用超文本作为WWW文档的标准格式后，于是在1990年，科学家们立即制定了能够快速查找这些超文本文档的协议，即HTTP协议。  </p>
-<h4 id="（2）HTTP是怎样工作的"><a href="#（2）HTTP是怎样工作的" class="headerlink" title="（2）HTTP是怎样工作的"></a>（2）HTTP是怎样工作的</h4><p>由于HTTP协议是基于请求/响应范式的（相当于客户机/服务器）。一个客户机与服务器建立连接后，发送一个请求给服务器，请求方式的格式为：统一资源标识符（URL）、协议版本号，后边是MIME（关于MIME，看百度百科里是这样解释的<a href="http://baike.baidu.com/view/160611.htm）信息包括请求修饰符、客户机信息和可能的内容。服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。" target="_blank" rel="external">http://baike.baidu.com/view/160611.htm）信息包括请求修饰符、客户机信息和可能的内容。服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。</a><br>许多HTTP通讯是由一个用户代理初始化的并且包括一个申请在源服务器上资源的请求。最简单的情况可能是在用户代理和服务器之间通过一个单独的连接来完成。在Internet上，HTTP通讯通常发生在TCP/IP连接之上。缺省端口是TCP<br>80，但其它的端口也是可用的。但这并不预示着HTTP协议在Internet或其它网络的其它协议之上才能完成。HTTP只预示着一个可靠的传输。<br>这个过程就好像我们打电话订货一样，我们可以打电话给商家，告诉他我们需要什么规格的商品，然后商家再告诉我们什么商品有货，什么商品缺货。这些，我们是通过电话线用电话联系（HTTP是通过TCP/IP），当然我们也可以通过传真，只要商家那边也有传真。  </p>
-<p>以上简要介绍了HTTP协议的宏观运作方式，下面介绍一下HTTP协议的内部操作过程。</p>
-<p>在WWW中，”客户”与”服务器”是一个相对的概念，只存在于一个特定的连接期间，即在某个连接中的客户在另一个连接中可能作为服务器。基于HTTP协议的客户/服务器模式的信息交换过程，它分四个过程：建立连接、发送请求信息、发送响应信息、关闭连接。这就好像上面的例子，我们电话订货的全过程。</p>
-<p>其实简单说就是任何服务器除了包括HTML文件以外，还有一个HTTP驻留程序，用于响应用户请求。你的浏览器是HTTP客户，向服务器发送请求，当浏览器中输入了一个开始文件或点击了一个超级链接时，浏览器就向服务器发送了HTTP请求，此请求被送往由IP地址指定的URL。驻留程序接收到请求，在进行必要的操作后回送所要求的文件。在这一过程中，在网络上发送和接收的数据已经被分成一个或多个数据包（packet），每个数据包包括：要传送的数据；控制信息，即告诉网络怎样处理数据包。TCP/IP决定了每个数据包的格式。如果事先不告诉你，你可能不会知道信息被分成用于传输和再重新组合起来的许多小块。<br>也就是说商家除了拥有商品之外，它也有一个职员在接听你的电话，当你打电话的时候，你的声音转换成各种复杂的数据，通过电话线传输到对方的电话机，对方的电话机又把各种复杂的数据转换成声音，使得对方商家的职员能够明白你的请求。这个过程你不需要明白声音是怎么转换成复杂的数据的。  </p>
-<h4 id="（3）-ipc-是什么"><a href="#（3）-ipc-是什么" class="headerlink" title="（3） ipc$ 是什么"></a>（3） ipc$ 是什么</h4><p>IPC$(Internet Process<br>Connection)是共享”命名管道”的资源(大家都是这么说的)，它是为了让进程间通信而开放的命名管道，可以通过验证用户名和密码获得相应的权限,在远程管理计算机和查看计算机的共享资源时使用。<br>利用IPC$,连接者甚至可以与目标主机建立一个空的连接而无需用户名与密码(当然,对方机器必须开了ipc$共享,否则你是连接不上的)，而利用这个空的连接，连接者还可以得到目标主机上的用户列表(不过负责的管理员会禁止导出用户列表的)。<br>我们总在说ipc$漏洞ipc$漏洞,其实,ipc$并不是真正意义上的漏洞,它是为了方便管理员的远程管理而开放的远程网络登陆功能,而且还打开了默认共享,即所有的逻辑盘(c$,d$,e$……)和系统目录winnt或windows(admin$)。<br>所有的这些,初衷都是为了方便管理员的管理,但好的初衷并不一定有好的收效,一些别有用心者(到底是什么用心?我也不知道,代词一个)会利用IPC$，访问共享资源,导出用户列表,并使用一些字典工具，进行密码探测,寄希望于获得更高的权限,从而达到不可告人的目的.<br>解惑:<br>1)IPC连接是Windows NT及以上系统中特有的远程网络登陆功能，其功能相当于Unix中的Telnet,由于IPC$功能需要用到Windows<br>NT中的很多DLL函数，所以不能在Windows 9.x中运行。<br>也就是说只有nt/2000/xp才可以建立ipc$连接,98/me是不能建立ipc$连接的(但有些朋友说在98下能建立空的连接,不知道是真是假,不过现在都2003年了,建议98的同志换一下系统吧,98不爽的)<br>2)即使是空连接也不是100%都能建立成功,如果对方关闭了ipc$共享,你仍然无法建立连接<br>3)并不是说建立了ipc$连接就可以查看对方的用户列表,因为管理员可以禁止导出用户列表.  </p>
-<h4 id="（4）-ASP-是什么"><a href="#（4）-ASP-是什么" class="headerlink" title="（4） ASP 是什么?"></a>（4） ASP 是什么?</h4><p>ASP即Active Server Page的缩写。它是一种包含了使用VB Script或Jscript脚本程序代码的网页。当浏览器浏览ASP网页时,<br>Web服务器就会根据请求生成相应的HTML代码然后再返回给浏览器,这样浏览器端看到的<br>就是动态生成的网页。ASP是微软公司开发的代替CGI脚本程序的一种应用,它可以与数据库和其它程序进行交互。是一种简单、方便的编程工具。在了解了VBSCRIPT的基本语法后，只需要清楚各个组件的用途、属性、方法，就可以轻松编写出自己的ASP系统。ASP的网页文件的格式是.ASP。</p>
-
-          
+          #HTTP和FTP的区别
+标签：ftpFTPhttpHttpHTTP
+2012-12-13 19:51 10544人阅读评论(1)收藏 举报
+ 分类：
+网络（2） 
+目录(?)[+]
+今天去面试，面试官问我这个问题，好吧，我好不容易记起来两个协议的中文名字，又含糊其辞地说FTP是传输文件的，很怂，回
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/21/http,ftp/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1634,7 +1535,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-20T22:35:00+08:00">
                 2016-09-20
@@ -1649,6 +1550,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/20/SecureCRT注册机使用方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/20/SecureCRT注册机使用方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1674,16 +1585,21 @@
       
         
           
-            <p>SecureCRT_7.3注册机激活步骤如下：</p>
-<p>1）准备工作</p>
-<p>安装好SecureCRT软件，</p>
-<p>下载并得到该注册机。</p>
-<p>2）保持SecureCRT软件关闭（运行的话会提示你正在运行的，关闭就好）。</p>
-<p>3）将注册机拷贝到你的CRT软件的安装的目录下；</p>
-<p>4）点击【Patch】按钮，会让你选择文件<br>，选择SecureCRT.exe可执行文件，还会再提示一次选择一个help什么文件。总之，确定后都会提示成功信息。</p>
-<p>5）然后打开CRT软件，按照相应的提示输入注册机上显示的信息（当然重新生成也是可以的）。注意，默认打开CRT时候会是一个输入key的页面，什么都不输入，点击下一步，选择输入自己的相关信息。就会看到分别让你输入名称、序列号等相关日期了。完成结束。看看自己的是否有激活成功。</p>
-
-          
+          SecureCRT_7.3注册机激活步骤如下：
+1）准备工作
+安装好SecureCRT软件，
+下载并得到该注册机。
+2）保持SecureCRT软件关闭（运行的话会提示你正在运行的，关闭就好）。
+3）将注册机拷贝到你的CRT软件的安装的目录下；
+4）点击【Patch】按钮，会让你选择文件，选择Secu
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/20/SecureCRT注册机使用方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1759,7 +1675,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -1768,7 +1684,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -1787,6 +1703,26 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -1825,11 +1761,11 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -1910,34 +1846,167 @@
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

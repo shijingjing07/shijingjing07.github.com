@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-07T16:19:00+08:00">
                 2016-07-07
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/07/指针函数和函数指针的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/07/指针函数和函数指针的区别/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,94 +348,21 @@
       
         
           
-            <p><strong>1.指针函数</strong><br>指针函数是一个函数，函数的返回值是一个指针。<br>格式如下：</p>
-<pre><code>类型标识符 *函数名(参数表)
+          1.指针函数指针函数是一个函数，函数的返回值是一个指针。格式如下：
+类型标识符 *函数名(参数表)
 如 double *myfunc(double x,double y);
-</code></pre><p>myfunc即为一个指针函数。</p>
-<p>代码示例如下：<br>pfunc.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-double *myfunc(double x,double y);
-int main()
-{
-    double *p = myfunc(2.5,4.3);
-    printf(&quot;%f\n&quot;,*p);
-    return 0;
-}
-double *myfunc(double x,double y)
-{
-    double result = x+y;
-    return &amp;result;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001412327-1346732365.png" alt=""></p>
-<p><strong>2.函数指针</strong><br>函数指针是一个指针，它指向函数地址<br>格式如下：</p>
-<pre><code>类型标识符 (*指针名)(参数表)
-如 double (*myfuncp)(double x,double y);
-</code></pre><p>myfuncp是一个指针，*myfuncp为指针指向的函数的地址。</p>
-<p>我们有以下函数<br>double myfunc(double x,double y);<br>则可将函数的地址赋给指针<br>myfuncp = &amp;myfunc或myfuncp=myfunc(取地址运算符不是必需的)</p>
-<p>代码示例如下：<br>funcp.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-double (*myfuncp)(double x,double y);
-double myfunc(double x,double y);
-int main()
-{
-    myfuncp = &amp;myfunc;
-    double result = (*myfunc)(2.5,4.3);
-    printf(&quot;%f\n&quot;,result);
-    return 0;
-}
-double myfunc(double x,double y)
-{
-    return x+y;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001457811-2041478665.png" alt=""></p>
-<p><strong>3.指针的指针</strong><br>表示指针指向的值，是一个指针类型。<br>如 int i=5;<br>int <em>p = &amp;i;<br>int *</em>pp = &amp;p;<br>其中pp即为一个指向指针的指针。<br>可以用以下示意图来标识。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001516452-748101375.png" alt=""></p>
-<p>再看下面的图</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001549155-1269840008.png" alt=""></p>
-<p>若<em>pp=p2;会发生什么？</em>pp即p=p2,那么p将指向p2所指的地方，即p指向j。<br>如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001616311-903524457.png" alt=""></p>
-<p><strong>4.指针的指针的作用</strong><br>1)调用函数修改局部指针变量<br>2)处理指针数组</p>
-<p>代码示例如下：<br>从一个int类型数组中，找出第一个负数。<br>pptest2.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-int main()
-{
-    int vals[]={7,6,5,-4,3,2,1,0};
-    int *p=vals;
-    getnegative(&amp;p);
-    printf(&quot;%d\n&quot;,*p);
-    return 0;
-}
-void getnegative(int **pp)
-{
-    while(**pp!=0)
-    {
-        if(**pp&lt;0)
-            break;
-        else
-            (*pp)++;
-    }
-}
-</code></pre><p>输出结果:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001715546-1319494951.png" alt=""></p>
-<p>我们可以用指针数组来代替多维数组，<br>代码示例如下：<br>arrayp.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-int main()
-{
-        char* names[]={&quot;Bill&quot;,&quot;Sam&quot;,&quot;Jim&quot;,&quot;Paul&quot;,&quot;Jack&quot;,&quot;0&quot;};
-        char **namesp = names;
-        while(*namesp!=&quot;0&quot;)
-        {
-                printf(&quot;%s &quot;,*namesp++);
-        }
-        return 0;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160708001801046-2004231501.png" alt=""></p>
-<p>其中*namesp++表示先取得指针指向的内容，然后使指针自增。</p>
-
-          
+myfunc即为一个指针函数。
+代码示例如下：pfunc.c
+#include&lt;stdio.h&gt;
+double *
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/07/07/指针函数和函数指针的区别/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -487,7 +439,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-06T10:37:00+08:00">
                 2016-07-06
@@ -502,6 +454,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/06/Linux启动新进程的三种方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/06/Linux启动新进程的三种方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -527,150 +489,17 @@ int main()
       
         
           
-            <p>程序中，我们有时需要启动一个新的进程，来完成其他的工作。<br>下面介绍了三种实现方法，以及这三种方法之间的区别。</p>
-<p><strong>1.system函数-调用shell进程，开启新进程</strong><br>system函数，是通过启动shell进程，然后执行shell命令进程。<br>原型：</p>
-<pre><code>int system(const char *string);
-</code></pre><p>string:shell命令字符串<br>返回值：成功返回命令退出码，无法启动shell，返回127错误码，其他错误，返回-1。</p>
-<p>代码示例如下：<br>process_system.c</p>
-<pre><code>#include&lt;stdlib.h&gt;                                                              
-#include&lt;stdio.h&gt;
-int main()
-{
-        printf(&quot;Running ps with system\n&quot;);
-        int code = system(&quot;ps au&quot;);//新进程结束后，system函数才返回
-        //int code = system(&quot;ps au&quot;);//system函数立即返回
-        printf(&quot;%d\n&quot;,code);
-        printf(&quot;ps Done\n&quot;);
-        exit(0);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706182806983-198256886.png" alt=""></p>
-<p>system函数，在启动新进程时，必须先启动shell进程，因此使用system函数的效率不高。</p>
-<p><strong>2.exec系列函数-替换进程映像</strong><br>exec系列函数调用时，启动新进程，替换掉当前进程。即程序不会再返回到原进程，<br>除非exec调用失败。<br>exec启动的新进程继承了原进程的许多特性，如在原进程中打开的文件描述符在新进程中仍保持打开。<br>需要注意的是，在原进程中打开的文件流在新进程中将关闭。原因在于，我们在前面讲过<a href="http://www.cnblogs.com/shijingjing07/p/5620646.html" target="_blank" rel="external">进程间通信</a>的方式，进程之间需要管道才能通信。</p>
-<p>原型：</p>
-<pre><code>int execl(const char *path,const char *arg0,...,(char*)0);
-int execlp(const char *file,const char *arg0,...,(char*)0);
-int execle(const char *path,const char *arg0,...,(char*)0,char *const envp[]);
-
-int execv(cosnt char *path,char *const argv[]);
-int execvp(cosnt char *file,char *const argv[]);
-int execve(cosnt char *path,char *const argv[],char *const envp[]);
-</code></pre><p>path/file：进程命令路径/进程命令名<br>argc:命令参数列表<br>envp:新进程的环境变量<br>代码示例如下：<br>process_exec.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-int main()
-{
-    printf(&quot;Running ps with execlp\n&quot;);
-    execlp(&quot;ps&quot;,&quot;ps&quot;,&quot;au&quot;,(char*)0);
-    printf(&quot;ps done&quot;);
-    exit(0);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706182941139-216208758.png" alt=""></p>
-<p>可以看出，调用execlp函数后，原进程被新进程替换，原进程中printf(“ps done”);没有被执行到。</p>
-<p><strong>3.fork函数-复制进程映像</strong><br>1)fork函数的使用<br>fork和exec的替换不同，调用fork函数，可复制一个和父进程一模一样的子进程。<br>执行的代码也完全相同，但子进程有自己的数据空间，环境和文件描述符。<br>原型：</p>
-<pre><code>pid_t fork();
-</code></pre><p>父进程执行时，返回子进程的PID<br>子进程执行时，返回0</p>
-<p>代码示例如下：<br>process_fork.c</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;sys/types.h&gt;
-int main()
-{
-    pid_t pid = fork();
-    switch(pid)
-    {
-        case -1:
-            perror(&quot;fork failed&quot;);
-            exit(1);
-            break;
-        case 0:
-            printf(&quot;\n&quot;);
-            execlp(&quot;ps&quot;,&quot;ps&quot;,&quot;au&quot;,0);
-            break;
-        default:
-            printf(&quot;parent,ps done\n&quot;);
-            break;
-    }
-    exit(0);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183035311-1079184377.png" alt=""></p>
-<p>调用fork函数后，新建了一个子进程，拷贝父进程的代码，数据等到子进程的内存空间。父进程和子进程执行互不影响。使用fork函数的返回值，来区分执行的是父进程，还是子进程。</p>
-<p>2)僵尸进程<br>子进程退出后，内核会将子进程置为僵尸状态。此时，子进程只保留了最小的一些内核数据结构，如退出码，以便父进程查询子进程的退出状态。这时，子进程就是一个僵尸进程。</p>
-<p>在父进程中调用wait或waitpid函数，查询子进程的退出状态，可以避免僵尸进程。<br>原型：</p>
-<pre><code>pid_t wait(int *stat_loc);
-pid_t waitpid(pid_t pid,int *stat_loc,int options);
-</code></pre><p>stat_loc:若不是空指针，则子进程的状态码会被写入该指针指向的位置。<br>pid:等待的子进程的进程号pid<br>options:标记阻塞或非阻塞模式<br>返回值：成功返回子进程的pid，若子进程没有结束或意外终止，返回0</p>
-<p>wait：阻塞模式(使用了信号量)，父进程调用wait时，会暂停执行，等待子进程的结束。<br>wait调用返回后，子进程会彻底销毁。</p>
-<p>waitpid:与wait不同的是，<br>a.可以表示四种不同的子进程类型<br>     pid==-1 等待任何一个子进程，此时waitpid的作用与wait相同<br>　　pid &gt;0 等待进程ID与pid值相同的子进程<br>　　pid==0 等待与调用者进程组ID相同的任意子进程<br>　　pid&lt;-1 等待进程组ID与pid绝对值相等的任意子进程<br>b.当options的值为WNOHANG时，为非阻塞模式，即waitpid会立即返回<br>此时，可以循环查询子进程的状态，若子进程未结束，waitpid返回，做其他工作。<br>这样提高了程序的效率。</p>
-<p>wait函数使用示例如下：<br>process_fork3.c</p>
-<pre><code>#include&lt;wait.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;sys/types.h&gt;
-int main()
-{
-    pid_t pid = fork();
-    int stat = 0;
-    switch(pid)
-    {
-        case -1:
-            perror(&quot;fork failed&quot;);
-            exit(1);
-            break;
-        case 0:
-            printf(&quot;\n&quot;);
-            exit(0);
-            break;
-        default:
-            pid = wait(&amp;stat);
-            printf(&quot;Child has finished:PID=%d\n&quot;,pid);
-            printf(&quot;parent,ps done\n&quot;);
-            break;
-    }
-    exit(0);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183153561-1567285869.png" alt=""></p>
-<p>waitpid函数使用示例如下：<br>process_fork2.c</p>
-<pre><code>#include&lt;wait.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;sys/types.h&gt;
-int main()
-{
-    pid_t pid = fork();
-    int stat = 0;
-    switch(pid)
-    {
-        case -1:
-            perror(&quot;fork failed&quot;);
-            exit(1);
-            break;
-        case 0:
-            printf(&quot;\n&quot;);
-            execlp(&quot;ps&quot;,&quot;ps&quot;,&quot;au&quot;,0);
-            break;
-        default:
-            do
-            {
-                pid = waitpid(pid,&amp;stat,WNOHANG);
-                if(pid==0)
-                {
-                    printf(&quot;parent do something else.\n&quot;);
-                    sleep(1);
-                }
-            }while(pid==0);
-            printf(&quot;Child has finished:PID=%d\n&quot;,pid);
-            printf(&quot;parent,ps done\n&quot;);
-            break;
-    }
-    exit(0);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160706183236639-933066854.png" alt=""></p>
-<p><strong>4.启动新进程三种方法的比较</strong><br>1)system函数最简单，启动shell进程，并在shell进程中执行新的进程。<br>效率不高，system函数必须等待子进程返回才能接着执行。</p>
-<p>2)exec系列函数用新进程替换掉原进程，但不会返回到原进程，除非调用失败。<br>该函数继承了许多原进程的特性，效率也较高。</p>
-<p>3)fork函数，复制一个子进程，和父进程一模一样，但是拥有自己的内存空间。父子进程执行互不影响。需要注意僵尸子进程的问题。</p>
-
-          
+          程序中，我们有时需要启动一个新的进程，来完成其他的工作。下面介绍了三种实现方法，以及这三种方法之间的区别。
+1.system函数-调用shell进程，开启新进程system函数，是通过启动shell进程，然后执行shell命令进程。原型：
+int system(const char *string)
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/07/06/Linux启动新进程的三种方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -747,7 +576,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-01T17:03:00+08:00">
                 2016-07-01
@@ -762,6 +591,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/01/Linux文件操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/01/Linux文件操作/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -787,103 +626,17 @@ int main()
       
         
           
-            <p>Linux中一切都是文件。如普通文件，目录，设备，管道等。<br>操作这些文件有两种方式，调用系统函数和使用标准I/O库。</p>
-<p><strong>一、调用系统函数</strong><br>1.文件描述符：数值类型，表示打开的文件标识<br>程序运行时，会首先打开3个文件描述符，0(标准输入文件),1(标准输出文件),2(标准错误文件)</p>
-<p>2.系统调用常用函数<br>1)open函数：打开文件<br>原型为：</p>
-<pre><code>int open(const char *path,int oflags)
-int open(const char *path,int oflags,mode_t mode)
-</code></pre><p>path:完整的文件路径<br>oflags:文件访问模式(只读，只写，可读写)<br>mode:设定文件访问权限</p>
-<p>返回值：返回与文件关联的文件描述符，失败返回-1<br>注意这个描述符是唯一的，不与其他进程共享，文件对应的文件描述符并不是固定的。</p>
-<p>2)write函数：写入文件<br>原型为：</p>
-<pre><code>size_t write(int fildes,const void *buf,size_t nbytes);
-</code></pre><p>将buf缓冲区的前nbyts个字节，写入文件描述符files关联的文件中。<br>返回值：实际写入的字节数，失败返回-1</p>
-<p>3)read函数：读取文件<br>原型为：</p>
-<pre><code>size_t read(int fildes,void *buf,szie_t nbytes);
-</code></pre><p>读取文件描述符fildes关联的文件中前nbytes个字节，到buf缓冲区<br>返回值：实际读取的字节数，失败返回-1</p>
-<p>4)close函数:关闭文件<br>原型为：</p>
-<pre><code>int close(int fildes);
-</code></pre><p>返回值：成功返回0,失败返回-1</p>
-<p><strong>3.调用系统函数示例</strong><br>从一个文件中复制数据到另一个文件，代码如下：<br>copy.c</p>
-<pre><code>#include&lt;fcntl.h&gt;
-#include&lt;stdlib.h&gt;
-int main()
-{
-    char c=&apos;\0&apos;;
-    int in=-1,out=-1;
-    in=open(&quot;myfile.txt&quot;,O_RDONLY);
-    //以只写方式创建文件，若文件不存在则新建一个文件
-    //文件所有者具有读和写权限
-    out=open(&quot;myfile2.txt&quot;,O_WRONLY|O_CREAT,S_IRUSR|S_IWUSR);
-    while(read(in,&amp;c,1)==1)
-        write(out,&amp;c,1);
-    close(in);
-    close(out);
-    return 0;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702005858156-1718842993.png" alt=""></p>
-<p><strong>4.标准I/O库</strong><br>在标准I/O中，使用的是文件流，对应着底层的文件描述符。<br>文件流是一个指向FILE结构的指针。</p>
-<p>I/O库的函数包含在头文件stdio.h中。</p>
-<p>1)fopen函数：打开文件<br>原型为：</p>
-<pre><code>FILE* fopen(const char *filename,const char *mode);
-</code></pre><p>与底层open函数类似<br>返回值：成功返回非空指针，失败返回NULL</p>
-<p>2)fread函数：读取文件<br>原型为：</p>
-<pre><code>size_t fread(void *ptr,size_t size,size_t nitems,FILE *stream);
-</code></pre><p>与底层read函数类似<br>从stream读取nitems个长度为size的数据到ptr指向的缓冲区<br>返回值：成功读取的字节数，失败返回-1</p>
-<p>3)fwrite函数：写入文件<br>原型为：</p>
-<pre><code>size_t fwrite(const void *ptr,size_t size,size_t nitems,FILE *stream);
-</code></pre><p>与底层write函数类似<br>从ptr指向的缓存区读取nitems个长度为size的数据，并把它们写到stream对应的文件中。<br>返回值：成功写入的字节数，失败返回-1</p>
-<p>4)fclose函数：关闭文件<br>原型为:</p>
-<pre><code>int fclose(FILE *stream);
-</code></pre><p>返回值：成功返回0,失败返回-1</p>
-<p><strong>5.标准I/O使用示例</strong><br>与前例一样，从一个文件中复制数据到另一个文件，只是使用I/O库函数来实现，<br>代码如下：</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-int main()
-{
-    int c=0;
-    FILE *pfin = NULL;
-    FILE *pfout = NULL;
-    pfin = fopen(&quot;myfile.txt&quot;,&quot;r&quot;);
-    pfout = fopen(&quot;myfile2.txt&quot;,&quot;w&quot;);
-    while(fread(&amp;c,sizeof(char),1,pfin))
-        fwrite(&amp;c,sizeof(char),1,pfout);
-    fclose(pfin);
-    fclose(pfout);
-    return 0;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010045749-2057295766.png" alt=""></p>
-<p>程序中的读和写数据可以用库中的其他函数来代替，如fget,fputc等。</p>
-<p><strong>6.文件描述符和文件流</strong><br>一般不要混合使用底层输入输出与高层文件流操作。<br>调用fileno函数，可以获得文件流使用的底层文件描述符<br>原型为：int fileno(FILE <em>stream);<br>调用fdopen函数，可以在一个已经打开的文件描述符上创建一个新的文件流<br>原型为：FILE</em> fdopen(int fildes,const char* mode);</p>
-<p>Linux下编程时，一般使用系统调用，而不使用I/O库。<br>有些操作必须使用系统调用，如创建文件读写锁等。</p>
-<p><strong>7.系统调用性能优化</strong><br>我们使用time命令测试系统调用和I/O库两种方法的运行时间，<br>结果如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010118046-665220137.png" alt=""></p>
-<p>可以看出，系统调用的效率要明显低于I/O库，这是为什么呢？<br>因为系统调用时，Linux必须从运行用户代码切换到内核代码，然后再返回用户代码。<br>而I/O库函数会自动在数据满足数据块长度时，才调用底层系统函数。</p>
-<p>系统调用代码优化如下，每次一次性读取和写入N个字节，减少系统调用次数。</p>
-<p>copyopt.c</p>
-<pre><code>#include&lt;fcntl.h&gt;
-#include&lt;stdlib.h&gt;
-int main()
-{
-    char buffer[1024];
-    int in=-1,out=-1;
-    int nread=0;
-    in=open(&quot;myfile.txt&quot;,O_RDONLY);
-    //以只写方式创建文件，若文件不存在则新建一个文件
-    //文件所有者具有读和写权限
-    out=open(&quot;myfile2.txt&quot;,O_WRONLY|O_CREAT,S_IRUSR|S_IWUSR);
-    while(nread=read(in,buffer,sizeof(buffer))&gt;0)
-        write(out,buffer,nread);
-    close(in);
-    close(out);
-    return 0;
-}
-</code></pre><p>使用time测试输出如下：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160702010202156-1711515887.png" alt=""></p>
-<p>可以看出，性能得到了提高，甚至超过了使用I/O的性能。</p>
-
-          
+          Linux中一切都是文件。如普通文件，目录，设备，管道等。操作这些文件有两种方式，调用系统函数和使用标准I/O库。
+一、调用系统函数1.文件描述符：数值类型，表示打开的文件标识程序运行时，会首先打开3个文件描述符，0(标准输入文件),1(标准输出文件),2(标准错误文件)
+2.系统调用常用函数1)o
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/07/01/Linux文件操作/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -960,7 +713,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-01T05:42:00+08:00">
                 2016-07-01
@@ -975,6 +728,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/01/Linux 数据流重定向/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/01/Linux 数据流重定向/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1000,28 +763,16 @@ int main()
       
         
           
-            <p><strong>1.三种数据流重定向</strong><br>1)标准输入(stdin):代码为0，使用0&lt;或0&lt;&lt;，其中代码0可以省略<br>2)标准输出(stdout):代码为1，使用1&gt;或1&gt;&gt;，其中代码1可以省略<br>3)标准错误输出(stderr):代码为2，使用2&gt;或2&gt;&gt;</p>
-<p><strong>2.标准输出(stdout)重定向</strong><br>我们知道Linux中，cat命令可以将文件内容输出到屏幕。<br>如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133103874-1115755871.png" alt=""></p>
-<p>我们可以使用&gt;将输出重定向到其他文件，如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133130781-834052391.png" alt=""></p>
-<p>可以看到，使用&gt;后，文件内容并没有输出到屏幕，而是输出到了mytxt文件。</p>
-<p>&gt;&gt;与&gt;的区别是，&gt;&gt;会把输出添加到文件的末尾，&gt;会清空文件，然后将输出写入该文件。</p>
-<p><strong>3.标准输入(stdin)重定向</strong><br>cat&gt;mytxt，表示需要从键盘输入数据到文件。如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133201390-1495529579.png" alt=""></p>
-<p>使用&lt;可以将其他文件内容输入到该文件，如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133637109-1643770272.png" alt=""></p>
-<p>使用&lt;&lt;，表示定义输入结束符，<br>从键盘输入时，输入Ctrl+D，可结束进程。<br>还可以使用&lt;&lt;自定义结束符，如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133651609-1775141750.png" alt=""></p>
-<p><strong>4.标准错误输出(stderr)重定向</strong><br>与标准输出(stdout)重定向使用相同。<br>表示重定向的是错误信息。<br>一般用来将错误信息和正确信息分开。</p>
-<p><strong>5.标准输出和标准错误输出写入同一个文件</strong><br>使用&amp;&gt;可将stdout和stderr输出到同一个文件，如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133712921-1572346818.png" alt=""></p>
-<p><strong>6.屏蔽所有输出的方法</strong><br>有时我们希望将所有的错误信息或正确信息屏蔽掉，<br>此时，可将输出重定向到设备/dev/null。如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201607/300946-20160701133726171-631294718.png" alt=""></p>
-<p>将正确信息吃掉，此时屏幕输出的只有错误信息了。</p>
-<p><strong>7.为什么要用数据流重定向</strong><br>1)需要将屏幕信息保存下来的时候<br>2)不希望其他程序干扰到当前程序的屏幕输出<br>3)执行时一些已知的错误，我们可以用”2&gt;/dev/null”丢掉<br>4)正确信息和错误信息需要分开输出</p>
-
-          
+          1.三种数据流重定向1)标准输入(stdin):代码为0，使用0&lt;或0&lt;&lt;，其中代码0可以省略2)标准输出(stdout):代码为1，使用1&gt;或1&gt;&gt;，其中代码1可以省略3)标准错误输出(stderr):代码为2，使用2&gt;或2&gt;&gt;
+2.标准输出(
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/07/01/Linux 数据流重定向/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1098,7 +849,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-30T13:18:00+08:00">
                 2016-06-30
@@ -1113,6 +864,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/30/Linux硬链接和软链接/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/30/Linux硬链接和软链接/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1138,17 +899,16 @@ int main()
       
         
           
-            <p><strong>1.硬链接：文件别名</strong><br>通过前面讲的<a href="http://www.cnblogs.com/shijingjing07/p/5630747.html" target="_blank" rel="external">Linux<br>ext2文件系统</a>，我们知道在目录文件的block中，存放着目录下文件的文件名和对应的inode。<br>可以将多个文件名对应到同一个inode，<br>新建一条文件名链接到某inode号，这就是硬链接。</p>
-<p>可以看出，硬链接只是新建了一个文件名，关联到一个已存在的文件。<br>此时，目录下的block多写了一个文件名/inode的数据<br>所以，硬链接没有增加inode和block的耗用。</p>
-<p><strong>2.软链接：类似windows中的快捷方式</strong><br>软链接的实质是，创建了一个独立的文件，而读取这个文件时，会指向它链接的那个文件的文件名。类似于重定向的功能。</p>
-<p>软链接新建了文件，所以是要耗用inode和block的。</p>
-<p><strong>3.硬链接和软链接的比较</strong></p>
-<p>1)硬链接比较安全，多个文件名对应一个inode时，若删除文件，只要还有其他的文件名对应着这个inode文件，文件就不会删除，<br>此时，只是将文件的连接数减1,当连接数为0时，文件真正删除。</p>
-<p>硬链接不会耗用inode和block</p>
-<p>硬链接不能链接到目录。</p>
-<p>2)软链接<br>软链接比较灵活，可以链接到文件和目录。<br>但是会耗用inode和block，不过这点空间不算什么。<br>若目标文件删除，则读取链接文件会失败。</p>
-
-          
+          1.硬链接：文件别名通过前面讲的Linuxext2文件系统，我们知道在目录文件的block中，存放着目录下文件的文件名和对应的inode。可以将多个文件名对应到同一个inode，新建一条文件名链接到某inode号，这就是硬链接。
+可以看出，硬链接只是新建了一个文件名，关联到一个已存在的文件。此时，目
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/30/Linux硬链接和软链接/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1225,7 +985,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-30T09:42:00+08:00">
                 2016-06-30
@@ -1240,6 +1000,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/30/Linux ext2文件系统/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/30/Linux ext2文件系统/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1265,28 +1035,18 @@ int main()
       
         
           
-            <p>Linux最传统的磁盘文件系统(filesystem)使用的是ext2</p>
-<p><strong>1.ext2文件系统结构</strong><br>ext2文件系统划分为多个块组，每个块组拥有独立的inode/block，一个文件系统只有一个Superblock。<br>如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173517390-2010416358.png" alt=""></p>
-<p>1)Boot Sector:启动扇区。<br>启动扇区可以安装引导装载程序，这样可以将不同的引导装载程序安装到不同的文件系统，<br>不用覆盖整块硬盘唯一的MBR，才能制作出多重引导的环境。</p>
-<p>2)Data Block:存放文件内容。<br>ext2系统中block的大小有1KB,2KB,4KB三种，block大小由文件系统总容量决定，如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173538968-986757518.png" alt=""></p>
-<p>每个block只能放一个文件的数据，若文件大小超过block，则占用多个；<br>若小于block，block剩余的空间也不能被其他文件使用。</p>
-<p>3)Inode Table:存放文件属性和权限等。<br>inode存放的文件数据至少有：<br>文件的访问权限(rwx)<br>文件的所有者与组(ower/group)<br>文件的大小<br>文件创建和状态改变时间<br>最近一次读的时间<br>最近修改的时间<br>文件类型标识<br>文件指向的block号</p>
-<p>inode的大小固定为128B<br>我们重点看一下最后一项，”文件指向的block号”<br>inode是通过12个直接指针，1个间接指针，1个双间接指针，1个三间接指针来指向block的。<br>如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160630173604874-1386854855.png" alt=""></p>
-<p>12个直接指针:直接取得block号码<br>如果文件太大,就会使用间接指针，双间接指针，三间接指针来记录编号</p>
-<p>4)Superblock:存放文件系统的基本信息。<br>一个文件系统只有一个Superblock，存放的信息有：<br>inode,block的总量<br>未使用和已使用的inode,block数量<br>inode,block的大小<br>文件系统挂载时间，最近写入数据时间，最近检查磁盘时间<br>validbit值，文件系统已挂载，则validbit为0，否则为1</p>
-<p>5)File system Description(文件系统描述):每个块组的开始结束号码</p>
-<p>6)block bitmap(block对照表)：标识block是否使用<br>便于系统快速找到空间来处置文件</p>
-<p>7)inode bitmap(inode对照表):标识inode是否使用<br>与block bitmap相似。</p>
-<p><strong>2.文件系统树型结构之间的关系</strong><br>1)目录<br>新建一个目录时，ext2会分配一个inode和至少一块block给该目录。<br>inode记录目录权限和属性，以及分配的block号。<br>block记录目录下的文件名和文件名占用的inode号。</p>
-<p>2)文件<br>新建一个文件时，ext2会分配一个inode和对应文件大小的N个block块给该文件。<br>inode和文件名会同时被记录在目录的block中，以便通过目录访问到该文件。<br>block存放文件内容。</p>
-<p>3)文件查找<br>查找文件时，会先找到文件所在目录，目录的inode对应的block中，<br>存放着文件的名称和inode，找到文件名对应的inode,<br>然后找到文件inode对应的block，找到文件内容。</p>
-<p><strong>3.ext3文件系统</strong><br>ext3是ext2的升级，加入了日志文件系统。</p>
-<p><strong>4.挂载文件系统</strong><br>文件系统要挂载到目录树，才能使用。<br>文件系统与目录树结合的操作，称为挂载。<br>挂载点是目录，该目录为进入该文件系统的入口。</p>
+          Linux最传统的磁盘文件系统(filesystem)使用的是ext2
+1.ext2文件系统结构ext2文件系统划分为多个块组，每个块组拥有独立的inode/block，一个文件系统只有一个Superblock。如下图所示：
 
-          
+1)Boot Sector:启动扇区。启动扇区可以安装引导装载程序，这样
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/30/Linux ext2文件系统/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1363,7 +1123,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-30T02:08:00+08:00">
                 2016-06-30
@@ -1378,6 +1138,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/30/Linux文件特殊权限/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/30/Linux文件特殊权限/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1403,15 +1173,15 @@ int main()
       
         
           
-            <p>除了我们前面介绍的rwx权限外，Linux中还有另外三种特殊权限：SUID,SGID,SBIT<br><strong>一、SUID,SGID,SBIT介绍</strong><br>1.SUID:s出现在文件所有者的x权限上。<br>1)SUID只能用于二进制可执行文件，对目录无效<br>2)执行者若具有该文件的x权限，则将具有文件所有者的权限<br>3)权限只在文件执行时有效，执行完毕不再拥有所有者权限</p>
-<p>2.SGID：s出现在文件所属群组的x权限上。<br>SGID和SUID不同，可以用于目录<br>1)使用者若有此目录的x,w权限，则可进入和修改此目录<br>2)使用者在此目录下的群组将变成该目录的群组，新建的文件，群组是此目录的群组。</p>
-<p>SGID对于文件来说<br>1)SGID只对二进制可执行文件有效<br>2)执行者若具有该文件的x权限，则将具有文件所属群组的权限<br>3)权限只在文件执行时有效，执行完毕不再拥有所属群组权限</p>
-<p>3.SBIT:t出现在文件其他用户的x权限上。<br>1)和SUID,SGID不同的是，只能用于目录<br>2)使用者在该目录下，仅自己与root才有权力删除新建的目录或文件</p>
-<p><strong>二、为什么要使用特殊权限</strong><br>举个例子，比如 /usr/bin/passwd 这个二进制文件。<br>它的权限是 -rwsr-xr-x ，我不是所有者，我具有”x”权限，我执行它时，获得了它的所有者（即root）的权限，<br>所以在该二进制程序执行时，我可以用它来读到我平时是没有权限访问的 /etc/shadow 文件（-r——–），从而能更改我自己的密码</p>
-<p><strong>三、修改SUID,SGID,SBIT权限</strong><br>1.符号类型修改权限<br>chmod u+s test –为test文件加上suid权限<br>chmod g+s test –为test文件加上sgid权限<br>chmod o+t test –为test文件加上sbit权限</p>
-<p>2.数字类型修改权限<br>我们知道普通文件的rwx权限修改<br>对于特殊权限，需要在最前面增加一位，SUID:4,SGID:2,SBIT:1<br>chmod 4777 test –test拥有SUID权限，rwsrwxrwx<br>chmod 2777 test –test拥有SGID权限，rwxrwsrwx<br>chmod 1777 test –test拥有SBIT权限，rwxrwxrwt</p>
-
-          
+          除了我们前面介绍的rwx权限外，Linux中还有另外三种特殊权限：SUID,SGID,SBIT一、SUID,SGID,SBIT介绍1.SUID:s出现在文件所有者的x权限上。1)SUID只能用于二进制可执行文件，对目录无效2)执行者若具有该文件的x权限，则将具有文件所有者的权限3)权限只在文件执行时
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/30/Linux文件特殊权限/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1488,7 +1258,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-29T10:04:00+08:00">
                 2016-06-29
@@ -1503,6 +1273,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/29/Linux文件普通权限/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/29/Linux文件普通权限/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1528,21 +1308,16 @@ int main()
       
         
           
-            <p><strong>1.文件所有者，所属用户组，其他用户</strong><br>1)文件所有者:创建文件的用户<br>2)所属用户组：文件属于哪个用户组<br>3)其他用户：不是文件所有者，不属于文件所属用户组的用户，称为其他用户</p>
-<p><strong>2.Linux文件权限</strong><br>我们切换到root用户，新建一个myfile的文件夹,<br>然后使用ls -al|grep myfile命令查看文件属性，如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629180109249-70843389.png" alt=""></p>
-<p>文件类型 所有者权限 用户组权限 其他用户权限 连接数 所有者 用户组 文件容量(B) 修改日期       文件名<br>d           rwx          r-x           r-x                 2    root    root<br>4096         6/29 9:00    myfile</p>
-<p>权限中三位分别代表r(读)，w(写)，x(执行)文件内容的权限，若为-，表示没有相应的权限。</p>
-<p>对于文件夹来说，内容为文件夹中的文件名列表。<br>r:可读取文件名列表<br>w:可新建，删除，重命名文件名<br>x:有进入文件夹的权限<br>若要执行文件夹的w权限，必须要先有进入文件夹的权限，所以要使用w权限，必须要有x权限。</p>
-<p>对于文件来说，内容为文件内容本身<br>r:可读取文件内容<br>w:可修改文件内容<br>x:可执行文件</p>
-<p>可见，文件本身的权限只和文件内容有关系，文件的新增，删除，重命名，则需要文件所在的目录的w权限。</p>
-<p><strong>3.修改文件权限</strong><br>1)chmod:修改文件权限<br>使用权限对应的数值来修改权限，<br>r:4,w:2,x:1<br>rwx的值为4+2+1=7<br>r-x的值为4+0+1=5<br>rw-的值为4+2+0=6</p>
-<p>chmod rwx的值 文件名<br>即可将文件修改成相应的权限，如我们修改myfile的其他用户权限为rwx,修改命令为：chmod 757 myfile</p>
-<p>2)chgrp:修改文件所属用户组<br>chgrp ubuntu myfile<br>即可将myfile的用户组从root改为ubuntu</p>
-<p>3)chown:修改文件所有者<br>chown ubuntu myfile修改文件所有者<br>或chown ubuntu:ubuntu myfile 同时修改文件所有者和文件所属用户组</p>
-<hr>
-
-          
+          1.文件所有者，所属用户组，其他用户1)文件所有者:创建文件的用户2)所属用户组：文件属于哪个用户组3)其他用户：不是文件所有者，不属于文件所属用户组的用户，称为其他用户
+2.Linux文件权限我们切换到root用户，新建一个myfile的文件夹,然后使用ls -al|grep myfile命令查看
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/29/Linux文件普通权限/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1619,7 +1394,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-29T07:33:00+08:00">
                 2016-06-29
@@ -1634,6 +1409,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/29/Linux Shell编程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/29/Linux Shell编程/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1659,248 +1444,16 @@ int main()
       
         
           
-            <p><strong>一、什么是Shell</strong><br>在Linux中，系统会为每个用户运行一个shell(外壳)程序。<br>shell程序是一个命令行解释器，交互式地解释和执行用户输入的命令。<br>shell还是一种解释性的程序设计语言，定义了变量和函数，数组，程序控制结构等很多高级语言支持的特性。</p>
-<p><strong>二、shell编程用在什么地方</strong><br>shell一般用于批量命令执行，用来管理，监控系统等。</p>
-<p><strong>三、shell语法详解</strong><br>1.程序示例，输出”hello world”<br>firstshell</p>
-<pre><code>#!/bin/bash
-echo &quot;hello world&quot;
-</code></pre><p>改变文件的访问权限，使其具有可执行属性<br>chmod +x firstshell</p>
-<p>输出结果:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150427843-1821626791.png" alt=""></p>
-<p>程序的第一行必须是 #!/bin/bash<br>指定系统用#!后的命令/bin/bash来运行此文件。</p>
-<p>2.变量<br>varname=值<br>需要注意的是：<br>1)”=”前后不能有空格<br>2)变量默认都是字符串格式的<br>3)使用变量，必须加上”$”符号，否则取到的是变量名本身<br>4)若变量名和其他字符串混淆在一起时，需要加上{}来区分变量名<br>如下例所示：<br>myshell</p>
-<pre><code>#!/bin/bash
-var1=1
-var2=2
-var3=$var1+$var2 #变量默认是字符串，所以输出为1+2
-var4 =4 #等号前后有空格，报错
-echo $var1
-echo $var2
-echo $var3
-echo $var4
-echo &quot;var1 is the ${var1}st&quot;
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150522421-237667676.png" alt=""></p>
-<p>那么，我们如何将var1,var2作为数值类型来相加呢？<br>方法一：使用C风格表示式，((表示式))<br>((var3=$var1+$var2))<br>或((var3=var1+var2))</p>
-<p>方法二：使用shell中的let命令<br>let ‘var3=var1+var2’ #注意不能加’$’符号，否则报错</p>
-<p>方法三：调用expr外部程序，效率较低，尽量少用<br>var3=$(expr $var1 + $var2) #expr函数需要三个参数,$var1,+,$var2</p>
-<p>3.流程控制<br>1)if语句<br>结构如下：</p>
-<pre><code>if
-then
-elif
-then
-else
-fi
-</code></pre><p>或者(then写在if的后面，但是要加分号;)</p>
-<pre><code>if ...;then
-elif...;then
-else
-fi
-</code></pre><p>示例如下：<br>myshell</p>
-<pre><code>#!/bin/bash
-var1=1
-var2=2
-if ((var1==var2))
-then
-    echo &quot;var1=var2&quot;
-elif ((var1&gt;var2))
-then
-    echo &quot;var1&gt;var2&quot;
-else
-    echo &quot;var1&lt;var2&quot;
-fi
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150644781-2023272747.png" alt=""></p>
-<p>bash中有一些常用的条件判断表达式，使用方法：[ 条件判断表达式 ]<br>-f “filename”:判断是否是文件<br>-x “/bin/ls”:判断/bin/ls是否存在并有可执行权限<br>-n “$var”:判断$var变量是否有值<br>“$a”==”$b”:判断$a和$b是否相等</p>
-<p>2)&amp;&amp;和||操作符<br>&amp;&amp;：逻辑与操作符<br>||: 逻辑或操作符</p>
-<p>3)case语句<br>case表达式用来匹配给定的字符串，和C中的switch…case匹配的是数字不同。</p>
-<pre><code>case ... in
-...) 
-    do something;;
-...)
-    do something;;
-esac
-</code></pre><p>下例中，我们写了一个程序，用来解压bzip2,gzip,zip类型的压缩文件。<br>代码如下：</p>
-<pre><code>#!/bin/bash
-ftype=$(file $1)
-echo &quot;$ftype&quot;
-case &quot;$ftype&quot; in
-&quot;$1: Zip archive&quot;*)
-    unzip &quot;$1&quot;;;
-&quot;$1: gzip compressed&quot;*)
-    gunzip &quot;$1&quot;;;
-&quot;$1: bzip2 compressed&quot;*)
-    bunzip2 &quot;$1&quot;;;
-*)
-    echo &quot;File $1 can not be unconpressed&quot;;;
-esac
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150734281-2075603643.png" alt=""></p>
-<p>其中$1表示输入的第一个参数</p>
-<p>4)select循环语句<br>select循环适合交互式的场合，格式如下：</p>
-<pre><code>select var in ...;do
-...
-done
-</code></pre><p>示例代码如下：</p>
-<pre><code>#!/bin/bash
-echo &quot;what is your favourite OS?&quot;
-select var in &quot;RedHat&quot; &quot;Ubuntu&quot; &quot;Free BSD&quot; &quot;Other&quot;;do
-    echo &quot;hello $var&quot;
-    break;
-done
-echo &quot;you have selected $var&quot;
-</code></pre><p>输出结果:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150821046-256989018.png" alt=""></p>
-<p>5)while/for循环<br>while循环</p>
-<pre><code>while...;do
-    ...
-done
-</code></pre><p>for循环</p>
-<pre><code>for var in ...;do
-    ...
-done
-</code></pre><p>示例代码如下：</p>
-<pre><code>#!/bin/bash
-for var in A B C;do
-    echo &quot;var is $var&quot;
-done
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150919374-53766546.png" alt=""></p>
-<p>4.shell里的一些特殊符号<br>1)*:表示通配符<br>双引号可以防止通配符但允许变量扩展<br>单引号(或转义字符\)的限制更严格，可防止任何变量扩展；<br>示例代码如下：</p>
-<pre><code>#!/bin/bash
-echo *.c
-echo &quot;*.c&quot;
-echo &apos;*.c&apos;
-echo \*.c
-
-echo $SHELL
-echo &quot;$SHELL&quot;
-echo &apos;$SHELL&apos;
-echo \$SHELL
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629150948984-14562658.png" alt=""></p>
-<p>2)命令行参数<br>$1:命令行的第一个参数<br>$#:命令行参数的个数<br>$@:命令行的所有参数<br>$*:所有命令行参数作为一个参数<br>shift n:去掉前面的n个参数</p>
-<p>示例如下：</p>
-<pre><code>#!/bin/bash
-help()
-{
-cat &lt;&lt; HELP
-   本例程序用来获取命令行参数
-   使用了命令：myshell -l hello -f -- -somefile1 somefile2
-HELP
-   exit 0
-}
-while [ -n &quot;$1&quot; ]; do
-case &quot;$1&quot; in
-   -h) help;shift 1;; 
-   -f) opt_f=1;shift 1;; 
-   -l) opt_l=$2;shift 2;; 
-   --) shift;break;; 
-   -*) echo &quot;error: no such option $1. -h for help&quot;;exit 1;;
-   *) break;;
-esac
-done
-echo &quot;opt_f is $opt_f&quot;
-echo &quot;opt_l is $opt_l&quot;
-echo &quot;first arg is $1&quot;
-echo &quot;2nd arg is $2&quot;
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151036718-2078581139.png" alt=""></p>
-<p>3)输出段落<br>echo一次只能输出一行<br>如果是一段文字，该如何输出呢？<br>我们可以使用cat &lt;&lt;，后接一个字符串，段落的末尾再加上这个字符串来输出段落。</p>
-<pre><code>cat &lt;&lt; HELP
-...
-...
-HELP
-</code></pre><p>下例中，程序用来替换文件名，<br>有三个输入参数，第一个参数是待替换字符<br>第二个参数是替换字符<br>第三个参数是文件名。</p>
-<pre><code>#!/bin/bash
-if [ $# -lt 3 ];then
-cat &lt;&lt; HELP
-本例中，程序用来替换文件名，
-有三个输入参数，第一个参数是待替换字符
-第二个参数是替换字符
-第三个参数是文件名。
-HELP
-   exit 0
-fi
-OLD=&quot;$1&quot;
-NEW=&quot;$2&quot;
-# The shift command removes one argument from the list of
-# command line arguments.
-shift
-shift
-# $@ contains now all the files:
-for file in &quot;$@&quot;; do
-   if [ -f &quot;$file&quot; ]; then
-      newfile=`echo &quot;$file&quot; | sed &quot;s/${OLD}/${NEW}/g&quot;`
-      if [ -f &quot;$newfile&quot; ]; then
-　　　　   echo &quot;ERROR: $newfile exists already&quot;
-      else
-         echo &quot;renaming $file to $newfile ...&quot;
-         mv &quot;$file&quot; &quot;$newfile&quot;
-      fi
-   fi
-done
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151122468-1904498454.png" alt=""></p>
-<p>5.函数<br>格式如下：</p>
-<pre><code>函数名(){
-    #函数中$1,$2对应接收到的第一第二个参数
-}
-</code></pre><p>示例代码如下:</p>
-<pre><code>#!/bin/bash
-add()
-{
-
-    echo $(($1+$2))
-}
-var1=1
-var2=2
-add $var1 $var2
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151200921-881466817.png" alt=""></p>
-<p><strong>四、脚本调试</strong><br>最简单的方式是使用echo输出值。</p>
-<p><strong>五、Shell编程示例</strong><br>我们有一个日志文件，保存了系统的操作记录。过了一段时间后，这个文件可能会变得很大。<br>我们采取的做法是重命名该文件，然后生成一个新的文件供再次使用。<br>重命名的规则是，当前文件log.txt重名为log1.txt，在此之前，如果已经有log1.txt时，将log。txt命名为log2.txt，依次类推。<br>代码如下：</p>
-<pre><code>#!/bin/bash
-help()
-{
-   cat &lt;&lt; HELP
-重命名该文件，然后生成一个新的文件供再次使用。
-重命名的规则是，当前文件log.txt重名为log1.txt，在此之前，如果已经有log1.txt时，将log。txt命名为log2.txt，依次类推。
-HELP
-   exit 0
-}
-
-if [[ $1 == &apos;-h&apos; || $1 == &apos;&apos; ]]; then
-  help
-fi
-
-filename=$1
-
-# 我们先找到最大的数字再说。
-max=0
-while [ -f &quot;$filename.$((++max))&quot; ]; do
-  : # 什么都不用做，我们已经顺手用 ++max 自增了 max 了。
-done
-
-# 然后从最大的一路重命名下来。
-for ((i=max; i&gt;0; i--)); do
-  # 数字加个 1，好给前一个让位子。
-  if [ -f $filename.$i ];then 
-      mv &quot;$filename.$i&quot; &quot;$filename.$((i+1))&quot;
-  fi
-done
-
-# 最后我们点名要重命名的：
-if [ -f &quot;$filename&quot; ]; then
-   mv &quot;$filename&quot; &quot;$filename.1&quot;
-fi
-
-# 重新创建一下。
-: &gt; &quot;$filename&quot;
-</code></pre><p>运行程序，./myshell log.txt</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160629151250546-138117983.png" alt=""><br>我们会发现log.txt的日志文件的名称会加1，同时当前的log.txt文件会变成log.txt.1,<br>生成一个全新的log.txt文件，供程序再次使用。</p>
-
-          
+          一、什么是Shell在Linux中，系统会为每个用户运行一个shell(外壳)程序。shell程序是一个命令行解释器，交互式地解释和执行用户输入的命令。shell还是一种解释性的程序设计语言，定义了变量和函数，数组，程序控制结构等很多高级语言支持的特性。
+二、shell编程用在什么地方shell一般
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/29/Linux Shell编程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1977,7 +1530,7 @@ fi
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-27T10:56:00+08:00">
                 2016-06-27
@@ -1992,6 +1545,16 @@ fi
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/27/Linux进程间通信-命名管道/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/27/Linux进程间通信-命名管道/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2017,118 +1580,17 @@ fi
       
         
           
-            <p>前面我们讲了进程间通信的一种方式，<a href="http://www.cnblogs.com/shijingjing07/p/5620646.html" target="_blank" rel="external">匿名管道</a>。<br>我们知道，匿名管道只能用于父子关系的进程之间。那么没有这种关系的进程之间该如何进行数据传递呢？</p>
-<p><strong>1.什么是命名管道</strong></p>
-<p>匿名管道是在缓存中开辟的输出和输入文件流的空间，只能用于父子关系的进程之间。因为父子进程的输入和输出文件描述符是一致的。<br>命名管道是一种实际存在的FIFO文件，称作”管道文件”，用于不同进程之间，命名管道进程间打开同一个FIFO文件，进行数据传递。<br>我们可以像普通文件一样操作FIFO文件。<br>不同进程，引用同一个FIFO文件，进行数据传递。</p>
-<p><strong>2.创建命名管道</strong><br>mkfifo函数：创建一个命名管道</p>
-<pre><code>int mkfifo(const char *filename,mode_t mode);
-</code></pre><p>filename:指定FIFO文件的名称<br>mode:指定文件的读写权限</p>
-<p><strong>3.访问命名管道</strong><br>打开FIFO文件有四种方式：</p>
-<pre><code>open(const char *filename,O_RDONLY);
-open(const char *filename,O_RDONLY|O_NONBLOCK);
-open(const char *filename,O_WRONLY);
-open(const char *filename,O_WRONLY|O_NONBLOCK);
-</code></pre><p>需要注意的是，不能以O_RDWR模式打开FIFO文件，<br>因为这样一个进程写入的数据会被该进程读取，FIFO一般只用做单向的数据传递。</p>
-<p>open函数的第二个参数，表示是读管道，还是写管道。<br>O_NONBLOCK表示FIFO管道的读写是非阻塞的，默认的话，是阻塞的。<br>那么何为阻塞呢？<br>一个进程写模式打开管道的时候，必须有另一个进程以读模式打开；<br>或读模式的时候，必须有另一个进程写写模式打开，否则该进程open函数阻塞，直到满足以上关系。</p>
-<p>非阻塞，意味着open函数会立即返回，若没有其他进程以只读方式打开，open返回-1，并且FIFO也不会被打开。</p>
-<p><strong>4.FIFO管道使用示例</strong><br>下例有两个程序，fifowrite.c和fiforead.c分别写管道和读管道。<br>fifowrite.c中将一个文本文件data.txt,写到管道。<br>fiforead.c中从管道读取数据，并写到dataformfifo.txt文件中。<br>程序使用了默认的阻塞模式。<br>示例代码如下：</p>
-<p>fifowrite.c</p>
-<pre><code>#include&lt;sys/types.h&gt;
-#include&lt;stdlib.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;fcntl.h&gt;
-#include&lt;limits.h&gt;
-int main()
-{
-    const char *fifo_name = &quot;/tmp/my_fifo&quot;;
-    int pipe_fd = -1;
-    int data_fd = -1;
-    int res = 0;
-    const int open_mode = O_WRONLY;
-    char buffer[PIPE_BUF+1];
-    if(access(fifo_name,F_OK)==-1)
-    {
-        res = mkfifo(fifo_name,0777);
-        if(res!=0)
-        {
-            fprintf(stderr,&quot;could not create fifo\n&quot;);
-            exit(EXIT_FAILURE);
-        }
-    }
-    printf(&quot;process %d opening fifo O_WRONLY\n&quot;,getpid());
-    pipe_fd = open(fifo_name,open_mode);
-    data_fd = open(&quot;data.txt&quot;,O_RDONLY);
-    printf(&quot;process %d result %d\n&quot;,getpid(),pipe_fd);
-    if(pipe_fd!=-1)
-    {
-        int bytes_read = 0;
-        bytes_read = read(data_fd,buffer,PIPE_BUF);
-        while(bytes_read&gt;0)
-        {
-            res = write(pipe_fd,buffer,bytes_read);
-            if(res==-1)
-            {
-                fprintf(stderr,&quot;write error\n&quot;);
-                exit(EXIT_FAILURE);
-            }
-            bytes_read = read(data_fd,buffer,PIPE_BUF);
-            buffer[bytes_read]=&apos;\0&apos;;
-        }
-        close(pipe_fd);
-        close(data_fd);
-    }
-    else{
-        exit(EXIT_FAILURE);
-    }
-    printf(&quot;process %d finished.\n&quot;,getpid());
-    exit(EXIT_SUCCESS);
-}
-</code></pre><p>fiforead.c</p>
-<pre><code>#include&lt;stdlib.h&gt;
-#include&lt;stdio.h&gt;
-#include&lt;sys/types.h&gt;
-#include&lt;fcntl.h&gt;
-#include&lt;limits.h&gt;
-int main()
-{
-    const char *fifo_name = &quot;/tmp/my_fifo&quot;;
-    int pipe_fd = -1;
-    int data_fd = -1;
-    int res = 0;
-    int open_mode = O_RDONLY;
-    char buffer[PIPE_BUF+1];
-    int bytes_read = 0;
-    int bytes_write = 0;
-    memset(buffer,&apos;\0&apos;,sizeof(buffer));
-
-    printf(&quot;process %d opening FIFO O_RDONLY\n&quot;,getpid());
-    pipe_fd = open(fifo_name,open_mode);
-    data_fd = open(&quot;dataformfifo.txt&quot;,O_WRONLY|O_CREAT,0644);
-    printf(&quot;process %d result %d\n&quot;,getpid(),pipe_fd);
-    if(pipe_fd!=-1)
-    {
-        do{
-            res = read(pipe_fd,buffer,PIPE_BUF);
-            bytes_write = write(data_fd,buffer,res);
-            bytes_read +=res;
-        }while(res&gt;0);
-        close(pipe_fd);
-        close(data_fd);
-    }
-    else{
-        exit(EXIT_FAILURE);
-    }
-    printf(&quot;process %d finished,%d bytes read\n&quot;,getpid(),bytes_read);
-    exit(EXIT_SUCCESS);
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627185210171-680796629.png" alt=""></p>
-<p>我们在shell中输入命令 ls -l /tmp/my_fifo查看FIFO管道文件的属性</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160627185221718-1197546836.png" alt=""></p>
-<p>可以看到，FIFO文件生成了，第一个字符’p’，表示该文件是一个管道文件。</p>
-<p><strong>5.多个进程同时写管道</strong><br>当多个进程同时写管道时，读管道取得的数据是杂乱的。<br>此时，我们可以控制每个进程，当要写入的数据超过某个大小时，才写管道，另外要以阻塞的方式打开FIFO。确保写操作的原子性。</p>
-
-          
+          前面我们讲了进程间通信的一种方式，匿名管道。我们知道，匿名管道只能用于父子关系的进程之间。那么没有这种关系的进程之间该如何进行数据传递呢？
+1.什么是命名管道
+匿名管道是在缓存中开辟的输出和输入文件流的空间，只能用于父子关系的进程之间。因为父子进程的输入和输出文件描述符是一致的。命名管道是一种实际存
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/27/Linux进程间通信-命名管道/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2204,7 +1666,7 @@ int main()
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -2213,7 +1675,7 @@ int main()
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -2232,6 +1694,26 @@ int main()
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -2270,11 +1752,11 @@ int main()
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -2355,34 +1837,167 @@ int main()
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

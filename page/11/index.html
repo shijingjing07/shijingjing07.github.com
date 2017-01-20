@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-23T02:58:00+08:00">
                 2016-05-23
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/23/C++ new操作符详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/23/C++ new操作符详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,101 +348,19 @@
       
         
           
-            <p>一.new操作符的概念</p>
-<p>我们通常讲的new是指的是new operator，其实还有另外两个概念，operator new 和 placement new。</p>
-<p>1、new operator  </p>
-<p>我们在使用new operator的时候，实际上是执行了三个步骤:</p>
-<p>1）调用operator new分配内存 ；2）调用构造函数生成类对象；3）返回相应指针。</p>
-<p>2、operator new</p>
-<p>所以说operator new做的事情是new operator的一部分。</p>
-<p>operator new的原型是</p>
-<p>Void* operator new(size_t size);</p>
-<p>参数size指定待分配的内存大小，函数内部调用malloc初始化内存，返回指向这个内存的指针。</p>
-<p>你可以重载这个函数(注意是重载operator new，而不能重载new operator)。operator<br>new默认情况下首先调用分配内存的代码，尝试得到一段堆上的空间，如果成功就返回，如果失败，则转而去调用一个new_hander(异常处理函数)，若没有定义new_hander，则抛出异常，否则执行new_hander，然后继续重复前面过程。你可以在重载的时候加上额外的参数，但是第一个参数类型必须是size_t.例如：</p>
-<pre><code>class A
-{
-public:
-   void* operator new(size_t size)
-   {
-       printf(&quot;operator new calledn&quot;);
-       return ::operator new(size);
-   }
-};
-A* a = new A();
-</code></pre><p>这里通过::operator new调用了原有的全局的new，实现了在分配内存之前输出一句话。全局的operator<br>new也是可以重载的，但这样一来就不能再递归的使用new来分配内存，而只能使用malloc了：</p>
-<pre><code>void* operator new(size_t size)
-{
-   printf(&quot;global newn&quot;);
-   return malloc(size);
-}
-</code></pre><p>相应的，delete也有delete operator和operator delete之分，后者也是可以重载的。并且，如果重载了operator<br>new，就应该也相应的重载operator delete，这是良好的编程习惯。</p>
-<p>3、placement new</p>
-<p>placement new是用来实现定位构造的，因此可以实现new operator三步操作中的第二步。</p>
-<p>其实它也只是operator<br>new的一个重载的版本，只是我们很少用到它。如果你想在已经分配的内存中创建一个对象，使用new时行不通的。也就是说placement<br>new允许你在一个已经分配好的内存中（栈或者堆中）构造一个新的对象。原型中void*p实际上就是指向一个已经分配好的内存缓冲区的的首地址。</p>
-<p>我 们知道使用new操作符分配内存需要在堆中查找足够大的剩余空间，这个操作速度是很慢的，而且有可能出现无法分配内存的异常（空间不够）。 placement<br>new就可以解决这个问题。我们构造对象都是在一个预先准备好了的内存缓冲区中进行，不需要查找内存，内存分配的时间是常数；而且不会出现在程序运行中途<br>出现内存不足的异常。所以，placement new非常适合那些对时间要求比较高，长时间运行不希望被打断的应用程序。</p>
-<p>使用方法如下：<br>1. 缓冲区提前分配<br>可以使用堆的空间，也可以使用栈的空间，所以分配方式有如下两种：</p>
-<pre><code>class MyClass {…};
-char *buf=new char[N*sizeof(MyClass)+sizeof(int)];或者char buf[N*sizeof(MyClass)+sizeof(int)];
-</code></pre><p>2. 对象的构造</p>
-<pre><code>MyClass * pClass=new(buf) MyClass;
-</code></pre><p>3. 对象的销毁<br>一旦这个对象使用完毕，你必须显式的调用类的析构函数进行销毁对象。但此时内存空间不会被释放，以便其他的对象的构造。</p>
-<pre><code>pClass-&gt;~MyClass();
-</code></pre><p>4. 内存的释放<br>如果缓冲区在堆中，那么调用delete[] buf;进行内存的释放；如果在栈中，那么在其作用域内有效，跳出作用域，内存自动释放。</p>
-<p>注意：</p>
-<pre><code>* 在C++标准中，对于placement operator new []有如下的说明： placement operator new[] needs implementation-defined amount of additional storage to save a size of array. 所以我们必须申请比原始对象大小多出sizeof(int)个字节来存放对象的个数，或者说数组的大小。
-* 使用方法第二步中的new才是placement new，其实是没有申请内存的，只是调用了构造函数，返回一个指向已经分配好的内存的一个指针，所以对象销毁的时候不需要调用delete释放空间，但必须调用析构函数销毁对象。
-</code></pre><p>placement new 是重载operator new 的一个标准、全局的版本，它不能够被自定义的版本代替（不像普通版本的operator new 和<br>operator delete能够被替换）。<br>void <em>operator new( size_t, void </em>p ) throw()     { return p; }<br>placement new的执行忽略了size_t参数，只使用第二个参数。其结果是允许用户把一个对象放到一个特定的地方，达到调用构造函数的效果。<br>和其他普通的new不同的是，它在括号里多了另外一个参数。比如：<br>Widget * p = new Widget; - - - - - - - - - //ordinary new<br>pi = new (ptr) int; pi = new (ptr) int;     //placement new  </p>
-<p>括号里的参数ptr是一个指针，它指向一个内存缓冲器，placement new将在这个缓冲器上分配一个对象。Placement<br>new的返回值是这个被构造对象的地址(比如括号中的传递参数)。placement<br>new主要适用于：在对时间要求非常高的应用程序中，因为这些程序分配的时间是确定的；长时间运行而不被打断的程序；</p>
-<p>三、处理内存分配异常</p>
-<p>正如前面所说，operator<br>new的默认行为是请求分配内存，如果成功就返回，如果失败，则转而去调用一个new_hander(异常处理函数)，若没有定义new_hander，则抛出异常，否则执行new_hander，然后继续重复前面过程。于是，想要从operator<br>new的执行过程中返回，则必然需要满足下列条件之一：</p>
-<p>1）分配内存成功</p>
-<p>2）new_handler中抛出bad_alloc异常</p>
-<p>3）new_handler中调用exit()或类似的函数，使程序结束</p>
-<p>于是，我们可以假设默认情况下operator new的行为是这样的：</p>
-<pre><code>void* operator new(size_t size)  
-{  
-   void* p = null  
-   while(!(p = malloc(size)))  
-   {  
-       if(null == new_handler)  
-          throw bad_alloc();  
-       try  
-       {  
-          new_handler();  
-       }  
-       catch(bad_alloc e)  
-       {  
-          throw e;  
-       }  
-       catch(…)  
-       {}  
-   }  
-   return p;  
-}  
-</code></pre><p>当operator new不能满足一个内存分配请求的时候，默认会抛出一个异常，我们可以通过设置new_handler定义处置策略。</p>
-<p>new_handler的模型为：void (*new_handler)()</p>
-<p>可以通过”void set_new_handler( void(*new_handler)())<br>throw();”设置这个处理函数（new_handler），它定义在&lt;new&gt;标准函数库中：</p>
-<pre><code>namespace std
-{
-    void (*new_handler)();
-    void set_new_handler( new_handler )throw();
-}
-
-
-//error-handling function
-void MemErrorHandling()
-{
-    std::cerr &lt;&lt; &quot;Failed to allocate memory.\n&quot;;
-    std::abort();
-}
-... ...
-std::set_new_handler(MemErrorHandling);
-</code></pre><p>现在我们知道了new操作失败后，系统地大概处理流程，以及怎么设置用户自定义处理函数，但是我们究竟可以在new_handler中做些什么处理呢？</p>
-<p>1、删除其它无用的内存，使系统具有可以更多的内存可以使用，为下一步的内存申请作准备。<br>2、设置另外一个new_handler。如果当前的new_handler不能够做到更多的内存申请操作，或者它知道另外一个new_handler可<br>以做到，则可以调用set_new_handler函数设置另外一个new_handler，这样在operator<br>new下一次调用的时候，可以使用这个新的new_handler。<br>3、卸载new_handler（通过set_new_handler(0)），使operator<br>new在下一次调用的时候，因为new_handler为空抛出内存申请异常。<br>4、抛出自定义异常。<br>5、不再返回，调用abort或者exit退出程序。</p>
-<p>参考：<br>1、<a href="http://www.bc-cn.net/Article/kfyy/cjj/jszl/200604/4002.html" target="_blank" rel="external">http://www.bc-cn.net/Article/kfyy/cjj/jszl/200604/4002.html</a></p>
-<p>2、<a href="http://blog.csdn.net/youdianmengxiangba/article/details/8233651" target="_blank" rel="external">http://blog.csdn.net/youdianmengxiangba/article/details/8233651</a></p>
-
-          
+          一.new操作符的概念
+我们通常讲的new是指的是new operator，其实还有另外两个概念，operator new 和 placement new。
+1、new operator  
+我们在使用new operator的时候，实际上是执行了三个步骤:
+1）调用operator new分配内存
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/23/C++ new操作符详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -494,7 +437,7 @@ std::set_new_handler(MemErrorHandling);
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-20T07:48:00+08:00">
                 2016-05-20
@@ -509,6 +452,16 @@ std::set_new_handler(MemErrorHandling);
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/20/CDN技术详解笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/20/CDN技术详解笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -534,50 +487,18 @@ std::set_new_handler(MemErrorHandling);
       
         
           
-            <p>1.影响网络传输的四个因素<br>（1）”第一公里”：网站服务器接入互联网的链路所能提供的带宽。<br>（2）”最后一公里”：用户接入带宽。<br>（3）对等互联关口：不同网络之间的互联互通带宽。<br>（4）长途骨干传输：首先是长距离传输时延问题，其次是骨干网拥塞问题</p>
-<p>2.用户通过浏览器访问网站的过程如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201605/300946-20160520133722216-1539567662.png" alt=""></p>
-<p>①用户在自己的浏览器中输入要访问的网站域名。</p>
-<p>②浏览器向本地DNS服务器请求对该域名的解析。</p>
-<p>③本地DNS服务器中如果缓存有这个域名的解析结果，则直接用户的解析请求。</p>
-<p>④本地DNS服务器中如果没有关于这个域名的解析结果的缓存，则以递归方式向整个DNS系统请求解析，获得应答后将结果反馈给浏览器。</p>
-<p>⑤浏览器得到域名解析结果，就是该域名相应的服务设备的IP地址。</p>
-<p>⑥浏览器向服务器请求内容。</p>
-<p>⑦服务器将用户请求内容传送给浏览器。</p>
-<p>3.引入CDN后的访问流程</p>
-<p><img src="http://images.51cto.com/files/uploadimg/20120528/1230001.jpg" alt=""></p>
-<p>①当用户点击网站页面上的内容URL，经过本地DNS系统解析，DNS会最终将域名的解析权交给CNAME指向的CDN专用DNS服务器。</p>
-<p>②CDN的DNS服务器将CDN的全局负载均衡设备IP地址返回用户。</p>
-<p>③用户向CDN的全局负载均衡设备发起内容URL访问请求。</p>
-<p>④CDN全局负载均衡设备根据用户IP地址，以及用户请求的内容URL，选择一台用户所属区域的区域负载均衡设备，告诉用户向这台设备发起请求。</p>
-<p>⑤区域负载均衡设备会为用户选择一台合适的缓存服务器提供服务。选择的依据包括:根据用户IP地址，判断哪一台服务器距离用户最近；根据用户请求的URL携带的内容名称，判断哪一台服务器上有用户所需内容；查询各个服务器当前的负载情况，判断哪一台服务器尚有服务能力。基于以上这些条件的综合分析后，区域负载均衡设备会向全局负载均衡设备返回一台缓存服务器的IP地址。</p>
-<p>⑥全局负载均衡设备把IP地址返回用户。</p>
-<p>⑦用户向缓存服务器发起请求，缓存服务器响应用户请求，将用户所需内容传送到用户终端。如果这台缓存服务器上并没有用户想要的内容，而区域负载均衡设备依然将它分配给了用户，那么这一台服务器要向它的上一级缓存服务器请求内容，直至追溯到网站的源服务器将内容拉到本地。</p>
-<p>4.CDN的系统架构</p>
-<p><img src="http://images.51cto.com/files/uploadimg/20120528/123332551.jpg" alt=""></p>
-<p>5.CDN部署架构</p>
-<p><img src="http://images.51cto.com/files/uploadimg/20120528/1235500.jpg" alt=""></p>
-<p>在一个节点中，Cache设备和本地负载均衡设备的连接方式有两种：一种是旁路方式，一种是穿越方式。</p>
-<p><img src="http://images.51cto.com/files/uploadimg/20120528/1235501.jpg" alt=""></p>
-<p>6.CDN系统分类</p>
-<p>（1）基于不同内容承载类型的分类</p>
-<ul>
-<li>网页加速</li>
-<li>流媒体加速</li>
-<li>文件传输加速</li>
-<li>应用协议加速：针对TCP/IP等传输协议的优化。</li>
-</ul>
-<p>（2）基于内容生成机制的分类</p>
-<p>主流的Web网站系统都能够在逻辑上分为三个层次，表现层、业务逻辑层、数据访问层。</p>
-<p>根据CDN完成的不同层面的Web转移功能，将CDN分为表示层复制（静态网站）和全站复制（动态网站）两类。</p>
-<p>7.CDN系统三维模型图</p>
-<p><img src="http://images.51cto.com/files/uploadimg/20120528/123808115.jpg" alt=""></p>
-<p>X轴方向是贯穿系统头端到终端的垂直系统，每一种业务能力都可以有自己的中心、区域、边缘层设备，有自己独立的管理系统、负载均衡系统、分发服务系统。<br>因此，在X轴方向上，每一个CDN服务能力都可以是一套相对独立的子系统。</p>
-<p>Y轴方向的分级划分是依据CDN逐级缓存、分级调度、分级服务的要求。<br>CDN的管理功能、调度功能、缓存功能、服务功能都是分级部署的，不同层级的相同功能实体之间相互配合。<br>从控制功能上看，往往下一级控制实体是上一级控制实体的执行者；<br>从缓存功能上看，上一级缓存是下一级缓存实体的内容提供者；<br>从 服务功能上看，上一级服务实体是下一级服务实体的能力补充和备份。</p>
-<p>Z轴方向上，管理层主要完成CDN网络管理和业务逻辑处理。<br>网络管理提供IP网络层面的配置管理、故障管理、网络性能管理以及网络安全管理等，负责对整个CDN系统的网络和设备资源进行抽象，提取其业务能力，提供给上层业务平台。<br>业务逻辑处理指CDN系统辅助其服务的业务平台完成部分应用层功能的实现，完成和其他系统之间的接口适配，负责系统的认证、计费、统计分析、系统管理、用户管理、SP管理等功能。<br>控制平面负责对整个CDN网络的内容分布情况进行管理，对内容分发和访问路由策略进行控制，它是整个内容分发系统内容数据流向的控制点。<br>数据平面承担实际的内容分发工作，根据Z轴方向与X轴、Y轴相交点的具体要求，数据平面设备具备不同的应用服务提供能力。</p>
-<p>参考资料：《CDN技术详解》 pp.1-29</p>
+          1.影响网络传输的四个因素（1）”第一公里”：网站服务器接入互联网的链路所能提供的带宽。（2）”最后一公里”：用户接入带宽。（3）对等互联关口：不同网络之间的互联互通带宽。（4）长途骨干传输：首先是长距离传输时延问题，其次是骨干网拥塞问题
+2.用户通过浏览器访问网站的过程如下图所示：
 
-          
+①用户在自己
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/20/CDN技术详解笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -654,7 +575,7 @@ std::set_new_handler(MemErrorHandling);
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-19T10:14:00+08:00">
                 2016-05-19
@@ -669,6 +590,16 @@ std::set_new_handler(MemErrorHandling);
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/19/MSVC與CRT的恩怨情仇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/19/MSVC與CRT的恩怨情仇/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -694,127 +625,16 @@ std::set_new_handler(MemErrorHandling);
       
         
           
-            <h1 id=""><a href="#" class="headerlink" title=" "></a> </h1><p>很久沒有寫程式設計入門知識的相關文章了，這篇文章要來談談程式庫 (Library) 連結，以及關於 MSVC 與 CRT 之間的種種恩怨情仇。</p>
-<p>如果你使用的作業系統是 Linux、Mac 或其他非 Windows 平台，你可以忽略這篇文章；如果你使用的作業系統是 Windows 平台，但沒有用<br>Microsoft Visual Studio C++（以下簡稱為 MSVC）軟體撰寫 C++ 程式的話，這篇文章對你的幫助可能很有限；但如果你的作業系統是<br>Windows，而且你使用的程式整合開發環境是 MSVC 軟體撰寫 C++ 程式的話，這篇文章應該能夠幫助你釐清一些重要的基礎觀念。</p>
-<p>身為程式設計者，在學習程式設計的過程中，你是否曾經遇過某些看起來不知所云的錯誤訊息，卻不知該如何解決？例如當你快快樂樂地寫完程式，並且確認<br>所有的程式碼都能成功通過編譯之後，接著執行「建置方案」(Build Solution) 的步驟，結果卻跑出一堆莫名其妙的錯誤：</p>
-<blockquote>
-<p>LIBCMTD.lib(mlock.obj) : error LNK2005: <strong>lock 已在 MSVCRTD.lib(MSVCR80D.dll)<br>中定義過了<br> LIBCMTD.lib(mlock.obj) : error LNK2005: </strong>unlock 已在<br>MSVCRTD.lib(MSVCR80D.dll) 中定義過了<br> LIBCMTD.lib(crt0.obj) : error LNK2005: _mainCRTStartup 已在<br>MSVCRTD.lib(crtexe.obj) 中定義過了</p>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<p>…………</p>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<p>LINK : warning LNK4098: 預設的程式庫 ‘MSVCRTD’ 與其他使用的程式庫衝突，請使用<br>/NODEFAULTLIB:library<br> LINK : warning LNK4098: 預設的程式庫 ‘LIBCMTD’ 與其他使用的程式庫衝突，請使用<br>/NODEFAULTLIB:library<br> D:\Workspace\CrtLibTest\Debug\CrtLibTest.exe : fatal error LNK1169:<br>找到有一或多個已定義的符號</p>
-</blockquote>
-<p>以一般的情況來說，如果在你的程式專案中有使用某些由他人所撰寫的第三方程式庫或是開源專案的程式庫，比較容易會發生上述的錯誤狀況。從上述這些看<br>似離奇而令人摸不著頭緒的錯誤訊息中，我們大概可以猜測問題點應該在於 LIBCMTD.lib 與 MSVCRTD.lib 這兩個程式庫身上。<strong>但到底什麼是<br>LIBCMTD.lib 和 MSVCRTD.lib？在我們的程式碼中有使用這些程式庫嗎？</strong></p>
-<p>答案是肯定的。</p>
-<p>熟悉 C 語言的程式設計者都知道，如果要使用 printf()、scanf() 或者 fopen() 等等 C 語言的基本 I/O 操作函式時，首先必須用</p>
-<p>#include 語法將 stdio.h 這個標頭檔納入我們的程式碼中。藉由 stdio.h 中對這些 I/O 操作函式所做出的函式宣告 (function<br>declaration)，編譯器 (Compiler) 才得以確認 printf、scanf 以及 fopen 等等都是合法可用的函式。</p>
-<p>而當我們撰寫的程式碼經過編譯器產出 OBJ 形式的檔案之後，需要再經由連結器 (Linker) 的處理程序，將程式碼中全部有使用到的函式定義<br>(function definition) 連結建置起來，才能夠產生出最後的程式執行檔。問題來了，我們知道 printf、scanf 以及 fopen<br>的函式宣告存在於 stdio.h 當中，但是這些傢伙的函式定義，也就是真正的實做程式碼，究竟存放在什麼地方呢？</p>
-<p><strong>在 C 語言的標準程式庫中。</strong></p>
-<p>由 C 語言所制訂的標準程式庫，稱之為<strong>「執行階段程式庫」</strong>，也就是 <strong>C Run-Time Library</strong>，通常可簡稱為 <strong>CRT</strong>。在 C<br>語言的標準程式庫中，包含了一組常用的基礎函式，例如 I/O 處理與字串操作程序等等，所以只要我們使用 C 語言撰寫程式碼，就一定要將編譯完成後的程式碼<br>OBJ 檔，連結至 C 語言的執行階段程式庫，才能夠產生出合法的 C 語言程式執行檔。</p>
-<p>而 CRT 並非只有單一一種版本存在。事實上，除了可以依「除錯」與「釋出」用途分成兩個版本之外，兩者又可分別衍生分出「靜態連結」與「動態連結」兩種形式：</p>
-<blockquote>
-<p><strong>靜態連結</strong>：</p>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<ul>
-<li><p>LIBCMTD.lib（除錯版本）</p>
-</li>
-<li><p>LIBCMT.lib</p>
-</li>
-</ul>
-</blockquote>
-<p>&gt;</p>
-<p>&gt;</p>
-<blockquote>
-<p><strong>動態連結</strong>：</p>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<ul>
-<li><p>MSVCRTD.lib（除錯版本）</p>
-</li>
-<li><p>MSVCRT.lib</p>
-</li>
-</ul>
-</blockquote>
-<p>&gt;</p>
-<p>雖然這四個 CRT 版本的用途與使用方式各不相同，但卻有個共通的特點，就是<strong>它們都是滿足執行緒安全需求，可在多執行緒程式碼中安全使用的程式庫版本</strong>。<br>事實上，在過去 MSVC 6 的版本中，本來還有另外兩個 LIBCD.lib（除錯版本）與 LIBC.lib 程式庫，是專門給單執行緒程式使用的 CRT<br>版本，但是這兩個選項自 MSVC 2005 開始就從設定選項中被刪除掉了，所以現在大多數程式設計者使用的都是多執行緒的 CRT 版本。</p>
-<p>在程式庫連結 (library linking)<br>的行為中，靜態連結和動態連結的分別，在於使用靜態連結時，會直接將程式庫的函式定義嵌入執行檔之中，而使用動態連結時，程式庫的函式定義則存在於另外的<br>獨立檔案，通常是 DLL<br>格式的檔案中，然後與程式執行檔一同發佈給使用者。因此在檔案的尺寸上，使用動態連結的執行檔檔案，通常會比使用靜態連結的執行檔檔案來得更小一些。</p>
-<p>使用動態連結 CRT 版本的好處，是能夠將經常使用到的標準程式庫們獨立出來，放在 Windows<br>的系統資料夾中，以減少我們建置出來的執行檔檔案尺寸。但反過來說，<strong>使用動態連結 CRT 版本的缺點也在於這些與執行檔相依為命的 DLL 檔案上</strong>。<br>舉例來說，如果程式以 MSVC 2005 建置出 Debug 組態的執行檔，則此執行檔需要有 msvcr80d.dll 存在才能順利執行；如果是<br>Release 組態，則相依於 msvcr80.dll。但是如果你把相同的程式碼拿到 MSVC 2008 上建置，產生出來的執行檔則相依於<br>msvcr90d.dll 與 msvcr90.dll 兩個不同的 DLL 檔案。<strong>不同版本的 MSVC，都會有各自不同的相依 DLL 檔案。</strong></p>
-<p>在 MSVC 的程式專案中，如何指定程式碼要使用靜態連結或者動態連結的 CRT<br>版本？其實很容易，只要在專案屬性的「C/C++」頁面中，選擇「程式碼產生」(Code Generation)<br>子頁面，其中有個「執行階段程式庫」(Runtime Library) 的項目，也就是專案中用來設定 CRT<br>連結版本的地方。其中總共有四個選項，正好對應於上述靜態連結與動態連結的四個不同程式庫版本。</p>
-<ul>
-<li><strong>多執行緒偵錯 (/MTd)</strong>：對應 LIBCMTD.lib</li>
-<li><strong>多執行緒 (/MT)</strong>：對應 LIBCMT.lib</li>
-<li><strong>多執行緒偵錯 DLL (/MDd)</strong>：對應 MSVCRTD.lib</li>
-<li><strong>多執行緒 DLL (/MD)</strong>：對應 MSVCRT.lib</li>
-</ul>
-<p>如果你沒有做任何設定就開始建置程式的話，MSVC 的預設選項則會使用動態連結的版本。</p>
-<p><img src="http://blog.monkeypotion.net/wp-content/uploads/2009/03/c
--runtime-library.jpg" alt="c-runtime-library">C Runtime Library</p>
-<p>請注意，以上只是單純 C 語言的程式庫而沒有包含 C++ 語言在內。如果你的程式系統中，有包含 C++<br>語言的程式碼的話，那又是另外一回事了。但是在專案屬性的頁面中，為什麼找不到相關的設定選項呢？<strong>因為 MSVC<br>悄悄地幫程式設計者代勞處理掉了。</strong>只要在程式碼中使用 #include 語法納入任何一個 C++ 的標頭檔，例如 iostream 或<br>fstream，MSVC 就會在連結器的運作階段中，自動幫我們連結 C++ 的執行階段程式庫。而 C++ 的執行階段程式庫，同樣可分為四個版本：</p>
-<blockquote>
-<p><strong>靜態連結</strong>：</p>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<ul>
-<li><p>LIBCPMTD.lib（除錯版本）</p>
-</li>
-<li><p>LIBCPMT.lib</p>
-</li>
-</ul>
-</blockquote>
-<p>&gt;</p>
-<p>&gt;</p>
-<blockquote>
-<p><strong>動態連結</strong>：</p>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<ul>
-<li><p>MSVCPRTD.lib（除錯版本）：執行檔相依於 MSVCP90D.dll</p>
-</li>
-<li><p>MSVCPRT.lib：執行檔相依於 MSVCP90.dll</p>
-</li>
-</ul>
-</blockquote>
-<p>&gt;</p>
-<p>至於程式執行檔使用的是靜態連結或者動態連結的版本，就仰賴於 C 語言的版本設定選項了。舉個例子來說，如果你撰寫了一個 Debug 組態的 C++<br>程式，並且保留專案原先預設的建置選項（動態連結），那麼最終建置出來的程式執行檔將會相依於 MSVCR90D.dll 以及 MSVCP90D.dll 兩個<br>DLL 檔案。如果將相同的程式以 Release 組態建置完成，則會相依於 MSVCR90.dll 以及 MSVCP90.dll 二者。</p>
-<p><img src="http://blog.monkeypotion.net/wp-
-content/uploads/2009/03/standard-cpp-library.jpg" alt="standard-cpp-library">Standard C++ Library</p>
-<p>剛學習程式設計的入門者，經常會在滿心歡喜地完成一件程式作品並且傳給其他人使用時，卻發現不能在別人的電腦上啟動程式，其實就是陷入了使用者電腦缺少 DLL<br>檔案而無法執行程式的窘境。有三種方法可以解決這個令人困擾的問題：</p>
-<ol>
-<li>使用者的電腦，必須先安裝「Visual C++ 可轉發套件」（<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=A5C84275-3B97-4AB7-A40D-3802B2AF5FC2&amp;displaylang=zh-tw" target="_blank" rel="external">MSVC 2008</a> 或 <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=200B2FD9-AE1A-4A14-984D-389C36F85647&amp;displaylang=zh-tw" target="_blank" rel="external">MSVC 2005</a> ）。</li>
-<li>將所需的 DLL 檔案，例如 MSVCR90D.dll 與 MSVCP90D.dll，直接附在程式的下載包當中。</li>
-<li>以靜態連結方式建置程式執行檔。</li>
-</ol>
-<p>當你無法確定自己的程式或別人的程式，是否相依於某些特定的 DLL 檔案時，有一個非常好用的免費工具程式 <a href="http://www.dependencywalker.com/" target="_blank" rel="external">Dependency<br>Walker</a>，可以開啟 EXE 格式的執行檔或者 DLL<br>格式的動態程式庫，然後詳細地條列出它們所相依的 DLL 檔案。</p>
-<p>瞭解了幾種不同的 CRT 版本選項之後，回到最前面的錯誤訊息問題，相信各位現在應該能夠很清楚地理解，原來會發生這些奇怪的錯誤狀況，<strong>是因為程式同時連結了<br>LIBCMTD.lib 與 MSVCRTD.lib 所以造成函式定義版本衝突</strong>。也就是說，程式連結器已經在其中一個 CRT<br>的版本中找到所需的函式定義，但此時卻又跳出另外一位 CRT，也給了一份相同函式的實作版本，所以連結器無法判斷應該忽略誰並且選擇誰。</p>
-<p>而這個狀況的發生原因，就是你的程式與程式所連結的外部程式庫，使用了不同的 CRT 版本之故。例如，當你的程式使用了 Lua，自然必須連結至 Lua 的程式庫<br>lua5.1.lib，但如果 lua5.1.lib 是以靜態連結版本的 CRT 建置而成，而你的程式卻是以預設選項，動態連結 CRT<br>來建置程式執行檔的話，如此一來就會產生上述這些錯誤訊息了。至此，問題的答案已昭然若揭，解決方法有二種：<strong>其一是將 Lua 重新以動態連結 CRT<br>的方式建置出一個新的程式庫，其二則是將自己的程式專案改成以靜態連結 CRT 方式建置。</strong></p>
-<p>換個角度想，當你身為一位程式庫的設計開發者，想要將自己寫的東西分享給其他人，但又不想要完全開放自己撰寫的程式源碼時，至少可以同時提供以下四種版本的程式庫，以妥善滿足使用者的各種不同需求：</p>
-<ul>
-<li>Debug：動態連結除錯版本</li>
-<li>Release：動態連結版本</li>
-<li>Debug_Static：靜態連結除錯版本</li>
-<li>Release_Static：靜態連結版本</li>
-</ul>
-<p>然而，有時候世界並不會運作得如此理想。在某些特殊的狀況下，當我們使用他人所寫的第三方程式庫時，有時可能只拿得到其中某個特定的版本，例如<br>Release_Static<br>版本時，就很有可能會遇到程式庫衝突的錯誤情形。此時就需要視專案的實際需求而定，可以在專案屬性中指定「忽略特定程式庫」(Ignore Specific<br>Library) 這個選項，讓程式碼連結器忽略某些程式庫，以此化解動靜程式庫或新舊程式庫之間的恩怨衝突。</p>
-<p><strong>小測驗</strong>：你所撰寫的程式，必須連結某個以靜態多執行緒 (/MT) CRT 建置而成的程式庫。如果你的程式在 Debug 組態下以多執行緒偵錯 (/MTd) 選項建置，是否會產生衝突？如果你的程式在 Release 組態下以多執行緒 (/MT) 選項建置，是否會產生衝突？是的話，應該如何解決？</p>
-<p><strong>延伸閱讀：</strong></p>
-<ul>
-<li><a href="http://msdn.microsoft.com/en-us/library/abx4dbyh.aspx" target="_blank" rel="external">[MSDN] Visual Studio 2008: C Run-Time Libraries</a></li>
-<li><a href="http://kobyk.wordpress.com/2007/07/20/dynamically-linking-with-msvcrtdll-using-visual-c-2005/" target="_blank" rel="external">Dynamically linking with MSVCRT.DLL using Visual C++ 2005</a></li>
-</ul>
-<p>转自：<a href="http://blog.monkeypotion.net/gameprog/beginner/love-and-hate-between-msvc-
-and-crt" target="_blank" rel="external">http://blog.monkeypotion.net/gameprog/beginner/love-and-hate-between-msvc-
-and-crt</a></p>
-
-          
+           很久沒有寫程式設計入門知識的相關文章了，這篇文章要來談談程式庫 (Library) 連結，以及關於 MSVC 與 CRT 之間的種種恩怨情仇。
+如果你使用的作業系統是 Linux、Mac 或其他非 Windows 平台，你可以忽略這篇文章；如果你使用的作業系統是 Windows 平台，但沒有用Mi
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/19/MSVC與CRT的恩怨情仇/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -891,7 +711,7 @@ and-crt</a></p>
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-18T08:43:00+08:00">
                 2016-05-18
@@ -906,6 +726,16 @@ and-crt</a></p>
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/18/C++中typename和class的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/18/C++中typename和class的区别/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -931,41 +761,17 @@ and-crt</a></p>
       
         
           
-            <pre><code>在c++Template中很多地方都用到了typename与class这两个关键字，而且好像可以替换，是不是这两个关键字完全一样呢?  
+          在c++Template中很多地方都用到了typename与class这两个关键字，而且好像可以替换，是不是这两个关键字完全一样呢?  
 
-相信学习C++的人对class这个关键字都非常明白，class用于定义类，在模板引入c++后，最初定义模板的方法为： template&lt;class T&gt;...... 
-在这里class关键字表明T是一个类型，后来为了避免class在这两个地方的使用可能给人带来混淆，所以引入了typename这个关键字，它的作用同
-class一样表明后面的符号为一个类型，这样在定义模板的时候就可以使用下面的方式了： template&lt;typename T&gt;......
-在模板定义语法中关键字class与typename的作用完全一样。  
-
-typename难道仅仅在模板定义中起作用吗？其实不是这样，typename另外一个作用为：使用嵌套依赖类型(nested depended name)，如下所示：
-
-
-#include&lt;iostream&gt;
-class MyArray
-{
-public:
-    typedef int LengthType;
-};
-template&lt;class T&gt;
-void MyMethod(T myarr)
-{
-    typedef typename T::LengthType LengthType;
-    LengthType length = 5;
-    printf(&quot;%d&quot;,length);
-}
-int main()
-{
-    MyArray myArray;
-    MyMethod(myArray);
-    return 0;
-}
-
-
-这个时候typename的作用就是告诉c++编译器，typename后面的字符串为一个类型名称，而不是成员函数或者成员变量，  
-这个时候如果前面没有typename，编译器没有任何办法知道T::LengthType是一个类型还是一个成员名称(静态数据成员或者静态函数)，所以编译不能够通过。
-</code></pre>
-          
+相信学习C++的人对class这个关键字都非常明白，class用于定义类，在模板引入c++后，最初定义模板的方法为： template&lt;class T&g
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/18/C++中typename和class的区别/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1042,7 +848,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-18T03:12:00+08:00">
                 2016-05-18
@@ -1057,6 +863,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/18/SDL2中文教程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/18/SDL2中文教程/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1082,42 +898,17 @@ int main()
       
         
           
-            <h1 id="SDL2-0-Tutorial-Index"><a href="#SDL2-0-Tutorial-Index" class="headerlink" title="SDL2.0 Tutorial Index"></a>SDL2.0 Tutorial Index</h1><p>原文地址:<a href="http://twinklebeardev.blogspot.com/p/sdl-20
--tutorial-index.html" target="_blank" rel="external">SDL 2.0 Tutorial Index</a></p>
-<h3 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome!"></a>Welcome!</h3><p>下面的教程旨在为你提供一个SDL2.0以及c++中游戏设计和相关概念的介绍。在本教程中，我们假定你对C++有一定程度上的知识，至少了解数组，vector，控制结构，函数还有指针。  </p>
-<p>如果你觉得理解教程中的代码有困难，你可以在教程后面随意留言，或者在<a href="http://stackoverflow.com/questions/388242
-/the-definitive-c-book-guide-and-list" target="_blank" rel="external">StackOverflow</a>上的这个列表里抓一本书来读。  </p>
-<p>如果你想要查看或者下载全部的程序代码，你可以在<a href="https://github.com/Twinklebear/TwinklebearDev-
-Lessons" target="_blank" rel="external">Github</a>上找到。但是切忌复制粘贴！  </p>
-<p>SDL2.0的文档现在可以在<a href="http://wiki.libsdl.org/moin.cgi/FrontPage" target="_blank" rel="external">online wiki</a>上查看到。  </p>
-<h3 id="教程目录："><a href="#教程目录：" class="headerlink" title="教程目录："></a>教程目录：</h3><p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-0
--setting-up-sdl.html" target="_blank" rel="external">Lesson 0: Setting up SDL</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/25/lesson-0
--setting-up-sdl/" target="_blank" rel="external">第0节：配置SDL</a></p>
-<p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-1
--hello-world.html" target="_blank" rel="external">Lesson 1: Hello World!</a> <a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/26/lesson-1
--hello-world/" target="_blank" rel="external">第一节: Hello<br>World!</a></p>
-<p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-2-dont-put-everything-
-in-main.html" target="_blank" rel="external">Lesson 2: Don’t Put Everything in<br>Main</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/28/lesson-2
--dont-put-everything-in-main/" target="_blank" rel="external">第二节：别什么都塞进main里</a></p>
-<p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-3-sdl-extension-
-libraries.html" target="_blank" rel="external">Lesson 3: SDL Extension<br>Libraries</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/28/lesson-3
--sdl-extension-libraries/" target="_blank" rel="external">第三节：SDL扩展库</a></p>
-<p><a href="http://twinklebeardev.blogspot.com/2012/07/lesson-4-event-driven-
-programming.html" target="_blank" rel="external">Lesson 4: Event Driven<br>Programming</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/02/12/lesson-4
--event-driven-programming/" target="_blank" rel="external">第四节：事件驱动的编程</a></p>
-<p><a href="http://twinklebeardev.blogspot.com/2012/08/lesson-5-clipping-sprite-
-sheets.html" target="_blank" rel="external">Lesson 5: Clipping Sprite<br>Sheets</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/02/14/lesson-5
--clipping-sprite-sheets/" target="_blank" rel="external">第五节：裁剪精灵表</a></p>
-<p><a href="http://twinklebeardev.blogspot.com/2012/08/lesson-6-true-type-fonts-
-with-sdlttf.html" target="_blank" rel="external">Lesson 6: True Type Fonts with<br>SDL_ttf</a> <a href="http://adolfans.github.io/sdltutorialcn/blog/2013/03/23/lesson-6-true-
-type-fonts-with-sdl-ttf/" target="_blank" rel="external">第六节: 使用SDL_ttf绘制True<br>Type字体</a></p>
-<p><a href="http://twinklebeardev.blogspot.com/2012/09/lesson-7-taking-advantage-
-of-classes.html" target="_blank" rel="external">Lesson 7: Taking Advantage of<br>Classes</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/03/24/lesson-7
--taking-advantage-of-classes/" target="_blank" rel="external">第七节：充分利用类</a></p>
-<p><a href="http://twinklebeardev.blogspot.com/2012/10/lesson-8-timers.html" target="_blank" rel="external">Lesson 8:<br>Timers</a><br><a href="http://adolfans.github.io/sdltutorialcn/blog/2013/01/28/lesson-8-timers/" target="_blank" rel="external">第八节：计时器</a></p>
-<p>转自：<a href="http://adolfans.github.io/sdltutorialcn/sdl-2-dot-0-tutorial-index/" target="_blank" rel="external">http://adolfans.github.io/sdltutorialcn/sdl-2-dot-0-tutorial-index/</a></p>
-
-          
+          SDL2.0 Tutorial Index原文地址:SDL 2.0 Tutorial Index
+Welcome!下面的教程旨在为你提供一个SDL2.0以及c++中游戏设计和相关概念的介绍。在本教程中，我们假定你对C++有一定程度上的知识，至少了解数组，vector，控制结构，函数还有指针。  
+如
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/18/SDL2中文教程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1194,7 +985,7 @@ of-classes.html" target="_blank" rel="external">Lesson 7: Taking Advantage of<br
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-18T03:09:00+08:00">
                 2016-05-18
@@ -1209,6 +1000,16 @@ of-classes.html" target="_blank" rel="external">Lesson 7: Taking Advantage of<br
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/18/SDL介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/18/SDL介绍/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1234,73 +1035,17 @@ of-classes.html" target="_blank" rel="external">Lesson 7: Taking Advantage of<br
       
         
           
-            <p>SDL库的作用说白了就是封装了复杂的视音频底层操作，简化了视音频处理的难度。</p>
-<p>以下转自WiKi：</p>
-<p>SDL（Simple DirectMedia<br>Layer）是一套开放源代码的跨平台多媒体开发库，使用C语言写成。SDL提供了数种控制图像、声音、输出入的函数，让开发者只要用相同或是相似的代码就可以开发出跨多个平台（Linux、Windows、Mac<br>OS X等）的应用软件。目前SDL多用于开发游戏、模拟器、媒体播放器等多媒体应用领域。<br>SDL使用GNU宽通用公共许可证为授权方式，意指动态链接（dynamic<br>link）其库并不需要开放本身的源代码。因此诸如《雷神之锤4》等商业游戏也使用SDL来开发。  </p>
-<p>结构<br>虽然SDL时常被比较为’跨平台的DirectX’，然而事实上SDL是定位成以精简的方式来完成基础的功能，它大幅度简化了控制图像、声音、输出入等工作所需撰写的代码。但更高级的绘图功能或是音效功能则需搭配OpenGL和OpenAL等API来达成。另外它本身也没有方便创建图形用户界面的函数。<br>SDL在结构上是将不同操作系统的库再包装成相同的函数，例如SDL在Windows平台上其实是DirectX的再包装，旧版本包装的是DirectX<br>5，现时的版本（SDL 1.2）则是DirectX 7。而在使用X11的平台上（包括Linux），SDL则是与Xlib库沟通来输出图像。<br>虽然SDL本身是使用C语言写成，但是它几乎可以被所有的编程语言所使用，例如：C++、Perl、Python（借由pygame库）、Pascal等等，甚至是Euphoria、Pliant这类较不流行的编程语言也都可行。<br>SDL库分为 Video、Audio、CD-ROM、Joystick 和 Timer<br>等若干子系统，除此之外，还有一些单独的官方扩充函数库。这些库由官方网站提供，并包含在官方文档中，共同组成了SDL的”标准库”：<br>SDL_image–支持时下流行的图像格式：BMP、PPM、XPM、 PCX、GIF、JPEG、PNG、TGA。<br>SDL_mixer–更多的声音输出函数以及更多的声音格式支持。<br>SDL_net–网络支持。<br>SDL_ttf–TrueType字体渲染支持。<br>SDL_rtf–简单的RTF渲染支持。</p>
-<p><img src="http://img.blog.csdn.net/20130923233206828?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpeGlhb2h1YTEwMjA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-<p>子系统<br>SDL将功能分成下列数个子系统（subsystem）：<br>Video（图像）–图像控制以及线程（thread）和事件管理（event）。<br>Audio（声音）–声音控制<br>Joystick（摇杆）–游戏摇杆控制<br>CD-ROM（光盘驱动器）–光盘媒体控制<br>Window Management（视窗管理）－与视窗程序设计集成<br>Event（事件驱动）－处理事件驱动<br>以下是一支用C语言写成、非常简单的SDL示例：</p>
-<pre><code>// Headers
-#include &quot;SDL.h&quot;
-
-// Main function
-int main(int argc, char* argv[])
-{
-    // Initialize SDL
-    if(SDL_Init(SDL_INIT_EVERYTHING) == -1)
-        return(1);
-
-    // Delay 2 seconds
-    SDL_Delay(2000);
-
-    // Quit SDL
-    SDL_Quit();
-
-    // Return
-    return 0;
-}
-</code></pre><p>SDL与DirectX比较对应关系：</p>
-<table>
-<thead>
-<tr>
-<th><strong>SDL</strong></th>
-<th><strong>DirectX</strong></th>
-<th><strong>说明</strong>  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SDL_Video、SDL_Image、OpenGL</td>
-<td>DirectDraw、Direct3D</td>
-<td></td>
-</tr>
-<tr>
-<td>SDL_Audio、SDL_Mixer</td>
-<td>DirectSound</td>
-<td></td>
-</tr>
-<tr>
-<td>SDL_Joystick、SDL_Base</td>
-<td>DirectInput</td>
-<td></td>
-</tr>
-<tr>
-<td>SDL_Net</td>
-<td>DirectPlay</td>
-<td></td>
-</tr>
-<tr>
-<td>SMPEG、SDL_Video、SDL_Audio、SDL_Sound、SDL_Filter</td>
-<td>DirectShow</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>使用SDL开发的游戏:</p>
-<p>《Spore》<br>《Tux Paint》<br>《Simutrans》<br>《Stepmania》<br>《Frozen Bubble》<br>《无冬之夜》（Neverwinter Nights）<br>《魔法门之英雄无敌III》（Heroes of Might and Magic III）（Linux版）<br>《模拟城市3000》（Sim City 3000）（Linux版）<br>《虚幻竞技场》（Unreal Tournament）（Linux版）<br>《虚幻竞技场2003》（Unreal Tournament 2003）（Linux版）<br>《虚幻竞技场2004》（Unreal Tournament 2004）（Linux版）<br>《第二人生》（Second Life）（Linux版）<br>《佣兵战场》（Soldier of Fortune）（Linux版）<br>《韦诺之战》（Battle for Wesnoth）<br>Bos Wars</p>
-<p>转自：<a href="http://blog.csdn.net/leixiaohua1020/article/details/11954039" target="_blank" rel="external">http://blog.csdn.net/leixiaohua1020/article/details/11954039</a></p>
-
-          
+          SDL库的作用说白了就是封装了复杂的视音频底层操作，简化了视音频处理的难度。
+以下转自WiKi：
+SDL（Simple DirectMediaLayer）是一套开放源代码的跨平台多媒体开发库，使用C语言写成。SDL提供了数种控制图像、声音、输出入的函数，让开发者只要用相同或是相似的代码就可以开发出跨
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/18/SDL介绍/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1377,7 +1122,7 @@ int main(int argc, char* argv[])
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-14T19:19:00+08:00">
                 2016-05-14
@@ -1392,6 +1137,16 @@ int main(int argc, char* argv[])
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/14/Ubuntu 14.04 配置 Java SE jdk-7u55/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/14/Ubuntu 14.04 配置 Java SE jdk-7u55/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1417,31 +1172,16 @@ int main(int argc, char* argv[])
       
         
           
-            <p>JDK  目前最新版为jdk-8u5，这次没有选择安装最新的jdk8，而是要安装jdk7的最高版jdk-7u55 。</p>
-<pre><code>首先，去官网下载jdk-7u55，地址：&lt;http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html&gt;
-</code></pre><p><img src="http://img.blog.csdn.net/20140430145901406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-<p>选择Accept License Agreement 后，选择对应版本下载，Ubuntu 选择tar.gz的压缩包，64位选x64，32位选i586。</p>
-<p>下完后得到压缩包：jdk-7u55-linux-x64.tar.gz，解压再配置 下就可以使用了，不需要安装。我解压到家目录下，终端执行：tar -zxvf<br>jdk-7u55-linux-x64.tar.gz  -C ~/， -C 后是要解压到的目录。得到文件夹：jdk1.7.0_55</p>
-<p>接下来设置环境变量，终端执行：sudo gedit /etc/environment</p>
-<p><img src="http://img.blog.csdn.net/20140430160007265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
-<p>在已有的PATH变量后添加jdk的bin目录，注意用冒号与已有变量隔开</p>
-<p>再添加CALSSPATH和JAVA_HOME变量</p>
-<p>我的情况如下：</p>
-<p>PATH=”/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/tecn/jdk1.7.0_55/bin”<br>CLASSPATH=”/home/tecn/jdk1.7.0_55/lib:.”       注意后面有个点<br>JAVA_HOME=”/home/tecn/jdk1.7.0_55/“  </p>
-<p>设置好后，注销或重启使环境变量生效！</p>
-<p>查看是否生效，终端执行：<a href="http://lib.csdn.net/base/17" title="Java EE知识库" target="_blank" rel="external">Java</a> -version<br>，就可以看到版本就是刚配置的7u55 。</p>
-<p><img src="http://img.blog.csdn.net/20140430160545531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
-<p>到此就配置完成了，可以写个helloworld测试下。</p>
-<p><img src="http://img.blog.csdn.net/20140430161349421?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVjbjE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
-<p>已经装有openjdk启用官方jdk的方法：</p>
-<p>依次终端执行：</p>
-<p>sudo update-alternatives –install /usr/bin/java java<br>/home/tecn/jdk1.7.0_55/bin/java 445<br>sudo update-alternatives –install /usr/bin/javac javac<br>/home/tecn/jdk1.7.0_55/bin/javac 445<br>sudo update-alternatives –config java  </p>
-<p>将会提示，要维持当前值[*]请按回车键，或者输入选择的编号：</p>
-<p>输入优先级为 445 的那项的编号，回车即可。</p>
-<p>-——————————————————————————-</p>
-<p>转自：<a href="http://blog.csdn.net/tecn14/article/details/24797545" target="_blank" rel="external">http://blog.csdn.net/tecn14/article/details/24797545</a></p>
-
-          
+          JDK  目前最新版为jdk-8u5，这次没有选择安装最新的jdk8，而是要安装jdk7的最高版jdk-7u55 。
+首先，去官网下载jdk-7u55，地址：&lt;http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downlo
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/14/Ubuntu 14.04 配置 Java SE jdk-7u55/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1518,7 +1258,7 @@ int main(int argc, char* argv[])
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-11T03:04:00+08:00">
                 2016-05-11
@@ -1533,6 +1273,16 @@ int main(int argc, char* argv[])
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/11/C++引用与指针/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/11/C++引用与指针/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1558,18 +1308,15 @@ int main(int argc, char* argv[])
       
         
           
-            <p>1.什么是引用<br>引用是某一对象（变量）的一个别名。<br>int m=0;<br>int &amp;n=m;<br>n=1;<br>cout&lt;&lt;”n “&lt;&lt;n&lt;&lt;endl;<br>cout&lt;&lt;”m “&lt;&lt;m&lt;&lt;endl;<br>&amp;表示n是m的引用，即别名，对n的任何操作就是对m的操作。<br>所以n既不是m的拷贝，也不是指向m的指针，其实n就是m它自己。<br>将n的值赋值为1,则m的值也变为1</p>
-<p>2.什么是指针<br>指针用于指向对象（变量），指针存放的是对象（变量）的地址。<br>int m;<br>int *n=&amp;m;<br>指针n是一个指向int型变量m的指针。<br>&amp;是取地址操作符，&amp;m为m的地址。</p>
-<p>3.引用和指针的联系和区别<br>1)都是有关地址的<br>引用是对象本身，而指针是对象的地址。<br>2)都是间接访问对象<br>3)都能用于函数参数和返回值传递<br>4)指针是一个实体，引用只是别名<br>指针会分配内存（4字节int型），引用不会<br>5)指针可变，引用不可变<br>指针指向的地址，其指向地址中存放的数据都是可变的<br>引用必须在一开始就被初始化，而且一旦和一个对象绑定后，就不能再改变（从一而终）。<br>6)指针可为空，引用不能。</p>
-<p>4.函数参数和返回值传递方式<br>1)值引用<br>值传递过程中，被调用的形式参数作为被调函数函数的局部变量处理，即在栈中开辟了内存空间以存放由主调函数放进来的实参的值，从而成为了实参的一个拷贝。值传递的特点是被调函数对形式参数的任何操作都是作为局部变量进行，不会影响主调函数的实参变量的值。</p>
-<p>2)指针传递<br>指针传递本质上是值传递，只不过它传递的是一个地址值。我们可以用*操作符访问实参，从而对实参进行操作。</p>
-<p>3)引用传递<br>引用传递过程中，被调函数的形式参数虽然也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。被调函数对形参的任何操作都被处理成间接寻址（不必通过*操作符），即通过栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量（此时形参就是实参）。</p>
-<p>5.从编译角度理解指针和引用<br>程序在编译时分别将指针和引用添加到符号表上，符号表上记录的是变量名及变量所对应的地址。指针变量在符号表上对应的地址值为指针变量的地址值，而引用在符号表上对应的地址值为引用对象的地址值。符号表生成后就不会再改，因此指针可以改变其指向的对象（指针变量中的值可以改），而引用对象则不能修改。</p>
-<p>6.引用不能const，指针能const,const的指针不可变</p>
-<p>7.sizeof引用得到的是所指向的变量的大小，而sizeof指针得到的是指针本身的大小</p>
-<p>8.指针和引用的自增(++)运算意义不一样。</p>
-
-          
+          1.什么是引用引用是某一对象（变量）的一个别名。int m=0;int &amp;n=m;n=1;cout&lt;&lt;”n “&lt;&lt;n&lt;&lt;endl;cout&lt;&lt;”m “&lt;&lt;m&lt;&lt;endl;&amp;表示n是m的引用，即别名，对n的任何操作
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/11/C++引用与指针/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1646,7 +1393,7 @@ int main(int argc, char* argv[])
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-10T13:49:00+08:00">
                 2016-05-10
@@ -1661,6 +1408,16 @@ int main(int argc, char* argv[])
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/10/linux-ubuntu使用shadowsocks客户端配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/10/linux-ubuntu使用shadowsocks客户端配置/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1686,105 +1443,17 @@ int main(int argc, char* argv[])
       
         
           
-            <h1 id=""><a href="#" class="headerlink" title=" "></a> </h1><p>之前介绍过用<a href="http://aitanlu.com/vps-bandwagonhost-openvpn-shadowsocks-
-server.html" target="_blank" rel="external">搬瓦工的vps</a>可以轻松的搭建shadowsocks服务，然后在windows上和安卓手机平板等上轻松科学上网，只要下载对应的程序即可，当来到ubuntu上怎么配置shadowsocks来科学上网呢？有两种方法可行</p>
-<p>1.安装shadowsocks命令行程序，配置命令。</p>
-<p>2.安装shadowsocks GUI图形界面程序，配置。</p>
-<p>个人推荐第一种，配置好后基本不用管。但使用的前提是 你的服务端已经搭建好或者你有别人提供的SS 服务（我也不知道该不该写这文章…）</p>
-<h2 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h2><h3 id="ubuntu安装shadowsocks"><a href="#ubuntu安装shadowsocks" class="headerlink" title="ubuntu安装shadowsocks"></a>ubuntu安装shadowsocks</h3><p>用PIP安装很简单</p>
-<p><code>apt-get install python-pip</code></p>
-<p>接着安装shadowsocks</p>
-<p><code>pip install shadowsocks</code></p>
-<p>当然你在安装时候肯定有提示需要安装一些依赖比如python-setuptools m2crypto<br>，依照提示安装然后再安装就好。也可以网上搜索有很多教程的。</p>
-<h3 id="启动shadowsocks"><a href="#启动shadowsocks" class="headerlink" title="启动shadowsocks"></a>启动shadowsocks</h3><p>安装好后，在本地我们要用到sslocal ，终端输入sslocal –help 可以查看帮助，像这样</p>
-<p><img src="https://aitanlu.com/wp-content/uploads/2016/04/sslocal.png" alt="sslocal"></p>
-<p>通过帮助提示我们知道各个参数怎么配置，比如 sslocal -c 后面加上我们的json配置文件，或者像下面这样直接命令参数写上运行。</p>
-<p>比如 sslocal -s 11.22.33.44 -p 50003 -k “123456” -l 1080 -t 600 -m aes-256-cfb</p>
-<p>-s表示服务IP, -p指的是服务端的端口，-l是本地端口默认是1080, -k 是密码（要加””）, -t超时默认300,-m是加密方法默认aes-256-cfb，</p>
-<p><strong>为了方便我推荐直接用sslcoal -c 配置文件路径 这样的方式，简单好用。</strong></p>
-<p>我们可以在/home/mudao/ 下新建个文件shadowsocks.json  (mudao是我在我电脑上的用户名，这里路径你自己看你的)。内容是这样：</p>
-<ol>
-<li><p><code>{</code></p>
-</li>
-<li><p><code>&quot;server&quot;:&quot;11.22.33.44&quot;,</code></p>
-</li>
-<li><p><code>&quot;server_port&quot;:50003,</code></p>
-</li>
-<li><p><code>&quot;local_port&quot;:1080,</code></p>
-</li>
-<li><p><code>&quot;password&quot;:&quot;123456&quot;,</code></p>
-</li>
-<li><p><code>&quot;timeout&quot;:600,</code></p>
-</li>
-<li><p><code>&quot;method&quot;:&quot;aes-256-cfb&quot;</code></p>
-</li>
-<li><p><code>}</code></p>
-</li>
-</ol>
-<p>server  你服务端的IP<br>servier_port  你服务端的端口<br>local_port  本地端口，一般默认1080<br>passwd  ss服务端设置的密码<br>timeout  超时设置 和服务端一样<br>method  加密方法 和服务端一样</p>
-<p>确定上面的配置文件没有问题，然后我们就可以在终端输入 sslocal -c /home/mudao/shadowsocks.json<br>回车运行。如果没有问题的话，下面会是这样…</p>
-<p><img src="https://aitanlu.com/wp-
-content/uploads/2016/04/sslocal-1.png" alt="sslocal">（如果继续请不要关闭这个终端）</p>
-<p>如果你选择这一种请跳过第二种。你可以去系统的代理设置按照说明设置代理，但一般是全局的，<br>然而我们访问baidu,taobao等着些网站如果用代理就有点绕了，而且还会浪费服务器流量。我们最好配置我们的浏览器让它可以自动切换，该用代理用<br>代理该直接连接自动直接连接。所以请看配置浏览器。</p>
-<h2 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h2><p>安装GUI 图形界面程序，然后按照提示配置相对应的参数。安装教程地址：<a href="https://github.com/shadowsocks/shadowsocks-
-qt5/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97" target="_blank" rel="external">shadowsocks-qt5<br>安装指南</a></p>
-<p>在ubuntu上可以这样，通过PPA源安装，仅支持Ubuntu 14.04或更高版本。</p>
-<ol>
-<li><p><code>sudo add-apt-repository ppa:hzwhuang/ss-qt5</code></p>
-</li>
-<li><p><code>sudo apt-get update</code></p>
-</li>
-<li><p><code>sudo apt-get install shadowsocks-qt5</code></p>
-</li>
-</ol>
-<p>由于是图形界面，配置和windows基本没啥差别就不赘述了。经过上面的配置，你只是启动了sslocal<br>但是要上网你还需要配置下浏览器到指定到代理端口比如1080才可以正式上网。</p>
-<h2 id="配置浏览器"><a href="#配置浏览器" class="headerlink" title="配置浏览器"></a>配置浏览器</h2><p>假如你上面任选一种方式已经开始运行sslocal了，火狐那个代理插件老是订阅不了gfwlist所以配置自动模式的话不好使。这里用的是chrome，你可以在Ubuntu软件中心下载得到。</p>
-<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>我们需要给chrome安装SwitchyOmega插件，但是没有代理之前是不能从谷歌商店安装这个插件的，但是我们可以从Github上直接下载最新版<br><a href="https://github.com/FelisCatus/SwitchyOmega/releases/" target="_blank" rel="external">https://github.com/FelisCatus/SwitchyOmega/releases/</a><br>（这个是chrome的）然后浏览器地址打开chrome://extensions/，将下载的插件托进去安装。</p>
-<h3 id="设置代理地址"><a href="#设置代理地址" class="headerlink" title="设置代理地址"></a>设置代理地址</h3><p>安装好插件会自动跳到设置选项，有提示你可以跳过。左边新建情景模式-选择代理服务器-<br>比如命名为SS（叫什么无所谓）其他默认之后创建，之后在代理协议选择SOCKS5，地址为127.0.0.1,端口默认1080 。然后保存即应用选项。</p>
-<p><img src="https://aitanlu.com/wp-
-content/uploads/2016/04/shadowsocks-0.png" alt="shadowsocks-0"></p>
-<p><img src="https://aitanlu.com/wp-
-content/uploads/2016/04/shadowsocks-1.png" alt="shadowsocks-1"></p>
-<h3 id="设置自动切换"><a href="#设置自动切换" class="headerlink" title="设置自动切换"></a>设置自动切换</h3><p>接着点击自动切换 ( Auto<br>switch）上面的不用管，在按照规则列表匹配请求后面选择刚才新建的SS，默认情景模式选择直接连接。点击应用选项保存。再往下规则列表设置选择AutoProxy<br>然后将<strong><a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external">这个地址</a></strong>填进去，点击下面的立即更新情景模式，会有提示更新成功！</p>
-<p><img src="https://aitanlu.com/wp-
-content/uploads/2016/04/shadowsocks-2.png" alt="shadowsocks-2">sorry编辑图片时候少了一步，就是填好规则列表地址后先点击立即更新情景模式<br>后再应用选项保存</p>
-<p><a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</a></p>
-<p>点击浏览器右上角的SwitchyOmega图标，下面选择自动切换，然后打开google.com试试，其他的就不在这贴图了。</p>
-<p><img src="https://aitanlu.com/wp-
-content/uploads/2016/04/shadowsocks-3.png" alt="shadowsocks-3"></p>
-<h2 id="开机后台自动运行ss"><a href="#开机后台自动运行ss" class="headerlink" title="开机后台自动运行ss"></a>开机后台自动运行ss</h2><p>如果你选择了第二种可以不管这个</p>
-<p>如果你上面可以代理上网了可以进行这一步，之前我让你不要关掉终端，因为关掉终端的时候代理就随着关闭了，之后你每次开机或者关掉终端之后，下次你再想用代理就要重新在终端输入这样的命令<br>sslocal  -c /home/mudao/shadowsocks.json ，挺麻烦是不？</p>
-<p>我们现在可以在你的ubuntu上安装一个叫做supervisor的程序来管理你的sslocal启动。关于supervisor更多点击这</p>
-<p><code>sudo apt-get install supervisor</code></p>
-<p>安装好后我们可以在/etc/supervisor/目录下找到supervisor.conf配置文件，我们可以用以下命令来编辑</p>
-<p><code>sudo gedit /etc/supervisor/supervisor.conf</code></p>
-<p>在这个文件的最后加上以下内容</p>
-<ol>
-<li><p><code>[program:shadowsocks]</code></p>
-</li>
-<li><p><code>command=sslocal -c /home/mudao/shadowsocks.json</code></p>
-</li>
-<li><p><code>autostart=true</code></p>
-</li>
-<li><p><code>autorestart=true</code></p>
-</li>
-<li><p><code>user=root</code></p>
-</li>
-<li><p><code>log_stderr=true</code></p>
-</li>
-<li><p><code>logfile=/var/log/shadowsocks.log</code></p>
-</li>
-</ol>
-<p>command = 这里json文件的路径根据你的文件路径来填写。确认无误后记得保存。sslocal 和ssserver这两个命令是被存在<br>/usr/local/bin/下面的，我们要拷贝一份命令文件到/bin</p>
-<p><code>sudo cp /usr/local/bin/sslocal /bin</code>(注意空格)</p>
-<p>现在关掉你之前运行sslocal命令的终端，再打开终端输入sudo service supervisor restart<br>然后去打开浏览器看看可不可以继续代理上网。你也可以用ps -ef|grep sslocal命令查看sslocal是否在运行。</p>
-<p>这个时候我们需要在/etc下编辑一个叫rc.local的文件 ，让supervisor开机启动。</p>
-<p><code>sudo gedit /etc/rc.local</code></p>
-<p>在这个配置文件的exit 0前面一行加上 service supervisor start<br>保存。看你是否配置成功你可以在现在关机重启之后直接打开浏览器看是否代理成功。</p>
-<p>转自：<a href="https://aitanlu.com/ubuntu-shadowsocks-ke-
-hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsocks客户端配置</a></p>
-
-          
+           之前介绍过用搬瓦工的vps可以轻松的搭建shadowsocks服务，然后在windows上和安卓手机平板等上轻松科学上网，只要下载对应的程序即可，当来到ubuntu上怎么配置shadowsocks来科学上网呢？有两种方法可行
+1.安装shadowsocks命令行程序，配置命令。
+2.安装shado
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/10/linux-ubuntu使用shadowsocks客户端配置/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1861,7 +1530,7 @@ hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsoc
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-06T10:07:00+08:00">
                 2016-05-06
@@ -1876,6 +1545,16 @@ hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsoc
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/06/C--预处理指令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/06/C--预处理指令/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1901,83 +1580,17 @@ hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsoc
       
         
           
-            <p>源代码在编译成机器指令之前，要进行预处理。预处理功能主要包括宏定义，文件包含，条件编译三部分。这些预处理操作发生在编译程序过程中，它们会修改程序的语句，但不会干涉程序的执行。<br>ANSI标准定义的C语言预处理程序包括下列命令：<br>指令 用途  </p>
-<p>#include 包含一个源代码文件  </p>
-<p>#define 定义宏  </p>
-<p>#undef 取消已定义的宏  </p>
-<p>#if 如果给定条件为真，则编译下面代码  </p>
-<p>#ifdef 如果宏已经定义，则编译下面代码  </p>
-<p>#ifndef 如果宏没有定义，则编译下面代码  </p>
-<p>#elif 如果前面的#if给定条件不为真，当前条件为真，则编译下面代码  </p>
-<p>#endif 结束一个#if……#else条件编译块  </p>
-<p>#error 停止编译并显示错误信息  </p>
-<p>#else 略  </p>
-<p>#line 指令可以改变编译器用来指出警告和错误信息的文件号和行号。  </p>
-<p>#pragma 设定编译器的状态或者是指示编译器完成一些特定的动作。  </p>
-<p>#pragma指令稍复杂，格式一般为: #pragma para ，下面来看一些#pragma指令常用的参数。<br>(1)message 参数</p>
-<p>message参数，能够在编译信息输出窗口中输出相应的信息，<br>这对于源代码信息的控制是非常重要的。其使用方法为：  </p>
-<p>#pragma message(“消息文本”)<br>当编译器遇到这条指令时就在编译输出窗口中将消息文本打印出来。<br>当我们在程序中定义了许多宏来控制源代码版本的时候，我们自己有可能都会忘记有没有正确的设置这些宏，<br>此时我们可以用这条指令在编译的时候就进行检查。假设我们希望判断自己有没有在源代码的什么地方定义了_X86这个宏,<br>可以用下面的方法:  </p>
-<p>#ifdef _X86  </p>
-<p>#pragma message(“_X86 macro activated!”)  </p>
-<p>#endif<br>我们定义了_X86这个宏以后，应用程序在编译时就会在编译输出窗口里显示”_86 macro activated!”。<br>我们就不会因为不记得自己定义的一些特定的宏而抓耳挠腮了。  </p>
-<p>(2)另一个使用得比较多的pragma参数是code_seg</p>
-<p>格式如：  </p>
-<p>#pragma code_seg( [“section-name” [, “section-class”] ] )<br>它能够设置程序中函数代码存放的代码段，当我们开发驱动程序的时候就会使用到它。  </p>
-<p>(3)#pragma once (比较常用)</p>
-<p>只要在头文件的最开始加入这条指令就能够保证头文件被编译一次，这条指令实际上在VC6中就已经有了，<br>但是考虑到兼容性并没有太多的使用它。</p>
-<p>(4)#pragma hdrstop</p>
-<p>表示预编译头文件到此为止，后面的头文件不进行预编译。BCB可以预编译头文件以加快链接的速度，<br>但如果所有头文件都进行预编译又可能占太多磁盘空间，所以使用这个选项排除一些头文件。<br>有时单元之间有依赖关系，比如单元A依赖单元B，所以单元B要先于单元A编译。<br>你可以用#pragma startup指定编译优先级，如果使用了#pragma package(smart_init)，<br>BCB就会根据优先级的大小先后编译。</p>
-<p>(5)#pragma resource “*.dfm”</p>
-<p>表示把<em>.dfm文件中的资源加入工程。</em>.dfm中包括窗体<br>外观的定义。</p>
-<p>(6)#pragma warning( disable: 4507 34; once: 4385; error: 164 )  </p>
-<p>等价于：  </p>
-<p>#pragma warning( disable: 4507 34 ) // 不显示4507和34号警告信息  </p>
-<p>#pragma warning( once: 4385 ) // 4385号警告信息仅报告一次  </p>
-<p>#pragma warning( error: 164 ) // 把164号警告信息作为一个错误。</p>
-<p>同时这个pragma warning 也支持如下格式：  </p>
-<p>#pragma warning( push [, n ] )  </p>
-<p>#pragma warning( pop )<br>这里n代表一个警告等级(1—4)。  </p>
-<p>#pragma warning( push )保存所有警告信息的现有的警告状态。  </p>
-<p>#pragma warning( push, n )保存所有警告信息的现有的警告状态，并且把全局警告等级设定为n。  </p>
-<p>#pragma warning( pop )向栈中弹出最后一个警告信息，在入栈和出栈之间所作的一切改动取消。例如：  </p>
-<p>#pragma warning( push )  </p>
-<p>#pragma warning( disable: 4705 )  </p>
-<p>#pragma warning( disable: 4706 )  </p>
-<p>#pragma warning( disable: 4707 )<br>//…….  </p>
-<p>#pragma warning( pop )<br>在这段代码的最后，重新保存所有的警告信息(包括4705，4706和4707)。</p>
-<p>(7)#pragma comment(…)</p>
-<p>该指令将一个注释记录放入一个对象文件或可执行文件中。<br>常用的lib关键字，可以帮我们连入一个库文件。如：  </p>
-<p>#pragma comment(lib, “comctl32.lib”)  </p>
-<p>#pragma comment(lib, “vfw32.lib”)  </p>
-<p>#pragma comment(lib, “wsock32.lib”)  </p>
-<p>每个编译程序可以用#pragma指令激活或终止该编译程序支持的一些编译功能。</p>
-<p>例如，对循环优化功能：  </p>
-<p>#pragma loop_opt(on) // 激活  </p>
-<p>#pragma loop_opt(off) // 终止</p>
-<p>有时，程序中会有些函数会使编译器发出你熟知而想忽略的警告，<br>如”Parameter xxx is never used in function xxx”，可以这样：  </p>
-<p>#pragma warn –100 // Turn off the warning message for warning #100<br>int insert_record(REC <em>r)<br>{ /</em> function body */ }  </p>
-<p>#pragma warn +100 // Turn the warning message for warning #100 back on<br>函数会产生一条有唯一特征码100的警告信息，如此可暂时终止该警告。</p>
-<p>每个编译器对#pragma的实现不同，在一个编译器中有效在别的编译器中几乎无效。可从编译器的文档中查看。</p>
-<p>#pragma pack 与 内存对齐问题</p>
-<p>许多实际的计算机系统对基本类型数据在内存中存放的位置有限制，它们会要求这些数据的首地址的值是某个数k<br>(通常它为4或8)的倍数，这就是所谓的内存对齐，而这个k则被称为该数据类型的对齐模数(alignment modulus)。</p>
-<p>Win32平台下的微软C编译器(cl.exe for 80x86)在默认情况下采用如下的对齐规则:<br>任何基本数据类型T的对齐模数就是T的大小，即sizeof(T)。比如对于double类型(8字节)，<br>就要求该类型数据的地址总是8的倍数，而char类型数据(1字节)则可以从任何一个地址开始。</p>
-<p>Linux下的GCC奉行的是另外一套规则，任何2字节大小的数据类型(比如short)的对齐模数是2，而其它所有超过2字节的数据类型<br>(比如long,double)都以4为对齐模数。</p>
-<p>ANSI C规定一种结构类型的大小是它所有字段的大小以及字段之间或字段尾部的填充区大小之和。<br>填充区就是为了使结构体字段满足内存对齐要求而额外分配给结构体的空间。那么结构体本身有什么对齐要求吗？<br>有的，ANSI C标准规定结构体类型的对齐要求不能比它所有字段中要求最严格的那个宽松，可以更严格。</p>
-<p>如何使用c/c++中的对齐选项</p>
-<p>vc6中的编译选项有 /Zp[1|2|4|8|16] ，/Zp1表示以1字节边界对齐，相应的，/Zpn表示以n字节边界对齐。<br>n字节边界对齐的意思是说，一个成员的地址必须安排在成员的尺寸的整数倍地址上或者是n的整数倍地址上，取它们中的最小值。<br>也就是：<br>min ( sizeof ( member ), n)</p>
-<p>实际上，1字节边界对齐也就表示了结构成员之间没有空洞。<br>/Zpn选项是应用于整个工程的，影响所有的参与编译的结构。<br>要使用这个选项，可以在vc6中打开工程属性页，c/c++页，选择Code Generation分类，在Struct member<br>alignment可以选择。</p>
-<p>要专门针对某些结构定义使用对齐选项，可以使用#pragma pack编译指令:</p>
-<p>(1) #pragma pack( [ n ] )</p>
-<p>该指令指定结构和联合成员的紧凑对齐。而一个完整的转换单元的结构和联合的紧凑对齐由/Zp 选项设置。<br>紧凑对齐用pack编译指示在数据说明层设置。该编译指示在其出现后的第一个结构或联合说明处生效。<br>该编译指示对定义无效。<br>当你使用#pragma pack ( n ) 时, 这里n 为1、2、4、8 或16。<br>第一个结构成员之后的每个结构成员都被存储在更小的成员类型或n 字节界限内。<br>如果你使用无参量的#pragma pack, 结构成员被紧凑为以/Zp 指定的值。该缺省/Zp 紧凑值为/Zp8 。</p>
-<p>(2) 编译器也支持以下增强型语法:  </p>
-<p>#pragma pack( [ [ { push | pop } , ] [ identifier, ] ] [ n] )</p>
-<p>若不同的组件使用pack编译指示指定不同的紧凑对齐, 这个语法允许你把程序组件组合为一个单独的转换单元。<br>带push参量的pack编译指示的每次出现将当前的紧凑对齐存储到一个内部编译器堆栈中。<br>编译指示的参量表从左到右读取。如果你使用push, 则当前紧凑值被存储起来;<br>如果你给出一个n 的值, 该值将成为新的紧凑值。若你指定一个标识符, 即你选定一个名称,<br>则该标识符将和这个新的的紧凑值联系起来。</p>
-<p>带一个pop参量的pack编译指示的每次出现都会检索内部编译器堆栈顶的值,并且使该值为新的紧凑对齐值。<br>如果你使用pop参量且内部编译器堆栈是空的,则紧凑值为命令行给定的值, 并且将产生一个警告信息。<br>若你使用pop且指定一个n的值, 该值将成为新的紧凑值。若你使用p o p 且指定一个标识符,<br>所有存储在堆栈中的值将从栈中删除, 直到找到一个匹配的标识符, 这个与标识符相关的紧凑值也从栈中移出,<br>并且这个仅在标识符入栈之前存在的紧凑值成为新的紧凑值。如果未找到匹配的标识符,<br>将使用命令行设置的紧凑值, 并且将产生一个一级警告。缺省紧凑对齐为8 。</p>
-<p>pack编译指示的新的增强功能让你编写头文件, 确保在遇到该头文件的前后的<br>紧凑值是一样的。</p>
-<p>(3) 栈内存对齐</p>
-<p>在vc6中栈的对齐方式不受结构成员对齐选项的影响。它总是保持对齐，而且对齐在4字节边界上。</p>
-
-          
+          源代码在编译成机器指令之前，要进行预处理。预处理功能主要包括宏定义，文件包含，条件编译三部分。这些预处理操作发生在编译程序过程中，它们会修改程序的语句，但不会干涉程序的执行。ANSI标准定义的C语言预处理程序包括下列命令：指令 用途  
+#include 包含一个源代码文件  
+#define 定义
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/06/C--预处理指令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2053,7 +1666,7 @@ hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsoc
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -2062,7 +1675,7 @@ hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsoc
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -2081,6 +1694,26 @@ hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsoc
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -2119,11 +1752,11 @@ hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsoc
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -2204,34 +1837,167 @@ hu-duan-pei-zhi.html" target="_blank" rel="external">linux-ubuntu使用shadowsoc
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

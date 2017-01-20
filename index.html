@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T17:23:46+08:00">
                 2017-01-16
@@ -304,7 +319,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -320,6 +335,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/16/webapi应用架构详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/16/webapi应用架构详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -345,172 +370,16 @@
       
         
           
-            <h2 id="webapi适用场景"><a href="#webapi适用场景" class="headerlink" title="webapi适用场景"></a>webapi适用场景</h2><p>常见的应用包括以下四类，PC客户端程序，APP程序，网站程序，H5程序。<br>这些应用需要的数据，服务可由同一个接口服务程序提供，这样，大大提高了产品多平台设计开发的效率，避免了重复的编码。</p>
-<h2 id="什么是webapi"><a href="#什么是webapi" class="headerlink" title="什么是webapi"></a>什么是webapi</h2><p>webapi一般采用restful风格。以tornado为例,url路由配置如下：  </p>
-<pre><code>url = [
-    (r&apos;/test&apos;, testfc.testHandler)
-]
-</code></pre><p>业务逻辑层,返回数据一般为json格式：  </p>
-<pre><code>class testHandler(RequestHandler):
-    def get(self):
-        self.post()
-    def post(self):
-        result={}
-        if True:
-            result[&quot;code&quot;]=&quot;200&quot;
-            result[&quot;status&quot;]=&quot;true&quot;
-            result[&quot;result&quot;]=&quot;success&quot;
-        else:
-            result[&quot;code&quot;]=&quot;300&quot;
-            result[&quot;status&quot;]=&quot;false&quot;
-            result[&quot;result&quot;]=&quot;fail&quot;
-        self.write(json_encode(result))
-        return
-</code></pre><p>webapi访问方式如下：</p>
-<pre><code>http://127.0.0.1:9999/test
-</code></pre><p>返回结果：</p>
-<pre><code>{&quot;status&quot;: &quot;true&quot;, &quot;code&quot;: &quot;200&quot;, &quot;result&quot;: &quot;success&quot;}
-</code></pre><h2 id="webapi架构设计"><a href="#webapi架构设计" class="headerlink" title="webapi架构设计"></a>webapi架构设计</h2><p>如何确认一个app能够访问webapi?<br>使用AppID验证app访问webapi的合法性，AppID为服务端给出的一个ID标志。<br>我们可以为web/app/winform分别分配一个ID，从而可以确定访问的合法性，和访问的渠道。  </p>
-<p>如何保证app参数的正确性，没有被篡改？<br>客户端使用AppID对应的AppSecert，对参数进行签名(MD5/SHA等)<br>服务端使用同样的方式签名，和客户端签名校验。  </p>
-<p>如何防止webapi url被截获，重新访问？<br>客户端访问webapi时带上时间戳参数，服务端对时间戳进行校验，如10分钟内的访问才是有效的。  </p>
-<p>涉及具体用户的操作时，如何验证用户？<br>可以使用username,psw参数的方式访问webapi。但是这种方式很不安全。<br>使用授权token是很好的解决办法。在用户登录成功时，服务端生成一个授权码，对应用户信息。<br>访问时带上token参数，服务端查询token有效性，和token对应的用户信息。  </p>
-<h2 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h2><p>签名代码如下:</p>
-<pre><code>#coding:utf-8
-
-__author__ = &apos;jy&apos;
-
-import sys
-reload(sys)
-sys.setdefaultencoding(&apos;utf-8&apos;)
-sys.path.append(&apos;..&apos;)
-import datetime
-import time
-import math
-import hashlib
-import urllib
-def md5encode(source):
-    m2 = hashlib.md5()
-    m2.update(source)
-    return m2.hexdigest()
-def dataSort(data):
-    dataKeys=data.keys()
-    dataKeys.sort()
-    result=&quot;&quot;
-    for key in dataKeys:
-        result+=key.strip()
-        result+=data[key].strip()
-    return result 
-def dataSecret(data):
-    secret=&quot;af4d2c92-4bb7-11e5-8111-00163e001071&quot;
-    data=secret+data+secret
-    return data 
-def getSign(postdata):
-    try:
-        #升序排列,合并为字符串
-        dataSign=dataSort(postdata)
-        #加密钥
-        dataSign=dataSecret(dataSign)
-        #md5编码
-        dataSign=md5encode(dataSign)
-        return dataSign
-    except Exception as error:
-        pass
-</code></pre><p>验证url参数代码如下：</p>
-<pre><code>#coding:utf-8
-__author__ = &apos;haoy&apos;
-
-import sys
-reload(sys)
-sys.setdefaultencoding(&apos;utf-8&apos;)
-sys.path.append(&apos;..&apos;)
-from tornado.escape import json_decode, json_encode
-import datetime
-import time
-import math
-from utils.sign import *
-def valiUrldata(data):
-    result={}
-    try:
-        #判断appKey是否合法
-        appKey=data.get(&quot;appKey&quot;,&quot;&quot;) 
-        if appKey!=&quot;21ec85ec-30ca-491b-8bfb-c05e479eadc0&quot;:
-            result[&quot;code&quot;]=&quot;300&quot;
-            result[&quot;status&quot;]=&quot;false&quot;
-            result[&quot;result&quot;]=&quot;账号不合法&quot;
-            return result
-        #appKey对应的secret
-        appSecret=&quot;af4d2c92-4bb7-11e5-8111-00163e001071&quot;
-        #检验时间
-        timeStamp=data.get(&quot;timeStamp&quot;,&quot;0&quot;)
-        timeStamp=int(timeStamp)
-        nowtime=int(round(time.time()))
-
-        if abs(timeStamp-nowtime)&gt;600:
-            result[&quot;code&quot;]=&quot;300&quot;
-            result[&quot;status&quot;]=&quot;false&quot;
-            result[&quot;result&quot;]=&quot;请求时间戳不合法&quot;
-            return result
-
-        #校验签名
-        clientSign=data.get(&quot;sign&quot;,&quot;&quot;)
-        if clientSign==&quot;&quot;:
-            result[&quot;code&quot;]=&quot;300&quot;
-            result[&quot;status&quot;]=&quot;false&quot;
-            result[&quot;result&quot;]=&quot;请求参数签名不能为空&quot;
-            return result
-        data.pop(&quot;sign&quot;)
-        serverSign=getSign(data)
-        print serverSign
-        if clientSign!=serverSign:
-            result[&quot;code&quot;]=&quot;300&quot;
-            result[&quot;status&quot;]=&quot;false&quot;
-            result[&quot;result&quot;]=&quot;请求参数签名不合法&quot;
-            return result
-        result[&quot;code&quot;]=&quot;200&quot;
-        result[&quot;status&quot;]=&quot;true&quot;
-        result[&quot;result&quot;]=&quot;通过验证&quot;
-        return result
-    except Exception as error:
-        result[&quot;code&quot;]=&quot;300&quot;
-        result[&quot;status&quot;]=&quot;false&quot;
-        result[&quot;result&quot;]=&quot;异常:&quot;+error.message
-        return result
-</code></pre><p>登录代码如下：  </p>
-<pre><code>import uuid
-import redis
-class testLoginHandler(BaseHandler):
-    def get(self):
-        self.post()
-    def post(self):
-        #获取url参数
-        args=self.request.arguments
-        data={}
-        for key in args:
-            data[key]=self.get_argument(key,&quot;&quot;)
-        #验证url参数
-        valiResult=valiUrldata(data)
-        if valiResult[&quot;code&quot;]==&quot;300&quot;:
-            self.write(json_encode(valiResult).decode(&quot;unicode_escape&quot;))
-            return
-        username=self.get_argument(&quot;username&quot;,&quot;&quot;)
-        psw=self.get_argument(&quot;psw&quot;,&quot;&quot;)
-        if username==&quot;shijingjing07&quot; and psw==&quot;123456&quot;:
-            token = uuid.uuid1()
-            redisPool = redis.ConnectionPool(host=&apos;127.0.0.1&apos;,password=&apos;123456&apos;, port=6379, db=0)
-            cache = redis.Redis(connection_pool=redisPool)
-            cache.setex(token,username,300)
-            result[&quot;code&quot;] = 200
-            result[&quot;status&quot;] = &quot;true&quot;
-            result[&quot;result&quot;] = token
-        else:
-            result[&quot;code&quot;] = 300
-            result[&quot;status&quot;] = &quot;false&quot;
-            result[&quot;result&quot;] = &quot;account illegal&quot;
-        self.write(json_encode(result))
-</code></pre><p>返回结果：  </p>
-<pre><code>{&quot;status&quot;: &quot;true&quot;, &quot;code&quot;: 200, &quot;result&quot;: &quot;5720c334-dbcc-11e6-84f1-00163e001071&quot;}
-</code></pre>
-          
+          webapi适用场景常见的应用包括以下四类，PC客户端程序，APP程序，网站程序，H5程序。这些应用需要的数据，服务可由同一个接口服务程序提供，这样，大大提高了产品多平台设计开发的效率，避免了重复的编码。
+什么是webapiwebapi一般采用restful风格。以tornado为例,url路由配置
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/16/webapi应用架构详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -587,7 +456,7 @@ class testLoginHandler(BaseHandler):
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-06T07:55:00+08:00">
                 2017-01-06
@@ -602,6 +471,16 @@ class testLoginHandler(BaseHandler):
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/06/cookie欺骗/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/cookie欺骗/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -627,35 +506,17 @@ class testLoginHandler(BaseHandler):
       
         
           
-            <p>1.什么是cookie欺骗<br>改变cookie的值，发给服务器，就是cookie欺骗。<br>正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。</p>
-<p>2.cookie使用示例</p>
-<p>index.html 写入cookie {‘username’:’zhangsan’,’psw’:’123’}</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.cookie.js&quot;&gt;&lt;/script&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-        $.cookie(&apos;username&apos;, &quot;zhangsan&quot;);
-        $.cookie(&apos;psw&apos;, &quot;123&quot;);
-    &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>运行index.html,通过Chrome F12开发者工具，可以看到cookie信息。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201701/300946-20170106155059847-848303078.png" alt=""></p>
-<p>可以看到cookie要和domain域名对应。每个cookie只能被对应的域名所访问，其他域名无法访问。</p>
-<p>3.如何进行cookie欺骗</p>
-<p>修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。<br>步骤：<br>1)修改host<br>121.43.113.200 dev.test.com<br>2)将index.html放入服务器121.43.113.200<br>3)访问url:dev.test.com/index.html<br>4)查看cookie信息<br><img src="http://images2015.cnblogs.com/blog/300946/201701/300946-20170106155240675-1380622233.png" alt=""><br>5)还原host  </p>
-<p>#121.43.113.200 dev.test.com<br>6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。</p>
-<p>4.cookie欺骗防止<br>随机码防止cookie欺骗<br>原理：在服务端生成唯一随机码，每次提交cookie时带上随机码，和服务端的随机码校验。</p>
-
-          
+          1.什么是cookie欺骗改变cookie的值，发给服务器，就是cookie欺骗。正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。
+2.cookie使用示例
+index.html 写入cookie {‘username’:’zhangs
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/06/cookie欺骗/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -732,7 +593,7 @@ class testLoginHandler(BaseHandler):
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-30T09:43:00+08:00">
                 2016-12-30
@@ -747,6 +608,16 @@ class testLoginHandler(BaseHandler):
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/30/nginx文件目录权限设置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/30/nginx文件目录权限设置/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -772,27 +643,16 @@ class testLoginHandler(BaseHandler):
       
         
           
-            <p>1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。</p>
-<p>2.生成用户名单<br>在nginx中我们使用htpasswd来生成用户名单<br>下载这个python文件：<a href="http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py" target="_blank" rel="external">http://trac.edgewall.org/export/10770/trunk/contrib/htpasswd.py</a><br>（nginx wiki里推荐的）<br>运行示例：</p>
-<pre><code>chmod 777 htpasswd.py
-./htpasswd.py -c -b htpasswd username password
-</code></pre><p>#-c为生成文件 htpasswd为文件名</p>
-<p>nginx 的 http auth basic 的密码是用 crypt(3) 加密的<br>我们把生成的htpasswd文件放到/etc/nginx目录中，修改权限chmod 400 htpasswd来保护一下该文件。</p>
-<p>3.修改nginx配置文件</p>
-<pre><code>server {
-server_name www.test.com;
-root /usr/share/nginx/html;
-location /devdoc {
-autoindex on;#显示文件列表
-index index.html index.htm;#默认首页
-charset utf-8;#编码
-auth_basic &quot;Restricted&quot;;#访问权限类型
-auth_basic_user_file /etc/nginx/htpasswd;#用户名单
-}
-}
-</code></pre><p>重启nginx即可。访问网站www.test.com/devdoc，需要输入我们设置的用户名密码登录才能访问文件。如下图所示：<br><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161230174155304-2076405830.png" alt=""></p>
-
-          
+          1.有时我们web服务器上的某个文件夹只允许特定人员访问，这时我们需要在nginx配置文件中配置该文件夹的访问权限。
+2.生成用户名单在nginx中我们使用htpasswd来生成用户名单下载这个python文件：http://trac.edgewall.org/export/10770/trunk/
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/30/nginx文件目录权限设置/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -869,7 +729,7 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-30T03:00:00+08:00">
                 2016-12-30
@@ -884,6 +744,16 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/30/CSRF攻击/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/30/CSRF攻击/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -909,14 +779,15 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
       
         
           
-            <p>1.什么是CSRF攻击<br>CSRF(Cross-site request forgery)，跨站请求伪造。<br>CSRF攻击的原理如下：<br>1)用户登录正常的网站A后，在本地生成Cookie<br>2)在不登出A的情况下，访问了危险网站B<br>3)网站B中含有网站A的链接，点击网站A的链接，会调用本地cookie验证，自动登录网站A。</p>
-<p>CSRF攻击源于WEB的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于某个用户的浏览器，但却无法保证该请求是用户批准发送的。</p>
-<p>2.原理图如下：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161230105937070-1267632684.png" alt=""></p>
-<p>3.CSRF的防御<br>1)Cookie Hashing(所有表单都包含同一个伪随机值)：<br>CSRF的问题在于网站验证cookie存在的情况下，黑客可以直接登录网站。<br>我们可以在访问网站时，生成一个伪随机数，访问网站每个页面时带上这个伪随机数，服务端验证cookie和伪随机数是否一致。<br>这样可以确保网站A的链接不是由第三方网站直接跳转过来的，因为第三方网站是无法获得网站的cookie伪随机数的。</p>
-<p>2)验证码<br>登录网站时设置验证码，是很常用的方式，可以完全解决CSRF的问题。</p>
-
-          
+          1.什么是CSRF攻击CSRF(Cross-site request forgery)，跨站请求伪造。CSRF攻击的原理如下：1)用户登录正常的网站A后，在本地生成Cookie2)在不登出A的情况下，访问了危险网站B3)网站B中含有网站A的链接，点击网站A的链接，会调用本地cookie验证，自动登录
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/30/CSRF攻击/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -993,7 +864,7 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-28T11:21:00+08:00">
                 2016-12-28
@@ -1008,6 +879,16 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/28/HTTP长连接和短连接/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/28/HTTP长连接和短连接/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1033,18 +914,16 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
       
         
           
-            <p>1.HTTP协议的五大特点<br>1)支持客户/服务器模式<br>2)简单快速<br>3)灵活<br>4)无连接<br>每次连接只处理一个请求，服务器处理完客户的请求，并受到客户的应答后，断开连接。<br>5)无状态<br>协议不会记录服务器客户端状态。</p>
-<p>2.保持HTTP连接状态的两种方式<br>1)Cookie<br>在访问统一网站时，可以将信息写入cookie，方便在不同的页面间提取信息。</p>
-<p>2)Session<br>Session保存在服务器上，同时将标识Session的SessionId传递给客户端浏览器，保存在cookie中，浏览器关闭后，这个cookie就会被清掉。</p>
-<p>浏览器每次请求都会额外加上这个参数值，服务器根据这个SessionId，就能取得客户端的数据信息。</p>
-<p>3.什么是HTTP长连接，短连接<br>HTTP的长连接，短连接本质上是TCP长连接，短连接。</p>
-<p>在HTTP/1.0中，默认使用的是短连接。<br>即浏览器和服务器每进行一次HTTP操作，就建立一次连接，任务结束就中断连接。这样，如果一个网页中包含其他的web资源，如JavaScript文件，图像文件，CSS文件等，都需要建立连接。</p>
-<p>从HTTP/1.1起，默认使用长连接。我们可以看到响应头有这样一行代码：Connection:keep-alive<br>当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这条已经建立的连接。</p>
-<p>4.长连接短连接操作过程<br>短连接的操作步骤是：<br>建立连接—-数据传输—-关闭连接…建立连接—-数据传输—-关闭连接<br>长连接的操作步骤是：<br>建立连接—-数据传输…（保持连接）…数据传输—-关闭连接</p>
-<p>5.长连接短连接的优缺点<br>长连接可以省去较多的TCP建立和关闭的操作，减少浪费，节约时间。对于频繁请求资源的客户来说，较适用长连接。<br>Client与server之间的连接如果一直不关闭的话，会存在一个问题，随着客户端连接越来越多，server早晚有扛不住的时候，这时候server端需要采取一些策略，如关闭长时间没有读写事件的连接；限制每个客户端的最大长连接数。<br>短连接对服务器来说管理较为简单，存在的连接都是有用的连接。但如果客户请求频繁，将在TCP的建立和关闭上浪费时间和带宽。</p>
-<p>6.长连接短连接使用场合<br>长连接多用于操作频繁，点对点的通讯，而且连接数不能太多情况。如数据库的连接。<br>而像web网站的http服务一般用短连接，因为长连接对于服务端来说会耗费一定的资源，而像web网站这么频繁的成千上万甚至上亿客户端的连接用短连接更省资源，如果用长连接，而且同时有成千上万的用户。如果每个用户都占用一个连接的话，那可想而知吧。所以并发量大，但每个用户无需频繁操作的情况下用短连接好。</p>
-
-          
+          1.HTTP协议的五大特点1)支持客户/服务器模式2)简单快速3)灵活4)无连接每次连接只处理一个请求，服务器处理完客户的请求，并受到客户的应答后，断开连接。5)无状态协议不会记录服务器客户端状态。
+2.保持HTTP连接状态的两种方式1)Cookie在访问统一网站时，可以将信息写入cookie，方便
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/28/HTTP长连接和短连接/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1121,7 +1000,7 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-28T02:16:00+08:00">
                 2016-12-28
@@ -1136,6 +1015,16 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/28/类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/28/类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1161,40 +1050,15 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
       
         
           
-            <p>1)依赖<br>依赖关系是类与类之间的联接。一个类依赖于另一个类的定义。如，一个人(Person)可以买车(Car)和房子(House),Person类依赖于Car和House的定义，因为Person引入了Car和House。与关联不同的是，Person类中没有Car和House的属性，Car和House的实例是以参量的方式传入到buy()方法中的。一般而言，依赖关系在Java语言中体现为局部变量，方法形参，或者对静态方法的调用。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101136961-696404574.png" alt=""></p>
-<p>2)关联<br>关联是类与类之间的联接，使一个类知道另一个类的属性和方法。关联可以是双向，也可以是单向的。一般使用成员变量来实现。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101151773-384156678.png" alt=""></p>
-<p>3)聚合<br>聚合是一种强的关联关系。是整体和个体之间的关系。例如，汽车类与引擎类，轮胎类之间的关系就是整体与个体之间的关系。与关联关系一样，聚合关系也是通过实例变量实现的。但是关联关系涉及的两个类在同一层次，而聚合关系中两个类处在不平等的层次上，一个代表整体，一个代表部分。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101335851-1483683152.png" alt=""></p>
-<p>4)组合<br>组合也是关联关系的一种，一种比聚合关系强的关系。组合关系中的部分类不能独立于整体类存在。整体类和部分类有相同的生命周期。如Person类和Leg类。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101350570-1896750592.png" alt=""></p>
-<p>5)继承/泛化<br>泛化和继承其实是一个逆过程 泛化就是有子类抽象出一个父类 而继承就是由父类具体化一个子类 例如足球比联赛跟什么西甲 意甲 英超之间就是泛化/继承的关系</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101408773-94063945.png" alt=""></p>
-<p>6)组合和聚合的区别<br>组合和聚合都属于关联，所以它们之间难免有相似之处，区别举例来说明：<br>程老师的《大话》里举大那个大雁的例子很贴切 在此我就借用一下 大雁喜欢热闹害怕孤独 所以它们一直过着群居的生活 这样就有了雁群 每一只大雁都有自己的雁群<br>每个雁群都有好多大雁 大雁与雁群的这种关系就可以称之为聚合 另外每只大雁都有两只翅膀 大雁与雁翅的关系就叫做组合 有此可见 聚合的关系明显没有组合紧密<br>大雁不会因为它们的群主将雁群解散而无法生存 而雁翅就无法脱离大雁而单独生存—-组合关系的类具有相同的生命周期<br>聚合关系图：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101435898-1130053478.png" alt=""></p>
-<p>聚合关系图：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161228101455429-49000952.png" alt=""></p>
-<p>雁群类：</p>
-<pre><code>public class GooseGroup
-{
-    publi Goose goose;
-    public GooseGroup(Goose goose){
-        this.goose=goose;
-    }
-}
-</code></pre><p>大雁类：</p>
-<pre><code>public class Goose{
-    public Wings wings;
-    public Goose()
-    {
-        wings=new Wings();
-    }
-}    
-</code></pre><p>从构造函数来看，GooseGroup的构造函数要用到Goose作为参数把值传进来，Goose可以脱离GooseGroup独立存在。<br>组合关系中整体类含有部分类的实例化，Goose在实例化之前，一定要先实例化Wings，两个类紧密耦合在一起，它们有相同的生命周期，Wings不能独立于Goose存在。</p>
-<p>从信息封装来看，聚合关系中，客户端同时了解GooseGroup和Goose，因为它们是独立的。<br>而在组合关系中，客户端只认识大雁类，根本不知道翅膀类的存在，因为翅膀类被严密封装在大雁类中。</p>
-
-          
+          1)依赖依赖关系是类与类之间的联接。一个类依赖于另一个类的定义。如，一个人(Person)可以买车(Car)和房子(House),Person类依赖于Car和House的定义，因为Person引入了Car和House。与关联不同的是，Person类中没有Car和House的属性，Car和House的
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/28/类与类之间的关系-依赖，关联，聚合，组合，继承泛化的区别/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1271,7 +1135,7 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-27T14:19:00+08:00">
                 2016-12-27
@@ -1286,6 +1150,16 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/27/设计模式六大原则/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/27/设计模式六大原则/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1311,501 +1185,17 @@ auth_basic_user_file /etc/nginx/htpasswd;#用户名单
       
         
           
-            <p>1.设计模式的目的<br>设计模式是为了更好的代码重用性，可读性，可靠性，可维护性。</p>
-<p>2.常用的六大设计模式<br>1)单一职责原则<br>2)里氏替换原则<br>3)依赖倒转原则<br>4)接口隔离原则<br>5)迪米特法则<br>6)开闭原则</p>
-<p>3.单一职责原则<br>该原则是针对类来说的，即一个类应该只负责一项职责。<br>如类T负责两个不同职责：职责P1，职责P2。当职责P1需求变更而改变T时，可能造成职责P2发生故障，所以需要将类T的粒度分解为T1，T2。<br>示例如下：<br>用一个类秒数动物呼吸这个场景</p>
-<pre><code>class Animal {
-    public void breathe(string animal)
-    {
-        Console.WriteLine(animal+&quot;呼吸空气&quot;);
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        Animal animal = new Animal();
-        animal.breathe(&quot;牛&quot;);
-        animal.breathe(&quot;羊&quot;);
-        animal.breathe(&quot;猪&quot;);
-        animal.breathe(&quot;鱼&quot;);
-        Console.ReadLine();
-    }
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161227221245086-1277429426.png" alt=""></p>
-<p>我们发现不是所有动物都是呼吸空气的，比如鱼就是呼吸水的，根据单一职责原则，我们将Animal类细分为陆生动物类和水生动物类，如下所示：</p>
-<pre><code>class Terrestrial
-{
-    public void breathe(string animal)
-    {
-        Console.WriteLine(animal+&quot;呼吸空气&quot;);
-    }
-}
-class Aquatic
-{
-    public void breathe(string animal)
-    {
-        Console.WriteLine(animal + &quot;呼吸水&quot;);
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        Terrestrial terrestrial = new Terrestrial();
-        terrestrial.breathe(&quot;牛&quot;);
-        terrestrial.breathe(&quot;羊&quot;);
-        terrestrial.breathe(&quot;猪&quot;);
-        Aquatic aquatic = new Aquatic();
-        aquatic.breathe(&quot;鱼&quot;);
-        Console.ReadLine();
-    }
-}
-</code></pre><p>我们发现这样修改的花销很大，既要将原来的类分解，又要修改客户端。而直接修改Animal类虽然违背了单一职责原则，但花销小的多，如下所示：</p>
-<pre><code>class Animal
-{
-    public void breathe(string animal)
-    {
-        if (&quot;鱼&quot;.Equals(animal))
-        {
-            Console.WriteLine(animal + &quot;呼吸水&quot;);
-        }
-        else {
-            Console.WriteLine(animal + &quot;呼吸空气&quot;);
-        }
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        Animal animal = new Animal();
-        animal.breathe(&quot;牛&quot;);
-        animal.breathe(&quot;羊&quot;);
-        animal.breathe(&quot;猪&quot;);
-        animal.breathe(&quot;鱼&quot;);
-        Console.ReadLine();
-    }
-}
-</code></pre><p>可以看到，这种修改方式简单的多。但却存在隐患，一天需要将鱼分为淡水鱼，海水鱼，又需要修改Animal类的breathe方法。可能给”猪牛羊”等相关功能带来风险，这种修改直接在代码级别违背了单一职责原则，虽然修改起来最简单，但隐患最大。还有一种修改方式：</p>
-<pre><code>class Animal
-{
-    public void breathe(string animal)
-    {
-         Console.WriteLine(animal + &quot;呼吸空气&quot;);
-    }
-    public void breathe2(string animal)
-    {
-        Console.WriteLine(animal + &quot;呼吸水&quot;);
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        Animal animal = new Animal();
-        animal.breathe(&quot;牛&quot;);
-        animal.breathe(&quot;羊&quot;);
-        animal.breathe(&quot;猪&quot;);
-        animal.breathe2(&quot;鱼&quot;);
-        Console.ReadLine();
-    }
-} 
-</code></pre><p>这种修改方式没有改动原来的方法，而是在类中新加了一个方法，这样虽然违背了单一职责原则，但在方法级别上却是符合单一职责原则的。那么在实际编程中，采用哪一种呢？我的原则是，只有逻辑足够简单，才可以在代码级违反单一职责原则；只有类中方法数量足够少，才可以在方法级别违反单一职责原则。</p>
-<p>遵循单一职责的优点：<br>1)降低类的复杂度，一个类只负责一项职责。<br>2)提高类的可读性，可维护性<br>3)降低变更引起的风险。</p>
-<p>4.里氏替换原则<br>该原则是在1988年，由麻省理工学院的以为姓里的女士提出的。<br>如果对每个类型为T1的对象o1，都有类型为T2的对象o2，使得以T1定义的所有程序P在所有的对象o1都代换成o2时，程序P的行为没有发生变化，那么类型T2是类型T1的子类型。<br>换句话说，所有引用基类的地方必须能透明地使用其子类的对象。</p>
-<p>由定义可知，在使用继承时，遵循里氏替换原则，在子类中尽量不要重写和重载父类的方法。<br>继承包含这样一层含义：父类中凡是已经实现好的方法（相对抽象方法而言），实际上是在设定一系列的规范和契约，虽然它不强制要求所有的子类必须遵循这些契约，但是如果子类对这些非抽象方法任意修改，就会对整个继承体系造成破坏。而里氏替换原则就是表达了这一层含义。<br>继承作为面向对象三大特性之一，在给程序设计带来巨大遍历的同时，也带来了弊端。比如使用继承会给程序带来侵入性，程序的可移植性降低，增加对象间的耦合性，如果一个类被其他的类所继承，则当这个类需要修改时，必须考虑到所有的子类，并且父类修改后，所有涉及到子类的功能都有可能产生故障。<br>举例说明继承的风险，我们需要完成一个两数相减的功能，由类A来负责。</p>
-<pre><code>class A{
-    public int func1(int a,int b){
-        return a-b;
-    }
-}
-public class Client{
-    public static void main(string[] args){
-        A a=new A();
-        System.out.println(&quot;100-50=&quot;+a.func1(100,50));
-        System.out.println(&quot;100-80=&quot;+a.func1(100,80));
-    }
-}
-</code></pre><p>运行结果：</p>
-<p>100-50=50<br>100-80=20</p>
-<p>后来，我们需要增加一个新的功能：完成两数相加，然后再与100求和，由类B来负责。</p>
-<pre><code>Class B extends A{
-    public int func1(int a,int b){
-        return a+b;
-    }
-    public int func2(int a,int b){
-        return func1(a,b)+100;
-    }
-}
-public class Client{
-    public static void main(string[] args){
-        B a=new B();
-        System.out.println(&quot;100-50=&quot;+b.func1(100,50));
-        System.out.println(&quot;100-80=&quot;+b.func1(100,80));
-        System.out.println(&quot;100+20+100=&quot;+b.func2(100,20));
-    }
-}
-</code></pre><p>运行结果：</p>
-<p>100-50=150<br>100-80=180<br>100+20+100=220</p>
-<p>我们发现原来运行正常的相减功能发生了错误。原因就是类B无意中重写了父类的方法，造成原有功能出现错误。在实际编程中，我们常常会通过重写父类的方法完成新的功能，这样写起来虽然简单，但整个继承体系的复用性会比较差。特别是运行多态比较频繁的时候，如果非要重写父类的方法，通用的做法是：原来的父类和子类都继承一个更通俗的基类，原有的继承关系去掉，采用依赖，聚合，组合等关系代替。</p>
-<p>5.依赖倒转原则<br>高层模块不应该依赖低层模块，二者都应该依赖其抽象；抽象不应该依赖细节，细节应该依赖抽象。<br>类A直接依赖类B，如果要将类A改为依赖类C，则必须通过修改类A的代码来达成。此时，类A一般是高层模块，负责复杂的业务逻辑，类B和类C是低层模块，负责基本的原子操作；修改A会给程序带来风险。<br>将类A修改未依赖接口I，类B和类C各自实现接口I，类A通过接口I间接与类B或类C发生联系，则会大大降低修改类A的记几率。<br>依赖倒置原则基于这样一个事实：相对于细节的多变性，抽象的东西要稳定的多。以抽象为基础搭建的架构比以细节为基础的架构要稳定的多。在java中，抽象指的是接口或抽象类，细节就是具体的实现类，使用接口或抽象类的目的是制定好规范，而不涉及任何具体的操作，把展现细节的任务交给他们的实现类去完成。<br>依赖倒置的中心思想是面向接口编程。</p>
-<p>代码示例如下：</p>
-<pre><code>class Book {
-    public string getContent() {
-        return &quot;很久很久以前。。。。。&quot;;
-    }
-}
-class Mother {
-    public void narrate(Book book)
-    {
-        Console.WriteLine(book.getContent());
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        Mother monther = new Mother();
-        monther.narrate(new Book());
-        Console.ReadLine();
-    }
-}
-</code></pre><p>运行结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161227221502773-795863634.png" alt=""></p>
-<p>如果读的对象是报纸，杂志，却发现客户端不适用了。<br>我们引入一个抽象的接口IReader,代表读物</p>
-<pre><code>interface IReader{
-    public string getContent();
-}
-</code></pre><p>这样Mother类与接口IReader发生依赖关系，而Book和Newspaper都属于读物的范畴，他们各自都去实现IReader接口，这样就符合依赖倒置原则了，修改代码如下：</p>
-<pre><code>interface IReader {
-         string getContent();
-    }
-    class Newspaper: IReader
-    {
-    public string getContent()
-    {
-        return &quot;切尔西豪取12连胜&quot;;
-    }
-}
-class Book:IReader
-{
-
-    public string getContent()
-{
-    return &quot;很久很久以前。。。。&quot;;
-}
-}
-class Mother
-{
-    public void narrate(IReader reader)
-    {
-        Console.WriteLine(reader.getContent());
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        Mother monther = new Mother();
-        monther.narrate(new Book());
-        monther.narrate(new Newspaper());
-        Console.ReadLine();
-    }
-}
-</code></pre><p>运行结果:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161227221546539-427144726.png" alt=""></p>
-<p>采用依赖倒置原则给多人并行开发带来极大的便利，比如上列中Mother类与Book类直接耦合，Mother必须等Book类编码完成后才可以进行编码，因为Mother类依赖于Book类。修改后的程序可以同时开工，互不影响。<br>依赖关系的传递有三种方式，接口传递，构造方法传递和setter方法传递。<br>接口传递：</p>
-<pre><code>interface IDriver{
-    public void drive(ICar car);
-}
-public class Driver:IDriver{
-    public void drive(ICar car){
-        car.run();
-    }
-}
-</code></pre><p>构造方法传递：</p>
-<pre><code>interface IDriver{
-    public void drive();
-}
-public class Driver implements IDriver{
-    public ICar car;
-    public Driver(ICar _car){
-        this.car=_car;
-    }
-    public void drive(){
-        this.car.run();
-    }
-}
-</code></pre><p>setter方式传递：</p>
-<pre><code>interface IDriver{
-    public void setCar(ICar car);
-    public void drive();
-}
-public class Driver:IDriver{
-    PRIVATE ICar car;
-    public void setCar(ICar car){
-        this.car=car;
-    }
-    public void drive(){
-        this.car.run();
-    }
-}
-</code></pre><p>在实际编程中，一般需要做到如下3点：<br>低层模块尽量都要有抽象类或接口，或者两者都有。<br>变量的声明类型尽量是抽象类或接口。<br>使用继承时遵循里氏替换原则</p>
-<p>6.接口隔离原则<br>客户端不应该依赖它不需要的接口；一个类对另一个类的依赖应该建立在最小的接口上。<br>类A通过接口I依赖类B，类C通过接口I依赖类D，如果接口I对于类A和类C来说不是最小接口，则类B和类D必须去实现他们不需要的方法。<br>将臃肿的接口I拆分为独立的几个接口，类A和类C分别与他们需要的接口建立依赖关系。也就是采用接口隔离原则。<br>举例说明接口隔离原则：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161227221656132-1065812137.png" alt=""></p>
-<p>这个图的意思是：类A依赖接口I中的方法1，方法2，方法3，类B是对类A依赖的实现；类C依赖接口I中的方法1，方法4，方法5，类D是对类C依赖的实现。对于类B和类D来说，虽然存在用不到的方法（红色标记所示），但由于实现了接口I，所以也必须要实现这些用不到的方法。代码如下：</p>
-<pre><code>interface I{
-    void method1();
-    void method2();
-    void method3();
-    void method4();
-    void method5();
-}
-class A{
-    public void depend1(I i){
-        i.method1();
-    }
-    public void depend2(I i){
-        i.method2();
-    }
-    public void depend3(I i){
-        i.method3();
-    }
-}
-class C{
-    public void depend1(I i){
-        i.method1();
-    }
-    public void depend2(I i){
-        i.method4();
-    }
-    public void depend3(I i){
-        i.method5();
-    }
-}
-class B:I{
-    public void method1(){
-        Console.WriteLine(&quot;类B实现接口I的方法1&quot;);
-    }
-    public void method2(){
-        Console.WriteLine(&quot;类B实现接口I的方法2&quot;);
-    }
-    public void method3(){
-        Console.WriteLine(&quot;类B实现接口I的方法3&quot;);
-    }
-    public void method4(){}
-    public void method5(){}
-}
-class D:I{
-    public void method1(){
-        Console.WriteLine(&quot;类B实现接口I的方法1&quot;);
-    }
-    public void method2(){}
-    public void method3(){}
-    public void method4(){
-        Console.WriteLine(&quot;类B实现接口I的方法4&quot;);
-    }
-    public void method5(){
-        Console.WriteLine(&quot;类B实现接口I的方法5&quot;);
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        A a=new A();
-        a.depend1(new B());
-        a.depend2(new B());
-        a.depend3(new B());
-
-        C c=new C();
-        c.depend1(new D());
-        c.depend2(new D());
-        c.depend3(new D());
-        Console.ReadLine();
-    }
-}
-</code></pre><p>可以看到，接口中出现的方法，不管对依赖于它的类有没有作用，实现类中都必须去实现这些方法。于是我们将原接口I拆分为三个接口：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161227221732117-1230926316.png" alt=""></p>
-<p>代码如下所示：</p>
-<pre><code>interface I1{
-    void method1();
-}
-interface I2{
-    void method2();
-    void method3();
-}
-interface I3{
-    void method4();
-    void method5();
-}
-class A{
-    public void depend1(I1 i){
-        i.method1();
-    }
-    public void depend2(I2 i){
-        i.method2();
-    }
-    public void depend3(I2 i){
-        i.method3();
-    }
-}
-class C{
-    public void depend1(I1 i){
-        i.method1();
-    }
-    public void depend2(I3 i){
-        i.method4();
-    }
-    public void depend3(I3 i){
-        i.method5();
-    }
-}
-class B:I1,I2{
-    public void method1(){
-        Console.WriteLine(&quot;类B实现接口I1的方法1&quot;);
-    }
-    public void method2(){
-        Console.WriteLine(&quot;类B实现接口I2的方法2&quot;);
-    }
-    public void method3(){
-        Console.WriteLine(&quot;类B实现接口I2的方法3&quot;);
-    }
-}
-class D:I1,I3{
-    public void method1(){
-        Console.WriteLine(&quot;类B实现接口I的方法1&quot;);
-    }
-    public void method4(){
-        Console.WriteLine(&quot;类B实现接口I的方法4&quot;);
-    }
-    public void method5(){
-        Console.WriteLine(&quot;类B实现接口I的方法5&quot;);
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        A a=new A();
-        a.depend1(new B());
-        a.depend2(new B());
-        a.depend3(new B());
-
-        C c=new C();
-        c.depend1(new D());
-        c.depend2(new D());
-        c.depend3(new D());
-        Console.ReadLine();
-    }
-}
-</code></pre><p>说到这里，可能会觉得接口隔离原则和之前的单一职责原则很相似，其实不然。一，单一职责注重职责，而接口隔离原则注重对接口依赖的隔离；二，单一职责是约束类，其次是方法，针对的是程序中的实现和细节；而接口隔离原则约束的是接口，针对的是抽象，程序整体框架的构建。</p>
-<p>7.迪米特法则<br>一个对象应该对其他对象保持最少的了解。<br>类与类关系越密切，耦合度越大。<br>迪米特法则又叫最少知道原则，即一个类对自己依赖的类知道的越少越好。也就是说，对于被依赖的类不管多么复杂，都尽量将逻辑封装在类的内部。对外除了提供的public<br>方法，不对外泄露任何信息。<br>迪米特法则还有个更简单的定义：只与直接的朋友通信。<br>什么是直接的朋友：每个对象都会与其他对象由耦合关系，只要两个对象之间有耦合关系，我们就说这两个对象之间是朋友关系。耦合的方式很多，依赖，关联，组合，聚合等。其中，我们称出现成员变量，方法参数，方法返回值中的类为直接的朋友，而出现在局部变量中的类不是直接的朋友。也就是说，陌生的类最好不要以局部变量的形式出现在类的内部。<br>举例额说明如下，有一个集团公司，下属单位有分公司和直属部门，现要求打印出所有下属单位的员工ID。</p>
-<pre><code>class Employee{
-    private string id;
-    public void setId(string id){
-        this.id=id;
-    }
-    public string getId(){
-        return id;
-    }
-}
-class SubEmployee{
-    private string id;
-    public void setId(string id){
-        this.id=id;
-    }
-    public string getId(){
-        return id;
-    }
-}
-class SubCompanyManager{
-    public List&lt;SubEmployee&gt; getAllEmployee(){
-        List&lt;SubEmployee&gt; list=new ArrayList(SubEmployee);
-        for(int i=0;i&lt;100;i++){
-            SubEmployee emp=new SubEmployee();
-            emp.setId(&quot;分公司&quot;+i);
-            list.add(emp);
-        }
-        return list;
-    }
-}
-class CompanyManager{
-    public List&lt;Employee&gt; getAllEmployee(){
-        List&lt;Employee&gt; list=new ArrayList&lt;Employee&gt;();
-        for(int i=0;i&lt;30;i++)
-        {
-            Employee emp=new Employee();
-            emp.setId(&quot;总公司&quot;+i);
-            list.add(emp);
-        }
-        return list;
-    }
-    publi void printAllEmployee(SubCompanyManager sub){
-        List&lt;SubEmployee&gt; list1=sub.getAllEmployee();
-        foreach(SubEmployee e in list1){
-            Console.WriteLine(e.getId());
-        }
-        List&lt;Employee&gt; list2=this.getAllEmployee();
-        foreach(Employee e in list2){
-            Console.WriteLine(e.getId());
-        }
-    }
-}
-class Program
-{
-    static void Main(string[] args)
-    {
-        CompanyManager e=new CompanyManager();
-        e.printAllEmployee(new SubCompanyManager());
-        Console.ReadLine();
-    }
-}
-</code></pre><p>这个设计的问题在于CompanyManager中，SubEmployee类并不是CompanyManager类的直接朋友，按照迪米特法则，应该避免类中出现这样非直接朋友关系的耦合。修改后的代码如下:</p>
-<pre><code>class SubCompanyManager{
-    public List&lt;SubEmployee&gt; getAllEmployee(){
-        List&lt;SubEmployee&gt; list = new ArrayList&lt;SubEmployee&gt;();
-        for(int i=0; i&lt;100; i++){
-            SubEmployee emp = new SubEmployee();
-            //为分公司人员按顺序分配一个ID
-            emp.setId(&quot;分公司&quot;+i);
-            list.add(emp);
-        }
-        return list;
-    }
-    public void printEmployee(){
-        List&lt;SubEmployee&gt; list = this.getAllEmployee();
-        for(SubEmployee e:list){
-            System.out.println(e.getId());
-        }
-    }
-}
-class CompanyManager{
-    public List&lt;Employee&gt; getAllEmployee(){
-        List&lt;Employee&gt; list = new ArrayList&lt;Employee&gt;();
-        for(int i=0; i&lt;30; i++){
-            Employee emp = new Employee();
-            //为总公司人员按顺序分配一个ID
-            emp.setId(&quot;总公司&quot;+i);
-            list.add(emp);
-        }
-        return list;
-    }
-
-    public void printAllEmployee(SubCompanyManager sub){
-        sub.printEmployee();
-        List&lt;Employee&gt; list2 = this.getAllEmployee();
-        for(Employee e:list2){
-            System.out.println(e.getId());
-        }
-    }
-}
-</code></pre><p>迪米特法则的初衷是降低类之间的耦合，由于每个类都减少了不必要的依赖，因此的确可以降低耦合关系。</p>
-<p>8.开闭原则<br>一个软件实体如类，模块和函数应该对扩展开放，对修改关闭。用抽象构建框架，用实现扩展细节。<br>当软件需要变化时，尽量通过扩展软件实体的行为来实现变化，而不是通过修改已有的代码来实现变化。<br>当我们遵循前面介绍的5大原则，以及使用23中设计模式的目的就是遵循开闭原则。</p>
-
-          
+          1.设计模式的目的设计模式是为了更好的代码重用性，可读性，可靠性，可维护性。
+2.常用的六大设计模式1)单一职责原则2)里氏替换原则3)依赖倒转原则4)接口隔离原则5)迪米特法则6)开闭原则
+3.单一职责原则该原则是针对类来说的，即一个类应该只负责一项职责。如类T负责两个不同职责：职责P1，职责P2
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/27/设计模式六大原则/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1882,7 +1272,7 @@ class CompanyManager{
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T13:42:00+08:00">
                 2016-12-20
@@ -1897,6 +1287,16 @@ class CompanyManager{
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/20/【python】多进程锁multiprocess.Lock/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/20/【python】多进程锁multiprocess.Lock/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1922,115 +1322,22 @@ class CompanyManager{
       
         
           
-            <p>#<br><a href="http://blog.csdn.net/moxiaomomo/article/details/11640439" target="_blank" rel="external">【python】多进程锁multiprocess.Lock</a></p>
-<p>2013-09-13 13:48 11613人阅读<br><a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#comments" target="_blank" rel="external">评论</a>(2) 收藏<br><a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#report" title="举报" target="_blank" rel="external">举报</a></p>
-<p><img src="http://static.blog.csdn.net/images/category_icon.jpg" alt=""> 分类：</p>
-<p>Python（38） <img src="http://static.blog.csdn.net/images/arrow_triangle%20_down.jpg" alt=""></p>
-<p>同步的方法基本与多线程相同。</p>
-<p>1) Lock</p>
-<p>当多个进程需要访问共享资源的时候，Lock可以用来避免访问的冲突。</p>
-<p><strong>[python]</strong> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="copy" target="_blank" rel="external">copy</a></p>
-<ol>
-<li>import multiprocessing  </li>
-<li>import sys  </li>
-<li></li>
-<li>def worker_with(lock, f):  </li>
-<li>with lock:  </li>
-<li>fs = open(f,”a+”)  </li>
-<li>fs.write(‘Lock acquired via with\n’)  </li>
-<li>fs.close()  </li>
-<li></li>
-<li>def worker_no_with(lock, f):  </li>
-<li>lock.acquire()  </li>
-<li>try:  </li>
-<li>fs = open(f,”a+”)  </li>
-<li>fs.write(‘Lock acquired directly\n’)  </li>
-<li>fs.close()  </li>
-<li>finally:  </li>
-<li>lock.release()  </li>
-<li></li>
-<li>if <strong>name</strong> == “<strong>main</strong>“:  </li>
-<li></li>
-<li>f = “file.txt”  </li>
-<li></li>
-<li>lock = multiprocessing.Lock()  </li>
-<li>w = multiprocessing.Process(target=worker_with, args=(lock, f))  </li>
-<li>nw = multiprocessing.Process(target=worker_no_with, args=(lock, f))  </li>
-<li></li>
-<li>w.start()  </li>
-<li>nw.start()  </li>
-<li></li>
-<li>w.join()  </li>
-<li>nw.join()  </li>
-</ol>
-<p>在上面的例子中，如果两个进程没有使用lock来同步,则他们对同一个文件的写操作可能会出现混乱。</p>
-<p>2）Semaphore</p>
-<p>Semaphore用来控制对共享资源的访问数量，例如池的最大连接数。</p>
-<p><strong>[python]</strong> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="copy" target="_blank" rel="external">copy</a></p>
-<ol>
-<li>import multiprocessing  </li>
-<li>import time   </li>
-<li></li>
-<li>def worker(s,i):  </li>
-<li>s.acquire()  </li>
-<li>print(multiprocessing.current_process().name + “ acquire”)  </li>
-<li>time.sleep(i)  </li>
-<li>print(multiprocessing.current_process().name + “ release”)  </li>
-<li>s.release()  </li>
-<li></li>
-<li>if <strong>name</strong> == “<strong>main</strong>“:  </li>
-<li></li>
-<li>s = multiprocessing.Semaphore(2)  </li>
-<li>for i in range(5):  </li>
-<li>p = multiprocessing.Process(target=worker, args=(s,i*2))  </li>
-<li>p.start()  </li>
-</ol>
-<p>上面的实例中使用semaphore限制了最多有2个进程同时执行。</p>
-<p>3）Event</p>
-<p>Event用来实现进程间同步通信。</p>
-<p><strong>[python]</strong> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="view plain" target="_blank" rel="external">view plain</a> <a href="http://blog.csdn.net/moxiaomomo/article/details/11640439#" title="copy" target="_blank" rel="external">copy</a></p>
-<ol>
-<li>import multiprocessing  </li>
-<li>import time  </li>
-<li></li>
-<li>def wait_for_event(e):  </li>
-<li>“””Wait for the event to be set before doing anything”””  </li>
-<li>print (‘wait_for_event: starting’)  </li>
-<li>e.wait()  </li>
-<li>print (‘wait_for_event: e.is_set()-&gt;’ + str(e.is_set()))  </li>
-<li></li>
-<li>def wait_for_event_timeout(e, t):  </li>
-<li>“””Wait t seconds and then timeout”””  </li>
-<li>print (‘wait_for_event_timeout: starting’)  </li>
-<li>e.wait(t)  </li>
-<li>print (‘wait_for_event_timeout: e.is_set()-&gt;’ + str(e.is_set()))  </li>
-<li></li>
-<li></li>
-<li>if <strong>name</strong> == ‘<strong>main</strong>‘:  </li>
-<li>e = multiprocessing.Event()  </li>
-<li>w1 = multiprocessing.Process(name=’block’,   </li>
-<li>target=wait_for_event,  </li>
-<li>args=(e,))  </li>
-<li>w1.start()  </li>
-<li></li>
-<li>w2 = multiprocessing.Process(name=’non-block’,   </li>
-<li>target=wait_for_event_timeout,   </li>
-<li>args=(e, 2))  </li>
-<li>w2.start()  </li>
-<li></li>
-<li>time.sleep(3)  </li>
-<li>e.set()  </li>
-<li>print (‘main: event is set’)  </li>
-</ol>
-<p>#the output is:  </p>
-<p>#wait_for_event_timeout: starting  </p>
-<p>#wait_for_event: starting  </p>
-<p>#wait_for_event_timeout: e.is_set()-&gt;False  </p>
-<p>#main: event is set  </p>
-<p>#wait_for_event: e.is_set()-&gt;True</p>
-<p> 转自：<a href="http://blog.csdn.net/moxiaomomo/article/details/11640439" target="_blank" rel="external">http://blog.csdn.net/moxiaomomo/article/details/11640439</a></p>
-
-          
+          #【python】多进程锁multiprocess.Lock
+2013-09-13 13:48 11613人阅读评论(2) 收藏举报
+ 分类：
+Python（38） 
+同步的方法基本与多线程相同。
+1) Lock
+当多个进程需要访问共享资源的时候，Lock可以用来避免访问的冲突。
+[python] 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/20/【python】多进程锁multiprocess.Lock/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2107,7 +1414,7 @@ class CompanyManager{
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T13:04:00+08:00">
                 2016-12-20
@@ -2122,6 +1429,16 @@ class CompanyManager{
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/20/线程安全及Python中的GIL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/20/线程安全及Python中的GIL/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2147,99 +1464,16 @@ class CompanyManager{
       
         
           
-            <h1 id="线程安全及Python中的GIL"><a href="#线程安全及Python中的GIL" class="headerlink" title="线程安全及Python中的GIL"></a>线程安全及Python中的GIL</h1><p>本博客所有内容采用 <a href="http://creativecommons.org/about/licenses/meet-the-licenses" target="_blank" rel="external">Creative Commons<br>Licenses</a> 许可使用.<br>引用本内容时，请保留 <a href="http://sites.google.com/site/towerjoo" target="_blank" rel="external">朱涛</a>,<br><a href="http://www.cnblogs.com/mindsbook" target="_blank" rel="external">出处</a> ，并且 <strong>非商业</strong> .</p>
-<p>点击 <a href="http://feed.feedsky.com/MindsbookTowerJoo" target="_blank" rel="external">订阅</a> 来订阅本博客.(推荐使用 <a href="http://reader.google.com/" target="_blank" rel="external">google<br>reader</a>, 如果你的浏览器不支持直接订阅,请直接在 <a href="http://reader.google.com/" target="_blank" rel="external">google<br>reader</a> 中手动添加).</p>
-<p>抱歉,在正文中加入很多本博客的链接,主要是发现很多转载的朋友并未按照本声明来加入出处信息. 影响阅读,实在抱歉.</p>
-<h1 id="摘要-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety-and"><a href="#摘要-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety-and" class="headerlink" title="[摘要](http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-"></a>[摘要](<a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-" target="_blank" rel="external">http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-</a></h1><p>GIL.html#id17)</p>
-<p><a href="http://www.cnblogs.com/mindsbook" target="_blank" rel="external">作者博客链接</a>.</p>
-<p>什么是线程安全? 为什么python会使用GIL的机制?</p>
-<p>在多核时代的到来的背景下,基于多线程来充分利用硬件的编程方法也不断发展起来, 但是一旦 牵扯到多线程,就必然会涉及到一个概念,即 <strong>线程安全</strong>,<br>本文就主要谈下笔者对线程安全的一些理解.</p>
-<p>而Python为很多人所抱怨的一点就是GIL,那么python为什么选择使用GIL, 本文也就这个问题进行一些讨论.</p>
-<p>Contents</p>
-<ul>
-<li><a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-GIL.html#id1" target="_blank" rel="external">摘要</a></li>
-<li><a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-GIL.html#id2" target="_blank" rel="external">引入</a></li>
-<li><a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-GIL.html#id3" target="_blank" rel="external">线程安全</a></li>
-<li><a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-GIL.html#gil" target="_blank" rel="external">GIL</a></li>
-<li><a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-GIL.html#id4" target="_blank" rel="external">个人的观点</a></li>
-<li><a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-GIL.html#id5" target="_blank" rel="external">参考资料</a></li>
-<li><a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-GIL.html#rst" target="_blank" rel="external">本文的rst源码</a></li>
-</ul>
-<h1 id="引入-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety-and"><a href="#引入-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety-and" class="headerlink" title="[引入](http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-"></a>[引入](<a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-" target="_blank" rel="external">http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-</a></h1><p>GIL.html#id18)</p>
-<p><a href="http://www.cnblogs.com/mindsbook" target="_blank" rel="external">作者博客链接</a>.</p>
-<p>你的PC或者笔记本还是单核吗? 如果是,那你已经out了.</p>
-<p>随着纳米技术的不断进步, 计算机芯片的工艺也在进步,但是已经很难在工艺上的改进来提高 运算速度而满足<br><a href="http://en.wikipedia.org/wiki/Moore_Law" target="_blank" rel="external">摩尔定理</a>, 所以intel,<br>amd相继在采用横向的扩展即增加更多的CPU, 从而双核, 4核, N核不断推出,于是我们进入了多核时代.</p>
-<p>于是一个问题出现了, 多核时代的出现对于我们程序员而言意味着什么, 我们如何利用多核的优势?</p>
-<p>在回答这个问题之前,建议对 <a href="http://en.wikipedia.org/wiki/Process_\(computing\" target="_blank" rel="external">进程</a>) 和<br><a href="http://en.wikipedia.org/wiki/Thread_\(computing\" target="_blank" rel="external">线程</a>) 不熟悉的读者可以先补下相关的知识.</p>
-<p>当然方案是,可以采用 <strong>多进程</strong>, 也可以采用 <strong>多线程</strong>. 二者的最大区别就是, 是否共享资源, 后者是共享资源的,而前者是独立的.<br>所以你也可能想起了google chrome为什么又开始使用独立的进程 来作为每个tab服务了(不共享数据,意味着有更好的安全性).</p>
-<p>相对于进程的轻型特征,多线程环境有个最大的问题就是 <strong>如何保证资源竞争,死锁, 数据修改等</strong>.</p>
-<p>于是,便有了 <a href="http://en.wikipedia.org/wiki/Thread_safety" target="_blank" rel="external">线程安全</a> (thread safety)的提出.</p>
-<h1 id="线程安全-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety"><a href="#线程安全-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety" class="headerlink" title="[线程安全](http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-"></a>[线程安全](<a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-" target="_blank" rel="external">http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-</a></h1><p>and-GIL.html#id19)</p>
-<p><a href="http://www.cnblogs.com/mindsbook" target="_blank" rel="external">作者博客链接</a>.</p>
-<pre><code>Thread safety is a computer programming concept applicable in the context of multi-threaded programs.
-A piece of code is thread-safe if it functions correctly during simultaneous execution by multiple threads.
-In particular, it must satisfy the need for multiple threads to access the same shared data,
-and the need for a shared piece of data to be accessed by only one thread at any given time.
-</code></pre><p>上面是wikipedia中的解释, 换句话说, <a href="http://en.wikipedia.org/wiki/Thread_safety" target="_blank" rel="external">线程安全</a><br>是在多线程的环境下, 线程安全能够保证多个线程同时执行时程序依旧运行正确,<br>而且要保证对于共享的数据,可以由多个线程存取,但是同一时刻只能有一个线程进行存取.</p>
-<p>既然,多线程环境下必须存在资源的竞争,那么如何才能保证同一时刻只有一个线程对共享资源进行存取?</p>
-<p><strong>加锁</strong>, 对, 加锁可以保证存取操作的唯一性, 从而保证同一时刻只有一个线程对共享数据存取.</p>
-<p>通常加锁也有2种不同的粒度的锁:</p>
-<ol>
-<li>fine-grained(所谓的细粒度), 那么程序员需要自行地加,解锁来保证线程安全</li>
-<li>coarse-grained(所谓的粗粒度), 那么语言层面本身维护着一个全局的锁机制,用来保证线程安全</li>
-</ol>
-<p>前一种方式比较典型的是<br><a href="http://en.wikipedia.org/wiki/Java_\(programming_language\" target="_blank" rel="external">java</a>),<br><a href="http://en.wikipedia.org/wiki/Jython" target="_blank" rel="external">Jython</a> 等, 后一种方式比较典型的是<br><a href="http://en.wikipedia.org/wiki/Cpython" target="_blank" rel="external">CPython</a> (即Python).</p>
-<p>前一种本文不进行讨论, 具体可参考<br><a href="http://en.wikipedia.org/wiki/Java_\(programming_language\" target="_blank" rel="external">java</a>) 中的多线程编程部分.</p>
-<p>至于Python中的全局锁机制,也即 <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a><br>(Global Interpreter Lock), 下面主要进行一些讨论.</p>
-<h1 id="GIL-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety-and"><a href="#GIL-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety-and" class="headerlink" title="[GIL](http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-"></a>[GIL](<a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-" target="_blank" rel="external">http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-</a></h1><p>GIL.html#id20)</p>
-<p><a href="http://www.cnblogs.com/mindsbook" target="_blank" rel="external">作者博客链接</a>.</p>
-<p>什么是 <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> ?<br>答案可参考wikipedia中的说明, 简单地说就是:</p>
-<p><strong>每一个interpreter进程,只能同时仅有一个线程来执行, 获得相关的锁, 存取相关的资源</strong>.</p>
-<p>那么很容易就会发现,如果一个interpreter进程只能有一个线程来执行, 多线程的并发则成为不可能, 即使这几个线程之间不存在资源的竞争.</p>
-<p>从理论上讲,我们要尽可能地使程序更加并行, 能够充分利用多核的功能, 那么Python为什么要使用 全局的<br><a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> 来限制这种并行呢?</p>
-<p>这个问题,其实已经得到了很多的讨论, 不止十年, 可以参考下面的文档:</p>
-<p>反对 <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> 的声音:</p>
-<ol>
-<li><a href="http://blog.snaplogic.org/?p=94" target="_blank" rel="external">An open letter to Guido van Rossum</a> (这个文章值得一看,下面有很多的留言也值得一看)</li>
-</ol>
-<p>认为 <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> 不能去除的:</p>
-<ol>
-<li><a href="http://www.artima.com/weblogs/viewpost.jsp?thread=214235" target="_blank" rel="external">It isn’t Easy to Remove the GIL</a> (这个文章来自python作者 <a href="http://en.wikipedia.org/wiki/Guido_van_Rossum" target="_blank" rel="external">Guido</a>, 他说明了什么要使用 <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a>)</li>
-</ol>
-<p>其它的一些讨论很容易从Google来搜索得到, 譬如: <a href="http://www.google.com/search?hl=en&amp;newwindow=1&amp;q=global+interpreter+lock&amp;aq=0&amp;oq=Global+interpreter&amp;aqi=g3g-m6" target="_blank" rel="external">GIL at<br>google</a>.</p>
-<p>那么,简单总结下双方的观点.</p>
-<p>认为应该去除 <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> 的:</p>
-<ol>
-<li>不顺应计算机的发展潮流(多核时代已经到来, 而 <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> 会很影响多核的使用)</li>
-<li>大幅度提升多线程程序的速度</li>
-</ol>
-<p>认为不应该去除 <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> 的(如果去掉,会):</p>
-<ol>
-<li>写python的扩展(module)时会遇到锁的问题,程序员需要繁琐地加解锁来保证线程安全</li>
-<li>会较大幅度地减低单线程程序的速度</li>
-</ol>
-<p>后者是 <a href="http://en.wikipedia.org/wiki/Guido_van_Rossum" target="_blank" rel="external">Guido</a> 最为关切的, 也是不去除<br><a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> 最重要的原因,<br>一个简单的尝试是在1999年(十年前), 最终的结果是导致单线程的程序速度下降了几乎2倍.</p>
-<p>归根结底,其实就是多进程与多线程的选择问题, 有一段话比较有意思, 可以参考<br><a href="http://www.artima.com/forums/flat.jsp?forum=106&amp;thread=214235" target="_blank" rel="external">http://www.artima.com/forums/flat.jsp?forum=106&amp;thread=214235</a>.</p>
-<p>我引用如下:</p>
-<pre><code>I actually don&apos;t think removing the GIL is a good solution.
-But I don&apos;t think threads are a good solution, either.
-They&apos;re too hard to get right, and I say that after spending literally years studying threading in both C++ and Java.
-Brian Goetz has taken to saying that no one can get threading right.
-</code></pre><p>引自 <a href="http://en.wikipedia.org/wiki/Bruce_Eckel" target="_blank" rel="external">Bruce Eckel</a> 对<br><a href="http://en.wikipedia.org/wiki/Guido_van_Rossum" target="_blank" rel="external">Guido</a> 的回复. 而 <a href="http://en.wikipedia.org/wiki/Bruce_Eckel" target="_blank" rel="external">Bruce<br>Eckel</a> 是何许人, 如果你了解<br><a href="http://en.wikipedia.org/wiki/Java_\(programming_language\" target="_blank" rel="external">java</a>) 或者 C++,<br>那么应该不会不知道他.</p>
-<h1 id="个人的观点-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety"><a href="#个人的观点-http-www-cnblogs-com-mindsbook-archive-2009-10-15-thread-safety" class="headerlink" title="[个人的观点](http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-"></a>[个人的观点](<a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-" target="_blank" rel="external">http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-</a></h1><p>and-GIL.html#id21)</p>
-<p><a href="http://www.cnblogs.com/mindsbook" target="_blank" rel="external">作者博客链接</a>.</p>
-<p>那么,从我自己的角度来看(我没有太多的多线程编程经验), 先不论多线程的速度优势等,我更加喜欢多进程的是:</p>
-<ol>
-<li>简单,无需要人为(或者语言级别)的加解锁. 想想 <a href="http://en.wikipedia.org/wiki/Java_\(programming_language\" target="_blank" rel="external">java</a>) 中的多线程编程,程序员通常会在此处出错(java程序员可以思考下)</li>
-<li>安全, 这也是浏览器为什么开始使用多进程的一个原因</li>
-</ol>
-<p>依照Python自身的哲学, <strong>简单</strong> 是一个很重要的原则,所以, 使用<br><a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock" target="_blank" rel="external">GIL</a> 也是很好理解的.</p>
-<p>当然你真的需要充分利用多核的速度优势,此时python可能并非你最佳的选择,请考虑别的语言吧,如<br><a href="http://en.wikipedia.org/wiki/Java_\(programming_language\" target="_blank" rel="external">java</a>),<br><a href="http://en.wikipedia.org/wiki/Erlang_\(programming_language\" target="_blank" rel="external">erlang</a>) 等.</p>
-<p>转自：<a href="http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-
-GIL.html" target="_blank" rel="external">http://www.cnblogs.com/mindsbook/archive/2009/10/15/thread-safety-and-
-GIL.html</a></p>
-
-          
+          线程安全及Python中的GIL本博客所有内容采用 Creative CommonsLicenses 许可使用.引用本内容时，请保留 朱涛,出处 ，并且 非商业 .
+点击 订阅 来订阅本博客.(推荐使用 googlereader, 如果你的浏览器不支持直接订阅,请直接在 googlereader 中
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/20/线程安全及Python中的GIL/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2316,7 +1550,7 @@ GIL.html</a></p>
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-19T05:37:00+08:00">
                 2016-12-19
@@ -2331,6 +1565,16 @@ GIL.html</a></p>
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/19/python logging模块/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/19/python logging模块/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2356,108 +1600,15 @@ GIL.html</a></p>
       
         
           
-            <p>1.logging模块提供了四个组件<br>logger：日志类，有两个功能<br>1)配置日志的等级，处理器handler，过滤器filter<br>logger.setLevel(logging.INFO)<br>logger.addHandler(handler)<br>logger.addFilter(filter)<br>2)写日志<br>logger.info()</p>
-<p>handler:处理器类，实际写日志的类<br>常用的处理器有StreamHandler和FileHandler<br>StreamHandler将日志输出到stream，如sys.stdout,sys.stderr<br>FileHandler将日志输出到文件<br>处理器类可以配置自己的等级，过滤器<br>一个logger可以配置多个处理器类</p>
-<p>filter:过滤器类，过滤日志等级，内容<br>使用示例如下：<br>class InfoFilter(logging.Filter):<br>def filter(self,rec):<br>reurn rec.levelno==logging.INFO<br>logger.addFilter(InfoFilter())</p>
-<p>formatter:内容格式化类，格式化输出的内容<br>格式化配置，使用%(&lt;dict key&gt;)s的形式，具体有哪些关键字，可以参照官网的介绍。<br>使用示例如下：<br>fmt=’%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s’<br>formatter=logging.Formatter(fmt)<br>handler.setFormatter(formatter)</p>
-<p>2.logger对象<br>使用logging.getLogger(name=None)函数找到一个logger对象，当name指定的logger不存在时，会自动创建一个该名称的对象，保存在logging.manage的loggerDict中。</p>
-<p>3.logging日志输出流程</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161219133511603-20961325.png" alt=""></p>
-<p>logger输出日志的流程：<br>1)用户代码调用打印日志函数（logging.info(),logging.debug()等）<br>2)若希望打印的日志级别不够，则流程停止。否则进入步骤3<br>3)建立一个LogRecord对象，该对象代表打印的日志<br>4)判断这条日志是否被filter过滤掉，如果被过滤，流程停止。否则进入步骤5<br>5)logger将LogRecord传递到它定义的handlers，进行处理<br>6)判断当前logger的propagate属性，为0，则流程停止，否则进入步骤7<br>7)判断当前logger有无父logger，如果没有，流程停止，否则设置当前logger为它的父logger，继续执行步骤5<br>注：logger对象是有继承关系的，如名为a.b,a.c的logger都是名为a的子logger，并且所有的logger对象都继承自root,如果子对象没有添加handler等配置，会从父对象继承，这样可以通过继承关系来复用配置。</p>
-<p>handler处理日志的过程：<br>1)如果当前LogRecord的级别小于handler所设置的LogLevel,则停止流程，否则进入步骤2<br>2)判断当前LogRecord是否被handler设置的filter过滤，如果被过滤，流程停止，否则日志输出到最终目的地。</p>
-<p>4.logging使用示例<br>logging有三种配置方式<br>1)代码定义logger,handler等</p>
-<pre><code>#!/usr/bin/env python 
-# -*- coding: utf-8 -*- 
-import logging  
-import logging.config
-
-handler = logging.StreamHandler()
-fmt = &apos;%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s&apos;  
-
-formatter = logging.Formatter(fmt)   # 实例化formatter  
-handler.setFormatter(formatter)      # 为handler添加formatter  
-
-logger = logging.getLogger(&apos;tst&apos;)    # 获取名为tst的logger  
-logger.addHandler(handler)           # 为logger添加handler  
-logger.setLevel(logging.DEBUG)  
-
-logger.info(&apos;first info message&apos;)  
-logger.debug(&apos;first debug message&apos;)  
-</code></pre><p>2)logging配置文件<br>loggin.conf采用了模式匹配的方式进行配置，正则表达式是r’^[(.*)]$’，从而匹配出所有的组件。对于同一个组件具有多个实例的情况使用逗号’，’进行分隔。对于一个实例的配置采用componentName_instanceName配置块。使用这种方式还是蛮简单的。<br>logging.conf</p>
-<pre><code>[loggers]
-keys=root,simpleExample
-
-[handlers]
-keys=consoleHandler
-
-[formatters]
-keys=simpleFormatter
-
-[logger_root]
-level=DEBUG
-handlers=consoleHandler
-
-[logger_simpleExample]
-level=DEBUG
-handlers=consoleHandler
-qualname=simpleExample
-propagate=0
-
-[handler_consoleHandler]
-class=StreamHandler
-level=DEBUG
-formatter=simpleFormatter
-args=(sys.stdout,)
-
-[formatter_simpleFormatter]
-format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
-
-
-#!/usr/bin/env python 
-# -*- coding: utf-8 -*- 
-import logging  
-import logging.config  
-
-logging.config.fileConfig(&apos;logging.conf&apos;)
-
-# create logger
-logger = logging.getLogger(&apos;simpleExample&apos;)
-
-# &apos;application&apos; code
-logger.debug(&apos;debug message&apos;)
-logger.info(&apos;info message&apos;)
-logger.warn(&apos;warn message&apos;)
-logger.error(&apos;error message&apos;)
-logger.critical(&apos;critical message&apos;)
-</code></pre><p>3)logging配置字典</p>
-<pre><code>#!/usr/bin/env python 
-# -*- coding: utf-8 -*- 
-import logging  
-import logging.config  
-
-LOGGING = {
-    &apos;version&apos;: 1,
-    &apos;disable_existing_loggers&apos;: False,
-    &apos;handlers&apos;: {
-        &apos;console&apos;: {
-            &apos;class&apos;: &apos;logging.StreamHandler&apos;,
-        },
-    },
-    &apos;loggers&apos;: {
-        &apos;test&apos;: {
-            &apos;handlers&apos;: [&apos;console&apos;],
-            &apos;level&apos;: &apos;ERROR&apos;,
-        },
-    },
-}     
-logging.config.dictConfig(LOGGING)
-logger = logging.getLogger(&apos;test&apos;)
-logger.info(&apos;info message dict&apos;)
-logger.warn(&apos;warn message dict&apos;)
-logger.error(&apos;error message dict&apos;)
-logger.critical(&apos;critical message dict&apos;)
-</code></pre>
-          
+          1.logging模块提供了四个组件logger：日志类，有两个功能1)配置日志的等级，处理器handler，过滤器filterlogger.setLevel(logging.INFO)logger.addHandler(handler)logger.addFilter(filter)2)写日志lo
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/19/python logging模块/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2533,7 +1684,7 @@ logger.critical(&apos;critical message dict&apos;)
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -2542,7 +1693,7 @@ logger.critical(&apos;critical message dict&apos;)
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -2561,6 +1712,26 @@ logger.critical(&apos;critical message dict&apos;)
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -2599,11 +1770,11 @@ logger.critical(&apos;critical message dict&apos;)
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -2684,34 +1855,167 @@ logger.critical(&apos;critical message dict&apos;)
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-18T15:20:00+08:00">
                 2016-09-18
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/18/微信消息的处理和应答/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/18/微信消息的处理和应答/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,96 +348,18 @@
       
         
           
-            <p>1.微信消息应答流程<br>微信服务器是客户手机和开发服务器信息流通的桥梁。消息流程图如下：<br><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918231623647-1594288246.png" alt=""></p>
-<p>2.微信服务器向开发服务器请求消息<br>1)文本消息处理<br>2)事件消息处理<br>3)开发者认证处理<br><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918231637429-148934776.png" alt=""></p>
-<p>微信消息处理入口操作，代码示例如下：</p>
-<pre><code>public void ProcessRequest(HttpContext context)
-{
-    //WHC.Framework.Commons.LogTextHelper.Info(&quot;测试记录&quot;);
-
-    string postString = string.Empty;
-    if (HttpContext.Current.Request.HttpMethod.ToUpper() == &quot;POST&quot;)
-    {
-        using (Stream stream = HttpContext.Current.Request.InputStream)
-        {
-            Byte[] postBytes = new Byte[stream.Length];
-            stream.Read(postBytes, 0, (Int32)stream.Length);
-            postString = Encoding.UTF8.GetString(postBytes);
-        }
-
-        if (!string.IsNullOrEmpty(postString))
-        {
-            Execute(postString);
-        }
-    }
-    else
-    {
-        Auth();
-    }
-}
-</code></pre><p>WeixinApiDispatch消息分发管理类，它提取请求消息的内容，并构建不同类型的消息参数，传递给不同的响应函数进行处理，然后返回封装好的XML内容，作为响应。</p>
-<pre><code>/// &lt;summary&gt;
-/// 处理各种请求信息并应答（通过POST的请求）
-/// &lt;/summary&gt;
-/// &lt;param name=&quot;postStr&quot;&gt;POST方式提交的数据&lt;/param&gt;
-private void Execute(string postStr)
-{
-    WeixinApiDispatch dispatch = new WeixinApiDispatch();
-    string responseContent = dispatch.Execute(postStr);
-
-    HttpContext.Current.Response.ContentEncoding = Encoding.UTF8;
-    HttpContext.Current.Response.Write(responseContent);
-}
-</code></pre><p>代码处理逻辑如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918231731840-1285622410.png" alt=""></p>
-<p>具体的消息处理类：</p>
-<pre><code>/// &lt;summary&gt;
-/// 客户端请求的数据接口
-/// &lt;/summary&gt;
-public interface IWeixinAction
-{
-    /// &lt;summary&gt;
-    /// 对文本请求信息进行处理
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;info&quot;&gt;文本信息实体&lt;/param&gt;
-    /// &lt;returns&gt;&lt;/returns&gt;
-    string HandleText(RequestText info);
-
-    /// &lt;summary&gt;
-    /// 对图片请求信息进行处理
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;info&quot;&gt;图片信息实体&lt;/param&gt;
-    /// &lt;returns&gt;&lt;/returns&gt;
-    string HandleImage(RequestImage info);
-
-...........................
-
-
-    /// &lt;summary&gt;
-    /// 对订阅请求事件进行处理
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;info&quot;&gt;订阅请求事件信息实体&lt;/param&gt;
-    /// &lt;returns&gt;&lt;/returns&gt;
-    string HandleEventSubscribe(RequestEventSubscribe info);
-
-    /// &lt;summary&gt;
-    /// 对菜单单击请求事件进行处理
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;info&quot;&gt;菜单单击请求事件信息实体&lt;/param&gt;
-    /// &lt;returns&gt;&lt;/returns&gt;
-    string HandleEventClick(RequestEventClick info);
-
-..............................
-}
-</code></pre><p>其中，实体类参数是我们根据程序开发自己定义的，继承关系如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918231806967-1391534270.png" alt=""></p>
-<p>3.开发者服务器向微信服务器进行的消息请求消息<br>我们可以通过微信，进行相关的消息回复或者数据管理操作。<br>如下如所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918231825453-2039232473.png" alt=""></p>
-<p>微信的回复消息处理，处理逻辑如下图所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918231842407-1088216109.png" alt=""></p>
-<p>参考资料：<a href="http://www.cnblogs.com/wuhuacong/p/3614175.html" target="_blank" rel="external">http://www.cnblogs.com/wuhuacong/p/3614175.html</a></p>
-
-          
+          1.微信消息应答流程微信服务器是客户手机和开发服务器信息流通的桥梁。消息流程图如下：
+2.微信服务器向开发服务器请求消息1)文本消息处理2)事件消息处理3)开发者认证处理
+微信消息处理入口操作，代码示例如下：
+public void ProcessRequest(HttpContext contex
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/18/微信消息的处理和应答/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -489,7 +436,7 @@ public interface IWeixinAction
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-17T16:16:00+08:00">
                 2016-09-17
@@ -504,6 +451,16 @@ public interface IWeixinAction
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/17/微信公众号开发--开发服务器接入微信服务器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/17/微信公众号开发--开发服务器接入微信服务器/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -529,81 +486,15 @@ public interface IWeixinAction
       
         
           
-            <p><strong>1.微信公众号注册</strong><br>到微信公众平台（<a href="https://mp.weixin.qq.com/）注册公众号。" target="_blank" rel="external">https://mp.weixin.qq.com/）注册公众号。</a><br>公众号有”服务号”，”订阅号”，”企业号”三种类别，”服务号”主要面向企业和个人，”订阅号”主要面向组织和个人。<br>申请完毕后，登陆公众号，进入管理界面，公众号对应的二维码如下所示：<br><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918001355273-1496569262.png" alt=""><br><strong>2.开发服务器配置</strong><br><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160918001455711-2130774720.png" alt=""><br>URL是开发者用来接收微信消息和事件的接口URL<br>Token可由开发者任意填写，用作生成签名<br>EncodingAESKey由开发者手动填写或随机生成，将用作消息体加解密秘钥</p>
-<p><strong>3.验证开发服务器地址有效性</strong><br>开发者提交信息后，微信服务器将发送GET请求到开发服务器URL，GET请求有四个参数：<br>signature:微信加密签名<br>signature结合了token，timestamp，nonce三个参数<br>timestamp:时间戳<br>nonce:随机数<br>echostr:随机字符串</p>
-<p>开发者通过检验signature对请求进行检验，若检验成功，接入生效，否则接入失败</p>
-<p>加密/检验流程如下：<br>1)将token,timestamp,nonce三个参数进行字典序排序<br>2)将三个参数字符串拼接成一个字符串进行sha1加密<br>3)开发者获得加密后的字符串雨signature对比</p>
-<p>检验signature的C#示例代码如下：</p>
-<p>wxapi.ashx</p>
-<pre><code>&lt;%@ WebHandler Language=&quot;C#&quot; Class=&quot;wxapi&quot; %&gt;
-
-using System;
-using System.Web;
-using System.IO;
-using System.Text;
-using System.Web.Security;
-public class wxapi : IHttpHandler {
-
-    public void ProcessRequest (HttpContext context) {
-        string postString = string.Empty;
-        Auth(); //微信接入的测试
-    }
-    /// &lt;summary&gt;
-    /// 成为开发者的第一步，验证并相应服务器的数据
-    /// &lt;/summary&gt;
-    private void Auth()
-    {
-        string token = &quot;weixin&quot;;//从配置文件获取Token
-        if (string.IsNullOrEmpty(token))
-        {
-
-        }
-
-        string echoString = HttpContext.Current.Request.QueryString[&quot;echoStr&quot;];
-        string signature = HttpContext.Current.Request.QueryString[&quot;signature&quot;];
-        string timestamp = HttpContext.Current.Request.QueryString[&quot;timestamp&quot;];
-        string nonce = HttpContext.Current.Request.QueryString[&quot;nonce&quot;];
-
-        if (CheckSignature(token, signature, timestamp, nonce))
-        {
-            if (!string.IsNullOrEmpty(echoString))
-            {
-                HttpContext.Current.Response.Write(echoString);
-                HttpContext.Current.Response.End();
-            }
-        }
-    }
-    /// &lt;summary&gt;
-    /// 验证微信签名
-    /// &lt;/summary&gt;
-    public bool CheckSignature(string token, string signature, string timestamp, string nonce)
-    {
-        string[] ArrTmp = { token, timestamp, nonce };
-
-        Array.Sort(ArrTmp);
-        string tmpStr = string.Join(&quot;&quot;, ArrTmp);
-
-        tmpStr = FormsAuthentication.HashPasswordForStoringInConfigFile(tmpStr, &quot;SHA1&quot;);
-        tmpStr = tmpStr.ToLower();
-
-        if (tmpStr == signature)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public bool IsReusable {
-        get {
-            return false;
-        }
-    }
-
-}
-</code></pre>
-          
+          1.微信公众号注册到微信公众平台（https://mp.weixin.qq.com/）注册公众号。公众号有”服务号”，”订阅号”，”企业号”三种类别，”服务号”主要面向企业和个人，”订阅号”主要面向组织和个人。申请完毕后，登陆公众号，进入管理界面，公众号对应的二维码如下所示：2.开发服务器配置URL
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/17/微信公众号开发--开发服务器接入微信服务器/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -680,7 +571,7 @@ public class wxapi : IHttpHandler {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-08T10:46:00+08:00">
                 2016-09-08
@@ -695,6 +586,16 @@ public class wxapi : IHttpHandler {
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/08/RESTful架构/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/08/RESTful架构/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -720,86 +621,19 @@ public class wxapi : IHttpHandler {
       
         
           
-            <h1 id="RESTful架构"><a href="#RESTful架构" class="headerlink" title="RESTful架构"></a><strong>RESTful架构</strong></h1><p>1.什么是RESTful API设计原则</p>
-<p>REST是Representational State Transfer的简写，意为”表现层状态转换”</p>
-<p>是一种对资源状态进行操作的设计规则，如查询，新增，删除，修改</p>
-<p>（1）每个URI代表一种资源</p>
-<p>（2）客户端和服务器之间，传递这种资源的某种表现层</p>
-<p>（3）客户端通过四个HTTP动作，对服务器端资源进行操作，实现”表现层状态转换”</p>
-<p>2.资源</p>
-<p>资源即为实体，如一个文件，图片等</p>
-<p>3.表现层</p>
-<p>资源的表现形式，如文本可以用txt,html,xml,json,二进制等多种不同格式来表现。</p>
-<p>资源的具体表现形式，是在http请求头中使用Accept和Content-Type来指定的。</p>
-<p>4.状态转换</p>
-<p>操作一个资源表现层转换，只能是HTTP协议。</p>
-<p>具体，在HTTP协议里面，有四个表示操作方式的动词：GET,POST,PUT,DELETE，分别用来获取，新建，更新，删除资源。</p>
-<p>5.RESTful设计指南</p>
-<p>（1）总是使用HTTPs协议</p>
-<p>（2）域名</p>
-<p><a href="https://api.example.com" target="_blank" rel="external">https://api.example.com</a></p>
-<p>（3）版本</p>
-<p><a href="https://api.example.com/v1/" target="_blank" rel="external">https://api.example.com/v1/</a></p>
-<p>（4）路径</p>
-<p>在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表名对应，名词应该使用复数。</p>
-<p><a href="https://api.example.com/v1/zoos" target="_blank" rel="external">https://api.example.com/v1/zoos</a></p>
-<p><a href="https://api.example.com/v1/animals" target="_blank" rel="external">https://api.example.com/v1/animals</a></p>
-<p>（5）HTTP动词</p>
-<p>常用的HTTP动词有下面五个（括号里是对应的SQL命令）。</p>
-<p>GET（SELECT）：从服务器取出资源（一项或多项）。</p>
-<p>POST（CREATE）：在服务器新建一个资源。</p>
-<p>PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</p>
-<p>PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</p>
-<p>DELETE（DELETE）：从服务器删除资源。</p>
-<p>示例如下：</p>
-<p>GET /zoos：列出所有动物园</p>
-<p>POST /zoos：新建一个动物园</p>
-<p>GET /zoos/ID：获取某个指定动物园的信息</p>
-<p>PUT /zoos/ID：更新某个指定动物园的信息（提供该动物园的全部信息）</p>
-<p>PATCH /zoos/ID：更新某个指定动物园的信息（提供该动物园的部分信息）</p>
-<p>DELETE /zoos/ID：删除某个动物园</p>
-<p>GET /zoos/ID/animals：列出某个指定动物园的所有动物</p>
-<p>DELETE /zoos/ID/animals/ID：删除某个指定动物园的指定动物</p>
-<p>（6）过滤信息</p>
-<p>下面是一些常见的参数</p>
-<p>?limit=10：指定返回记录的数量</p>
-<p>?offset=10：指定返回记录的开始位置。</p>
-<p>?page=2&amp;per_page=100：指定第几页，以及每页的记录数。</p>
-<p>?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。</p>
-<p>?animal_type_id=1：指定筛选条件</p>
-<p>（7）状态码</p>
-<p>服务器向用户返回的状态码和提示信息，常见的有以下一些（方括号中是该状态码对应的HTTP动词）</p>
-<p>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。</p>
-<p>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</p>
-<p>202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）</p>
-<p>204 NO CONTENT - [DELETE]：用户删除数据成功。</p>
-<p>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</p>
-<p>401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。</p>
-<p>403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。</p>
-<p>404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</p>
-<p>406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。</p>
-<p>410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</p>
-<p>422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</p>
-<p>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。</p>
-<p>（8）错误处理</p>
-<p>如果状态码是4xx，就应该向用户返回出错信息。一般来说，返回的信息中将error作为键名，出错信息作为键值即可</p>
-<p>{</p>
-<p>error: “Invalid API key”</p>
-<p>}</p>
-<p>（9）返回结果</p>
-<p>GET /collection：返回资源对象的列表（数组）</p>
-<p>GET /collection/resource：返回单个资源对象</p>
-<p>POST /collection：返回新生成的资源对象</p>
-<p>PUT /collection/resource：返回完整的资源对象</p>
-<p>PATCH /collection/resource：返回完整的资源对象</p>
-<p>DELETE /collection/resource：返回一个空文档</p>
-<p>（10）提供Hypermedia</p>
-<p>返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。</p>
-<p>（11）其他</p>
-<p>API使用OAuth2.0框架</p>
-<p>服务器返回的数据格式，应该尽量使用JSON，避免使用XML。</p>
-
-          
+          RESTful架构1.什么是RESTful API设计原则
+REST是Representational State Transfer的简写，意为”表现层状态转换”
+是一种对资源状态进行操作的设计规则，如查询，新增，删除，修改
+（1）每个URI代表一种资源
+（2）客户端和服务器之间，传递这种资源的某种
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/08/RESTful架构/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -876,7 +710,7 @@ public class wxapi : IHttpHandler {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-08T09:13:00+08:00">
                 2016-09-08
@@ -891,6 +725,16 @@ public class wxapi : IHttpHandler {
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/08/OAuth2.0详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/08/OAuth2.0详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -916,66 +760,21 @@ public class wxapi : IHttpHandler {
       
         
           
-            <p>1.使用场景</p>
-<p>A系统存放着订单信息</p>
-<p>B系统需要查询A系统中的订单信息，但是必须要A系统验证通过后，才能查询。</p>
-<p>此时，我们有两种验证方式：</p>
-<p>1)拥有A系统的账户/密码</p>
-<p>  弊端是对A系统来说，直接提供账户/密码的方式非常不安全。</p>
-<p>2)A系统给B系统颁发一个令牌，规定了令牌的使用范围和有效期，可以理解为一个通行证。</p>
-<p>第二种方式，就是我们所说的OAuth授权。</p>
-<p>2.OAuth原理</p>
-<p>我们称待授权系统为”客户端”，授权系统为”服务器”</p>
-<p>OAuth的原理是，”客户端”不能直接登录”服务器”，”客户端”登录时，”服务端”有一个”授权层”，会首先检验颁发给”客户端”的”令牌”是否有效，若有效，则允许登录。</p>
-<p>3.OAuth验证流程</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171316113-195409067.png" alt=""></p>
-<p>（A）客户端请求用户授权</p>
-<p>（B）用户同意授权给客户端</p>
-<p>（C）客户端使用上一步获得的授权，像服务器申请令牌</p>
-<p>（D）服务器对客户端进行认证后，确认无误，同意发送令牌</p>
-<p>（E）客户端使用令牌，向服务器请求资源</p>
-<p>（F）服务器确认令牌无误，返回资源</p>
-<p>上述步骤中，关键是用户如何给客户端授权。有了授权后，客户端就可以获得令牌，继而获得资源。</p>
-<p>4.客户端授权的四种模式</p>
-<p>授权码模式</p>
-<p>简化模式</p>
-<p>密码模式</p>
-<p>客户端模式</p>
-<p>5.授权码模式</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171336691-1061817565.png" alt=""></p>
-<p>（A）用户访问客户端，客户端将用户导向服务器，包含了”重定向URI”地址</p>
-<p>（B）用户选择是否给予客户端授权</p>
-<p>（C）若给予，服务器将用户导向”重定向URI”地址，同时附上一个授权码</p>
-<p>（D）客户端收到授权码，附上”重定向URI”地址，向服务器申请令牌</p>
-<p>（E）服务端核对授权码和重定向URI，确认无误，向客户端发送访问令牌和更新令牌</p>
-<p>授权模式的特点是，需要通过客户端服务器，来和服务器端进行交互。</p>
-<p>6.简化模式</p>
-<p>简化模式不需要客户端服务器，直接通过浏览器向服务器申请令牌，跳过了”授权码”</p>
-<p>所有步骤在浏览器中完成，不需要认证客户端。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171351238-623752089.png" alt=""></p>
-<p>（A）客户端将用户导向服务器</p>
-<p>（B）用户决定是否给予客户端授权</p>
-<p>（C）若授权，服务器将用户导向客户端指定的”重定向URI”，URI的hash部分包含了访问令牌。</p>
-<p>（D）浏览器向服务器发出请求，不包括上一步收到的hash值</p>
-<p>（E）服务器返回一个网页，其中包含的代码可以获取hash值中的令牌</p>
-<p>（F）浏览器执行上一步获得的脚本，提取出令牌</p>
-<p>（G）浏览器将令牌发给客户端</p>
-<p>7.密码模式</p>
-<p>用户向客户端提供自己的用户名和密码，客户端使用用户名/密码，向服务器索要授权</p>
-<p>客户端不得储存密码，通常是一些大品牌信誉好的公司，才用这种模式。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171403879-1720556914.png" alt=""></p>
-<p>（A）用户向客户端提供用户名/密码</p>
-<p>（B）客户端讲用户名/密码发给服务器，请求令牌</p>
-<p>（C）服务器确认无误，向客户端提供访问令牌</p>
-<p>8.客户端模式</p>
-<p>客户端以自己的名义，而不是用户的名义，向服务器进行认证。用户直接向客户端注册，客户端以自己的名义要求服务器提供服务，其实不存在授权问题。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201609/300946-20160908171413441-1479058253.png" alt=""></p>
-<p>（A）客户端向服务器进行身份认证，并要求一个访问令牌</p>
-<p>（B）服务器确认无误，向客户端提供访问令牌</p>
-<p>9.更新令牌</p>
-<p>客户端的访问令牌过期后，需要使用更新令牌申请一个新的访问令牌</p>
-
-          
+          1.使用场景
+A系统存放着订单信息
+B系统需要查询A系统中的订单信息，但是必须要A系统验证通过后，才能查询。
+此时，我们有两种验证方式：
+1)拥有A系统的账户/密码
+  弊端是对A系统来说，直接提供账户/密码的方式非常不安全。
+2)A系统给B系统颁发一个令牌，规定了令牌的使用范围和有效期，可以理解为
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/08/OAuth2.0详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1052,7 +851,7 @@ public class wxapi : IHttpHandler {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-08T05:28:00+08:00">
                 2016-09-08
@@ -1067,6 +866,16 @@ public class wxapi : IHttpHandler {
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/08/HTTP头详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/08/HTTP头详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1092,40 +901,17 @@ public class wxapi : IHttpHandler {
       
         
           
-            <p>HTTP 头部解释</p>
-<p>1. Accept：告诉WEB服务器自己接受什么介质类型，<em>/</em> 表示任何类型，type/* 表示该类型下的所有子类型，type/sub-type。</p>
-<p>2. Accept-Charset： 浏览器申明自己接收的字符集<br>Accept-Encoding： 浏览器申明自己接收的编码方法，通常指定压缩方法，是否支持压缩，支持什么压缩方法 （gzip，deflate）<br>Accept-Language：：浏览器申明自己接收的语言语言跟字符集的区别：中文是语言，中文有多种字符集，比如big5，gb2312，gbk等等。</p>
-<p>3. Accept-<br>Ranges：WEB服务器表明自己是否接受获取其某个实体的一部分（比如文件的一部分）的请求。bytes：表示接受，none：表示不接受。</p>
-<p>4. Age：当代理服务器用自己缓存的实体去响应请求时，用该头部表明该实体从产生到现在经过多长时间了。</p>
-<p>5. Authorization：当客户端接收到来自WEB服务器的 WWW-Authenticate<br>响应时，该头部来回应自己的身份验证信息给WEB服务器。</p>
-<p>6. Cache-Control：请求：no-cache（不要缓存的实体，要求现在从WEB服务器去取）<br>max-age：（只接受 Age 值小于 max-age 值，并且没有过期的对象）<br>max-stale：（可以接受过去的对象，但是过期时间必须小于<br>max-stale 值）<br>min-fresh：（接受其新鲜生命期大于其当前 Age 跟 min-fresh 值之和的<br>缓存对象）<br>响应：public(可以用 Cached 内容回应任何用户)<br>private（只能用缓存内容回应先前请求该内容的那个用户）<br>no-cache（可以缓存，但是只有在跟WEB服务器验证了其有效后，才能返回给客户端）<br>max-age：（本响应包含的对象的过期时间）<br>ALL: no-store（不允许缓存）</p>
-<p>7. Connection：请求：close（告诉WEB服务器或者代理服务器，在完成本次请求的响应<br>后，断开连接，不要等待本次连接的后续请求了）。<br>keepalive（告诉WEB服务器或者代理服务器，在完成本次请求的<br>响应后，保持连接，等待本次连接的后续请求）。<br>响应：close（连接已经关闭）。<br>keepalive（连接保持着，在等待本次连接的后续请求）。<br>Keep-Alive：如果浏览器请求保持连接，则该头部表明希望 WEB 服务器保持<br>连接多长时间（秒）。<br>例如：Keep-Alive：300</p>
-<p>8. Content-Encoding：WEB服务器表明自己使用了什么压缩方法（gzip，deflate）压缩响应中的对象。<br>例如：Content-Encoding：gzip<br>Content-Language：WEB 服务器告诉浏览器自己响应的对象的语言。<br>Content-Length： WEB 服务器告诉浏览器自己响应的对象的长度。<br>例如：Content-Length: 26012<br>Content-Range： WEB 服务器表明该响应包含的部分对象为整个对象的哪个部分。<br>例如：Content-Range: bytes 21010-47021/47022<br>Content-Type： WEB 服务器告诉浏览器自己响应的对象的类型。<br>例如：Content-Type：application/xml</p>
-<p>9. ETag：就是一个对象（比如URL）的标志值，就一个对象而言，比如一个 html 文件，<br>如果被修改了，其 Etag 也会别修改， 所以，ETag 的作用跟 Last-Modified 的<br>作用差不多，主要供 WEB 服务器 判断一个对象是否改变了。<br>比如前一次请求某个 html 文件时，获得了其 ETag，当这次又请求这个文件时，<br>浏览器就会把先前获得的 ETag 值发送给 WEB 服务器，然后 WEB 服务器<br>会把这个 ETag 跟该文件的当前 ETag 进行对比，然后就知道这个文件<br>有没有改变了。</p>
-<p>10. Expired：WEB服务器表明该实体将在什么时候过期，对于过期了的对象，只有在<br>跟WEB服务器验证了其有效性后，才能用来响应客户请求。<br>是 HTTP/1.0 的头部。<br>例如：Expires：Sat, 23 May 2009 10:02:12 GMT</p>
-<p>11. Host：客户端指定自己想访问的WEB服务器的域名/IP 地址和端口号。<br>例如：Host：rss.sina.com.cn</p>
-<p>12. If-Match：如果对象的 ETag 没有改变，其实也就意味著对象没有改变，才执行请求的动作。<br>If-None-Match：如果对象的 ETag 改变了，其实也就意味著对象也改变了，才执行请求的动作。</p>
-<p>13. If-Modified-Since：如果请求的对象在该头部指定的时间之后修改了，才执行请求<br>的动作（比如返回对象），否则返回代码304，告诉浏览器该对象<br>没有修改。<br>例如：If-Modified-Since：Thu, 10 Apr 2008 09:14:42 GMT<br>If-Unmodified-Since：如果请求的对象在该头部指定的时间之后没修改过，才执行<br>请求的动作（比如返回对象）。</p>
-<p>14. If-Range：浏览器告诉 WEB 服务器，如果我请求的对象没有改变，就把我缺少的部分<br>给我，如果对象改变了，就把整个对象给我。 浏览器通过发送请求对象的<br>ETag 或者 自己所知道的最后修改时间给 WEB 服务器，让其判断对象是否<br>改变了。<br>总是跟 Range 头部一起使用。</p>
-<p>15. Last-Modified：WEB 服务器认为对象的最后修改时间，比如文件的最后修改时间，<br>动态页面的最后产生时间等等。<br>例如：Last-Modified：Tue, 06 May 2008 02:42:43 GMT</p>
-<p>16. Location：WEB 服务器告诉浏览器，试图访问的对象已经被移到别的位置了，<br>到该头部指定的位置去取。<br>例如：Location：<br><a href="http://i0.sinaimg.cn/dy/deco/2008/0528/sinahome_0803_ws_005_text_0.gif" target="_blank" rel="external">http://i0.sinaimg.cn/dy/deco/2008/0528/sinahome_0803_ws_005_text_0.gif</a></p>
-<p>17. Pramga：主要使用 Pramga: no-cache，相当于 Cache-Control： no-cache。<br>例如：Pragma：no-cache</p>
-<p>18. Proxy-Authenticate： 代理服务器响应浏览器，要求其提供代理身份验证信息。<br>Proxy-Authorization：浏览器响应代理服务器的身份验证请求，提供自己的身份信息。</p>
-<p>19. Range：浏览器（比如 Flashget 多线程下载时）告诉 WEB 服务器自己想取对象的哪部分。<br>例如：Range: bytes=1173546-</p>
-<p>20. Referer：浏览器向 WEB 服务器表明自己是从哪个 网页/URL 获得/点击 当前请求中的网址/URL。<br>例如：Referer：<a href="http://www.sina.com/" target="_blank" rel="external">http://www.sina.com/</a></p>
-<p>21. Server: WEB 服务器表明自己是什么软件及版本等信息。<br>例如：Server：Apache/2.0.61 (Unix)</p>
-<p>22. User-Agent: 浏览器表明自己的身份（是哪种浏览器）。<br>例如：User-Agent：Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN;<br>rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14</p>
-<p>23. Transfer-Encoding: WEB 服务器表明自己对本响应消息体（不是消息体里面的对象）<br>作了怎样的编码，比如是否分块（chunked）。<br>例如：Transfer-Encoding: chunked</p>
-<p>24. Vary: WEB服务器用该头部的内容告诉 Cache 服务器，在什么条件下才能用本响应<br>所返回的对象响应后续的请求。<br>假如源WEB服务器在接到第一个请求消息时，其响应消息的头部为：<br>Content-Encoding: gzip; Vary: Content-Encoding 那么 Cache 服务器会分析后续<br>请求消息的头部，检查其 Accept-Encoding，是否跟先前响应的 Vary 头部值<br>一致，即是否使用相同的内容编码方法，这样就可以防止 Cache 服务器用自己<br>Cache 里面压缩后的实体响应给不具备解压能力的浏览器。<br>例如：Vary：Accept-Encoding</p>
-<p>25. Via： 列出从客户端到 OCS 或者相反方向的响应经过了哪些代理服务器，他们用<br>什么协议（和版本）发送的请求。<br>当客户端请求到达第一个代理服务器时，该服务器会在自己发出的请求里面<br>添加 Via 头部，并填上自己的相关信息，当下一个代理服务器 收到第一个代理<br>服务器的请求时，会在自己发出的请求里面复制前一个代理服务器的请求的Via<br>头部，并把自己的相关信息加到后面， 以此类推，当 OCS 收到最后一个代理服<br>务器的请求时，检查 Via 头部，就知道该请求所经过的路由。<br>例如：Via：1.0 236-81.D07071953.sina.com.cn:80 (squid/2.6.STABLE13)</p>
-<p>====================================</p>
-<p>HTTP 请求消息头部实例：<br>Host：rss.sina.com.cn<br>User-Agent：Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.8.1.14)<br>Gecko/20080404 Firefox/2.0.0.14<br>Accept：text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,<em>/</em>;q=0.5<br>Accept-Language：zh-cn,zh;q=0.5<br>Accept-Encoding：gzip,deflate<br>Accept-Charset：gb2312,utf-8;q=0.7,*;q=0.7<br>Keep-Alive：300<br>Connection：keep-alive<br>Cookie：userId=C5bYpXrimdmsiQmsBPnE1Vn8ZQmdWSm3WRlEB3vRwTnRtW &lt;-- Cookie<br>If-Modified-Since：Sun, 01 Jun 2008 12:05:30 GMT<br>Cache-Control：max-age=0<br>HTTP 响应消息头部实例：<br>Status：OK - 200 &lt;-- 响应状态码，表示 web 服务器处理的结果。<br>Date：Sun, 01 Jun 2008 12:35:47 GMT<br>Server：Apache/2.0.61 (Unix)<br>Last-Modified：Sun, 01 Jun 2008 12:35:30 GMT<br>Accept-Ranges：bytes<br>Content-Length：18616<br>Cache-Control：max-age=120<br>Expires：Sun, 01 Jun 2008 12:37:47 GMT<br>Content-Type：application/xml<br>Age：2<br>X-Cache：HIT from 236-41.D07071951.sina.com.cn &lt;-- 反向代理服务器使用的 HTTP 头部<br>Via：1.0 236-41.D07071951.sina.com.cn:80 (squid/2.6.STABLE13)  </p>
-<h1 id="Connection：close"><a href="#Connection：close" class="headerlink" title="Connection：close  "></a>Connection：close  </h1><p>HTTP头部信息简单说明</p>
-<p>一、HTTP响应码响应码由三位十进制数字组成，它们出现在由HTTP服务器发送的响应的第一行。<br>响应码分五种类型，由它们的第一位数字表示：<br>1xx：信息，请求收到，继续处理<br>2xx：成功，行为被成功地接受、理解和采纳<br>3xx：重定向，为了完成请求，必须进一步执行的动作<br>4xx：客户端错误，请求包含语法错误或者请求无法实现<br>5xx：服务器错误，服务器不能实现一种明显无效的请求<br>下表显示每个响应码及其含义：<br>100 继续101 分组交换协200 OK201 被创建202 被采纳203 非授权信息204 无内容205 重置内容206 部分内容300 多选项301<br>永久地传送302 找到303 参见其他304 未改动305 使用代理307 暂时重定向400 错误请求401 未授权402 要求付费403 禁止404<br>未找到405 不允许的方法406 不被采纳407 要求代理授权408 请求超时409 冲突410 过期的411 要求的长度412 前提不成立413<br>请求实例太大414 请求URI太大415 不支持的媒体类型416 无法满足的请求范围417 失败的预期500 内部服务器错误501 未被使用502<br>网关错误503 不可用的服务504 网关超时505 HTTP版本未被支持</p>
-<p>二、HTTP头标头标由主键/值对组成。它们描述客户端或者服务器的属性、被传输的资源以及应该实现连接。<br>四种不同类型的头标：<br>1.通用头标：即可用于请求，也可用于响应，是作为一个整体而不是特定资源与事务相关联。<br>2.请求头标：允许客户端传递关于自身的信息和希望的响应形式。<br>3.响应头标：服务器和于传递自身信息的响应。<br>4.实体头标：定义被传送资源的信息。即可用于请求，也可用于响应。<br>头标格式：&lt;name&gt;:&lt;value&gt;&lt;CRLF&gt;<br>下表描述在HTTP/1.1中用到的头标<br>Accept 定义客户端可以处理的媒体类型，按优先级排序；在一个以逗号为分隔的列表中，可以定义多种类型和使用通配符。例如：Accept:<br>image/jpeg,image/png,<em>/</em>Accept-Charset<br>定义客户端可以处理的字符集，按优先级排序；在一个以逗号为分隔的列表中，可以定义多种类型和使用通配符。例如：Accept-Charset:<br>iso-8859-1,*,utf-8<br>Accept-Encoding 定义客户端可以理解的编码机制。例如：Accept-Encoding:gzip,compress<br>Accept-Language 定义客户端乐于接受的自然语言列表。例如：Accept-Language: en,de<br>Accept-Ranges 一个响应头标，它允许服务器指明：将在给定的偏移和长度处，为资源组成部分的接受请求。该头标的值被理解为请求范围的度量单位<br>。例如Accept-Ranges: bytes或Accept-Ranges: none<br>Age 允许服务器规定自服务器生成该响应以来所经过的时间长度，以秒为单位。该头标主要用于缓存响应。例如：Age: 30<br>Allow 一个响应头标，它定义一个由位于请求URI中的次源所支持的HTTP方法列表。例如：Allow: GET,PUT<br>aUTHORIZATION 一个响应头标，用于定义访问一种资源所必需的授权（域和被编码的用户ID与口令）。例如：Authorization: Basic<br>YXV0aG9yOnBoaWw=<br>Cache-Control 一个用于定义缓存指令的通用头标。例如：Cache-Control: max-age=30<br>Connection 一个用于表明是否保存socket连接为开放的通用头标。例如：Connection: close或Connection: keep-<br>alive<br>Content-Base 一种定义基本URI的实体头标，为了在实体范围内解析相对URLs。如果没有定义Content-<br>Base头标解析相对URLs，使用Content- Location URI（存在且绝对）或使用URI请求。例如：Content-Base:</p>
-<p>Content-Encoding 一种介质类型修饰符，标明一个实体是如何编码的。例如：Content-Encoding: zipContent-<br>Language 用于指定在输入流中数据的自然语言类型。例如：Content-Language: en<br>Content-Length 指定包含于请求或响应中数据的字节长度。例如：Content-Length:382<br>Content-Location 指定包含于请求或响应中的资源定位（URI）。如果是一绝。对URL它也作为被解析实体的相对URL的出发点。例如<br>：Content-Location: <a href="http://www.myweb.com/news" target="_blank" rel="external">http://www.myweb.com/news</a><br>Content-MD5 实体的一种MD5摘要，用作校验和。发送方和接受方都计算MD5摘要，接受方将其计算的值与此头标中传递的值进行比较。例如<br>：Content-MD5: &lt;base64 of 128 MD5 digest&gt;<br>Content-Range 随部分实体一同发送；标明被插入字节的低位与高位字节偏移，也标明此实体的总长度。例如：Content-Range:<br>1001-2000/5000<br>Contern-Type 标明发送或者接收的实体的MIME类型。例如：Content-Type: text/html<br>Date 发送HTTP消息的日期。例如：Date: Mon,10PR 18:42:51 GMT<br>ETag<br>一种实体头标，它向被发送的资源分派一个唯一的标识符。对于可以使用多种URL请求的资源，ETag可以用于确定实际被发送的资源是否为同一资源。例如：ETag:<br>‘208f-419e-30f8dc99’<br>Expires 指定实体的有效期。例如：Expires: Mon,05 Dec 2008 12:00:00 GMT<br>Form 一种请求头标，给定控制用户代理的人工用户的电子邮件地址。例如：From: webmaster@myweb.com<br>Host 被请求资源的主机名。对于使用HTTP/1.1的请求而言，此域是强制性的。例如：Host: www.myweb.com<br>If-Modified-Since<br>如果包含了GET请求，导致该请求条件性地依赖于资源上次修改日期。如果出现了此头标，并且自指定日期以来，此资源已被修改，应该反回一个304响应代码。例如<br>：If-Modified-Since: Mon,10PR 18:42:51 GMT<br>If-Match 如果包含于一个请求，指定一个或者多个实体标记。只发送其ETag与列表中标记区配的资源。例如：If-Match: ‘208f-419e-<br>308dc99’<br>If-None-Match 如果包含一个请求，指定一个或者多个实体标记。资源的ETag不与列表中的任何一个条件匹配，操作才执行。例如：If-None-<br>Match: ‘208f-419e-308dc99’<br>If-Range<br>指定资源的一个实体标记，客户端已经拥有此资源的一个拷贝。必须与Range头标一同使用。如果此实体自上次被客户端检索以来，还不曾修改过，那么服务器只发送指定的范围，否则它将发送整个资源。例如：Range:<br>byte=0-499&lt;CRLF&gt;If-Range:’208f-419e-30f8dc99’<br>If-Unmodified-Since 只有自指定的日期以来，被请求的实体还不曾被修改过，才会返回此实体。例如：If-Unmodified-<br>Since:Mon,10PR 18:42:51 GMT<br>Last-Modified 指定被请求资源上次被修改的日期和时间。例如：Last-Modified: Mon,10PR 18:42:51 GMT<br>Location<br>对于一个已经移动的资源，用于重定向请求者至另一个位置。与状态编码302（暂时移动）或者301（永久性移动）配合使用。例如：Location:<br><a href="http://www2.myweb.com/index.jsp" target="_blank" rel="external">http://www2.myweb.com/index.jsp</a><br>Max-Forwards<br>一个用于TRACE方法的请求头标，以指定代理或网关的最大数目，该请求通过网关才得以路由。在通过请求传递之前，代理或网关应该减少此数目。例如：Max-<br>Forwards: 3<br>Pragma 一个通用头标，它发送实现相关的信息。例如：Pragma: no-cache<br>Proxy-Authenticate 类似于WWW-Authenticate，便是有意请求只来自请求链（代理）的下一个服务器的认证。例如：Proxy-<br>Authenticate: Basic realm-admin<br>Proxy-Proxy-Authorization 类似于授权，但并非有意传递任何比在即时服务器链中更进一步的内容。例如：Proxy-Proxy-<br>Authorization: Basic YXV0aG9yOnBoaWw=<br>Public 列表显示服务器所支持的方法集。例如：Public: OPTIONS,MGET,MHEAD,GET,HEAD<br>Range 指定一种度量单位和一个部分被请求资源的偏移范围。例如：Range: bytes=206-5513<br>Refener 一种请求头标域，标明产生请求的初始资源。对于HTML表单，它包含此表单的Web页面的地址。例如：Refener:<br><a href="http://www.myweb.com/news/search.html" target="_blank" rel="external">http://www.myweb.com/news/search.html</a><br>Retry-After<br>一种响应头标域，由服务器与状态编码503（无法提供服务）配合发送，以标明再次请求之前应该等待多长时间。此时间即可以是一种日期，也可以是一种秒单位。例如<br>：Retry-After: 18<br>Server 一种标明Web服务器软件及其版本号的头标。例如：Server: Apache/2.0.46(Win32)<br>Transfer-Encoding 一种通用头标，标明对应被接受方反向的消息体实施变换的类型。例如：Transfer-Encoding: chunked<br>Upgrade 允许服务器指定一种新的协议或者新的协议版本，与响应编码101（切换协议）配合使用。例如：Upgrade: HTTP/2.0<br>User-Agent 定义用于产生请求的软件类型（典型的如Web浏览器）。例如：User-Agent: Mozilla/4.0(compatible;<br>MSIE 5.5; Windows NT; DigExt)<br>Vary 一个响应头标，用于表示使用服务器驱动的协商从可用的响应表示中选择响应实体。例如：Vary: *Via<br>一个包含所有中间主机和协议的通用头标，用于满足请求。例如：Via: 1.0 fred.com, 1.1 wilma.com<br>Warning 用于提供关于响应状态补充信息的响应头标。例如：Warning: 99 www.myweb.com Piano needs tuning<br>www-Authenticate 一个提示用户代理提供用户名和口令的响应头标，与状态编码401（未授权）配合使用。响应一个授权头标。例如：www-<br>Authenticate: Basic realm=zxm.mgmt</p>
-
-          
+          HTTP 头部解释
+1. Accept：告诉WEB服务器自己接受什么介质类型，/ 表示任何类型，type/* 表示该类型下的所有子类型，type/sub-type。
+2. Accept-Charset： 浏览器申明自己接收的字符集Accept-Encoding： 浏览器申明自己接收的编码方法，通常指
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/08/HTTP头详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1202,7 +988,7 @@ public class wxapi : IHttpHandler {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-29T03:00:00+08:00">
                 2016-08-29
@@ -1217,6 +1003,16 @@ public class wxapi : IHttpHandler {
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/29/学习tornado：安全/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/29/学习tornado：安全/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1242,9 +1038,16 @@ public class wxapi : IHttpHandler {
       
         
           
-            <p><a href="http://blog.csdn.net/siddontang/article/details/18053915" target="_blank" rel="external">http://blog.csdn.net/siddontang/article/details/18053915</a></p>
+          http://blog.csdn.net/siddontang/article/details/18053915
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/29/学习tornado：安全/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1321,7 +1124,7 @@ public class wxapi : IHttpHandler {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-23T07:33:00+08:00">
                 2016-08-23
@@ -1336,6 +1139,16 @@ public class wxapi : IHttpHandler {
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/23/python tornado框架实现CRUD/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/23/python tornado框架实现CRUD/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1361,353 +1174,19 @@ public class wxapi : IHttpHandler {
       
         
           
-            <p>1.本例采用postgresql数据库，创建数据表 user_tbl</p>
-<pre><code>create table user_tbl(name varchar(20),signup_date date);
-</code></pre><p>2.webapi接口</p>
-<p>(1)tornado框架配置 t_tornado.py</p>
-<pre><code>#-*- coding:UTF-8 -*-
-import tornado.httpserver
-import tornado.ioloop
-import tornado.options
-import tornado.web
-from tornado.options import define,options
-import t_url
-import psycopg2
-app=tornado.web.Application(t_url.url)
-define(&quot;port&quot;,default=8000,help=&quot;run on port&quot;,type=int)
-if __name__==&quot;__main__&quot;:
-   tornado.options.parse_command_line()
-   app.listen(options.port)
-   tornado.ioloop.IOLoop.instance().start()
-</code></pre><p>(2)路径映射 t_url.py</p>
-<pre><code>from t_handler import *
-url=[
-(r&apos;/&apos;,IndexHandler),
-(r&apos;/AddUser&apos;,AddHandler),
-(r&apos;/EditUser&apos;,EditHandler),
-(r&apos;/DelUser&apos;,DelHandler)
-]
-</code></pre><p>(3)处理类 t_handler.py</p>
-<pre><code>from tornado.web import RequestHandler
-from tornado.escape import json_decode,json_encode
-import psycopg2
-
-#解决js跨域请求问题
-class BaseHandler(RequestHandler):
-     def set_default_headers(self):
-        self.set_header(&apos;Access-Control-Allow-Origin&apos;, &apos;*&apos;)
-        self.set_header(&apos;Access-Control-Allow-Methods&apos;, &apos;POST, GET, OPTIONS&apos;)
-        self.set_header(&apos;Access-Control-Max-Age&apos;, 1000)
-        self.set_header(&apos;Access-Control-Allow-Headers&apos;, &apos;*&apos;)
-        self.set_header(&apos;Content-type&apos;, &apos;application/json&apos;)
-
-#删除用户
-class DelHandler(BaseHandler):
-    def post(self):
-        name=self.get_argument(&apos;name&apos;,None)
-        result={}
-        conn=psycopg2.connect(host=&apos;127.0.0.1&apos;,port=5432,user=&apos;leo&apos;,password=&apos;king&apos;,database=&apos;testdb&apos;)
-        cursor=conn.cursor()
-        try:
-          sqlstr=&quot;delete from  user_tbl where name=&apos;%s&apos;&quot;%name
-          cursor.execute(sqlstr)
-        except(psycopg2.Warning,psycopg2.Error) as error:
-          result[&quot;result&quot;]=&quot;DB Error:&quot;+error.message
-          result[&quot;status&quot;]=&quot;false&quot;
-          result[&quot;code&quot;]=300
-          self.write(json_encode(result))
-          conn.rollback()
-          cursor.close()
-          conn.close()
-          return
-        result[&quot;result&quot;]=&quot;success&quot;
-        result[&quot;status&quot;]=&quot;true&quot;
-        result[&quot;code&quot;]=200
-        if(result[&quot;status&quot;]==&quot;true&quot;):
-          conn.commit()
-        cursor.close()
-        conn.close()
-        self.write(json_encode(result))
-
-#修改用户  
-class EditHandler(BaseHandler):
-   def post(self):
-      o_name=self.get_argument(&apos;o_name&apos;,None)
-      name=self.get_argument(&apos;name&apos;,None)
-      time=self.get_argument(&apos;time&apos;,None)
-      result={}
-      conn=psycopg2.connect(host=&apos;127.0.0.1&apos;,port=5432,user=&apos;leo&apos;,password=&apos;king&apos;,database=&apos;testdb&apos;)
-      cursor=conn.cursor()
-      try:
-        sqlstr=&quot;update user_tbl set name=&apos;%s&apos;,signup_date=&apos;%s&apos; where name=&apos;%s&apos;&quot;%(name,time,o_name)
-        cursor.execute(sqlstr)
-      except(psycopg2.Warning,psycopg2.Error) as error:
-        result[&quot;result&quot;]=&quot;DB Error:&quot;+error.message
-        result[&quot;status&quot;]=&quot;false&quot;
-        result[&quot;code&quot;]=300
-        self.write(json_encode(result))
-        conn.rollback()
-        cursor.close()
-        conn.close()
-        return
-      result[&quot;result&quot;]=&quot;success&quot;
-      result[&quot;status&quot;]=&quot;true&quot;
-      result[&quot;code&quot;]=200
-      if(result[&quot;status&quot;]==&quot;true&quot;):
-         conn.commit()
-      cursor.close()
-      conn.close()
-      self.write(json_encode(result))
-
-#新增用户
-class AddHandler(BaseHandler):
-    def post(self):
-      time=self.get_argument(&apos;time&apos;,None)
-      result={}
-      conn=psycopg2.connect(host=&apos;127.0.0.1&apos;,port=5432,user=&apos;leo&apos;,password=&apos;king&apos;,database=&apos;testdb&apos;)
-      cursor=conn.cursor()
-      try:
-        sqlstr=&quot;insert into user_tbl(name,signup_date) values(&apos;%s&apos;,&apos;%s&apos;)&quot;%(name,time)
-        cursor.execute(sqlstr)
-      except(psycopg2.Warning,psycopg2.Error) as error:
-        result[&quot;result&quot;]=&quot;DB Error:&quot;+error.message
-        result[&quot;status&quot;]=&quot;false&quot;
-        result[&quot;code&quot;]=300
-        self.write(json_encode(result))
-        conn.rollback()
-        cursor.close()
-        conn.close()
-        return
-      result[&quot;result&quot;]=&quot;success&quot;
-      result[&quot;status&quot;]=&quot;true&quot;
-      result[&quot;code&quot;]=200
-      if(result[&quot;status&quot;]==&quot;true&quot;):
-         conn.commit()
-      cursor.close()
-      conn.close()
-      self.write(json_encode(result)) 
-
-class IndexHandler(BaseHandler):
-   def get(self):
-      conn=psycopg2.connect(host=&apos;127.0.0.1&apos;,port=5432,user=&apos;leo&apos;,password=&apos;king&apos;,database=&apos;testdb&apos;)
-      cursor=conn.cursor()
-      result={}
-      try:
-         sqlstr=&quot;select name,signup_date from user_tbl&quot;
-         cursor.execute(sqlstr)
-         if(cursor.rowcount==0):
-            result[&quot;total&quot;]=0
-            result[&quot;rows&quot;]=&quot;no data.&quot;
-            result[&quot;status&quot;]=&quot;false&quot;
-            result[&quot;code&quot;]=300
-            self.write(json_encode(result))
-            conn.close()
-            return
-         else:
-            res=cursor.fetchall()
-            content=[]
-            t=1
-            for item in res:
-              tempItem={}
-              tempItem[&quot;id&quot;]=t
-              tempItem[&quot;name&quot;]=item[0]
-              try:
-                tempItem[&quot;signup_date&quot;]=item[1].strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)
-              except:
-                tempItem[&quot;signup_date&quot;]=&apos;&apos;
-              t+=1
-              content.append(tempItem)
-            result[&quot;total&quot;]=1000
-            result[&quot;rows&quot;]=content
-            result[&quot;status&quot;]=&quot;true&quot;
-            result[&quot;code&quot;]=200
-      except(psycopg2.Warning,psycopg2.Error) as error:
-         result[&quot;result&quot;]=&quot;DB error:&quot;+error.message
-         result[&quot;status&quot;]=&quot;false&quot;
-         result[&quot;code&quot;]=300
-         self.write(json_encode(result))
-         conn.rollback()
-         conn.close()
-         return
-      if(result[&quot;status&quot;]==&quot;true&quot;):
-        conn.commit()
-      conn.close()
-      print json_encode(result)
-      self.write(json_encode(result)) 
-</code></pre><p>3.html请求</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;script src=&quot;Scripts/jquery.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
-    &lt;script src=&quot;Scripts/jquery.easyui.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
-    &lt;link href=&quot;Css/easyui.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;   
-    &lt;script type=&quot;text/javascript&quot;&gt;
-    var o_name;
-        var userUrl = &quot;http://127.0.0.1:8000&quot;;
-        $(function () {
-            initUser();
-            $(&apos;#dri_grid&apos;).datagrid(&apos;load&apos;, userUrl);
-            $(&quot;#dri_tools_add&quot;).click(function() {
-        $(&quot;#n_name&quot;).val(&quot;&quot;);
-        $(&quot;#n_time&quot;).val(&quot;&quot;);
-        var a = document.getElementById(&apos;driver_add&apos;);
-        a.href = &quot;javascript:driver_adddd()&quot;;
-        $(&quot;#adduser&quot;).show();
-        });
-        $(&quot;#dri_tools_edit&quot;).click(function() {
-                var row=$(&quot;#dri_grid&quot;).datagrid(&apos;getSelected&apos;);
-                if(row){
-                       var name = row.name;
-               o_name = name;
-                       var time = row.signup_date;
-                       $(&quot;#n_name&quot;).val(name);
-                       $(&quot;#n_time&quot;).val(time);
-            var a = document.getElementById(&apos;driver_add&apos;);
-            a.href = &quot;javascript:driver_editdd()&quot;;
-                       $(&quot;adduser&quot;).show();
-        }
-        else{
-            alert(&quot;please select&quot;);
-        }
-        $(&quot;#adduser&quot;).show();
-        });
-            $(&quot;#dri_tools_del&quot;).click(function() {
-        var row = $(&apos;#dri_grid&apos;).datagrid(&apos;getSelected&apos;);
-        if (row) {
-            if(confirm(&quot;really delete?&quot;)){
-            var t_name = row.name;
-                var datas = {
-                    name: t_name
-                };
-            var driver_delurl=&quot;http://127.0.0.1:8000/DelUser&quot;;
-                $.post(driver_delurl, datas, function (v) {
-                    if (v.status==&quot;true&quot;) {
-                        $(&quot;#dri_grid&quot;).datagrid(&quot;reload&quot;);
-                        alert(&quot;success&quot;);
-                    } else {
-                alert(&quot;error&quot;);
-                    }
-                });
-            }
-        } else {
-            alert(&quot;please select&quot;);
-        }
-        });
-        });
-        function driver_adddd(){
-        var n_name = $(&quot;#n_name&quot;).val();
-        var n_time = $(&quot;#n_time&quot;).val(); 
-        var userdata = {
-                name: n_name,
-                time: n_time
-            };
-                var driver_addurl=&quot;http://127.0.0.1:8000/AddUser&quot;;
-        $.post(driver_addurl, userdata, function(s) {
-            if (s.status == &quot;true&quot;) {
-                $(&quot;#dri_grid&quot;).datagrid(&quot;reload&quot;);
-                alert(&apos;新增成功&apos;);
-            } else {
-                    alert(s.result);
-            }
-        });
-}
-    function driver_editdd(){
-        var n_name = $(&quot;#n_name&quot;).val();
-        var n_time = $(&quot;#n_time&quot;).val(); 
-        var userdata = {
-                                o_name:o_name,
-                name: n_name,
-                time: n_time
-            };
-                var driver_addurl=&quot;http://127.0.0.1:8000/EditUser&quot;;
-        $.post(driver_addurl, userdata, function(s) {
-            if (s.status == &quot;true&quot;) {
-                $(&quot;#dri_grid&quot;).datagrid(&quot;reload&quot;);
-                alert(&apos;更新成功&apos;);
-            } else {
-                    alert(s.result);
-            }
-        });
-    }
-function initUser() {
-            $(&apos;#dri_grid&apos;).datagrid({
-                border: false,
-                fit: true,
-                singleSelect: true,
-                method: &apos;get&apos;,
-                pagination: true,
-                striped: true,
-                pageSize: 20,
-                onBeforeLoad: function() {
-                },
-                columns: [
-                    [{
-                        field: &apos;name&apos;,
-                        title: &apos;t_name&apos;,
-                        width: &apos;8%&apos;,
-                        align: &apos;center&apos;
-                    }, {
-                        field: &apos;signup_date&apos;,
-                        title: &apos;t_signup_date&apos;,
-                        width: &apos;14%&apos;,
-                        align: &apos;center&apos;
-                    }
-                    ]
-                ],
-                onLoadSuccess: function(data) {
-                }
-            });
-        }
-    &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt; 
-&lt;span id=&quot;dri_tools_add&quot;&gt;
-&lt;a href=&quot;#&quot; style=&quot;width: 100px&quot;&gt;新增&lt;/a&gt;
-&lt;/span&gt;&amp;nbsp;&amp;nbsp;
-&lt;span id=&quot;dri_tools_edit&quot;&gt;
-&lt;a href=&quot;#&quot; style=&quot;width: 100px&quot;&gt;修改&lt;/a&gt;
-&lt;/span&gt;&amp;nbsp;&amp;nbsp;
-&lt;span id=&quot;dri_tools_del&quot;&gt;
-&lt;a href=&quot;#&quot; style=&quot;width: 100px&quot;&gt;删除&lt;/a&gt;
-&lt;/span&gt;
-&lt;div id=&quot;adduser&quot; style=&quot;display:none;&quot;&gt;
-&lt;table style=&quot;padding-left: 4%; padding-right: 4%&quot;&gt;
-&lt;tr&gt;
-    &lt;td&gt;
-        &lt;span style=&quot;color: red&quot;&gt;*&lt;/span&gt;
-        &lt;label&gt;姓名：&lt;/label&gt;
-    &lt;/td&gt;
-    &lt;td style=&quot;padding-right: 80px; padding-bottom: 5px;&quot;&gt;
-        &lt;input id=&quot;n_name&quot; style=&quot;width:100px;&quot; type=&quot;text&quot;&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-        &lt;label&gt;注册时间：&lt;/label&gt;
-    &lt;/td&gt;
-    &lt;td style=&quot;padding-bottom: 5px; width: 175px;&quot;&gt;
-        &lt;input id=&quot;n_time&quot;  style=&quot;width:100px;&quot; type=&quot;text&quot;&gt;
-    &lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-&lt;div&gt;&lt;a id=&quot;driver_add&quot; class=&quot;easyui-linkbutton&quot; data-options=&quot;iconCls:&apos;icon-ok&apos;&quot; href=&quot;javascript:void(0)&quot; style=&quot;width: 120px&quot;&gt;提交&lt;/a&gt; &lt;/div&gt;
-&lt;/div&gt;
- &lt;table id=&quot;dri_grid&quot;&gt;&lt;/table&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre><p>4.浏览器显示结果：</p>
-<p>(1)查询</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160823152659964-1970116390.png" alt=""></p>
-<p>(2)新增</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160823152801542-733156144.png" alt=""></p>
-<p>(3)修改</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160823153017855-1556185775.png" alt=""></p>
-<p>(4)删除</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160823153134370-1494527675.png" alt=""></p>
-
-          
+          1.本例采用postgresql数据库，创建数据表 user_tbl
+create table user_tbl(name varchar(20),signup_date date);
+2.webapi接口
+(1)tornado框架配置 t_tornado.py
+#-*- coding:UTF-8 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/23/python tornado框架实现CRUD/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1784,7 +1263,7 @@ function initUser() {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-19T02:33:00+08:00">
                 2016-08-19
@@ -1799,6 +1278,16 @@ function initUser() {
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/19/MyISAM 和InnoDB区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/19/MyISAM 和InnoDB区别/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1824,30 +1313,16 @@ function initUser() {
       
         
           
-            <p>MyISAM 和InnoDB 讲解</p>
-<p>　　InnoDB和MyISAM是许多人在使用<a href="http://lib.csdn.net/base/14" title="undefined" target="_blank" rel="external">MySQL</a>时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。基本的差别为：MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持。MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供事务支持以及外部键等高级数据库功能。</p>
-<p>　　以下是一些细节和具体实现的差别：</p>
-<p>　　◆1.InnoDB不支持FULLTEXT类型的索引。</p>
-<p>　　◆2.InnoDB 中不保存表的具体行数，也就是说，执行select count(<em>) from<br>table时，InnoDB要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当count(</em>)语句包含<br>where条件时，两种表的操作是一样的。</p>
-<p>　　◆3.对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引。</p>
-<p>　　◆4.DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除。</p>
-<p>　　◆5.LOAD TABLE FROM<br>MASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性(例如外键)的表不适用。</p>
-<p>◆6.InnoDB支持数据行锁定，MyISAM不支持行锁定，只支持锁定整个表。即MyISAM同一个表上的读锁和写锁是互斥的，MyISAM并发读写时如果等待队列中既有读请求又有写请求，默认写请求的优先级高，即使读请求先到，所以MyISAM不适合于有大量查询和修改并存的情况，那样查询进程会长时间阻塞。因为MyISAM是锁表，所以某项读操作比较耗时会使其他写进程饿死。</p>
-<p>　　另外，InnoDB表的行锁也不是绝对的，假如在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表，例如update<br>table set num=1 where name like “%aaa%”</p>
-<p>　　<strong>两种类型最主要的差别就是Innodb 支持事务处理与外键和行级锁。</strong>而MyISAM不支持.所以MyISAM往往就容易被人认为只适合在小项目中使用。</p>
-<p>作为使用MySQL的用户角度出发，Innodb和MyISAM都是比较喜欢的，如果数据库平台要达到需求：99.9%的稳定性，方便的扩展性和高可用性来说的话，MyISAM绝对是首选。</p>
-<p>　　原因如下：</p>
-<p>　　1、平台上承载的大部分项目是读多写少的项目，而MyISAM的读性能是比Innodb强不少的。</p>
-<p>2、MyISAM的索引和数据是分开的，并且索引是有压缩的，内存使用率就对应提高了不少。能加载更多索引，而Innodb是索引和数据是紧密捆绑的，没有使用压缩从而会造成Innodb比MyISAM体积庞大不小。</p>
-<p>3、经常隔1，2个月就会发生应用开发人员不小心update一个表where写的范围不对，导致这个表没法正常用了，这个时候MyISAM的优越性就体现出来了，随便从当天拷贝的压缩包取出对应表的文件，随便放到一个数据库目录下，然后dump成sql再导回到主库，并把对应的binlog补上。如果是Innodb，恐怕不可能有这么快速度，别和我说让Innodb定期用导出xxx.sql机制备份，因为最小的一个数据库实例的数据量基本都是几十G大小。</p>
-<p>　　4、从接触的应用逻辑来说，select count(*) 和order by<br>是最频繁的，大概能占了整个sql总语句的60%以上的操作，而这种操作Innodb其实也是会锁表的，很多人以为Innodb是行级锁，那个只是where对它主键是有效，非主键的都会锁全表的。</p>
-<p>5、还有就是经常有很多应用部门需要我给他们定期某些表的数据，MyISAM的话很方便，只要发给他们对应那表的frm.MYD,MYI的文件，让他们自己在对应版本的数据库启动就行，而Innodb就需要导出xxx.sql了，因为光给别人文件，受字典数据文件的影响，对方是无法使用的。</p>
-<p>6、如果和MyISAM比insert写操作的话，Innodb还达不到MyISAM的写性能，如果是针对基于索引的update操作，虽然MyISAM可能会逊色Innodb,但是那么高并发的写，从库能否追的上也是一个问题，还不如通过多实例分库分表架构来解决。</p>
-<p>　　7、如果是用MyISAM的话，merge引擎可以大大加快应用部门的开发速度，他们只要对这个merge表做一些select<br>count(*)操作，非常适合大项目总量约几亿的rows某一类型(如日志，调查统计)的业务表。</p>
-<p>　　当然Innodb也不是绝对不用，用事务的项目就用Innodb的。另外，可能有人会说你MyISAM无法抗太多写操作，但是可以通过架构来弥补。</p>
-<p>转自：<a href="http://blog.csdn.net/xifeijian/article/details/20316775" target="_blank" rel="external">http://blog.csdn.net/xifeijian/article/details/20316775</a></p>
-
-          
+          MyISAM 和InnoDB 讲解
+　　InnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。基本的差别为：MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持。MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/19/MyISAM 和InnoDB区别/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1924,7 +1399,7 @@ function initUser() {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-18T10:02:00+08:00">
                 2016-08-18
@@ -1939,6 +1414,16 @@ function initUser() {
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/18/jQuery easyui datagrid数据绑定/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/jQuery easyui datagrid数据绑定/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1964,109 +1449,19 @@ function initUser() {
       
         
           
-            <p>1.绑定json数据</p>
-<pre><code>&lt;!DOCTYPE html&gt;
+          1.绑定json数据
+&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
-&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;script src=&quot;Scripts/jquery.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
-     &lt;script src=&quot;Scripts/jquery.easyui.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
-     &lt;link href=&quot;Css/easyui.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;   
-     &lt;script type=&quot;text/javascript&quot;&gt; 
-         $(function () {      
-             var json={&quot;total&quot;:28,&quot;rows&quot;:[
-{&quot;productid&quot;:&quot;FI-SW-01&quot;,&quot;unitcost&quot;:10.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:36.50,&quot;attr1&quot;:&quot;Large&quot;,&quot;itemid&quot;:&quot;EST-1&quot;},
-{&quot;productid&quot;:&quot;K9-DL-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:18.50,&quot;attr1&quot;:&quot;Spotted Adult Female&quot;,&quot;itemid&quot;:&quot;EST-10&quot;},
-{&quot;productid&quot;:&quot;RP-SN-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:28.50,&quot;attr1&quot;:&quot;Venomless&quot;,&quot;itemid&quot;:&quot;EST-11&quot;},
-{&quot;productid&quot;:&quot;RP-SN-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:26.50,&quot;attr1&quot;:&quot;Rattleless&quot;,&quot;itemid&quot;:&quot;EST-12&quot;},
-{&quot;productid&quot;:&quot;RP-LI-02&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:35.50,&quot;attr1&quot;:&quot;Green Adult&quot;,&quot;itemid&quot;:&quot;EST-13&quot;},
-{&quot;productid&quot;:&quot;FL-DSH-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:158.50,&quot;attr1&quot;:&quot;Tailless&quot;,&quot;itemid&quot;:&quot;EST-14&quot;},
-{&quot;productid&quot;:&quot;FL-DSH-01&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:83.50,&quot;attr1&quot;:&quot;With tail&quot;,&quot;itemid&quot;:&quot;EST-15&quot;},
-{&quot;productid&quot;:&quot;FL-DLH-02&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:63.50,&quot;attr1&quot;:&quot;Adult Female&quot;,&quot;itemid&quot;:&quot;EST-16&quot;},
-{&quot;productid&quot;:&quot;FL-DLH-02&quot;,&quot;unitcost&quot;:12.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:89.50,&quot;attr1&quot;:&quot;Adult Male&quot;,&quot;itemid&quot;:&quot;EST-17&quot;},
-{&quot;productid&quot;:&quot;AV-CB-01&quot;,&quot;unitcost&quot;:92.00,&quot;status&quot;:&quot;P&quot;,&quot;listprice&quot;:63.50,&quot;attr1&quot;:&quot;Adult Male&quot;,&quot;itemid&quot;:&quot;EST-18&quot;}
-             ]};
-             $(&apos;#tbl&apos;).datagrid({
-                 title: &apos;测试DataGrid&apos;,
-                 width: 700,
-                 height: &apos;auto&apos;,
-                 fitColumns: true,
-                 columns:[[
-                 {field:&apos;itemid&apos;,title:&apos;Item ID&apos;,width:80},
-                 {field:&apos;productid&apos;,title:&apos;Product ID&apos;,width:120},
-                 {field:&apos;listprice&apos;,title:&apos;List Price&apos;,width:80,align:&apos;right&apos;},
-                 {field:&apos;unitcost&apos;,title:&apos;Unit Cost&apos;,width:80,align:&apos;right&apos;},
-                 {field:&apos;attr1&apos;,title:&apos;Attribute&apos;,width:250},
-                 {field:&apos;status&apos;,title:&apos;Status&apos;,width:60,align:&apos;center&apos;}
-                 ]]
-             }).datagrid(&quot;loadData&quot;,json);
-         });
-     &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;table id=&quot;tbl&quot;&gt;     
-    &lt;/table&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>浏览器显示结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818175001406-827948937.png" alt=""></p>
-<p>2.查询后台数据，然后绑定</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;script src=&quot;Scripts/jquery.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
-    &lt;script src=&quot;Scripts/jquery.easyui.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;     
-    &lt;link href=&quot;Css/easyui.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;   
-    &lt;script type=&quot;text/javascript&quot;&gt;
-        var userUrl = &quot;http://127.0.0.1:9998/getUser&quot;;
-        function initUser() {
-            $(&apos;#dri_grid&apos;).datagrid({
-                border: false,
-                fit: true,
-                singleSelect: true,
-                method: &apos;get&apos;,
-                pagination: true,
-                striped: true,
-                pageSize: 20,
-                onBeforeLoad: function() {
-                },
-                columns: [
-                    [{
-                        field: &apos;id&apos;,
-                        title: &apos;&amp;#12288;编号&apos;,
-                        width: &apos;8%&apos;,
-                        align: &apos;center&apos;
-                    }, {
-                        field: &apos;lasttimeonline&apos;,
-                        title: &apos;&amp;#12288;最后登录时间&apos;,
-                        width: &apos;14%&apos;,
-                        align: &apos;center&apos;
-                    }
-                    ]
-                ],
-                onLoadSuccess: function(data) {
-                }
-            });
-        }
-        $(function () {
-            initUser();
-            $(&apos;#dri_grid&apos;).datagrid(&apos;load&apos;, userUrl);
-        });
-    &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;table id=&quot;dri_grid&quot;&gt;&lt;/table&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>浏览器显示结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818180125328-1201691621.png" alt=""></p>
-
-          
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/18/jQuery easyui datagrid数据绑定/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2143,7 +1538,7 @@ function initUser() {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-18T01:01:00+08:00">
                 2016-08-18
@@ -2158,6 +1553,16 @@ function initUser() {
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/18/js调用百度地图API创建地图，搜索位置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/js调用百度地图API创建地图，搜索位置/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2183,86 +1588,20 @@ function initUser() {
       
         
           
-            <p>实现代码：</p>
-<pre><code>&lt;!DOCTYPE html&gt;
+          实现代码：
+&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta http-equiv=&quot;Cache-Control&quot; content=&quot;no-store&quot; /&gt;
-    &lt;meta http-equiv=&quot;Pragma&quot; content=&quot;no-cache&quot; /&gt;
-    &lt;meta http-equiv=&quot;Expires&quot; content=&quot;0&quot; /&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;http://api.map.baidu.com/api?v=2.0&amp;ak=e3ZohdqyB0RL98hFOiC29xqh&quot;&gt;&lt;/script&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-            function initMap(){
-                createMap();//创建地图
-                setMapEvent();//设置地图事件
-            }
-            //创建地图函数：
-            function createMap(){
-                var map = new BMap.Map(&quot;BaiduDitu&quot;);//在百度地图容器中创建一个地图
-                map.centerAndZoom(&apos;上海&apos;,11);//设定地图的中心点和坐标并将地图显示在地图容器中
-                window.map = map;//将map变量存储在全局
-            }
-            //地图事件设置函数：
-            function setMapEvent(){
-                map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
-                map.enableScrollWheelZoom();//启用地图滚轮放大缩小
-                map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
-                map.enableKeyboard();//启用键盘上下左右键移动地图
-            }
-            $(function(){
-                initMap();//创建和初始化地图
-                createSearch();
-                createAutocomlete();
-                $(&quot;#s_p_search_btn&quot;).click(function () {
-                    searchPlace($(&quot;#searchplace&quot;).val());
-                });
-            });
-            function createSearch() {
-                var map = window.map;
-                var local = new BMap.LocalSearch(map,
-                    {
-                        renderOptions: { map: map, panel: &quot;searchlist&quot; }
-                    });
-                window.local = local;
-            }
-            //搜索
-            function searchPlace(value) {
-                window.local.search(value);
-            }
-            function createAutocomlete() {
-                var map = window.map;
-                var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
-                    {
-                        &quot;input&quot;: &quot;searchplace&quot;,
-                        &quot;location&quot;: map
-                    });
-                ac.addEventListener(&quot;onconfirm&quot;, function (e) {    //鼠标点击下拉列表后的事件
-                    var _value = e.item.value;
-                    var addr =_value.business+ _value.province + _value.city + _value.district + _value.street + _value.streetNumber ;
-                    searchPlace(addr);
-                });
-            }
-        &lt;/script&gt;
-&lt;/head&gt;
-&lt;body class=&quot;easyui-layout&quot;&gt;
-     &lt;div class=&quot;Ditumap&quot;&gt;  
-        &lt;div style=&quot;margin-bottom:10px;&quot;&gt;
-            &lt;input id=&quot;searchplace&quot; style=&quot;width: 550px;&quot; class=&quot;easyui-textbox-simple&quot; placeholder=&quot;输入搜索关键字&quot; /&gt;
-            &lt;a id=&quot;s_p_search_btn&quot; href=&quot;#&quot; class=&quot;easyui-linkbutton&quot; style=&quot;width: 80px;&quot; iconcls=&quot;icon-search&quot;&gt;搜索&lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div id=&quot;searchlist&quot; style=&quot;width: 350px; height: 460px; margin-right:10px; float:left;&quot;&gt;&lt;/div&gt;
-        &lt;div style=&quot;width:600px;height:460px;border:none; float:left;&quot; id=&quot;BaiduDitu&quot;&gt;&lt;/div&gt;
-        &lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>浏览器显示结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201608/300946-20160818090005093-64399963.png" alt=""></p>
-
-          
+    &lt;meta http-equiv=&quot;Cache-Control&quot; con
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/18/js调用百度地图API创建地图，搜索位置/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2338,7 +1677,7 @@ function initUser() {
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -2347,7 +1686,7 @@ function initUser() {
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -2366,6 +1705,26 @@ function initUser() {
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -2404,11 +1763,11 @@ function initUser() {
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -2489,34 +1848,167 @@ function initUser() {
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

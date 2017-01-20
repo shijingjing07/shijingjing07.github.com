@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-05T07:44:00+08:00">
                 2016-05-05
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/05/Yii2.0 权威指南/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/05/Yii2.0 权威指南/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,28 +348,16 @@
       
         
           
-            <p>Yii 是一个高性能，基于组件的 PHP 框架，用于快速开发 Web 应用程序。</p>
-<p>一、安装<br>1.Composer 安装<br>Composer是一个基于项目的依赖管理器，负责将PHP项目所依赖的包或库安装到项目所在的目录中<br>curl -sS <a href="https://getcomposer.org/installer" target="_blank" rel="external">https://getcomposer.org/installer</a> | php<br>mv composer.phar /usr/local/bin/composer</p>
-<p>2.安装 Yii<br>安装 Composer asset plugin包管理插件<br>composer global require “fxp/composer-asset-plugin:~1.0.0”<br>安装Yii 到名为 basic 的目录中<br>composer create-project –prefer-dist yiisoft/yii2-app-basic basic<br>注：安装过程中会询问你的github身份令牌token,可在github设置中生成token,复制到这里。</p>
-<p>将basic项目文件夹，copy到web服务器网页根目录下(/var/www/html),访问地址<a href="http://localhost/basic/web/index.php" target="_blank" rel="external">http://localhost/basic/web/index.php</a><br>出现以下界面，说明安装成功。</p>
-<p><img src="http://www.yiichina.com/docs/guide/2.0/images/start-app-
-installed.png" alt="Yii 安装成功"></p>
-<p>二：Yii请求处理过程</p>
-<p>应用中最重要的目录和文件（假设应用根目录是 basic）：</p>
-<p>basic/ 应用根目录<br>　　composer.json Composer 配置文件, 描述包信息<br>　　config/ 包含应用配置及其它配置<br>　　　　console.php 控制台应用配置信息<br>　　　　web.php Web 应用配置信息<br>　　commands/ 包含控制台命令类<br>　　controllers/ 包含控制器类<br>　　models/ 包含模型类<br>　　runtime/ 包含 Yii 在运行时生成的文件，例如日志和缓存文件<br>　　vendor/ 包含已经安装的 Composer 包，包括 Yii 框架自身<br>　　views/ 包含视图文件<br>　　web/ Web 应用根目录，包含 Web 入口文件<br>　　　　assets/ 包含 Yii 发布的资源文件（javascript 和 css）<br>　　　　index.php 应用入口文件<br>　　yii Yii 控制台命令执行脚本  </p>
-<hr>
-<p>Yii 实现了模型-视图-控制器 (MVC)设计模式。 models 目录包含了所有模型类，views 目录包含了所有视图脚本，controllers<br>目录包含了所有控制器类。</p>
-<p>以下图表展示了一个应用的静态结构：</p>
-<p><img src="http://www.yiichina.com/docs/guide/2.0/images/application-
-structure.png" alt="应用静态结构"></p>
-<p>每个应用都有一个入口脚本 web/index.php，这是整个应用中唯一可以访问的 PHP 脚本。入口脚本接受一个 Web 请求并创建应用实例去处理它。<br>应用在它的组建辅助下解析请求，并分派请求至 MVC 元素。视图使用小部件去创建复杂和动态的用户界面。</p>
-<p>请求生命周期</p>
-<p>以下图表展示了一个应用如何处理请求：</p>
-<p><img src="http://www.yiichina.com/docs/guide/2.0/images/request-lifecycle.png" alt="请求生命周期"></p>
-<p>1.用户向入口脚本 web/index.php 发起请求。<br>2.入口脚本加载应用配置并创建一个应用实例去处理请求。<br>3.应用通过请求组件解析请求的路由。<br>4.应用创建一个控制器实例去处理请求。<br>5.控制器创建一个操作实例并针对操作执行过滤器。<br>6.如果任何一个过滤器返回失败，则操作退出。<br>7.如果所有过滤器都通过，操作将被执行。<br>8.操作会加载一个数据模型，或许是来自数据库。<br>9.操作会渲染一个视图，把数据模型提供给它。<br>10.渲染结果返回给响应组件。<br>11.响应组件发送渲染结果给用户浏览器。</p>
-<p>参考资料：<a href="http://www.yiichina.com/doc/guide/2.0" target="_blank" rel="external">http://www.yiichina.com/doc/guide/2.0</a></p>
-
-          
+          Yii 是一个高性能，基于组件的 PHP 框架，用于快速开发 Web 应用程序。
+一、安装1.Composer 安装Composer是一个基于项目的依赖管理器，负责将PHP项目所依赖的包或库安装到项目所在的目录中curl -sS https://getcomposer.org/installer |
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/05/05/Yii2.0 权威指南/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -421,7 +434,7 @@ structure.png" alt="应用静态结构"></p>
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-26T09:36:00+08:00">
                 2016-04-26
@@ -436,6 +449,16 @@ structure.png" alt="应用静态结构"></p>
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/26/C++ Dll 编写入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/26/C++ Dll 编写入门/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -461,57 +484,16 @@ structure.png" alt="应用静态结构"></p>
       
         
           
-            <p>一、前言  </p>
-<p>　　自从微软推出16位的Windows操作系统起，此后每种版本的Windows操作系统都非常依赖于动态链接库(DLL)中的函数和数据，实际上<br>Windows操作系统中几乎所有的内容都由DLL以一种或另外一种形式代表着，例如显示的字体和图标存储在GDI<br>DLL中、显示Windows桌面和处理用户的输入所需要的代码被存储在一个User DLL中、Windows编程所需要的大量的API函数也被包含在Kernel<br>DLL中。  </p>
-<p>在Windows操作系统中使用DLL有很多优点，最主要的一点是多个应用程序、甚至是不同语言编写的应用程序可以共享一个DLL文件，真正实现了资源”共享”，大大缩小了应用程序的执行代码，更加有效的利用了内存；使用DLL的另一个优点是DLL文件作为一个单独的程序模块，封装性、独立性好，在软件需要升级的时候，开发人员只需要修改相应的DLL文件就可以了，而且，当DLL中的函数改变后，只要不是参数的改变,程序代码并不需要重新编译。这在编程时十分有用，大大提高了软件开发和维护的效率。  </p>
-<p>既然DLL那么重要，所以搞清楚什么是DLL、如何在Windows操作系统中开发使用DLL是程序开发人员不得不解决的一个问题。本文针对这些问题，通过一个简单的例子，即在一个DLL中实现比较最大、最小整数这两个简单函数，全面地解析了在Visual<br>C++编译环境下编程实现DLL的过程，文章中所用到的程序代码在Windows98系统、Visual C++6.0编译环境下通过。  </p>
-<p>　　二、DLL的概念  </p>
-<p>DLL是建立在客户/服务器通信的概念上，包含若干函数、类或资源的库文件，函数和数据被存储在一个DLL（服务器）上并由一个或多个客户导出而使用，这些客户可以是应用程序或者是其它的DLL。DLL库不同于静态库，在静态库情况下，函数和数据被编译进一个二进制文件（通常扩展名为*.LIB），<br>Visual<br>C++的编译器在处理程序代码时将从静态库中恢复这些函数和数据并把他们和应用程序中的其他模块组合在一起生成可执行文件。这个过程称为”静态链接”，此时因为应用程序所需的全部内容都是从库中复制了出来，所以静态库本身并不需要与可执行文件一起发行。  </p>
-<p>在动态库的情况下，有两个文件，一个是引入库（.LIB）文件，一个是DLL文件，引入库文件包含被DLL导出的函数的名称和位置，DLL包含实际的函数和数据，应用程序使用LIB文件链接到所需要使用的DLL文件，库中的函数和数据并不复制到可执行文件中，因此在应用程序的可执行文件中，存放的不是被调用的函数代码，而是DLL中所要调用的函数的内存地址，这样当一个或多个应用程序运行是再把程序代码和被调用的函数代码链接起来，从而节省了内存资源。从上面的说明可以看出，DLL和.LIB文件必须随应用程序一起发行，否则应用程序将会产生错误。  </p>
-<p>　　微软的Visual C++支持三种DLL，它们分别是Non-MFC Dll（非MFC动态库）、Regular Dll（常规DLL）、Extension<br>Dll（扩展DLL）。Non-MFC<br>DLL指的是不用MFC的类库结构，直接用C语言写的DLL，其导出的函数是标准的C接口，能被非MFC或MFC编写的应用程序所调用。Regular<br>DLL:和下述的Extension<br>Dlls一样，是用MFC类库编写的，它的一个明显的特点是在源文件里有一个继承CWinApp的类（注意：此类DLL虽然从CWinApp派生，但没有消息循环）,被导出的函数是C函数、C++类或者C++成员函数（注意不要把术语C++类与MFC的微软基础C++类相混淆），调用常规DLL的应用程序不必是MFC应用程序，只要是能调用类C函数的应用程序就可以，它们可以是在Visual<br>C++、Dephi、Visual Basic、Borland C等编译环境下利用DLL开发应用程序。  </p>
-<p>常规DLL又可细分成静态链接到MFC和动态链接到MFC上的，这两种常规DLL的区别将在下面介绍。与常规DLL相比，使用扩展DLL用于导出增强MFC基础类的函数或子类，用这种类型的动态链接库，可以用来输出一个从MFC所继承下来的类。  </p>
-<p>扩展DLL是使用MFC的动态链接版本所创建的，并且它只被用MFC类库所编写的应用程序所调用。例如你已经创建了一个从MFC的CtoolBar类的派生类用于创建一个新的工具栏，为了导出这个类，你必须把它放到一个MFC扩展的DLL中。扩展DLL<br>和常规DLL不一样，它没有一个从CWinApp继承而来的类的对象，所以，开发人员必须在DLL中的DllMain函数添加初始化代码和结束代码。<br>三、动态链接库的创建  </p>
-<p>　　在Visual C++6.0开发环境下，打开File\New\Project选项，可以选择Win32 Dynamic-Link Library或MFC<br>AppWizard[dll]来以不同的方式来创建Non-MFC Dll、Regular Dll、Extension Dll等不同种类的动态链接库。  </p>
-<p>　　1． Win32 Dynamic-Link Library方式创建Non-MFC DLL动态链接库  </p>
-<p>　　每一个DLL必须有一个入口点，这就象我们用C编写的应用程序一样，必须有一个WINMAIN函数一样。在Non-MFC<br>DLL中DllMain是一个缺省的入口函数，你不需要编写自己的DLL入口函数，用这个缺省的入口函数就能使动态链接库被调用时得到正确的初始化。如果应用程序的DLL需要分配额外的内存或资源时，或者说需要对每个进程或线程初始化和清除操作时，需要在相应的DLL工程的.CPP文件中对DllMain<br>()函数按照下面的格式书写。  </p>
-<p>BOOL APIENTRY DllMain(HANDLE hModule,DWORD ul_reason_for_call,LPVOID<br>lpReserved)<br>{<br>switch( ul_reason_for_call )<br>{<br>case DLL_PROCESS_ATTACH:<br>…….<br>case DLL_THREAD_ATTACH:<br>…….<br>case DLL_THREAD_DETACH:<br>…….<br>case DLL_PROCESS_DETACH:<br>…….<br>}<br>return TRUE;<br>}  </p>
-<p>　　参数中，hMoudle是动态库被调用时所传递来的一个指向自己的句柄(实际上，它是指向_DGROUP段的一个选择符)；<br>ul_reason_for_call是一个说明动态库被调原因的标志，当进程或线程装入或卸载动态链接库的时候，操作系统调用入口函数，并说明动态链接库被调用的原因，它所有的可能值为：DLL_PROCESS_ATTACH:<br>进程被调用、DLL_THREAD_ATTACH: 线程被调用、DLL_PROCESS_DETACH: 进程被停止、DLL_THREAD_DETACH:<br>线程被停止；lpReserved为保留参数。到此为止，DLL的入口函数已经写了，剩下部分的实现也不难，你可以在DLL工程中加入你所想要输出的函数或变量了。  </p>
-<p>我们已经知道DLL是包含若干个函数的库文件，应用程序使用DLL中的函数之前，应该先导出这些函数，以便供给应用程序使用。要导出这些函数有两种方法，一是在定义函数时使用导出关键字_declspec(dllexport)，另外一种方法是在创建DLL文件时使用模块定义文件.Def。需要读者注意的是在使用第一种方法的时候，不能使用DEF文件。下面通过两个例子来说明如何使用这两种方法创建DLL文件。  </p>
-<p>1）使用导出函数关键字_declspec(dllexport)创建MyDll.dll，该动态链接库中有两个函数，分别用来实现得到两个数的最大和最小数。在MyDll.h和MyDLL.cpp文件中分别输入如下原代码：  </p>
-<p>//MyDLL.h<br>extern “C” _declspec(dllexport) int Max(int a, int b);<br>extern “C” _declspec(dllexport) int Min(int a, int b);<br>//MyDll.cpp  </p>
-<p>#include  </p>
-<p>#include”MyDll.h”<br>int Max(int a, int b)<br>{<br>if(a&gt;=b)return a;<br>else<br>return b;<br>}<br>int Min(int a, int b)<br>{<br>if(a&gt;=b)return b;<br>else<br>return a;<br>}  </p>
-<p>　　该动态链接库编译成功后，打开MyDll工程中的debug目录，可以看到MyDll.dll、MyDll.lib两个文件。LIB文件中包含DLL<br>文件名和DLL文件中的函数名等，该LIB文件只是对应该DLL文件的”映像文件”，与DLL文件中，LIB文件的长度要小的多，在进行隐式链接DLL时要用到它。读者可能已经注意到在MyDll.h中有关键字”extern<br>C”，它可以使其他编程语言访问你编写的DLL中的函数。  </p>
-<p>　　2）用.def文件创建工程MyDll  </p>
-<p>　　为了用.def文件创建DLL，请先删除上个例子创建的工程中的MyDll.h文件，保留MyDll.cpp并在该文件头删除#include<br>MyDll.h语句，同时往该工程中加入一个文本文件，命名为MyDll.def，再在该文件中加入如下代码：  </p>
-<p>LIBRARY MyDll  //注意这里的MyDll是工程名如果不同则应用程序连接库时会发生连接错误<br>EXPORTS<br>Max @1,<br>Min @2,  </p>
-<p>　　其中LIBRARY语句说明该def文件是属于相应DLL的，EXPORTS语句下列出要导出的函数名称。我们可以在.def文件中的导出函数后加<br>@n，如Max@1，Min@2，表示要导出的函数顺序号，在进行显式连时可以用到它。该DLL编译成功后，打开工程中的Debug目录，同样也会看到<br>MyDll.dll和MyDll.lib文件。  </p>
-<p>　　2．MFC AppWizard[dll]方式生成常规/扩展DLL  </p>
-<p>　　在MFC<br>AppWizard[dll]下生成DLL文件又有三种方式，在创建DLL是，要根据实际情况选择创建DLL的方式。一种是常规DLL静态链接到MFC，另一种是常规DLL动态链接到MFC。两者的区别是：前者使用的是MFC的静态链接库，生成的DLL文件长度大，一般不使用这种方式，后者使用MFC的动态链接库，生成的DLL文件长度小；动态链接到MFC的规则DLL所有输出的函数应该以如下语句开始：  </p>
-<p>AFX_MANAGE_STATE(AfxGetStaticModuleState( )) //此语句用来正确地切换MFC模块状态  </p>
-<p>　　最后一种是MFC扩展DLL，这种DLL特点是用来建立MFC的派生类，Dll只被用MFC类库所编写的应用程序所调用。前面我们已经介绍过，<br>Extension DLLs 和Regular<br>DLLs不一样，它没有一个从CWinApp继承而来的类的对象，编译器默认了一个DLL入口函数DLLMain()作为对DLL的初始化，你可以在此函数中实现初始化,代码如下：  </p>
-<p>BOOL WINAPI APIENTRY DLLMain(HINSTANCE hinstDll，DWORD reason ，LPVOID flmpload)<br>{<br>switch(reason)<br>{<br>……………//初始化代码；<br>}<br>return true;<br>}  </p>
-<p>参数hinstDll存放DLL的句柄，参数reason指明调用函数的原因，lpReserved是一个被系统所保留的参数。对于隐式链接是一个非零值，对于显式链接值是零。  </p>
-<p>　　在MFC下建立DLL文件，会自动生成def文件框架，其它与建立传统的Non-MFC<br>DLL没有什么区别，只要在相应的头文件写入关键字_declspec(dllexport)函数类型和函数名等，或在生成的def文件中EXPORTS<br>下输入函数名就可以了。需要注意的是在向其它开发人员分发MFC扩展DLL<br>时，不要忘记提供描述DLL中类的头文件以及相应的.LIB文件和DLL本身，此后开发人员就能充分利用你开发的扩展DLL了。<br>四、动态链接库DLL的链接  </p>
-<p>　　应用程序使用DLL可以采用两种方式：一种是隐式链接，另一种是显式链接。在使用DLL之前首先要知道DLL中函数的结构信息。Visual<br>C++6.0在VC\bin目录下提供了一个名为Dumpbin.exe的小程序，用它可以查看DLL文件中的函数结构。另外，Windows系统将遵循下面的搜索顺序来定位DLL：<br>1．包含EXE文件的目录，2．进程的当前工作目录，3．Windows系统目录， 4．Windows目录，5．列在Path环境变量中的一系列目录。  </p>
-<p>　　1．隐式链接  </p>
-<p>　　隐式链接就是在程序开始执行时就将DLL文件加载到应用程序当中。实现隐式链接很容易，只要将导入函数关键字_declspec<br>(dllimport)函数名等写到应用程序相应的头文件中就可以了。下面的例子通过隐式链接调用MyDll.dll库中的Min函数。首先生成一个项目为TestDll，在DllTest.h、DllTest.cpp文件中分别输入如下代码：  </p>
-<p>//Dlltest.h  </p>
-<p>#pragma comment(lib，”MyDll.lib”)<br>extern “C”_declspec(dllimport) int Max(int a,int b);<br>extern “C”_declspec(dllimport) int Min(int a,int b);<br>//TestDll.cpp  </p>
-<p>#include  </p>
-<p>#include”Dlltest.h”<br>void main()<br>{int a;<br>a=min(8,10)<br>printf(“比较的结果为%d\n”，a);<br>}  </p>
-<p>//注意如果程序发生连接错误则要把lib文件加要工程里去  </p>
-<p>　　在创建DllTest.exe文件之前，要先将MyDll.dll和MyDll.lib拷贝到当前工程所在的目录下面，也可以拷贝到windows的<br>System目录下。如果DLL使用的是def文件，要删除TestDll.h文件中关键字extern “C”。TestDll.h文件中的关键字Progam<br>commit是要Visual C+的编译器在link时，链接到MyDll.lib文件，当然，开发人员也可以不使用#pragma<br>comment(lib，”MyDll.lib”)语句，而直接在工程的Setting-&gt;Link页的Object/Moduls栏填入<br>MyDll.lib既可。  </p>
-<p>　　2．显式链接  </p>
-<p>显式链接是应用程序在执行过程中随时可以加载DLL文件，也可以随时卸载DLL文件，这是隐式链接所无法作到的，所以显式链接具有更好的灵活性，对于解释性语言更为合适。不过实现显式链接要麻烦一些。在应用程序中用LoadLibrary或MFC提供的AfxLoadLibrary显式的将自己所做的动态链接库调进来，动态链接库的文件名即是上述两个函数的参数，此后再用GetProcAddress()获取想要引入的函数。自此，你就可以象使用如同在应用程序自定义的函数一样来调用此引入函数了。在应用程序退出之前，应该用FreeLibrary或MFC提供的AfxFreeLibrary释放动态链接库。下面是通过显式链接调用DLL中的Max函数的例子。  </p>
-<p>#include  </p>
-<p>#include<br>void main(void)<br>{<br>typedef int(<em>pMax)(int a,int b);<br>typedef int(</em>pMin)(int a,int b);<br>HINSTANCE hDLL;<br>PMax Max<br>HDLL=LoadLibrary(“MyDll.dll”);//加载动态链接库MyDll.dll文件；<br>Max=(pMax)GetProcAddress(hDLL,”Max”);<br>A=Max(5,8);<br>Printf(“比较的结果为%d\n”，a);<br>FreeLibrary(hDLL);//卸载MyDll.dll文件；<br>}  </p>
-<p>在上例中使用类型定义关键字typedef，定义指向和DLL中相同的函数原型指针，然后通过LoadLibray()将DLL加载到当前的应用程序中并返回当前DLL文件的句柄，然后通过GetProcAddress()函数获取导入到应用程序中的函数指针，函数调用完毕后，使用<br>FreeLibrary()卸载DLL文件。在编译程序之前，首先要将DLL文件拷贝到工程所在的目录或Windows系统目录下。  </p>
-<p>　　使用显式链接应用程序编译时不需要使用相应的Lib文件。另外，使用GetProcAddress()函数时，可以利用<br>MAKEINTRESOURCE()函数直接使用DLL中函数出现的顺序号，如将GetProcAddress(hDLL,”Min”)改为<br>GetProcAddress(hDLL,<br>MAKEINTRESOURCE(2))（函数Min()在DLL中的顺序号是2），这样调用DLL中的函数速度很快，但是要记住函数的使用序号，否则会发生错误。  </p>
-<p>本文通过通俗易懂的方式，全面介绍了动态链接库的概念、动态链接库的创建和动态链接库的链接，并给出个简单明了的例子，相信读者看了本文后，能够创建自己的动态链接库并应用到后续的软件开发当中去了，当然，读者要熟练操作DLL，还需要在大量的实践中不断摸索，希望本文能起到抛砖引玉的作用。</p>
-<pre><code>转自：&lt;http://www.cnblogs.com/daocaoren/archive/2012/05/30/2526495.html&gt;
-</code></pre>
-          
+          一、前言  
+　　自从微软推出16位的Windows操作系统起，此后每种版本的Windows操作系统都非常依赖于动态链接库(DLL)中的函数和数据，实际上Windows操作系统中几乎所有的内容都由DLL以一种或另外一种形式代表着，例如显示的字体和图标存储在GDIDLL中、显示Windows桌面和处理
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/26/C++ Dll 编写入门/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -588,7 +570,7 @@ structure.png" alt="应用静态结构"></p>
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-26T06:35:00+08:00">
                 2016-04-26
@@ -603,6 +585,16 @@ structure.png" alt="应用静态结构"></p>
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/26/在Windows上开发PHP扩展模块/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/26/在Windows上开发PHP扩展模块/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -628,51 +620,17 @@ structure.png" alt="应用静态结构"></p>
       
         
           
-            <p>环境: window + php + apache + vc6 + cygwin</p>
-<p>下载：php二进制文件： php-5.3.10-Win32-VC9-x86<br>        php源码包：php-5.3.10</p>
-<p><strong>操作第一步:</strong><br>PHP源代码生成 main/config.w32.h<br>详见：<a href="http://www.cnblogs.com/shijingjing07/p/5420902.html" target="_blank" rel="external">http://www.cnblogs.com/shijingjing07/p/5420902.html</a></p>
-<p><strong>操作第二步:</strong><br>把PHP二进制根目录加入到环境变量下。在cmd命令行,进入PHP源码包中ext文件下。<br>执行php ext_skel_win32.php –extname=test命令生成扩展骨架。</p>
-<p>把PHP二进制包中dev目录php5ts.lib文件复制到你扩展目录test中。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142103533-311736746.png" alt=""></p>
-<p>命令执行后,生成如下图示的文件:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142808830-541720256.png" alt=""></p>
-<p><strong>操作第三步:</strong></p>
-<p>编辑php_test.h内容,找到:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426142936267-2055583038.png" alt=""></p>
-<pre><code>在下面编写:
-</code></pre><p>   PHP_FUNCTION(hello);   //添加方法</p>
-<p>编辑test.c内容,找到:  </p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143000236-1532883051.png" alt=""></p>
-<pre><code>在里面添加你的要的添加的方法:
-
-   PHP_FE(hello,NULL)  //最好的跟上面写的一样。
-
-   变为:
-</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143019455-258945384.png" alt=""></p>
-<pre><code>再找到:
-</code></pre><p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143039877-726059326.png" alt=""></p>
-<p>在下面实现你的方法:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143101595-1915175175.png" alt=""></p>
-<pre><code>简单些。你我需要更深入php内核才能写好的php扩展。
-</code></pre><p><strong>操作第四步:</strong></p>
-<p> 接下来就是对扩展文件进行编译。</p>
-<p> 进入扩展的目录，执行以下命令。</p>
-<p>  msdev test.dsp /MAKE “test - Win32 Release_TS”  //命令</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160426143153830-836596253.png" alt=""></p>
-<p>如果没有错误,在D:/PHP目录中会产生一个Release_TS目录,php_test.dll就在其中。</p>
-<p><strong>操作第五步:</strong></p>
-<p>把php_test.dll复制到二进制PHP中的etc文件中.</p>
-<pre><code> 修改php.ini文件,添加extension=php_test.dll文件。
-
- 重启服务。
-
- &amp;lt;?php
-
-       echo hello();//test
-
-?&amp;gt;
-</code></pre>
-          
+          环境: window + php + apache + vc6 + cygwin
+下载：php二进制文件： php-5.3.10-Win32-VC9-x86        php源码包：php-5.3.10
+操作第一步:PHP源代码生成 main/config.w32.h详见：http://www.
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/26/在Windows上开发PHP扩展模块/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -749,7 +707,7 @@ structure.png" alt="应用静态结构"></p>
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-25T03:31:00+08:00">
                 2016-04-25
@@ -764,6 +722,16 @@ structure.png" alt="应用静态结构"></p>
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/25/windows下apache+php+mysql 环境配置方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/25/windows下apache+php+mysql 环境配置方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -789,85 +757,17 @@ structure.png" alt="应用静态结构"></p>
       
         
           
-            <p>转自：<a href="http://www.jb51.net/article/30128.htm" target="_blank" rel="external">http://www.jb51.net/article/30128.htm</a></p>
-<p><strong>一 准备</strong><br>1 下载apache <a href="http://httpd.apache.org/download.cgi#apache24" target="_blank" rel="external">http://httpd.apache.org/download.cgi#apache24</a><br>httpd-2.2.22-win32-x86-openssl-0.9.8t.msi  </p>
-<p>openssl表示带有openssl模块，利用openssl可给Apache配置SSL安全链接  </p>
-<p>2 下载php <a href="http://windows.php.net/downloads/releases/archives/" target="_blank" rel="external">http://windows.php.net/downloads/releases/archives/</a><br>php-5.3.5-Win32-VC6-x86.zip  </p>
-<p>下载vc6版本<br>VC6:legacy Visual Studio 6 compiler，就是使用这个编译器编译的。  </p>
-<p>VC9:the Visual Studio 2008 compiler，就是用微软的VS编辑器编译的。  </p>
-<p>3 下载mysql <a href="http://mysql.llarian.net/Downloads/MySQL-5.5/mysql-5.5.23-winx64.msi" target="_blank" rel="external">http://mysql.llarian.net/Downloads/MySQL-5.5/mysql-5.5.23-winx64.msi</a></p>
-<p><strong>二 安装</strong><br>1 apache 比较简单,一路next完成.</p>
-<p><img src="http://files.jb51.net/upload/201204/20120419200854919.png" alt="image"></p>
-<p>浏览器验证,出现一下页面,成功</p>
-<p><img src="http://files.jb51.net/upload/201204/20120419200856377.png" alt="image"></p>
-<p>2 php安装</p>
-<p>下载zip包,直接解压到一个目录,目录重命名为php</p>
-<p><img src="http://files.jb51.net/upload/201204/20120419200856628.png" alt="image"></p>
-<p>3 mysql<br>略</p>
-<p>三 配置<br>php配置<br>php.ini-development 文件重命名为 php.ini<br>指定PHP扩展包的具体目录，以便调用相应的DLL文件</p>
-<pre><code>; Directory in which the loadable extensions (modules) reside. 
-; http://php.net/extension-dir 
-; extension_dir = &quot;./&quot; 
-; On windows: 
-; extension_dir = &quot;ext&quot; 
-</code></pre><p>修改为</p>
-<pre><code>; Directory in which the loadable extensions (modules) reside. 
-; http://php.net/extension-dir 
-; extension_dir = &quot;./&quot; 
-; On windows: 
-extension_dir = &quot;D:/servers/php/ext&quot; 
-</code></pre><p>去掉以下配置注释,支持mysql</p>
-<p>代码如下:</p>
-<pre><code>extension=php_curl.dll 
-extension=php_gd2.dll 
-extension=php_mysql.dll 
-extension=php_pdo_mysql.dll 
-extension=php_pdo_odbc.dll 
-</code></pre><p>支持session</p>
-<pre><code>session.save_path = &quot;e:/temp&quot; 
-</code></pre><p>上传文件目录配置</p>
-<pre><code>upload_tmp_dir =&quot;e:/temp&quot; 
-</code></pre><p>时区配置</p>
-<pre><code>date.timezone =Asia/Shanghai 
-</code></pre><p>apache配置</p>
-<p>进入apache安装目录，打开配置文件 /conf/httpd.conf<br>在#LoadModule vhost_alias_module modules/mod_vhost_alias.so下添加</p>
-<pre><code>LoadModule php5_module &quot;e:/servers/php/php5apache2_2.dll&quot; 
-PHPIniDir &quot;e:/servers/php&quot; 
-AddType application/x-httpd-php .php .html .htm 
-</code></pre><p> web主目录修改</p>
-<pre><code>DocumentRoot &quot;D:/servers/Apache2.2/htdocs&quot; 
-</code></pre><p>改为</p>
-<pre><code>DocumentRoot &quot;D:/servers/phpweb&quot; 
-</code></pre><p>代码如下:</p>
-<pre><code>&lt;Directory &quot;D:/servers/Apache2.2/htdocs&quot;&gt; 
-</code></pre><p>改为</p>
-<pre><code>&lt;Directory &quot;D:/phpweb&quot;&gt; 
-</code></pre><p>代码如下:</p>
-<pre><code>&lt;IfModule dir_module&gt; 
-DirectoryIndex index.html 
-&lt;/IfModule&gt; 
-</code></pre><p> 改为</p>
-<pre><code>&lt;IfModule dir_module&gt; 
-DirectoryIndex index.php index.html 
-&lt;/IfModule&gt; 
-</code></pre><p>重启apache  </p>
-<p>mysql配置<br>略<br>四 测试<br>建立phpweb目录 D:\servers\phpweb</p>
-<p>创建测试文件 index.php</p>
-<pre><code>&lt;?php 
-phpinfo(); 
-?&gt; 
-</code></pre><p>浏览:<a href="http://localhost" target="_blank" rel="external">http://localhost</a><br>显示如下信息,说明配置成功:</p>
-<p><img src="http://files.jb51.net/upload/201204/20120419200857735.png" alt="image"></p>
-<p>创建mysql连接测试文件</p>
-<pre><code>&lt;?php 
-$connect=mysql_connect(&quot;10.71.196.147&quot;,&quot;user&quot;,&quot;&quot;); 
-if(!$connect) echo &quot;Mysql Connect Error!&quot;; 
-else echo &quot;mysql 连接成功&quot;; 
-mysql_close(); 
-?&gt; 
-</code></pre><p>浏览:<a href="http://localhost/mysqltest.php" target="_blank" rel="external">http://localhost/mysqltest.php</a> 测试mysql连接</p>
-
-          
+          转自：http://www.jb51.net/article/30128.htm
+一 准备1 下载apache http://httpd.apache.org/download.cgi#apache24httpd-2.2.22-win32-x86-openssl-0.9.8t.msi  
+opens
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/25/windows下apache+php+mysql 环境配置方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -944,7 +844,7 @@ mysql_close();
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-23T20:36:00+08:00">
                 2016-04-23
@@ -959,6 +859,16 @@ mysql_close();
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/23/Ubuntu搭建LAMP环境/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/23/Ubuntu搭建LAMP环境/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -984,24 +894,19 @@ mysql_close();
       
         
           
-            <p><strong>安装过程</strong></p>
-<p><em>  
-</em>第一步 安装Apache2<br>sudo apt-get install apache2</p>
-<p>第二步 安装PHP模块<br>sudo apt-get install php5</p>
-<p>第三步 安装Mysql<br>sudo apt-get install mysql-server<br>sudo apt-get install mysql-client</p>
-<p>第四步 其他模块安装<br>sudo apt-get install libapache2-mod-php5<br>sudo apt-get install libapache2-mod-auth-mysql<br>sudo apt-get install php5-mysql<br>sudo apt-get install php5-gd</p>
-<p>第五步 测试Apache是否正常工作<br>打开浏览器，输入localhost，看看是否有It Works!网页展示。目录为/var/www</p>
-<p>第六步 修改权限/var/www<br>sudo chmod 777 /var/www</p>
-<p>第七步 安装phpmyadmin<br>sudo apt-get install phpmyadmin<br>安装过程中选择apache2，点击确定。下一步选择是要配置数据库，并输入密码。</p>
-<p>第八步 测试phpmyadmin<br>sudo ln -s /usr/share/phpmyadmin /var/www<br>然后直接运行<a href="http://localhost/phpmyadmin，看有没有数据库管理软件出现。" target="_blank" rel="external">http://localhost/phpmyadmin，看有没有数据库管理软件出现。</a></p>
-<p><strong>配置过程</strong>  </p>
-<p>第一步 启用mod_rewrite模块<br>sudo a2enmod rewrite<br>重启Apache服务器：sudo /etc/init.d/apache2 restart或者sudo service apache2 restart</p>
-<p>第二步 设置Apache支持.htm .html .php<br>sudo gedit /etc/apache2/apache2.conf&amp;<br>添加以下句子：AddType application/x-httpd-php .php .htm .html</p>
-<p>第三步 测试php网页<br>编辑mysql_test.php代码如下：<br>&lt;?php<br>$link = mysql_connect(“localhost”, “root”, “password”);<br>if(!$link)<br>die(‘Could not connect: ‘ . mysql_error());<br>else<br>echo “Mysql 配置正确!”;<br>mysql_close($link);<br>?&gt;<br>访问 <a href="http://localhost/mysql_test.php" target="_blank" rel="external">http://localhost/mysql_test.php</a> 显示’Mysql 配置正确’就代表配置正确。</p>
-<p>第四步 第三步这里出现了乱码以后解决方法<br>打开配置文件sudo gedit /etc/apache2/apache2.conf&amp;<br>添加如下代码：AddDefaultCharset UTF-8<br>到此为止配置OK。</p>
-<p>转自：<a href="http://blog.csdn.net/callmeback/article/details/8130190" target="_blank" rel="external">http://blog.csdn.net/callmeback/article/details/8130190</a></p>
-
-          
+          安装过程
+  
+第一步 安装Apache2sudo apt-get install apache2
+第二步 安装PHP模块sudo apt-get install php5
+第三步 安装Mysqlsudo apt-get install mysql-serversudo apt-get instal
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/23/Ubuntu搭建LAMP环境/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1078,7 +983,7 @@ mysql_close();
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-20T07:58:00+08:00">
                 2016-04-20
@@ -1093,6 +998,16 @@ mysql_close();
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/20/go--Ubuntu下安装GO LANG，测试输入hello world/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/20/go--Ubuntu下安装GO LANG，测试输入hello world/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1118,17 +1033,17 @@ mysql_close();
       
         
           
-            <p>1.下载go语言源码，<a href="https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz" target="_blank" rel="external">https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz</a></p>
-<p>2.解压缩源码包<br>tar zxvf go1.6.1.linux-amd64.tar.gz</p>
-<p>3.移动源码包到安装目录<br>sudo mv go /usr/local/go  </p>
-<p>4.设置系统环境变量<br>sudo vi /etc/profile</p>
-<p>在文件最后添加如下代码<br>export GOROOT=/usr/local/go<br>export GOBIN=$GOROOT/bin<br>export GOPKG=$GOROOT/pkg/tool/linux_amd64<br>export GOARCH=amd64<br>export GOOS=linux<br>export PATH=.:$PATH:$GOBIN:$GOPKG</p>
-<p>编译，使环境变量生效<br>source /etc/profile</p>
-<p>5.测试安装是否成功<br>go version<br>go version go1.6.1 linux/amd64</p>
-<p>6.代码测试，输入”hello world”<br>package main<br>import “fmt”<br>func main(){<br>fmt.Printf(“Hello World!\n”)<br>}</p>
-<p>输出：Hello World!</p>
-
-          
+          1.下载go语言源码，https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
+2.解压缩源码包tar zxvf go1.6.1.linux-amd64.tar.gz
+3.移动源码包到安装目录sudo mv go /usr/lo
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/20/go--Ubuntu下安装GO LANG，测试输入hello world/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1205,7 +1120,7 @@ mysql_close();
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-18T08:41:00+08:00">
                 2016-04-18
@@ -1220,6 +1135,16 @@ mysql_close();
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/18/posix多线程--线程私有数据/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/18/posix多线程--线程私有数据/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1245,115 +1170,16 @@ mysql_close();
       
         
           
-            <p>1.当多个线程共享一个变量时，将该变量定义为静态或外部变量，使用互斥量确保共享变量的安全访问。<br>如果每个线程都需要一个私有变量值，则该值成为线程的私有数据。程序创建一个键，每个线程独立地设定或得到自己的键值，各线程间私有数据互不影响。</p>
-<p>2.建立线程私有数据<br>int pthread_key_create(pthread_key_t <em>key,void (</em>destructor)(void <em>));<br>int pthread_key_delete(pthread_key_t key);<br>int pthread_setspecific(pthread_key_t key,void </em>value);<br>void *pthread_getspecific(pthread_key_t key);</p>
-<p>私有数据键，若多次创建，会覆盖掉前面创建的键，对应的键值也将永远丢失。</p>
-<p>使用pthread_key_delete释放一个私有数据键时，必须保证所有线程都不在持有该键的值。<br>更好的做法是不释放线程私有数据键，因为线程私有数据键最多可达128个，很少有程序需要这么多的树木，没有必要手动释放。</p>
-<p>代码示例如下：<br>创建数据键，设置键值，获取键值</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-typedef struct tsd_tag
-{
-        pthread_t tid;
-        char *string;
-}tsd_t;
-pthread_key_t tsd_key;
-pthread_once_t key_once = PTHREAD_ONCE_INIT;
-void one_routine(void)
-{
-        pthread_key_create(&amp;tsd_key,NULL);;
-}
-void *thread_routine(void *arg)
-{
-        pthread_once(&amp;key_once,one_routine);
-        tsd_t *value;
-        value = (tsd_t*)malloc(sizeof(tsd_t));
-        pthread_setspecific(tsd_key,value);
-        value-&gt;tid = pthread_self();
-        value-&gt;string = (char*)arg;
-        value=(tsd_t*)pthread_getspecific(tsd_key);
-        sleep(2);
-        value=(tsd_t*)pthread_getspecific(tsd_key);
-        printf(&quot;%s done...\n&quot;,value-&gt;string);
-}
-int main(void)
-{
-        pthread_t tid1,tid2;
-        pthread_create(&amp;tid1,NULL,thread_routine,&quot;thread 1&quot;);
-        pthread_create(&amp;tid2,NULL,thread_routine,&quot;thread 2&quot;);
-        pthread_exit(NULL);
-}         
-</code></pre><p>View Code</p>
-<p>3.destructor函数<br>destructor函数仅仅当线程终止时被调用。当线程终止时，pthreads调用键的destructor函数前，将线程私有数据置为NULL,所以若线程私有数据值是堆存储的地址，并且想在destructor函数中释放，必须使用传递给destructor的参数，而不是pthread_getspecific的参数。可以自定义destructor函数。</p>
-<p>键值为NULL意味着线程对应该键值不再有值，而不是赋空值。否则若随后调用pthread_key_create建立该键，线程将会收到旧值。</p>
-<p>线程私有数据键的destructor函数在键值替换的时候不会被调用。即，如果在堆中将一个结构的指针作为键值，又分配一个新结构，并将新结构指针赋给相同数据键，则指向旧结构的指针不会调用destructor函数。</p>
-<p>代码示例如下：</p>
-<p>三个线程的私有变量数据，自定义destructor函数，在线程结束后，释放堆存储，在所有线程结束后，销毁私有数据键。</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-typedef struct private_tag
-{
-        pthread_t tid;
-        char *string;
-}private_t;
-pthread_key_t key;
-pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
-long counter = 0;
-void key_destructor(void *value)
-{
-        private_t *private = (private_t*)value;
-        printf(&quot;thread \&quot;%s\&quot; exiting...\n&quot;,private-&gt;string);
-        free(value);
-        pthread_mutex_lock(&amp;mutex);
-        counter--;
-        if(counter&lt;=0)
-        {
-                pthread_key_delete(key);
-                printf(&quot;key deleted...\n&quot;);
-        }
-        pthread_mutex_unlock(&amp;mutex);
-}
-void *key_get(void)
-{
-        void *value;
-        value = pthread_getspecific(key);
-        if(value==NULL)
-        {
-printf(&quot;malloc\n&quot;);
-value = malloc(sizeof(private_t));
-                pthread_setspecific(key,(void*)value);
-        }
-        return value;
-}
-void *thread_routine(void *arg)
-{
-        private_t *value;
-        value = (private_t*)key_get();
-        value-&gt;tid = pthread_self();
-        value-&gt;string = (char*)arg;
-        printf(&quot;thread \&quot;%s\&quot; starting...\n&quot;,value-&gt;string);
-        sleep(2);
-        return NULL;
-}
-int main(void)
-{
-        pthread_t tid1,tid2;
-        private_t *value;
-        pthread_key_create(&amp;key,key_destructor);
-        counter = 3;
-        value = (private_t *)key_get();
-        value-&gt;tid = pthread_self();
-        value-&gt;string = &quot;Main thread&quot;;
-        pthread_create(&amp;tid1,NULL,thread_routine,&quot;Thread 1&quot;);
-        pthread_create(&amp;tid2,NULL,thread_routine,&quot;Thread 2&quot;);
-        printf(&quot;exiting\n&quot;);
-        pthread_exit(NULL);
-}                        
-</code></pre><p>View Code</p>
-
-          
+          1.当多个线程共享一个变量时，将该变量定义为静态或外部变量，使用互斥量确保共享变量的安全访问。如果每个线程都需要一个私有变量值，则该值成为线程的私有数据。程序创建一个键，每个线程独立地设定或得到自己的键值，各线程间私有数据互不影响。
+2.建立线程私有数据int pthread_key_create(
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/18/posix多线程--线程私有数据/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1430,7 +1256,7 @@ int main(void)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-17T15:56:00+08:00">
                 2016-04-17
@@ -1445,6 +1271,16 @@ int main(void)
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/17/posix多线程--线程取消/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/17/posix多线程--线程取消/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1470,279 +1306,17 @@ int main(void)
       
         
           
-            <p>1.三种取消状态<br>Off                   禁用取消<br>Deferred           推迟取消：在下一个取消点执行取消<br>Asynchronous   异步取消：可以随时执行取消</p>
-<p>int pthread_cancel(pthread_t thread)</p>
-<p>2.推迟取消：在下一个取消点执行取消</p>
-<p>Pthreads系统上的某些函数会被作为取消点，如pthread_testcancel,sleep,pthread_cond_wait等。<br>线程调用pthread_cancel函数后，被取消线程不会立即取消，仅仅在到达取消点时响应取消请求。</p>
-<p>代码示例如下：</p>
-<p>在pthread_testcancel取消点，响应线程取消请求。</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-#include&lt;errno.h&gt;
-int counter;
-pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
-void *thread_route(void *arg)
-{
-        pthread_mutex_lock(&amp;mutex);
-        for(counter=0;;counter++)
-        {
-                if(counter%2000==0){
-                        printf(&quot;calling testcancel\n&quot;);
-                        pthread_testcancel();
-                }
-
-        }
-        pthread_mutex_unlock(&amp;mutex);
-}
-int main(void)
-{
-        pthread_t tid;
-        void *result;
-        pthread_create(&amp;tid,NULL,thread_route,NULL);
-        sleep(1);
-        printf(&quot;call cancel\n&quot;);
-        pthread_cancel(tid);
-        printf(&quot;call joining\n&quot;);
-        pthread_join(tid,&amp;result);
-        if(result==PTHREAD_CANCELED)
-        {
-            printf(&quot;Thread cancelled at %d\n&quot;,counter);
-        }
-        else{
-                printf(&quot;Thread was not canceled\n&quot;);
-        }
-        pthread_mutex_lock(&amp;mutex);
-        printf(&quot;main thread locked&quot;);
-        pthread_mutex_unlock(&amp;mutex);
-} 
-</code></pre><p>View Code</p>
-<p>3.如果要保证取消不在一个特别的取消点发生，可以暂时在代码的那个区域停用取消。<br>int pthread_setcancelstate(PTHREAD_CANCEL_DISABLE,int *state)</p>
-<p>代码示例如下：</p>
-<p>在sleep()时，禁用取消。</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-#include&lt;errno.h&gt;
-int counter;
-pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
-void *thread_route(void *arg)
-{
-        int state;
-        pthread_mutex_lock(&amp;mutex);
-        for(counter=0;;counter++)
-        {
-                if(counter%582==0)
-                {
-                        pthread_setcancelstate(PTHREAD_CANCEL_DISABLE,&amp;state)
-;
-                        sleep(1);
-                        pthread_setcancelstate(state,&amp;state);
-                }
-                if(counter%2000==0){
-                        printf(&quot;calling testcancel\n&quot;);
-                        pthread_testcancel();
-                }
-
-        }
-        pthread_mutex_unlock(&amp;mutex);
-}
-int main(void)
-{
-        pthread_t tid;
-        void *result;
-        pthread_create(&amp;tid,NULL,thread_route,NULL);
-        sleep(1);
-        printf(&quot;call cancel\n&quot;);
-        pthread_cancel(tid);
-        printf(&quot;call joining\n&quot;);
-        pthread_join(tid,&amp;result);
-        if(result==PTHREAD_CANCELED)
-        {
-                printf(&quot;Thread cancelled at %d\n&quot;,counter);
-        }
-        else{
-                printf(&quot;Thread was not canceled\n&quot;);
-        }
-        pthread_mutex_lock(&amp;mutex);
-        printf(&quot;main thread locked&quot;);
-        pthread_mutex_unlock(&amp;mutex);
-}           
-</code></pre><p>View Code</p>
-<p>4.异步取消：可以随时执行取消<br>异步取消不需要使用取消点来查询取消请求。异步取消不能获得任何资源，应避免异步的取消<br>代码示例如下：</p>
-<p>矩阵相乘线程取消</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-#define SIZE 10
-int arr_a[SIZE][SIZE];
-int arr_b[SIZE][SIZE];
-int arr_c[SIZE][SIZE];
-void printarr(int arr[SIZE][SIZE])
-{
-        int i,j;
-        for(i=0;i&lt;SIZE;i++)
-        {
-                for(j=0;j&lt;SIZE;j++)
-                {
-                        printf(&quot;%x &quot;,arr[i][j]);    
-                }
-                printf(&quot;\n&quot;);
-        }
-}
-void *thread_routine(void *arg)
-{
-        int i,j,cancel_type;
-        for(i=0;i&lt;SIZE;i++)
-                for(j=0;j&lt;SIZE;j++)
-                {
-                        arr_a[i][j] = i;
-                        arr_b[i][j] = j;
-                }
-        while(1)
-        {
-                pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,&amp;cancel_type);
-                 for(i=0;i&lt;SIZE;i++)
-                        for(j=0;j&lt;SIZE;j++)
-                        {
-                                arr_c[i][j] = arr_a[i][j]*arr_b[i][j];
-                        }
-                pthread_setcanceltype(cancel_type,&amp;cancel_type);
-                for(i=0;i&lt;SIZE;i++)
-                        for(j=0;j&lt;SIZE;j++)
-                                arr_a[i][j] = arr_c[i][j];
-        }
-}
-int main(void)
-{
-        pthread_t tid;                                                           
-        void *result;
-        pthread_create(&amp;tid,NULL,thread_routine,NULL);
-        sleep(1);
-        printf(&quot;canceling!&quot;);
-        pthread_cancel(tid);
-        printf(&quot;joining&quot;);
-        pthread_join(tid,&amp;result);
-        if(result==PTHREAD_CANCELED)
-                printf(&quot;thread cancelled\n&quot;);
-        else    
-                printf(&quot;thread was not cancelled\n&quot;);
-        printarr(arr_a);
-        printarr(arr_b);
-        printarr(arr_c);
-}
-</code></pre><p>View Code</p>
-<p>5.清除<br>在编写代码时，应将其设计为可以推迟取消，在不适当的地方停用取消，在取消点使用清除处理器。</p>
-<p>清除处理器可以理解为每个线程有一个活动的清除处理函数的栈，调用pthread_cleanup_push将清除函数加到栈中，调用pthread_cleanup_pop删除最近增加的处理函数。当所有活动的清除处理函数返回时，线程被终止。当pthread_cleanup_pop以非零值被调用时，即使线程没被取消，清除处理函数也要被执行。</p>
-<p>代码示例如下：<br>当一个条件变量等待被取消时，使用一个清除处理函数来释放互斥量。</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-#define THREADS 5
-typedef struct work_tag
-{
-        pthread_mutex_t mutex;
-        pthread_cond_t cond;
-        int counter;
-        int busy;
-}work_t;
-work_t work = {PTHREAD_MUTEX_INITIALIZER,PTHREAD_COND_INITIALIZER,0,1};
-void cleanup_handler(void *arg)
-{
-        work_t *work_p = (work_t*)arg;
-        work_p-&gt;counter--;
-        pthread_mutex_unlock(&amp;work_p-&gt;mutex);
-}
-void *thread_routine(void *arg)
-{
-        pthread_cleanup_push(cleanup_handler,(void *)&amp;work);
-        pthread_mutex_lock(&amp;work.mutex);
-        work.counter++;
-        while(work.busy)
-        {
-                pthread_cond_wait(&amp;work.cond,&amp;work.mutex);
-        }
-        pthread_cleanup_pop(1);
-        return NULL;
-}
-int main(void)
-{
-        pthread_t tid[THREADS];
-        void *result;
-        int i;
-        for(i=0;i&lt;THREADS;i++)
-        {
-                pthread_create(&amp;tid[i],NULL,thread_routine,NULL);
-        }
-        sleep(2);
-        for(i=0;i&lt;THREADS;i++)
-        {
-                pthread_cancel(tid[i]);
-                pthread_join(tid[i],&amp;result);
-                if(result == PTHREAD_CANCELED)
-                        printf(&quot;thread %d cancelled\n&quot;,i);
-                else
-                        printf(&quot;thread %d was not cancelled\n&quot;,i);
-        }
-        return 0;
-}       
-</code></pre><p>View Code</p>
-<p>在一套”转包”功能的程序中，当分包线程在进行中时，承包线程被取消，这时不希望分包线程继续运行。可以在承包线程清除处理函数中取消每个分包线程，<br>如果原来是连接分包线程，它们将继续消费一些资源直到它们被连接或分离。这时应在承包线程清除处理函数中使用pthread_detach立即分离它。</p>
-<p>代码示例如下：</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-#define THREADS 5
-typedef struct send_tag
-{
-        pthread_t sid[THREADS];
-}send_t;
-void *send_routine(void *arg)
-{
-        int counter;
-        for(counter=0;;counter++)
-                if(counter%1000==0)
-                        pthread_testcancel();
-}
-void cleanup(void *arg)
-{
-        send_t *send = (send_t*)arg;
-        int i;
-        for(i=0;i&lt;THREADS;i++)
-        {
-                pthread_cancel(send-&gt;sid[i]);
-                pthread_detach(send-&gt;sid[i]);
-                printf(&quot;cleanup:cancelled %d\n&quot;,i);
-        }
-}
-void *thread_routine(void *arg)
-{
-        send_t send;
-        int i;
-        void *result;
-        for(i=0;i&lt;THREADS;i++)
-        {
-                pthread_create(&amp;send.sid[i],NULL,send_routine,NULL);
-        }
-        pthread_cleanup_push(cleanup,(void*)&amp;send);
-        for(i=0;i&lt;THREADS;i++)
-                pthread_join(send.sid[i],&amp;result);
-        pthread_cleanup_pop(0);
-}
-int main(void)
-{
-        pthread_t tid;
-        void *result;
-        pthread_create(&amp;tid,NULL,thread_routine,NULL);
-        sleep(5);
-        pthread_cancel(tid);
-        pthread_join(tid,&amp;result);
-        return 0;
-}                                                                                
-</code></pre><p>View Code</p>
-<p>参考资料：《POSIX多线程程序设计》 pp.120-137</p>
-
-          
+          1.三种取消状态Off                   禁用取消Deferred           推迟取消：在下一个取消点执行取消Asynchronous   异步取消：可以随时执行取消
+int pthread_cancel(pthread_t thread)
+2.推迟取消：在下一个取消点执
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/17/posix多线程--线程取消/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1819,7 +1393,7 @@ int main(void)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-15T07:20:00+08:00">
                 2016-04-15
@@ -1834,6 +1408,16 @@ int main(void)
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/15/posix多线程--三种基本线程编程模型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/15/posix多线程--三种基本线程编程模型/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1859,424 +1443,20 @@ int main(void)
       
         
           
-            <p>本文介绍了三种构建线程解决方案的方式。</p>
-<p>一、流水线：每个线程执行同一种操作，并把操作结果传递给下一步骤的线程。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151918473-1467930339.png" alt=""></p>
-<p>代码示例如下：<br>终端输入一个int值，每个线程将该值加1，并将结果传给下一个线程。</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-typedef struct stage_tag
- {
-          pthread_mutex_t mutex;
-          pthread_cond_t cond;
-          int data;
-          int ready;
-          pthread_t tid;
-          struct stage_tag *next;
-}stage_t;
-typedef struct pipe_tag
-{
-        pthread_mutex_t mutex;
-        stage_t *head;
-        stage_t *tail;
-        int stages;
-}pipe_t;
-void pipe_send(stage_t *stage,int data)
-{
-        stage-&gt;data =data;
-        stage-&gt;ready = 1;
-        pthread_cond_signal(&amp;stage-&gt;cond);
-}
-void *thread_route(void *arg)
-{
-        stage_t *stage = (stage_t *)arg;
-        while(!stage-&gt;ready)
-        {
-                pthread_cond_wait(&amp;stage-&gt;cond,&amp;stage-&gt;mutex);
- }
-        int data = stage-&gt;data+1;
-        stage_t *next = stage-&gt;next;
-        if(next!=NULL)
-        {
-                pipe_send(next,data);
-        }
-        return NULL;
-}
-void create_pipe(pipe_t *pipe,int stages)
-{
-//      pipe = (pipe_t *)malloc(sizeof(pipe_t));
-        pipe-&gt;stages = stages;
-        int i;
-        stage_t *stage;
-        stage_t *last;
-        for(i=0;i&lt;=stages;i++)
-        {
-                stage = (stage_t *)malloc(sizeof(stage_t));
-                stage-&gt;data = i;
-                if(i==0)
-                {
-                        pipe-&gt;head = stage;
-                }
-                if(last!=NULL)
-                {
-                        last-&gt;next = stage;
-                }
-last = stage;
-        }
-        last-&gt;next=NULL;
-        pipe-&gt;tail = last;
-        for(stage=pipe-&gt;head;stage-&gt;next!=NULL;stage=stage-&gt;next)
-        {
-                pthread_create(&amp;stage-&gt;tid,NULL,thread_route,(void *)stage);
-                printf(&quot;stage %d\n&quot;,stage-&gt;data);
-        }
-/*      free(pipe);
-        for(stage=pipe-&gt;head;stage!=NULL;stage=stage-&gt;next)
-        {
-                  free(stage);
-        }       
-        */
-}
-int main(void)
-{
-        pipe_t my_pipe;
-        long value,result;
-        char line[128];
-        create_pipe(&amp;my_pipe,10);
-        pipe_send(my_pipe.head,5);
-        sleep(10);
-        printf(&quot;result is %d\n&quot;,my_pipe.tail-&gt;data);
-        return 0;
-} 
-</code></pre><p>View Code</p>
-<p>二、工作组：数据由一组线程分别独立地处理。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151935551-2032798922.png" alt=""></p>
-<p>代码示例如下：<br>程序有两个参数：filepath：文件或目录路径；search：待查找字符串</p>
-<p>程序将文件路径排队给工作组，工作组线程判断该路径是文件还是目录，如果是文件，它将在文件中搜索字符串；如果是目录，它将使用readdir_r查找该目录中的所有子目录和文件，并将每一项添加到工作队列。</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-#include&lt;dirent.h&gt;
-#include&lt;sys/stat.h&gt;
-typedef struct work_tag
-{
-        struct work_tag *next;
-        char *path;
-        char *search;
-}work_t,*work_p;
-typedef struct worker_tag
-{
-        int index;
-        pthread_t tid;
-        struct crew_tag *crew;
+          本文介绍了三种构建线程解决方案的方式。
+一、流水线：每个线程执行同一种操作，并把操作结果传递给下一步骤的线程。
 
-}worker_t,*worker_p;
-typedef struct crew_tag
-{
-        pthread_mutex_t mutex;
-        pthread_cond_t cond;
-        pthread_cond_t done;
-        long work_count;
-        work_t *first,*last;
-        worker_t workers[4];
-}crew_t,*crew_p;
-void *thread_route(void *arg)
-{
-worker_p worker = (worker_t *)arg;
-        crew_p crew = worker-&gt;crew;
-struct dirent *entry;
-        entry = (struct dirent*)malloc(sizeof(struct dirent)+sizeof(size_t));   
-pthread_mutex_lock(&amp;crew-&gt;mutex);
-while(crew-&gt;work_count ==0)
-        {
-                pthread_cond_wait(&amp;crew-&gt;cond,&amp;crew-&gt;mutex);
-        }
-        pthread_mutex_unlock(&amp;crew-&gt;mutex);
-        printf(&quot;worker is running: %d\n&quot;,worker-&gt;index);
-        while(1)
-        {
-                pthread_mutex_lock(&amp;crew-&gt;mutex);
-                while(crew-&gt;first==NULL)
-                {
-                        pthread_cond_wait(&amp;crew-&gt;cond,&amp;crew-&gt;mutex);
-                }
-                printf(&quot;worker %d woke %#lx %d\n&quot;,worker-&gt;index,crew-&gt;first,crew-&gt;work_count);
-                work_p work = crew-&gt;first;
-                crew-&gt;first = work-&gt;next;
-                if(crew-&gt;first==NULL)
-                        crew-&gt;last = NULL;
-                printf(&quot;worker %d took %#lx,leave first %#lx,last %#lx\n&quot;,worker-&gt;index,work,crew-&gt;first,crew-&gt;last);
-                pthread_mutex_unlock(&amp;crew-&gt;mutex);
-                struct stat filestat;
-                lstat(work-&gt;path,&amp;filestat);
-                if(S_ISLNK(filestat.st_mode))
-printf(&quot;worker %d:%s is a link,skipping.\n&quot;,worker-&gt;index,work-&gt;path);
-                else if(S_ISDIR(filestat.st_mode)){
-                        DIR *dir;
-                        struct dirent *result;
-                        dir = opendir(work-&gt;path);
-                        while(1){
-                                readdir_r(dir,entry,&amp;result);
-                if(result==NULL)
-                                        break;
-                                if(strcmp(entry-&gt;d_name,&quot;.&quot;)==0)
-                                        continue;
-                                if(strcmp(entry-&gt;d_name,&quot;..&quot;)==0)
+代码示例如下：终端输入一个int值，每个线程将该值加1，并将结果传给下一个线程。
 
-                                        continue;
-                                work_p new_work = (work_p)malloc(sizeof(work_t));
-                printf(&quot;test\n&quot;);
-                 path_max = pathconf (work-&gt;path, _PC_PATH_MAX);
-new_work-&gt;path = (char*)malloc (path_max);
-strcpy (new_work-&gt;path, work-&gt;path);
-                strcat (new_work-&gt;path, &quot;/&quot;);
-                strcat (new_work-&gt;path, entry-&gt;d_name);                 
-//       char *new_dir = strcat(work-&gt;path,entry-&gt;d_name);
-                                //new_work-&gt;path = new_dir;
-                                 new_work-&gt;search = work-&gt;search;
-                                 new_work-&gt;next = NULL;
-                                 pthread_mutex_lock(&amp;crew-&gt;mutex);
-                                 if(crew-&gt;first==NULL)
-{
-                                        crew-&gt;first = new_work;
-                                        crew-&gt;last = new_work;
-                                 }
-                                 else{
-                                        crew-&gt;last-&gt;next = new_work;
-                                        crew-&gt;last = new_work;
-                                 }
-                                 crew-&gt;work_count++;
-                                 printf(&quot;worker %d add work %#lx,first %#lx,last %#lx,%d\n&quot;,worker-&gt;index,new_work,crew-&gt;first,crew-&gt;last,crew-&gt;work_count);
-                                 pthread_cond_signal(&amp;crew-&gt;cond);
-                                 pthread_mutex_unlock(&amp;crew-&gt;mutex);
-                        }
-                        closedir(dir);
-                }
-                else if(S_ISREG(filestat.st_mode)){
-                        FILE *file;
-                        char buffer[256];
-                        file = fopen(work-&gt;path,&quot;r&quot;);
-                        fgets(buffer,sizeof(buffer),file);
-                        char *search_ptr;
-                        search_ptr = strstr(buffer,work-&gt;search);
-                        if(search_ptr!=NULL){
-                                printf(&quot;worker %d found \&quot;%s\&quot; in %s\n &quot;,worker-&gt;index,work-&gt;search,work-&gt;path);              
-                                 }
-                        fclose(file);
-
-                }
-                else{
-                        printf(&quot;worker %d:%s format is error.\n&quot;,worker-&gt;index,work-&gt;path);
-                }
-                free(work-&gt;path);
-                free(work);
-
-                pthread_mutex_lock(&amp;crew-&gt;mutex);
-                crew-&gt;work_count--;
-                printf(&quot;worker %d decremented work to %d\n&quot;,worker-&gt;index,crew-&gt;work_count);
-                if(crew-&gt;work_count&lt;=0){
-                        pthread_cond_broadcast(&amp;crew-&gt;done);
-                }                                                                
-                pthread_mutex_unlock(&amp;crew-&gt;mutex);
-        }
-        free(entry);
-        return NULL;
-}
-void crew_create(crew_t *crew)
-{
-        int worker_index;
-        crew-&gt;work_count = 0;
-        crew-&gt;first = NULL;
-        crew-&gt;last = NULL;
-        pthread_mutex_init(&amp;crew-&gt;mutex,NULL);
-pthread_cond_init(&amp;crew-&gt;cond,NULL);
-        pthread_cond_init(&amp;crew-&gt;done,NULL);
-        for(worker_index=0;worker_index&lt;4;worker_index++){
-                crew-&gt;workers[worker_index].index = worker_index;
-                crew-&gt;workers[worker_index].crew = crew;
-                pthread_create(&amp;crew-&gt;workers[worker_index].tid,
-                NULL,thread_route,(void *)&amp;crew-&gt;workers[worker_index]);
-        }
-}
-void crew_start(crew_t *crew,char *filepath,char *search)
-{
-        pthread_mutex_lock(&amp;crew-&gt;mutex);
-        work_p work = (work_p)malloc(sizeof(work_t));
-        work-&gt;path = filepath;
-        work-&gt;search = search;
-        work-&gt;next = NULL;
-        crew-&gt;first = work;
-        crew-&gt;last = work;
-        crew-&gt;work_count++;
-        pthread_cond_signal(&amp;crew-&gt;cond);
-        while(crew-&gt;work_count&gt;0)
-        {
-                pthread_cond_wait(&amp;crew-&gt;done,&amp;crew-&gt;mutex);
-        }
-        printf(&quot;crew is done!\n&quot;);
-        pthread_mutex_unlock(&amp;crew-&gt;mutex);
-}
-int main(void)             
-{
-        crew_t crew;
-        crew_create(&amp;crew);
-        char *filepath = &quot;/home/ubuntu/programs&quot;;
-        char *search = &quot;errno&quot;;
-        crew_start(&amp;crew,filepath,search);
-        return 0;
-}   
-</code></pre><p>View Code</p>
-<p>三、客户端/服务器：客户端线程将工作排队，交给一个服务器线程去处理。客户端或者以同步方式等待服务器执行，或异步执行并在后面需要时查找结果。</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160415151946160-1569950158.png" alt=""></p>
-<p>代码示例如下：<br>一组线程都需要从stdin中读取输入，这将导致提示-读(prompt-and-<br>read)操作可能有些混乱。一个方法是使用flockfile和funlockfile函数来锁住stdin和stdout。，另一个方式是，使用服务器线程，将客户端读写操作排队，由服务器线程依次处理读写操作队列。</p>
-<p><img src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt=""><img src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt=""></p>
-<pre><code>#include&lt;stdio.h&gt;                                                                
-#include&lt;pthread.h&gt;
-#define REQ_READ 1
-#define REQ_WRITE 2
-#define REQ_QUIT 3
-typedef struct client_tag
-{
-        struct client_tag *next;
-        int oper;
-        int sync;
-        int done_flag;
-        char prompt[32];
-        char text[128];
-        pthread_mutex_t mutex;
-        pthread_cond_t mutex;
-}client_t;
-typedef struct server_tag
-{
-        client_t *first,*last;
-        pthread_mutex_t mutex;
-        pthread_cond_t cond;
-}server_t;
-server_t server={NULL,NULL,PTHREAD_MUTEX_INITIALIZER,PTHREAD_COND_INITIALIZER};
-pthread_mutex_t main_mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t main_cond = PTHREAD_COND_INITIALIZER;
-int thread_count = 4;
-void client_request(int oper,int sync,const char *prompt,char *string)
-{
-        pthread_mutex_lock(&amp;server.mutex);
-        client_t *client;
-client = (client_t *)malloc(sizeof(client_t));
-        client-&gt;next = NULL;
-        client-&gt;oper  = oper;
-        client-&gt;sync = sync;
-        if(prompt!=NULL)
-                strncpy(client-&gt;prompt,prompt,32);
-        if(oper==REQ_WRITE&amp;&amp;string!=NULL)
-                strncpy(client-&gt;text,string,128);
-        if(server.first==NULL)
-        {
-                server.first = client;
-                server.last = client;
-        }else{
-                server.last-&gt;next = client;
-                server.last = client;
-        }
-        pthread_cond_signal(&amp;server.cond);
-        if(sync)
-        {
-                while(!client-&gt;done_flag)
-                {
-                        pthread_cond_wait(&amp;client-&gt;cond,&amp;server.mutex);
-                }
-                if(oper==REQ_READ)
-                {
-                        if(strlen(client-&gt;text)&gt;0)
-                                strcpy(string,client-&gt;text);
-                }
-}
-                pthread_cond_destroy(&amp;client-&gt;cond);
-                free(request);
-        }
-        pthread_mutex_unlock(&amp;server.mutex);
-}
-void *client_route(void *arg)
-{
-        int index = (int)arg;
-        int loops;
-        char prompt[32];
-        char string[128],formatted[128];
-        sprintf(prompt,&quot;Client %d&gt;&quot;,index);
-        while(1)
-        {
-                client_request(REQ_READ,1,prompt,string);
-                if(strlen(string)==0)
-                        break;
-                for(loops=0;loops&lt;4;loops++)
-                {
-                        sprintf(formatted,&quot;(%d#%d) %s&quot;,index,loops,string);
-                        client_request(REQ_WRITE,0,NULL,formatted);
-                        sleep(1);
-                }                 
- }
-}
-void *server_route(void *arg)
-{
-        client_t *client;
-        int oper;
-        while(1)
-        {
-                pthread_mutex_lock(&amp;server.mutex);
-                while(server.first==NULL)
-                {
-                        pthread_cond_wait(&amp;server.cond,&amp;server.mutex);
-                }
-                client = server.first;
-                server.first = client.next;
-                if(server.first==NULL)
-                        server.last = NULL;
-                pthread_mutex_unlock(&amp;server.mutex);
-                oper = client-&gt;oper;
-                switch(oper){
-                        case REQ_QUIT:
-                                break;
-                        case REQ_READ:
-                                if(strlen(client-&gt;prompt)&gt;0)
-                                        printf(client-&gt;prompt);
-                                fgets(client-&gt;text,128,stdin);
-                                break;
-                        case REQ_WRITE:       
-                                puts(client-&gt;text);
-                                break;
-                        default:
-                                break;
-                }
-                free(client);
-                if(oper==REQ_QUIT)
-                        break;
-        }
-        return NULL;
-}
-int main(void)
-{
-        pthread_t sid;
-        pthread_create(&amp;sid,NULL,server_route,NULL);
-
-        pthread_t cid;
-        int i;
-        for(i=0;i&lt;thread_count;i++)
-        {
-                pthread_create(&amp;cid,NULL,client_route,(void *)count);
-        }
-        pthread_mutex_lock(&amp;main_mutex);
-        while(thread_count&gt;0)
-        {
-                pthread_cond_wait(&amp;main_cond,&amp;main_mutex);
-        }
-        pthread_mutex_unlock(&amp;main_mutex);        
-        printf(&quot;Done!\n&quot;);
-        client_request(REQ_QUIT,1,NULL,NULL);
-        return 0;
-}    
-</code></pre><p>View Code</p>
-<p>参考资料：《POSIX多线程程序设计》 pp.81-110</p>
-
-          
+#include&lt;stdio.h&gt;                            
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/15/posix多线程--三种基本线程编程模型/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2353,7 +1533,7 @@ int main(void)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-13T03:16:00+08:00">
                 2016-04-13
@@ -2368,6 +1548,16 @@ int main(void)
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/13/posix多线程--条件变量/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/posix多线程--条件变量/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2393,100 +1583,18 @@ int main(void)
       
         
           
-            <p>条件变量是用来通知共享数据状态信息的。</p>
-<p>1.条件变量初始化两种方式：<br>（1）静态初始化<br>pthread_cond_t cond = PTHREAD_COND_INITIALIZER;<br>代码示例如下：</p>
-<pre><code>#include &lt;pthread.h&gt;
-typedef struct my_struct_tag {
-    pthread_mutex_t     mutex;  /* Protects access to value */
-    pthread_cond_t      cond;   /* Signals change to value */
-    int                 value;  /* Access protected by mutex */
-} my_struct_t;
-
-my_struct_t data = {
-    PTHREAD_MUTEX_INITIALIZER, PTHREAD_COND_INITIALIZER, 0};
-
-int main (int argc, char *argv[])
-{
-    return 0;
-}
-</code></pre><p>（2）动态初始化<br>int pthread_cond_init(pthread_cond_t <em>cond,pthread_condattr_t </em>condattr);<br>int pthread_cond_destroy(pthread_cond_t *cond);<br>代码示例如下：</p>
-<pre><code>#include &lt;pthread.h&gt;
-
-typedef struct my_struct_tag {
-    pthread_mutex_t     mutex;  /* Protects access to value */
-    pthread_cond_t      cond;   /* Signals change to value */
-    int                 value;  /* Access protected by mutex */
-} my_struct_t;
-
-int main (int argc, char *argv[])
-{
-    my_struct_t *data;
-    int status;
-    data = malloc (sizeof (my_struct_t));
-    status = pthread_mutex_init (&amp;data-&gt;mutex, NULL);
-    status = pthread_cond_init (&amp;data-&gt;cond, NULL);
-    status = pthread_cond_destroy (&amp;data-&gt;cond);
-    status = pthread_mutex_destroy (&amp;data-&gt;mutex);
-    (void)free (data);
-    return status;
-}
-</code></pre><p>2.等待条件变量<br>int pthread_cond_wait(pthread_cond_t <em>cond,pthread_mutex_t </em>mutex);<br>int pthread_cond_timedwait(pthread_cond_t <em>cond,pthread_mutex_t </em>mutex,struct<br>timespec *expiration);<br>当线程等待条件变量时，它必须将相关互斥量锁住。在阻塞线程之前，条件变量等待操作将解锁互斥量，而在重新返回线程之前，会再次锁住互斥量。</p>
-<p>3.唤醒条件变量<br>int pthread_cond_signal(pthread_cond_t <em>cond);<br>int pthread_cond_broadcast(pthread_cond_t </em>cond);<br>在发送信号时也必须锁住互斥量，如果互斥量不被锁住，任何线程可以在被唤醒线程之前锁住互斥量。这将是一个产生被拦截唤醒的根源。例如，一个低优先级的线程可能锁住了互斥量，使高优先级的线程无法被其他线程唤醒，延迟了高优先级线程的调度。</p>
-<p>4.需要在等待条件变量线程被唤醒后，检测条件<br>（1）被拦截的唤醒：等待条件变量被唤醒并加锁相关互斥量，若一个其他线程获得了互斥量，它可能在等待之前先检查条件。由于条件为真，所以它不需等待，直接处理工作，当它解锁时，已经没有可做的工作了。我们的第一个等待条件变量线程加锁互斥量后，再次检测条件，很有必要。<br>（2）松散的条件：使用不确定的条件时，循环检测条件，代码会更加健壮。<br>（3）假唤醒：在某些多处理器系统，会发生假唤醒的情况。</p>
-<p>5.使用示例</p>
-<p>主线程等待条件信号2S，子线程睡眠1S，改变共享数据值，发送信号，主线程接收信号，继续运行。</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;pthread.h&gt;
-#include&lt;errno.h&gt;                                                                
-typedef struct cond_tag
-{
-        pthread_mutex_t mutex;
-        pthread_cond_t cond;
-        int valid;
-}cond_t;
-cond_t data = {
-        PTHREAD_MUTEX_INITIALIZER,
-        PTHREAD_COND_INITIALIZER,
-        0
-};
-void *thread_route(void *arg)
-{
-        sleep(1);
-        pthread_mutex_lock(&amp;data.mutex);
-        data.valid = 1;
-        pthread_cond_signal(&amp;data.cond);
-        pthread_mutex_unlock(&amp;data.mutex);
-        return NULL;
-}
-int main(void)
-{
-        int status;
-        pthread_t pid;
-        pthread_create(&amp;pid,NULL,thread_route,NULL);
-        struct timespec timeout;
-        timeout.tv_sec = time(NULL)+2;
-        timeout.tv_nsec = 0;
-        pthread_mutex_lock(&amp;data.mutex);
-        while(data.valid==0)
-        {
-                status = pthread_cond_timedwait(&amp;data.cond,&amp;data.mutex,&amp;timeout);
-                if(status==ETIMEDOUT)
-                {
-                        printf(&quot;wait timed out\n&quot;);
-                        break;
-                }
-        }
-        if(data.valid==1)
-        {
-                printf(&quot;cond is signaled\n&quot;);
-        }
-        pthread_mutex_unlock(&amp;data.mutex);
-
-        return 0;
-}  
-</code></pre><p>参考资料：《POSIX多线程程序设计》 pp.59-74</p>
-
-          
+          条件变量是用来通知共享数据状态信息的。
+1.条件变量初始化两种方式：（1）静态初始化pthread_cond_t cond = PTHREAD_COND_INITIALIZER;代码示例如下：
+#include &lt;pthread.h&gt;
+typedef struct my_struct_t
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/13/posix多线程--条件变量/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2562,7 +1670,7 @@ int main(void)
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -2571,7 +1679,7 @@ int main(void)
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -2590,6 +1698,26 @@ int main(void)
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -2628,11 +1756,11 @@ int main(void)
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -2713,34 +1841,167 @@ int main(void)
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

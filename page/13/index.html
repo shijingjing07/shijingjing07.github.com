@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-12T02:09:00+08:00">
                 2016-04-12
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/12/posix多线程--互斥量/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/posix多线程--互斥量/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,45 +348,20 @@
       
         
           
-            <p>多线程程序在线程间共享数据时，如果多个线程同时访问共享数据就可能有问题。互斥量是解决多个线程间共享数据的方法之一。</p>
-<p>1.互斥量初始化两种方式：<br>（1）静态初始化</p>
-<pre><code>#include &lt;pthread.h&gt;
+          多线程程序在线程间共享数据时，如果多个线程同时访问共享数据就可能有问题。互斥量是解决多个线程间共享数据的方法之一。
+1.互斥量初始化两种方式：（1）静态初始化
+#include &lt;pthread.h&gt;
 
 typedef struct my_struct_tag {
-pthread_mutex_t mutex; /* Protects access to value */
-int value; /* Access protected by mutex */
-} my_struct_t;
-
-my_struct_t data = {PTHREAD_MUTEX_INITIALIZER, 0};
-
-int main (int argc, char *argv[])
-{
-return 0;
-}
-</code></pre><p>（2）动态初始化</p>
-<pre><code>#include &lt;pthread.h&gt;
-
-typedef struct my_struct_tag {
-pthread_mutex_t mutex; /* Protects access to value */
-int value; /* Access protected by mutex */
-} my_struct_t;
-
-int main (int argc, char *argv[])
-{
-my_struct_t *data;
-data = malloc (sizeof (my_struct_t));
-pthread_mutex_init (&amp;data-&gt;mutex, NULL);
-pthread_mutex_destroy (&amp;data-&gt;mutex);
-(void)free (data);
-return 0;
-}
-</code></pre><p>2.加锁和解锁<br>int pthread_mutex_lock(pthread_mutex_t <em>mutex)<br>int pthread_mutex_trylock(pthread_mutex_t </em>mutex)<br>int pthread_mutex_unlock(pthread_mutex_t *mutex)</p>
-<p>3.非阻塞式互斥量锁<br>int pthread_mutex_trylock(pthread_mutex_t *mutex)</p>
-<p>4.使用多个互斥量<br>使用多个互斥量易发生死锁的问题，如一个线程锁住互斥量A后，加锁互斥量B；同时另一个线程锁住互斥量B而等待互斥量A，则发生死锁现象。针对死锁，有两种解决方法：<br>（1）固定加锁层次：即所有同时需要加锁互斥量A和互斥量B的代码，必须先加锁A，后加锁B<br>（2）试加锁和回退：在锁住某个集合中的第一个互斥量后，使用pthread_mutex_trylock来加锁集合中的其他互斥量，如果失败，则将集合中所有已加锁互斥量释放，并重新加锁。</p>
-<p>5.链锁<br>链锁的作用范围互相交叠。当锁住第一个互斥量后，代码进入一个区域，该区域需要另一个互斥量。当锁住另一个互斥量后，第一个互斥量就不再需要，可以释放它了。<br>链锁在遍历如树型结构或链表结构是很有用。</p>
-<p>参考资料：《POSIX多线程程序设计》 pp.39-59</p>
-
-          
+pthread_mut
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/12/posix多线程--互斥量/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -438,7 +438,7 @@ return 0;
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-07T08:35:00+08:00">
                 2016-04-07
@@ -453,6 +453,16 @@ return 0;
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/07/c--日期和时间函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/07/c--日期和时间函数/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -478,103 +488,18 @@ return 0;
       
         
           
-            <p>C的标准库&lt;time.h&gt;包含了一些处理时间与日期的函数。</p>
-<p>1.clock_t clock(void);</p>
-<p>函数返回程序自开始执行后的处理器时间，类型是clock_t，单位是tick。如果有错误，clock()函数就返回-1。</p>
-<p>类型clock_t在&lt;time.h&gt;中定义，等价于size_t类型。CLOCKS_PER_SEC是&lt;time.h&gt;中定义的宏，表示一秒内的tick数，且是clock_t类型。将clock()函数返回值除以CLOCKS_PER_SEC，得到处理器运行时间。</p>
-<p>代码示例：</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include&lt;time.h&gt;
-#include&lt;windows.h&gt;
-#include&lt;stdlib.h&gt;
-main()
-{
-    clock_t start,end;
-    double cpu_time;
-    start = clock();
-    Sleep(2000);
-    end = clock();
-    cpu_time = (double)(end-start)/CLOCKS_PER_SEC;
-    printf(&quot;%.2lf&quot;,cpu_time);
-    system(&quot;pause&quot;);
-}
-</code></pre><p>输出结果：2.00</p>
-<p>2. time_t time(time_t *time_t)<br>time()函数返回从1970年1月1日格林威治时间0点0分0秒到现在的秒数。类型time_t在&lt;time.h&gt;中定义，等价于long。<br>如果变元不是NULL，则返回值就存在time_t变元指向的位置中。</p>
-<p>double difftime(time_t T2,time_t T1)<br>返回T2-T1的数值，类型是double，单位是秒。</p>
-<p>代码示例：</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include&lt;time.h&gt;
-#include&lt;windows.h&gt;
-#include&lt;stdlib.h&gt;
-main()
-{
-    time_t calendar_start,calendar_end;
-    calendar_start = time(NULL);
-    Sleep(2000);
-    calendar_end = time(NULL);
-    printf(&quot;start:%d\n&quot;,calendar_start);
-    printf(&quot;end:%d\n&quot;,calendar_end);
-    printf(&quot;diff:%.0lf\n&quot;,difftime(calendar_end,calendar_start));
-    system(&quot;pause&quot;);
-}
-</code></pre><p>输出结果：<br>start:1460010918<br>end:1460010920<br>diff:2</p>
-<p>3.char <em>ctime(const time_t </em>timer)<br>函数接收一个time_t变量的指针作为变元，返回一个指向26个字符的字符串指针。其中有星期，日期，时间以及年，最后用一个\n和\0终止。如：”Mon Aug<br>25 10:45:36 2015\n\0”</p>
-<p>代码示例：</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include&lt;time.h&gt;
-#include&lt;stdlib.h&gt;
-main()
-{
-    time_t calendar;
-    calendar = time(NULL);
-    printf(&quot;%s\n&quot;,ctime(&amp;calendar));
-    system(&quot;pause&quot;);
-}
-</code></pre><p>输出结果：Thu Apr 07 14:34:10 2016</p>
-<p>4.struct tm <em>localtime(const time_t</em> timer)<br>函数接收一个time_t值的指针，返回结构类型tm的指针。</p>
-<p>tm结构如下：<br>struct tm {<br>int tm_sec; /<em> 秒 - 取值区间为[0,59] </em>/<br>int tm_min; /<em> 分 - 取值区间为[0,59] </em>/<br>int tm_hour; /<em> 时 - 取值区间为[0,23] </em>/<br>int tm_mday; /<em> 一个月中的日期 - 取值区间为[1,31] </em>/<br>int tm_mon; /<em> 月份（从一月开始，0代表一月） - 取值区间为[0,11] </em>/<br>int tm_year; /<em> 年份，其值等于实际年份减去1900 </em>/<br>int tm_wday; /<em> 星期 - 取值区间为[0,6]，其中0代表星期天，1代表星期一 </em>/<br>int tm_yday; /<em> 从每年的1月1日开始的天数 </em>/<br>int tm_isdst; /<em> 夏令时标识符。</em>/<br>}</p>
-<p>代码示例：</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include&lt;time.h&gt;
-#include&lt;stdlib.h&gt;
-main()
-{
-    time_t calendar;
-    struct tm *time_data;
-    char *month[] = {&quot;一月&quot;,&quot;二月&quot;,&quot;三月&quot;,&quot;四月&quot;,&quot;五月&quot;,&quot;六月&quot;,&quot;七月&quot;,&quot;八月&quot;,&quot;九月&quot;,&quot;十月&quot;,&quot;十一月&quot;,&quot;十二月&quot;};
-    char *week[] = {&quot;星期一&quot;,&quot;星期二&quot;,&quot;星期三&quot;,&quot;星期四&quot;,&quot;星期五&quot;,&quot;星期六&quot;,&quot;星期日&quot;};
-    char *suffix[] = {&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;};
-    enum suffixIndex {st,nd,rd,th} sufsel = th;
-    calendar = time(NULL);
-    time_data = localtime(&amp;calendar);
-    printf(&quot;format date:%d/%d/%d\n&quot;,time_data-&gt;tm_year+1900,time_data-&gt;tm_mon,time_data-&gt;tm_mday);
-    switch(time_data-&gt;tm_mday)
-    {
-    case 1:
-    case 21:
-    case 31:
-        sufsel = st;
-        break;
-    case 2:
-    case 22:
-        sufsel = nd;
-        break;
-    case 3:
-    case 23:
-        sufsel = rd;
-        break;
-    default:
-        sufsel = th;
-        break;
-    }
-    printf(&quot;today is %s,%s,%d%s,%d&quot;,week[time_data-&gt;tm_wday],month[time_data-&gt;tm_mon],time_data-&gt;tm_mday,suffix[sufsel],time_data-&gt;tm_year+1900);
-    system(&quot;pause&quot;);
-}
-</code></pre><p>输出结果：<br>format date:2016/3/7<br>today is 星期五,四月,7th,2016</p>
-<p>4.localtime()函数生成的是本地时间，若要使用UTC(世界调整时间)，可使用gmtime()函数</p>
-<p>5.time_t mktime(struct tm *ptime)<br>函数接收一个tm结构的变元指针，返回值类型为timt_t。</p>
-
-          
+          C的标准库&lt;time.h&gt;包含了一些处理时间与日期的函数。
+1.clock_t clock(void);
+函数返回程序自开始执行后的处理器时间，类型是clock_t，单位是tick。如果有错误，clock()函数就返回-1。
+类型clock_t在&lt;time.h&gt;中定义，等价于
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/07/c--日期和时间函数/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -651,7 +576,7 @@ main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-01T08:34:00+08:00">
                 2016-04-01
@@ -666,6 +591,16 @@ main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/01/mysql--Ubuntu下设置MySQL字符集为utf8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/01/mysql--Ubuntu下设置MySQL字符集为utf8/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -691,13 +626,16 @@ main()
       
         
           
-            <p>1.mysql配置文件地址<br>/etc/mysql/my.cnf</p>
-<p>2.在[mysqld]在下方添加以下代码<br>[mysqld]<br>init_connect=’SET collation_connection = utf8_unicode_ci’<br>init_connect=’SET NAMES utf8’<br>character-set-server=utf8<br>collation-server=utf8_unicode_ci<br>skip-character-set-client-handshake</p>
-<p>3.重启mysql服务<br>sudo service mysql restart</p>
-<p>4.检测字符集是否更新成utf8.<br>进入mysql，mysql -u root -p,输入show variables like ‘%character%’ 查看字符集<br>+————————–+—————————-+<br>| Variable_name | Value |<br>+————————–+—————————-+<br>| character_set_client | utf8 |<br>| character_set_connection | utf8 |<br>| character_set_database | utf8 |<br>| character_set_filesystem | binary |<br>| character_set_results | utf8 |<br>| character_set_server | utf8 |<br>| character_set_system | utf8 |<br>| character_sets_dir | /usr/share/mysql/charsets/ |<br>+————————–+—————————-+</p>
-<p>注意事项：在修改字符集之前已经建立的数据库，character_set_database值不会发生改变，往数据库中插入中文数据仍然会显示乱码，所以最好在安装完MySQL后就将字符集改成utf8，否则后续修改会较麻烦。</p>
-
-          
+          1.mysql配置文件地址/etc/mysql/my.cnf
+2.在[mysqld]在下方添加以下代码[mysqld]init_connect=’SET collation_connection = utf8_unicode_ci’init_connect=’SET NAMES utf8’chara
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/01/mysql--Ubuntu下设置MySQL字符集为utf8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -774,7 +712,7 @@ main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-01T08:05:00+08:00">
                 2016-04-01
@@ -789,6 +727,16 @@ main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/01/python--使用MySQL数据库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/01/python--使用MySQL数据库/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -814,101 +762,17 @@ main()
       
         
           
-            <p>1.安装mysql<br>sudo apt-get install mysql-server<br>Sudo apt-get install mysql-client</p>
-<p>2.安装MySQL-python驱动<br>sudo apt-get install mysql-python</p>
-<p>3.测试是否安装成功<br>python解释器命令下运行 import MySQLdb<br>没有报错，说明安装已成功。</p>
-<p>4.python使用mysql数据库常见操作 exmysql.py</p>
-<pre><code># -*- coding: utf-8 -*-                                                                                                                                 
-import MySQLdb
-
-try:
-        #mysql连接
-        conn = MySQLdb.connect(host=&apos;localhost&apos;,user=&apos;root&apos;,passwd=&apos;password&apos;,port=3306,charset=&apos;utf8&apos;)
-
-        #创建游标
-        cur = conn.cursor()
-
-        #创建数据库
-        cur.execute(&apos;create database if not exists  pythondb&apos;)
-
-        #切换到数据库
-        conn.select_db(&apos;pythondb&apos;)   
-
-        #创建表
-        cur.execute(&quot;create table student(id int,name varchar(20),age int)&quot;)
-
-        #插入单条数据
-        cur.execute(&quot;insert into student values(9,&apos;张三&apos;,28)&quot;)
-
-        #插入多条数据
-        cur.execute(&quot;insert into student values(2,&apos;shijingjing08&apos;,21),(3,&apos;shijingjing09&apos;,30),(4,&apos;shijingjing10&apos;,12)&quot;)
-
-        #更新数据
-        cur.execute(&quot;update student set age=27 where name=&apos;shijingjing07&apos; &quot;)
-
-        #删除数据
-        cur.execute(&quot;delete from student where name=&apos;shijingjing10&apos; &quot;)
-
-        #查找数据
-        count = cur.execute(&quot;select * from student &quot;)
-        print &quot;总条数&quot;
-        print count
-
-        result = cur.fetchone()
-        print &quot;查找一条&quot;
-        print result
-
-        results = cur.fetchmany(5)
-        print &quot;查找多条&quot;
-        for r in results:
-                print r
-
-        cur.scroll(0,mode=&apos;absolute&apos;)
-
-        #游标定位到表中第一条数据
-        results = cur.fetchall()
-
-        print &quot;查找所有数据，第二列的值&quot;
-        for r in results:
-                print r[1]
-
-        #在再次执行select查询返回结果集时，需要执行nextset()操作，移动到下一结果集，否则会报2014错误
-        cur.nextset()
-
-
-        #执行存储过程的两种方法
-        #cur.execute(&quot;call get_student(&apos;shijingjing&apos;,20)&quot;)
-        cur.callproc(&quot;get_student&quot;,(&apos;shijingjing&apos;,20))
-        print &quot;执行存储过程&quot;
-        data=cur.fetchall()
-        for d in data:
-                print d
-
-
-        #关闭游标
-        cur.close()
-
-        #提交
-        conn.commit()
-        #关闭数据库连接
-        conn.close()
-
-except MySQLdb.Error,e:
-        print &quot;Mysql Error %d:%s&quot;%(e.args[0],e.args[1]) 
-</code></pre><p> 存储过程get_student(in p_name varchar(20),in p_age<br>int),输入name,age参数，模糊查找name,以及age&gt;p_age的学生。</p>
-<pre><code>delimiter $
-create procedure get_student(in p_name varchar(20),in p_age int) 
-     begin
-          select * from student where name like concat(p_name,&apos;%&apos;) and age&gt;p_age;
-     end;
-$
-</code></pre><p>5.运行结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201604/300946-20160401160447816-1857114613.png" alt=""></p>
-<p>6.常用的操作：<br>commit() 提交<br>rollback() 回滚</p>
-<p>callproc(self, procname, args):用来执行存储过程,接收的参数为存储过程名和参数列表,返回值为受影响的行数<br>execute(self, query, args):执行单条sql语句,接收的参数为sql语句本身和使用的参数列表,返回值为受影响的行数<br>executemany(self, query, args):执行单挑sql语句,但是重复执行参数列表里的参数,返回值为受影响的行数<br>nextset(self):移动到下一个结果集</p>
-<p>fetchall(self):接收全部的返回结果行.<br>fetchmany(self,<br>size=None):接收size条返回结果行.如果size的值大于返回的结果行的数量,则会返回cursor.arraysize条数据.<br>fetchone(self):返回一条结果行.<br>scroll(self, value,<br>mode=’relative’):移动指针到某一行.如果mode=’relative’,则表示从当前所在行移动value条,如果<br>mode=’absolute’,则表示从结果集的第一行移动value条.</p>
-
-          
+          1.安装mysqlsudo apt-get install mysql-serverSudo apt-get install mysql-client
+2.安装MySQL-python驱动sudo apt-get install mysql-python
+3.测试是否安装成功python解释器命令下
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/04/01/python--使用MySQL数据库/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -985,7 +849,7 @@ $
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-31T09:26:00+08:00">
                 2016-03-31
@@ -1000,6 +864,16 @@ $
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/31/python--笨方法学python 习题52/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/31/python--笨方法学python 习题52/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1025,184 +899,16 @@ $
       
         
           
-            <p>笨方法学python是一本不错的python入门书籍。<br>书的最后一节是一个web版的游戏程序，以下是程序代码：</p>
-<p>1.项目的目录结构如下所示：<br>skeleton\<br>　　　　app.py<br>　　　　map.py<br>　　　　templates\<br>　　　　　　　　layout.html<br>　　　　　　　　show_room.html<br>　　　　　　　　you_died.html</p>
-<p>2.游戏地图结构 map.py<br>其中Room类是游戏场景，包括场景名称 name，描述 description，通往下一场景的可能路径集合 paths。</p>
-<p>定义了游戏中设计到的7个场景。</p>
-<pre><code># -*- coding:utf-8 -*-                                                                                                                                  
-class Room(object):
-        def __init__(self, name, description): 
-                self.name = name 
-                self.description = description 
-                self.paths = {}  
-
-        def go(self, direction): 
-                return self.paths.get(direction, None) 
-
-        def add_paths(self, paths): 
-                self.paths.update(paths)
-
-central_corridor = Room(&quot;Central Corridor&quot;,
-&quot;&quot;&quot;
-#25外星战机入侵了你的飞船，并且摧毁了你的部队。你是最后一个幸存者，你的最终任务是从武器室拿到炸弹，将炸弹放在驾驶舱，跳进分离仓之后，炸掉飞船。
-你现在正在往武器室跑去，这时，一个外星人跳了出来，可怕的红色皮肤，暗淡肮脏的牙齿，丑陋的服装围绕着他那充满憎恶的身体。他正在关闭通往武器室的大门，并且掏
-出武器对准了你。
-&quot;&quot;&quot;
-)
-
-laser_weapon_armory=Room(&quot;Laser Weapon Armory&quot;,
-&quot;&quot;&quot;
-幸运的是你知道外星人是由意念组成的。
-你讲了一个你知道的外星笑话。
-&amp;$%@#$#%#@*&amp;^$%$@#^&amp;@%~$@%%!@~^^@#
-外星人停止了动作，试着不发出笑声，最终禁不住大笑起来，并且停不下来。
-当他笑的时候，你跑上前去，一枪命中他的眉心，将他放倒。然后跳进武器室。
-你一个前空翻进入武器室，仔细地检查武器室是否藏有更多的外星人。死一般的寂静，太安静了。
-你站起来，跑向武器室的角落，在盒子里找到了炸弹。盒子上有一个键盘，你需要输入密码才能将炸弹取出来。如果你输错10次，炸弹将永远被锁住无法取出。密码是4位数&gt;字。
-&quot;&quot;&quot;
-)
-
-the_bridge=Room(&quot;The Bridge&quot;,
-&quot;&quot;&quot;
-盒子咔哒一声打开了，密封破裂，毒气逸出。
-你一把抓起炸弹，尽可能快递跑向驾驶舱，你必须把炸弹安置在合适的地点。
-你闯入驾驶舱，手臂下夹着炸弹，惊奇地发现有5个外星人正在试图控制飞船。他们中的每一个都比上一个拥有更加丑陋的服装。他们没有拿出武器，因为他们看见了你手臂&gt;下的炸弹，并且不希望引爆它。
-&quot;&quot;&quot;
-)
-
-escape_pod=Room(&quot;Escape Pod&quot;,
-&quot;&quot;&quot;
-你拉出手臂下炸弹的导火线，外星人们举起手来，开始流汗。
-你缓慢地退向门口，打开门，然后小心翼翼地把炸弹放在地上，拉出导火线。然后跳出驾驶舱，按下关闭按钮，门锁住了，外星人们无法逃出去。
-现在炸弹已经安放好了，你跑向逃生通道。
-你不顾一切地冲过飞船，以确保在整个飞船爆炸之前到达分离仓。看起来没有外星人在船上了，所以几乎没有遇到任何阻碍。你成功到达分离仓，然后你需要选择一个。他们
-中的一些已经被摧毁了，但是你没有时间去检查。总共有5个分离仓，你将选择哪一个呢？
-&quot;&quot;&quot;
-)
-
-the_end_winner=Room(&quot;The End&quot;,
-&quot;&quot;&quot;
-你跳进了2号分离舱 ，按下发动按钮。分离舱很容易地向下方的地球滑去。当它飞向地球时，你往回看，发现你的飞船像一颗明亮的星星一样炸开了，同时炸掉了恶灵的飞船
-。你赢了！
-&quot;&quot;&quot;
-)
-
-the_end_loser=Room(&quot;The End&quot;,
-&quot;&quot;&quot;
-你随便跳进一个分离舱，按下发动按钮。分离舱逃向未知的空间，然后因为外壳破裂而爆炸，把你的身体压成肉酱。
-&quot;&quot;&quot;
-)
-escape_pod.add_paths({
-        &apos;2&apos;:the_end_winner,
-        &apos;*&apos;:the_end_loser
-})
-
-generic_death=Room(&quot;death&quot;,&quot;You died.&quot;)
-
-the_bridge.add_paths({
-        &apos;throw the bomb&apos;:generic_death,
-        &apos;slowly place the bomb&apos;:escape_pod
-})
-
-laser_weapon_armory.add_paths({
-        &apos;0132&apos;:the_bridge,
-        &apos;*&apos;:generic_death
-})
-
-central_corridor.add_paths({
-        &apos;shoot!&apos;:generic_death,
-        &apos;dodge!&apos;:generic_death,
-        &apos;tell a joke&apos;:laser_weapon_armory
-})
-
-START=central_corridor
-</code></pre><p>3.游戏引擎设计<br>游戏引擎，也就是我们的web应用程序入口，定义了起始场景。将场景作为参数传递给场景信息显示模板show_room.html，显示当前场景描述信息。玩家输入动作指令，提交表单后，根据当前场景以及输入的指令，确定下一场景并显示。因为Http协议的无状态性，当前场景可以通过两种方式传递：(1)通过web.py框架的session机制<br>(2)通过&lt;input type=”hidden” value=””&gt;隐藏域的方式。这里我们选择第一种方式。</p>
-<pre><code>import web                                                                                                                                              
-from map import *
-import pdb 
-urls=(
-        &apos;/game&apos;,&apos;GameEngine&apos;,
-        &apos;/&apos;,&apos;Index&apos;,
-)
-
-app=web.application(urls,globals())
-
-if web.config.get(&apos;_session&apos;) is None:
-        store = web.session.DiskStore(&apos;sessions&apos;)
-        session = web.session.Session(app,store,initializer={&apos;room&apos;:None,&apos;count&apos;:0})
-        web.config._session = session
-else:
-        session = web.config._session
-render = web.template.render(&apos;templates/&apos;,base=&quot;layout&quot;)
-
-class Index(object):
-        def GET(self):
-                session.room = START
-                #输入错误密码次数初始化
-                session.count = 0 
-                web.seeother(&quot;/game&quot;)
-
-class GameEngine(object):
-        def GET(self):
-            if session.room:
-                return render.show_room(room=session.room)
-            else:
-                #场景为None，则跳转到death界面
-                return render.you_died()
-
-        def POST(self):
-                form = web.input(action=None)
-                if session.room and form.action:
-                        result = session.room.go(form.action)
-#                       pdb.set_trace()
-                        #如果你输错10次，炸弹将永远被锁住无法取出
-                        if session.room.name==&apos;Laser Weapon Armory&apos; and (result==None or result.name==&apos;death&apos;) and session.count&lt;10:
-                                #输入错误密码次数累计
-                                session.count=session.count+1
-                        else:
-                                session.room = result
-                web.seeother(&quot;/game&quot;)
-
-if __name__==&quot;__main__&quot;:
-        app.run()
-</code></pre><p>4.接着创建模板页，模板放在templates文件夹下.<br>mkdir templates<br>首先创建一个基础模板页 layout.html</p>
-<pre><code>$def with (content)                                                                                                                                     
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;Gothons From Planet Percal #25&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-$:content
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>场景信息显示页面  show_room.html</p>
-<pre><code>$def with (room)                                                                                                                                        
-&lt;h1&gt;$room.name&lt;/h1&gt;
-&lt;pre&gt;
-$room.description
-&lt;/pre&gt;
-$if room.name==&quot;death&quot;:
-        &lt;p&gt;&lt;a href=&quot;/&quot;&gt;Play Again?&lt;/a&gt;&lt;/p&gt;
-$else:
-        &lt;p&gt;
-        &lt;form action=&quot;/game&quot; method=&quot;POST&quot;&gt;
-        -&lt;input type=&quot;text&quot; name=&quot;action&quot;&gt;
-        &lt;input type=&quot;SUBMIT&quot;&gt;
-        &lt;/form&gt;
-        &lt;/p&gt;
-</code></pre><p>场景为None失败，提示界面 you_died.html</p>
-<pre><code>&lt;h1&gt;You Died!&lt;/h1&gt;                                                                                                                                      
-&lt;p&gt;Looks like you bit the dust&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;/&quot;&gt;Play Again&lt;/a&gt;&lt;/p&gt;
-</code></pre><p>5.运行：python app.py</p>
-<p>6.结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172346129-267934389.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172410801-1185294461.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172428785-1970529617.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172445973-1703021698.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160331172459863-415540435.png" alt=""></p>
-
-          
+          笨方法学python是一本不错的python入门书籍。书的最后一节是一个web版的游戏程序，以下是程序代码：
+1.项目的目录结构如下所示：skeleton\　　　　app.py　　　　map.py　　　　templates\　　　　　　　　layout.html　　　　　　　　show_room.h
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/03/31/python--笨方法学python 习题52/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1279,7 +985,7 @@ $else:
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-30T05:45:00+08:00">
                 2016-03-30
@@ -1294,6 +1000,16 @@ $else:
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/30/python--web.py使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/30/python--web.py使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1319,82 +1035,20 @@ $else:
       
         
           
-            <p>web.py 是一个轻量级Python web框架。</p>
-<p>下面我将使用web.py框架，创建一个简单的html页面示例。</p>
-<p>1.项目的目录结构如下所示：</p>
-<p>exweb2\<br>  uniqueenv\<br>  app.py<br>  templates\</p>
-<p>　　　　　　base.html</p>
-<p>　　　　　　hello_form.html<br>                 index.html</p>
-<p>2.创建网站根目录exweb2<br>mkdir exweb2</p>
-<p>3.在网站根目录下创建一个虚拟环境<br>cd exweb2<br>virtualenv uniqueenv</p>
-<p>4.安装flask<br>uniqueenv/bin/pip install lpthw.web</p>
-<p>5.web.py使用，app.py代码如下</p>
-<pre><code>#-*- coding: UTF-8 -*-                                                           
-import web 
-
-urls =(
-        &apos;/&apos;,&apos;Index&apos;
-)
-
-app = web.application(urls,globals())
- #base为基础模板页
-render = web.template.render(&apos;templates/&apos;,base=&quot;base&quot;)
-
-class Index(object):
-         #get方式提交，若url参数不为空,直接跳转到显示界面,否则跳转到输入信息界面
-        def GET(self):
-                form = web.input(name=&quot;&quot;,greet=&quot;&quot;)
-                if form.greet!=&quot;&quot; and form.name!=&quot;&quot;:
-                        greeting=&quot;%s,%s&quot;%(form.greet,form.name)
-                        return render.index(greeting=greeting)
-                return render.hello_form()
-        #post方式提交表单,
-        def POST(self):
-                form = web.input(name=&quot;Nobody&quot;,greet=&quot;Hello&quot;)
-                greeting=&quot;%s,%s&quot;%(form.greet,form.name)
-                return render.index(greeting=greeting)
-if __name__ == &quot;__main__&quot;:
-        app.run() 
-</code></pre><p>6.接着创建模板页，模板放在templates文件夹下.</p>
-<p><strong>mkdir templates</strong></p>
-<p>首先创建一个基础模板页 base.html</p>
-<pre><code>$def with (content)                                                              
-&lt;html&gt;                                                                               
-        &lt;head&gt;
-                &lt;title&gt;
-                &lt;/title&gt;
-        &lt;/head&gt;
-        &lt;body&gt;
-                $:content
-        &lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>输入信息页 hello_form.html</p>
-<pre><code>&lt;h1&gt;Fill out this form&lt;/h1&gt;                                                      
-&lt;form action=&quot;/&quot; method=&quot;POST&quot;&gt;
-A Greeting:&lt;input type=&quot;text&quot; name=&quot;greet&quot;&gt;
-&lt;br/&gt;
-Your Name:&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;
-&lt;br/&gt;
-&lt;input type=&quot;submit&quot;&gt;
-&lt;/form&gt;
-</code></pre><p>显示信息页 index.html</p>
-<pre><code>$def with (greeting)                                                             
-
-$if greeting: 
-        I just wanted to say &lt;em style=&quot;color: green; font-size: 2em;&quot;&gt;$greeting&lt;/em&gt;. 
-$else: 
-        &lt;em&gt;Hello&lt;/em&gt;, world!
-</code></pre><p> <em>7.运行：uniqueenv/bin/python app.py</em></p>
-<p>注意运行的时候要使用虚拟目录中的python解释器</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134039535-1709829164.png" alt=""></p>
-<p>8.结果：</p>
-<p>(1)Get方式</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134104035-42679323.png" alt=""></p>
-<p>(2)Post方式</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134340254-2054116773.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330134351738-986870576.png" alt=""></p>
-
-          
+          web.py 是一个轻量级Python web框架。
+下面我将使用web.py框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：
+exweb2\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form.htm
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/03/30/python--web.py使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1471,7 +1125,7 @@ $else:
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-29T05:47:00+08:00">
                 2016-03-29
@@ -1486,6 +1140,16 @@ $else:
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/29/python--flask使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/29/python--flask使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1511,107 +1175,18 @@ $else:
       
         
           
-            <p>Flask是一个使用 Python 编写的轻量级 Web 应用框架。<br>下面我将使用Flask框架，创建一个简单的html页面示例。</p>
-<p>1.项目的目录结构如下所示：<br>exweb\<br>  uniqueenv\<br>  app.py<br>  templates\</p>
-<p>　　　　　　base.html</p>
-<p>　　　　　　hello_form.html<br>                 index.html</p>
-<p>2.创建网站根目录exweb<br>mkdir exweb</p>
-<p>3.在网站根目录下创建一个虚拟环境，虚拟环境是主python的一份拷贝，好处是你可以只安装flask包到该虚拟目录，你的主python不会受到影响，另一个好处是你不需要再有root权限<br>cd exweb<br>virtualenv uniqueenv</p>
-<p>4.安装flask<br>uniqueenv/bin/pip install flask</p>
-<p>5.flask使用，app.py代码如下</p>
-<pre><code>#-*- coding: UTF-8 -*-                                                                                                                                  
-from flask import Flask,render_template,request
-from flask.ext.wtf import Form
-from wtforms import TextField, BooleanField, TextAreaField
-from wtforms.validators import Required, Length
-
-app = Flask(__name__)
-
-#CSRF_ENABLED 配置是为了激活 跨站点请求伪造 保护
-app.config[&apos;CSRF_ENABLED&apos;]=True
-app.config[&apos;SECRET_KEY&apos;]=&apos;xxx&apos;
-
-#form表单类
-class HelloForm(Form):
-    name = TextField(&apos;name&apos;,validators = [Required()])
-    greet=TextField(&apos;greet&apos;,validators=[Required()])
-
-
-@app.route(&apos;/&apos;,methods=[&apos;GET&apos;,&apos;POST&apos;])
-def index():
-        #get方式提交，若url参数不为空,直接跳转到显示界面
-        name = request.args.get(&apos;name&apos;)
-        greet = request.args.get(&apos;greet&apos;)
-        if name!=&apos;&apos; and name!=None and greet!=&apos;&apos; and greet!=None:
-                greeting=&quot;%s,%s&quot;%(name,greet)
-                return render_template(&apos;index.html&apos;,
-                        title=u&apos;显示信息&apos;,
-                        greeting = greeting)
-
-
-        #否则为post方式提交表单,跳转到输入信息界面
-        form = HelloForm()
-        if form.validate_on_submit():
-                greeting=&quot;%s,%s&quot;%(form.name.data,form.greet.data)
-                return render_template(&apos;index.html&apos;,
-                        title=u&apos;显示信息&apos;,
-                        greeting = greeting)
-        return render_template(&apos;hello_form.html&apos;,
-                title=u&apos;输入信息&apos;,
-                form = form)
-
-app.run(debug=True)
-</code></pre><p>6.上一步我们从 Flask 框架中导入一个名为 render_template 的新函数，在内部，render_template 调用了 Jinja2<br>模板引擎，Jinja2 会把模板参数提供的相应的值替换。<br>模板放在templates文件夹下.<br>mkdir templates</p>
-<p>首先创建一个基础模板页 base.html</p>
-<pre><code>&lt;html&gt;                                                                                                                 
-         &lt;head&gt;
-                &lt;title&gt;{{title}}&lt;/title&gt;
-        &lt;/head&gt;
-        &lt;body&gt;
-                {% block content %}{% endblock %}
-            
-    
-
-
-
-输入信息页 hello_form.html
-
-    
-    
-    {% extends "base.html" %}                                                                                                 
-    
-    {% block content %}
-    <h1>Fill out this form</h1>    
-    <form action="" method="POST">
-    {{form.hidden_tag()}}
-    A Greeting:
-    {{form.greet(size=30,maxlength=140)}}
-    <br>
-    Your Name:
-    {{form.name(size=30,maxlength=140)}}
-    <br>
-    <input type="submit">
-    </form>
-    {% endblock %}
-</code></pre><p>显示信息页 index.html</p>
-<pre><code>{% extends "base.html" %}                                                                                                                            
-
-{% block content %}
-    {%if greeting:%}
-     I just wanted to say <em style="color:green;font-size:2em;">{{greeting}}</em>
-    {%endif%}
-    {% endblock %}
-</code></pre><p>7.运行：uniqueenv/bin/python app.py</p>
-<p>注意运行的时候要使用虚拟目录中的python解释器</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330095956098-476888447.png" alt=""></p>
-<p>8.结果：</p>
-<p>(1)Get方式</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330095846504-570096275.png" alt=""></p>
-<p>(2)Post方式</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330100036348-1915660279.png" alt=""></p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160330100106379-1591817480.png" alt=""></p>
-
-          
+          Flask是一个使用 Python 编写的轻量级 Web 应用框架。下面我将使用Flask框架，创建一个简单的html页面示例。
+1.项目的目录结构如下所示：exweb\  uniqueenv\  app.py  templates\
+　　　　　　base.html
+　　　　　　hello_form
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/03/29/python--flask使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1688,7 +1263,7 @@ app.run(debug=True)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-25T13:08:00+08:00">
                 2016-03-25
@@ -1703,6 +1278,16 @@ app.run(debug=True)
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/25/python--类方法、对象方法、静态方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/25/python--类方法、对象方法、静态方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1728,43 +1313,22 @@ app.run(debug=True)
       
         
           
-            <p> 1、我们已经讨论了类/对象可以拥有像函数一样的方法，这些对象方法与函数的区别只是一个额外的self变量</p>
-<pre><code># -*- coding:utf-8 -*-
+           1、我们已经讨论了类/对象可以拥有像函数一样的方法，这些对象方法与函数的区别只是一个额外的self变量
+# -*- coding:utf-8 -*-
 #!/usr/bin/python
 # Filename: method.py
 
 class Person:
     grade=1
-    def __init__(self,name):
-        self.name = name
-    def sayHi(self):#加self区别于普通函数
-        print &apos;Hello, your name is?&apos;,self.name
-
-    @staticmethod #声明静态，去掉则编译报错;还有静态方法不能访问类变量和实例变量
-    def sayName():#使用了静态方法，则不能再使用self
-        print &quot;my name is king&quot;#,grade,#self.name
-
-    @classmethod #类方法
-    def classMethod(cls):
-        print(&quot;class method&quot;)
-
-p = Person(&quot;king&quot;)
-p.sayHi()
-p.sayName()
-p.classMethod()
-Person.classMethod()
-
-输出：
-Hello, your name is? king
-my name is king
-class method
-class method
-</code></pre><p>2、静态方法<br>要在类中使用静态方法，需在类成员函数前面加上@staticmethod标记符，以表示下面的成员函数是静态函数。使用静态方法的好处是，不需要定义实例即可使用这个方法。另外，多个实例共享此静态方法。  </p>
-<p>3、 类方法<br>类方法与普通的成员函数和静态函数有不同之处，在接触的语言中好像也没见过这种语义，看它的定义：<br>一个类方法就可以通过类或它的实例来调用的方法, 不管你是用类来调用这个方法还是类实例调用这个方法,该方法的第一个参数总是定义该方法的类对象。<br>记住:方法的第一个参数都是类对象而不是实例对象.<br>按照惯例,类方法的第一个形参被命名为<br>cls.任何时候定义类方法都不是必须的（类方法能实现的功能都可以通过定义一个普通函数来实现,只要这个函数接受一个类对象做为参数就可以了）.  </p>
-<p>python中实现静态方法和类方法都是依赖于python的修饰器来实现的。 对象方法有self参数，类方法有cls参数，静态方法是不需要这些附加参数的。</p>
-<p>转自：<a href="http://blog.chinaunix.net/uid-26602509-id-3087296.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-26602509-id-3087296.html</a></p>
-
-          
+    def
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/03/25/python--类方法、对象方法、静态方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1841,7 +1405,7 @@ class method
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-25T13:06:00+08:00">
                 2016-03-25
@@ -1856,6 +1420,16 @@ class method
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/25/Python--类定义/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/25/Python--类定义/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1881,127 +1455,21 @@ class method
       
         
           
-            <p>转自：<a href="http://kanwoerzi.iteye.com/blog/1304466" target="_blank" rel="external">http://kanwoerzi.iteye.com/blog/1304466</a></p>
-<p>Python笔记—-类定义</p>
-<p>一、类定义：</p>
-<p>class &lt;类名&gt;:</p>
-<p>&lt;语句&gt;</p>
-<p>类实例化后，可以使用其属性，实际上，创建一个类之后，可以通过类名访问其属性</p>
-<p>如果直接使用类名修改其属性，那么将直接影响到已经实例化的对象</p>
-<p>类的私有属性：</p>
-<p>__private_attrs 两个下划线开头，声明该属性为私有，不能在类地外部被使用或直接访问</p>
-<p>在类内部的方法中使用时 self.__private_attrs</p>
-<p>类的方法</p>
-<p>在类地内部，使用def关键字可以为类定义一个方法，与一般函数定义不同，类方法必须包含参数self,且为第一个参数</p>
-<p>私有的类方法</p>
-<p>__private_method 两个下划线开头，声明该方法为私有方法，不能在类地外部调用</p>
-<p>在类的内部调用slef.__private_methods</p>
-<p>类的专有方法：</p>
-<p><strong>init</strong> 构造函数，在生成对象时调用</p>
-<p><strong>del</strong> 析构函数，释放对象时使用</p>
-<p><strong>repr</strong> 打印，转换</p>
-<p><strong>setitem</strong>按照索引赋值</p>
-<p><strong>getitem</strong>按照索引获取值</p>
-<p><strong>len</strong>获得长度</p>
-<p><strong>cmp</strong>比较运算</p>
-<p><strong>call</strong>函数调用</p>
-<p><strong>add</strong>加运算</p>
-<p><strong>sub</strong>减运算</p>
-<p><strong>mul</strong>乘运算</p>
-<p><strong>div</strong>除运算</p>
-<p><strong>mod</strong>求余运算</p>
-<p><strong>pow</strong>称方</p>
-<p>示例:</p>
-<pre><code>class people:  
-    #定义基本属性  
-    name = &apos;&apos;  
-    age = 0  
-    #定义私有属性,私有属性在类外部无法直接进行访问  
-    __weight = 0  
-    #定义构造方法  
-    def __init__(self,n,a,w):  
-        self.name = n  
-        self.age = a  
-        self.__weight = w  
-    def speak(self):  
-        print(&quot;%s is speaking: I am %d years old&quot; %(self.name,self.age))  
-
-
-p = people(&apos;tom&apos;,10,30)  
-p.speak()  
-</code></pre><p>二、继承类定义：</p>
-<p>1.单继承</p>
-<p>class &lt;类名&gt;(父类名)</p>
-<p>&lt;语句&gt;</p>
-<p>eg.</p>
-<p>class childbook(book)</p>
-<p>age = 10</p>
-<pre><code>#单继承示例  
-class student(people):  
-    grade = &apos;&apos;  
-    def __init__(self,n,a,w,g):  
-        #调用父类的构函  
-        people.__init__(self,n,a,w)  
-        self.grade = g  
-    #覆写父类的方法  
-    def speak(self):  
-        print(&quot;%s is speaking: I am %d years old,and I am in grade %d&quot;%(self.name,self.age,self.grade))  
-
-
-
-s = student(&apos;ken&apos;,20,60,3)  
-s.speak()  
-</code></pre><p>2.类的多重继承</p>
-<p>class 类名(父类1,父类2,….,父类n)</p>
-<p>&lt;语句1&gt;</p>
-<p>需要注意圆括号中父类的顺序，若是父类中有相同的方法名，而在子类使用时未指定，python从左至右搜索</p>
-<p>即方法在子类中未找到时，从左到右查找父类中是否包含方法</p>
-<pre><code>#另一个类，多重继承之前的准备  
-class speaker():  
-    topic = &apos;&apos;  
-    name = &apos;&apos;  
-    def __init__(self,n,t):  
-        self.name = n  
-        self.topic = t  
-    def speak(self):  
-        print(&quot;I am %s,I am a speaker!My topic is %s&quot;%(self.name,self.topic))  
-
-#多重继承  
-class sample(speaker,student):  
-    a =&apos;&apos;  
-    def __init__(self,n,a,w,g,t):  
-        student.__init__(self,n,a,w,g)  
-        speaker.__init__(self,n,t)  
-
-test = sample(&quot;Tim&quot;,25,80,4,&quot;Python&quot;)  
-test.speak()#方法名同，默认调用的是在括号中排前地父类的方法  
-</code></pre><p>类方法的覆写—-子类覆盖掉父类的方法</p>
-<p>def 方法名与父类一致</p>
-<p>若是在方法中要使用到父类方法 父类名.方法名</p>
-<p>若是将类放到了模块中</p>
-<p>使用时</p>
-<p>import A</p>
-<p>l = A.类()</p>
-<p>以上三段程序的执行结果:</p>
-<p>类方法的覆写—-子类覆盖掉父类的方法</p>
-<p>def 方法名与父类一致</p>
-<p>若是在方法中要使用到父类方法 父类名.方法名</p>
-<p>若是将类放到了模块中</p>
-<p>使用时</p>
-<p>import A</p>
-<p>l = A.类()</p>
-<p>以上三段程序的执行结果:</p>
-<p>类方法的覆写—-子类覆盖掉父类的方法</p>
-<p>def 方法名与父类一致</p>
-<p>若是在方法中要使用到父类方法 父类名.方法名</p>
-<p>若是将类放到了模块中</p>
-<p>使用时</p>
-<p>import A</p>
-<p>l = A.类()</p>
-<p>以上三段程序的执行结果:</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201603/300946-20160325210542370-292640845.jpg" alt=""></p>
-
-          
+          转自：http://kanwoerzi.iteye.com/blog/1304466
+Python笔记—-类定义
+一、类定义：
+class &lt;类名&gt;:
+&lt;语句&gt;
+类实例化后，可以使用其属性，实际上，创建一个类之后，可以通过类名访问其属性
+如果直接使用类名修改其属性，那么将直接
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/03/25/Python--类定义/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2077,7 +1545,7 @@ test.speak()#方法名同，默认调用的是在括号中排前地父类的方�
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -2086,7 +1554,7 @@ test.speak()#方法名同，默认调用的是在括号中排前地父类的方�
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -2105,6 +1573,26 @@ test.speak()#方法名同，默认调用的是在括号中排前地父类的方�
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -2143,11 +1631,11 @@ test.speak()#方法名同，默认调用的是在括号中排前地父类的方�
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -2228,34 +1716,167 @@ test.speak()#方法名同，默认调用的是在括号中排前地父类的方�
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

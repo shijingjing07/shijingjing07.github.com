@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-14T05:03:00+08:00">
                 2016-12-14
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/14/postgresql修改最大连接数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/14/postgresql修改最大连接数/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,9 +348,15 @@
       
         
           
-            <p>1.合适的最大连接数<br>used_connections/max_connections在85%左右<br>2.修改最大连接数<br>postgresql最大连接数默认为100<br>1)打开postgresql配置文件<br>vim /var/lib/pgsql/9.4/data/postgresql.conf<br>2)修改最大连接数<br>max_connections = 100<br>3)重启postgresql服务<br>在CentOS 6.x系统中<br>service postgresql-9.4 restart<br>在CentOS 7系统中<br>systemctl restart postgresql-9.4</p>
-
-          
+          1.合适的最大连接数used_connections/max_connections在85%左右2.修改最大连接数postgresql最大连接数默认为1001)打开postgresql配置文件vim /var/lib/pgsql/9.4/data/postgresql.conf2)修改最大连接数ma
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/14/postgresql修改最大连接数/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -402,7 +433,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-02T13:39:00+08:00">
                 2016-12-02
@@ -417,6 +448,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/02/socket详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/02/socket详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -442,119 +483,15 @@
       
         
           
-            <p>socket网络编程<br>1.进程间如何通信<br>本地进程间通信我们知道有以下几种方式：<br>1)消息传递(管道，FIFO，消息队列)<br>管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。<br>2)共享内存<br>不同进程访问同一个逻辑内存<br>3)同步<br>互斥量，条件变量，读写锁，信号量<br>4)远程过程调用<br>但是网络间的进程是如何通信的呢？如浏览器进程如何与web服务器通信，QQ聊天时，QQ进程如何与服务器或你好友所在的QQ进程通信？<br>答案是socket，网络间的进程通信几乎都是用的socket.  </p>
-<p>2.如何识别网络中唯一进程<br>本地进程间可以通过PID来唯一标识一个进程<br>网络中我们根据TCP/IP协议族来标识唯一进程，网络层的”IP地址”可唯一标识网络中的主机，而传输层的”协议+端口”可唯一标识主机中的进程。”IP地址+协议+端口”就可以确定唯一进程了。<br>3.进程间如何通过socket进行通讯<br>Linux的哲学是一切皆文件，socket也是一种文件。可以使用”打开-读写-关闭”来操作。socket是应用层和运输层之间的一个抽象层。<br>socket通信流程：<br>1)服务端创建socket<br>socket()<br>2)服务端绑定端口号<br>bind()<br>3)服务端监听端口号<br>listen()<br>4)客户端创建socket<br>socket()<br>5)客户端主动打开socket,连接服务器端socket<br>connect()<br>6)服务端接收客户端请求，socket被动打开<br>同步：accept() 异步：beginaccept()<br>7)客户端socket向服务端socket写信息<br>send()<br>8)服务端socket读取信息<br>9)客户端socket关闭<br>10)服务端socket关闭  </p>
-<p>4.socket建立连接的三次握手</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161202213659849-1737384138.png" alt=""></p>
-<p>第一步，客户端调用connect，向服务器发送SYN J包，connect阻塞<br>第二步，服务端收到SYN J包，调用accept函数接收请求，向客户端发送 SYN K,ACK J+1<br>        accept函数阻塞<br>第三步，客户端收到服务器的SYN K,ACK J+1后，connect返回，进行SYN K确认，服务端收到ACK<br>K+1时，accept返回，三次握手完成，连接建立。</p>
-<p>5.socket释放连接的四次握手</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201612/300946-20161202213749927-565791155.png" alt=""><br>第一步，客户端关闭连接，发送一个FIN M到服务端<br>第二步，服务端接收到FIN M后，执行被动关闭，对这个FIN M进行确认ACK M+1。<br>第三步，当服务端发送完毕后，再发送FIN N到客户端<br>第四步，客户端接收到FIN N调用close关闭它的socket,发送一个ACK N+1到服务端<br>服务端接收到这个ACK N+1关闭它的socket</p>
-<p>6.为什么建立连接是三次握手，释放连接需要四次<br>这是因为进行释放连接的第二步时，有可能服务端仍有数据发送给客户端，因此，需要分开，先对客户端FIN报文应答，当服务端数据发送完毕后，再发送FIN报文到客户端。  </p>
-<p>7.socket连接示例<br>服务器端</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-#include&lt;string.h&gt;
-#include&lt;errno.h&gt;
-#include&lt;sys/types.h&gt;
-#include&lt;sys/socket.h&gt;
-#include&lt;netinet/in.h&gt;
-
-#define MAXLINE 4096
-
-int main(int argc, char** argv)
-{
-    int    listenfd, connfd;
-    struct sockaddr_in     servaddr;
-    char    buff[4096];
-    int     n;
-
-    if( (listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1 ){
-    printf(&quot;create socket error: %s(errno: %d)\n&quot;,strerror(errno),errno);
-    exit(0);
-    }
-
-    memset(&amp;servaddr, 0, sizeof(servaddr));
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servaddr.sin_port = htons(6666);
-
-    if( bind(listenfd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) == -1){
-    printf(&quot;bind socket error: %s(errno: %d)\n&quot;,strerror(errno),errno);
-    exit(0);
-    }
-
-    if( listen(listenfd, 10) == -1){
-    printf(&quot;listen socket error: %s(errno: %d)\n&quot;,strerror(errno),errno);
-    exit(0);
-    }
-
-    printf(&quot;======waiting for client&apos;s request======\n&quot;);
-    while(1){
-    if( (connfd = accept(listenfd, (struct sockaddr*)NULL, NULL)) == -1){
-        printf(&quot;accept socket error: %s(errno: %d)&quot;,strerror(errno),errno);
-        continue;
-    }
-    n = recv(connfd, buff, MAXLINE, 0);
-    buff[n] = &apos;\0&apos;;
-    printf(&quot;recv msg from client: %s\n&quot;, buff);
-    close(connfd);
-    }
-
-    close(listenfd);
-}
-</code></pre><p>客户端</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-#include&lt;string.h&gt;
-#include&lt;errno.h&gt;
-#include&lt;sys/types.h&gt;
-#include&lt;sys/socket.h&gt;
-#include&lt;netinet/in.h&gt;
-
-#define MAXLINE 4096
-
-int main(int argc, char** argv)
-{
-    int    sockfd, n;
-    char    recvline[4096], sendline[4096];
-    struct sockaddr_in    servaddr;
-
-    if( argc != 2){
-    printf(&quot;usage: ./client &lt;ipaddress&gt;\n&quot;);
-    exit(0);
-    }
-
-    if( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) &lt; 0){
-    printf(&quot;create socket error: %s(errno: %d)\n&quot;, strerror(errno),errno);
-    exit(0);
-    }
-
-    memset(&amp;servaddr, 0, sizeof(servaddr));
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(6666);
-    if( inet_pton(AF_INET, argv[1], &amp;servaddr.sin_addr) &lt;= 0){
-    printf(&quot;inet_pton error for %s\n&quot;,argv[1]);
-    exit(0);
-    }
-
-    if( connect(sockfd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) &lt; 0){
-    printf(&quot;connect error: %s(errno: %d)\n&quot;,strerror(errno),errno);
-    exit(0);
-    }
-
-    printf(&quot;send msg to server: \n&quot;);
-    fgets(sendline, 4096, stdin);
-    if( send(sockfd, sendline, strlen(sendline), 0) &lt; 0)
-    {
-    printf(&quot;send msg error: %s(errno: %d)\n&quot;, strerror(errno), errno);
-    exit(0);
-    }
-
-    close(sockfd);
-    exit(0);
-}
-</code></pre>
-          
+          socket网络编程1.进程间如何通信本地进程间通信我们知道有以下几种方式：1)消息传递(管道，FIFO，消息队列)管道是一个进程的数据流到另一个进程的通道，即一个进程的数据输出作为另一个进程的数据输入，管道起到了桥梁的作用。2)共享内存不同进程访问同一个逻辑内存3)同步互斥量，条件变量，读写锁，信
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/02/socket详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -631,7 +568,7 @@ int main(int argc, char** argv)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-01T13:30:00+08:00">
                 2016-12-01
@@ -646,6 +583,16 @@ int main(int argc, char** argv)
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/01/重放攻击（Replay Attacks）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/01/重放攻击（Replay Attacks）/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -671,14 +618,16 @@ int main(int argc, char** argv)
       
         
           
-            <p>重放攻击（Replay Attacks）<br>1.什么是重放攻击<br>顾名思义，重复的会话请求就是重放攻击。<br>可能是因为用户重复发起请求，也可能是因为请求被攻击者获取，然后重新发给服务器。  </p>
-<p>2.重放攻击的危害<br>请求被攻击者获取，并重新发送给认证服务器，从而达到认证通过的目的。<br>我们可以通过加密，签名的方式防止信息泄露，会话被劫持修改。但这种方式防止不了重放攻击。  </p>
-<p>3.重放攻击的防御<br>1)时间戳验证<br>请求时加上客户端当前时间戳，同时签名（签名是为了防止会话被劫持，时间戳被修改），服务端对请求时间戳进行判断，如超过5分钟，认定为重放攻击，请求无效。<br>时间戳无法完全防止重放攻击。  </p>
-<p>2)序号<br>顾名思义，在客户端和服务端通讯时，先定义一个初始序号，每次递增。这样，服务端就可以知道是否是重复发送的请求。  </p>
-<p>3)挑战与应答的方式<br>我们一般采用这种方式来防御重放攻击。<br>客户端请求服务器时，服务器会首先生成一个随机数，然后返回给客户端，客户端带上这个随机数，访问服务器，服务器比对客户端的这个参数，若相同，说明正确，不是重放攻击。<br>这种方式下，客户端每次请求时，服务端都会先生成一个挑战码，客户端带上应答码访问，服务端进行比对，若挑战码和应答码不对应，视为重放攻击。  </p>
-<p>4)Https防重放攻击<br>对于https，每个socket连接都会验证证书，交换密钥。攻击者截获请求，重新发送，因为socket不同，密钥也不同，后台解密后是一堆乱码，所以https本身就是防止重放攻击的，除非能复制socket，或者进行中间人攻击。</p>
-
-          
+          重放攻击（Replay Attacks）1.什么是重放攻击顾名思义，重复的会话请求就是重放攻击。可能是因为用户重复发起请求，也可能是因为请求被攻击者获取，然后重新发给服务器。  
+2.重放攻击的危害请求被攻击者获取，并重新发送给认证服务器，从而达到认证通过的目的。我们可以通过加密，签名的方式防止信息
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/01/重放攻击（Replay Attacks）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -755,7 +704,7 @@ int main(int argc, char** argv)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-28T14:21:00+08:00">
                 2016-11-28
@@ -770,6 +719,16 @@ int main(int argc, char** argv)
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/28/IO-同步，异步，阻塞，非阻塞/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/28/IO-同步，异步，阻塞，非阻塞/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -795,18 +754,16 @@ int main(int argc, char** argv)
       
         
           
-            <p>IO-同步，异步，阻塞，非阻塞<br>1.什么是IO<br>数据在系统内核(kernel)和用户进程之间的传递，称为IO。</p>
-<p>2.IO操作步骤<br>以read为例，涉及两个系统对象，调用IO的process(or thread)，即用户进程；另一个为系统内核(kernel)。<br>当用户进程调用recvfrom操作时，会经历两个阶段<br>1)等待数据准备<br>2)将数据从内核拷贝至进程中</p>
-<p>3.IO模型<br>根据用户进程在IO操作时的状态，可以分为5中IO类型：<br>blocking IO:阻塞IO<br>non-blocking IO：非阻塞IO<br>IO multiplexing：多Socket连接IO<br>signal driven IO：信号驱动IO<br>asynchronous IO：异步IO</p>
-<p>signal driven IO实际中很少使用，在此不做介绍。</p>
-<p>2.blocking IO:阻塞IO<br>当用户进程调用recvfrom时，首先开始IO第一阶段：kernel准备数据。<br>用户进程会被阻塞。当kernel数据准备好以后，会将数据从kernel拷贝到用户内存，然后kernel返回结果，用户进程才会解除block的状态，重新运行起来。<br>blocking IO在IO执行的两个阶段都被block了。</p>
-<p>3.non-blocking IO:非阻塞IO<br>可以设置socket使其变为non-blocking。<br>当对一个non-blocking socket执行recvfrom操作时，流程如下：<br>用户进程调用recvfrom,如果kernel数据还没有准备好，此时用户进程不会被block。而是立刻返回一个error，从用户进程角度看，它并没有等待，而是立刻得到了一个结果。<br>用户进程判断是一个error时，它就知道数据还没有准备好，于是再次发送read操作。<br>一旦kernel中的数据准备好，并且再次收到了用户进程的system call,那么它马上将数据拷贝到用户内存，然后kernel返回结果。<br>non-blocking<br>IO在数据准备阶段，没有被block，而是不断的轮询kernel数据是否准备好；在数据拷贝阶段，用户进程被block，直到kernel拷贝结束，返回结果，用户进程才会解除block的状态。</p>
-<p>4.IO multiplexing：多Socket连接IO<br>IO<br>multiplexing的特点是单个用户进程可以同时处理多个网络连接IO，它的原理是select/epoll这个function会不断的轮询所负责的所有socket，当某个socket有数据到达了，就通知用户进程。<br>当用户进程调用select时，整个进程会被block，当任何一个socket中的数据准备好了，select就会返回。这时用户进程再调用read操作，将数据从kernel拷贝到用户进程。我们可以看出，IO<br>multiplexing和blocking IO的流程类似，不同的是，IO multiplexing需要两个system<br>call(select和recvfrom)，而blocking IO只调用了一个system<br>call(recvfrom)。select的优势在于它可以同时处理多个socket连接。所以如果连接数不高的话，使用select/epoll的web<br>server不一定比multi-threading+blocking IO的web<br>server性能更好，select/epoll的优势在于能够处理更多的连接。<br>IO multiplexing中，每一个socket一般设置为non-blocking的，但是用户进程一直是被select函数block的。</p>
-<p>5.asynchronous IO<br>用户进程发起read操作后，立刻返回可以去做其他的事情了。<br>此时，从kernel角度看，当它收到一个asynchronous<br>read后，首先他立刻返回，所以不会对用户进程产生任何block，然后,kernel等待数据准备完成，然后将数据拷贝到用户内存，当这一切完成之后，kernel会给用户进程发送一个signal告诉用户进程read操作完成了。</p>
-<p>6.四种IO模型的区别<br>blocking和non-blocking,synchronous IO和asynchronous IO的区别。<br>blocking和non-blocking的区别很明显，blocking会一致阻塞，non-blocking在数据没准备完全时会立刻返回。<br>synchronous同步IO指的是在IO操作时会阻塞用户进程；asynchronous含义相反。<br>可以看出blocking，non-blocking，IO multiplexing都是synchronous<br>IO；而asynchronous不会对用户进程产生任何阻塞。</p>
-<p>7.网上有一个比较形象的例子来说明这四种IO Model<br>有A，B，C，D四个人在钓鱼：<br>A用的是最老式的鱼竿，所以呢，得一直守着，等到鱼上钩了再拉杆；<br>B的鱼竿有个功能，能够显示是否有鱼上钩，所以呢，B就和旁边的MM聊天，隔会再看看有没有鱼上钩，有的话就迅速拉杆；<br>C用的鱼竿和B差不多，但他想了一个好办法，就是同时放好几根鱼竿，然后守在旁边，一旦有显示说鱼上钩了，它就将对应的鱼竿拉起来；<br>D是个有钱人，干脆雇了一个人帮他钓鱼，一旦那个人把鱼钓上来了，就给D发个短信。</p>
-
-          
+          IO-同步，异步，阻塞，非阻塞1.什么是IO数据在系统内核(kernel)和用户进程之间的传递，称为IO。
+2.IO操作步骤以read为例，涉及两个系统对象，调用IO的process(or thread)，即用户进程；另一个为系统内核(kernel)。当用户进程调用recvfrom操作时，会经历两个
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/28/IO-同步，异步，阻塞，非阻塞/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -883,7 +840,7 @@ int main(int argc, char** argv)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-19T09:45:00+08:00">
                 2016-11-19
@@ -898,6 +855,16 @@ int main(int argc, char** argv)
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/19/vue.js使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/19/vue.js使用详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -923,108 +890,16 @@ int main(int argc, char** argv)
       
         
           
-            <p>1.什么是vue.js<br>vue.js是一款数据驱动型的js框架。何为数据驱动型？html视图层定义模板，vue定义数据。html和vue数据，通过标签id关联。</p>
-<p>2.vue.js引入<br>&lt;script src=”<a href="https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&amp;gt" target="_blank" rel="external">https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&amp;gt</a>;</p>
-<p>3.使用示例<br>1)声明式渲染</p>
-<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
-&lt;div id=&quot;app&quot;&gt;
-{{message}}
-&lt;/div&gt;
-
-var app=new Vue({
-    el:&apos;#app&apos;,
-    data:{
-        message:&apos;Hello Vue!&apos;
-    }
-})
-</code></pre><p>运行结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174130482-998803872.png" alt=""></p>
-<p>2)条件判断</p>
-<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
-&lt;div id=&quot;app-3&quot;&gt;
-  &lt;p v-if=&quot;seen&quot;&gt;Now you see me&lt;/p&gt;
-&lt;/div&gt;
-
-var app3 = new Vue({
-  el: &apos;#app-3&apos;,
-  data: {
-    seen: true
-  }
-})
-</code></pre><p>运行结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174215842-1944546714.png" alt=""></p>
-<p>3)循环</p>
-<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
-&lt;div id=&quot;app-4&quot;&gt;
-    &lt;ol&gt;
-        &lt;li v-for=&quot;todo in todos&quot;&gt;
-            {{ todo.text }}
-        &lt;/li&gt;
-    &lt;/ol&gt;
-&lt;/div&gt;
-
-var app4 = new Vue({
-    el: &apos;#app-4&apos;,
-    data: {
-        todos: [
-          { text: &apos;Learn JavaScript&apos; },
-          { text: &apos;Learn Vue&apos; },
-          { text: &apos;Build something awesome&apos; }
-        ]
-    }
-})
-</code></pre><p>运行结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174251670-2022701270.png" alt=""></p>
-<p>4)客户端交互</p>
-<p>vue.js和浏览器可实现双向通信，即浏览器中绑定值改变后，js中会同时改变，反之亦然。</p>
-<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
-&lt;div id=&quot;app-5&quot;&gt;
-  &lt;p&gt;{{ message }}&lt;/p&gt;
-  &lt;button v-on:click=&quot;reverseMessage&quot;&gt;Reverse Message&lt;/button&gt;
-&lt;/div&gt;
-
-var app5 = new Vue({
-  el: &apos;#app-5&apos;,
-  data: {
-    message: &apos;Hello Vue.js!&apos;
-  },
-  methods: {
-    reverseMessage: function () {
-      this.message = this.message.split(&apos;&apos;).reverse().join(&apos;&apos;)
-    }
-  }
-})
-</code></pre><p>运行结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174331310-1906400836.png" alt=""></p>
-<p>4.组件<br>组件可以理解为在js中定义了一个html模板和一个vue.js，前台html可以直接使用这个模板，同时会被vue.js渲染。<br>需要注意的是，组件必须要有vue.js数据渲染才能显示。<br>如下例所示：</p>
-<pre><code>&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
-&lt;div id=&quot;app-7&quot;&gt;
-  &lt;ol&gt;
-    &lt;todo-item v-for=&quot;item in groceryList&quot; v-bind:todo=&quot;item&quot;&gt;&lt;/todo-item&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-
-Vue.component(&apos;todo-item&apos;, {
-  props: [&apos;todo&apos;],
-  template: &apos;&lt;li&gt;{{ todo.text }}&lt;/li&gt;&apos;
-})
-var app7 = new Vue({
-  el: &apos;#app-7&apos;,
-  data: {
-    groceryList: [
-      { text: &apos;Vegetables&apos; },
-      { text: &apos;Cheese&apos; },
-      { text: &apos;Whatever else humans are supposed to eat&apos; }
-    ]
-  }
-})
-</code></pre><p>运行结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119174405810-1399612477.png" alt=""></p>
-<p>我们在模板中增加了一个”props”字段，来接收数据，在html页面中将这个字段绑定到vue.js中的数据。<br>完成数据绑定。</p>
-<p>5.使用场景</p>
-<p>个人觉得适合数据量大，前端html页面模块重复复杂的情况。</p>
-
-          
+          1.什么是vue.jsvue.js是一款数据驱动型的js框架。何为数据驱动型？html视图层定义模板，vue定义数据。html和vue数据，通过标签id关联。
+2.vue.js引入&lt;script src=”https://unpkg.com/vue/dist/vue.js&quot;&gt;&
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/19/vue.js使用详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1101,7 +976,7 @@ var app7 = new Vue({
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-19T02:24:00+08:00">
                 2016-11-19
@@ -1116,6 +991,16 @@ var app7 = new Vue({
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/19/python 类中staticmethod,classmethod,普通方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/19/python 类中staticmethod,classmethod,普通方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1141,43 +1026,17 @@ var app7 = new Vue({
       
         
           
-            <p>1.staticmethod:静态方法<br>和全局函数类似，但是通过类和对象调用。</p>
-<p>2.classmethod:类方法<br>和类相关的方法，第一个参数是class对象（不是实例对象）。<br>在python中class也是一个真实存在于内存中的对象，不同于其他语言只存在于编译期间。</p>
-<p>3.普通方法<br>和实例相关的方法，通过类实例调用。</p>
-<p>4.代码示例</p>
-<pre><code>#coding:utf-8
-&apos;&apos;&apos;
-Created on 2015年5月29日
-@author: canx
-&apos;&apos;&apos;
-
-class Person:
-    def __init__(self):
-        print &quot;init&quot;
-
-    @staticmethod
-    def sayHello(hello):
-        print &quot;sayHell %s&quot;%(hello)
-
-    @classmethod
-    def introduce(cls,hello):
-        print &quot;introduce %s&quot;%(hello)
-
-    def hello(self,hello):
-        print &quot;hello %s&quot;%(hello)
-
-def main():
-    Person.sayHello(&quot;test&quot;)
-    Person.introduce(&quot;test&quot;)
-    p=Person()
-    p.hello(&quot;test&quot;)
-
-if __name__==&apos;__main__&apos;:
-    main()
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161119102339467-2036845135.png" alt=""></p>
-
-          
+          1.staticmethod:静态方法和全局函数类似，但是通过类和对象调用。
+2.classmethod:类方法和类相关的方法，第一个参数是class对象（不是实例对象）。在python中class也是一个真实存在于内存中的对象，不同于其他语言只存在于编译期间。
+3.普通方法和实例相关的方法，通过类
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/19/python 类中staticmethod,classmethod,普通方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1254,7 +1113,7 @@ if __name__==&apos;__main__&apos;:
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-07T11:10:00+08:00">
                 2016-11-07
@@ -1269,6 +1128,16 @@ if __name__==&apos;__main__&apos;:
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/07/cookie,session,sessionid/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/07/cookie,session,sessionid/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1294,11 +1163,16 @@ if __name__==&apos;__main__&apos;:
       
         
           
-            <p>cookie,session,sessionid</p>
-<p>http协议是无状态的，意思是每次请求的状态不会保存。因此，产生了cookie,session之类保存会话状态的机制。<br>1.什么是cookie<br>cookie将信息存储在客户端浏览器中。<br>cookie的内容主要包括：key,value,expire_time,path(路径),domain(域)<br>浏览器发送请求是会查找对应的path,domain，把符合的cookie自动发送给服务器。</p>
-<p>2.什么是session<br>session在服务器端生成，然后会将对应的sessionid在浏览器端使用cookie保存起来。<br>因此会话状态可以在session中保存。<br>cookie可以被人为禁止，可以使用url重写，将session id附在URL路径的后面。还可以使用表单隐藏字段。</p>
-
-          
+          cookie,session,sessionid
+http协议是无状态的，意思是每次请求的状态不会保存。因此，产生了cookie,session之类保存会话状态的机制。1.什么是cookiecookie将信息存储在客户端浏览器中。cookie的内容主要包括：key,value,expire_time
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/07/cookie,session,sessionid/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1375,7 +1249,7 @@ if __name__==&apos;__main__&apos;:
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-02T10:57:00+08:00">
                 2016-11-02
@@ -1390,6 +1264,16 @@ if __name__==&apos;__main__&apos;:
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/02/supervisor使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/02/supervisor使用详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1415,85 +1299,18 @@ if __name__==&apos;__main__&apos;:
       
         
           
-            <p>1.什么是supervisor<br>supervisor是用python写的一个进程管理工具，用来启动，重启，关闭进程。</p>
-<p>2.supervisor的安装</p>
-<pre><code>pip install supervisor
-</code></pre><p>3.supervisor的配置文件<br>supervisor安装完毕后，会有一个配置文件supervisord.conf<br>运行</p>
-<pre><code>echo_supervisord_conf
-</code></pre><p>命令，可输出文件详细<br>我们使用重定向运算符将配置文件定向到/etc路径下（方便管理）</p>
-<pre><code>echo_supervisord_conf&gt;/etc/supervisord.conf
-</code></pre><p>4.配置文件详解</p>
-<pre><code>[unix_http_server]
-file=/tmp/supervisor.sock ; UNIX socket 文件，supervisorctl 会使用
-;chmod=0700 ; socket 文件的 mode，默认是 0700
-;chown=nobody:nogroup ; socket 文件的 owner，格式： uid:gid
-
-;[inet_http_server] ; HTTP 服务器，提供 web 管理界面
-;port=127.0.0.1:9001 ; Web 管理后台运行的 IP 和端口，如果开放到公网，需要注意安全性
-;username=user ; 登录管理后台的用户名
-;password=123 ; 登录管理后台的密码
-
-[supervisord]
-logfile=/tmp/supervisord.log ; 日志文件，默认是 $CWD/supervisord.log
-logfile_maxbytes=50MB ; 日志文件大小，超出会 rotate，默认 50MB
-logfile_backups=10 ; 日志文件保留备份数量默认 10
-loglevel=info ; 日志级别，默认 info，其它: debug,warn,trace
-pidfile=/tmp/supervisord.pid ; pid 文件
-nodaemon=false ; 是否在前台启动，默认是 false，即以 daemon 的方式启动
-minfds=1024 ; 可以打开的文件描述符的最小值，默认 1024
-minprocs=200 ; 可以打开的进程数的最小值，默认 200
-
-; the below section must remain in the config file for RPC
-; (supervisorctl/web interface) to work, additional interfaces may be
-; added by defining them in separate rpcinterface: sections
-[rpcinterface:supervisor]
-supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
-
-[supervisorctl]
-serverurl=unix:///tmp/supervisor.sock ; 通过 UNIX socket 连接 supervisord，路径与 unix_http_server 部分的 file 一致
-;serverurl=http://127.0.0.1:9001 ; 通过 HTTP 的方式连接 supervisord
-
-; 包含其他的配置文件
-[include]
-files = relative/directory/*.ini ; 可以是 *.conf 或 *.ini
-</code></pre><p>5.进程Program配置</p>
-<pre><code>[program:usercenter]
-directory = /home/leon/projects/usercenter ; 程序的启动目录
-command = gunicorn -c gunicorn.py wsgi:app ; 启动命令，可以看出与手动在命令行启动的命令是一样的
-autostart = true ; 在 supervisord 启动的时候也自动启动
-startsecs = 5 ; 启动 5 秒后没有异常退出，就当作已经正常启动了
-autorestart = true ; 程序异常退出后自动重启
-startretries = 3 ; 启动失败自动重试次数，默认是 3
-user = leon ; 用哪个用户启动
-redirect_stderr = true ; 把 stderr 重定向到 stdout，默认 false
-stdout_logfile_maxbytes = 20MB ; stdout 日志文件大小，默认 50MB
-stdout_logfile_backups = 20 ; stdout 日志文件备份数
-; stdout 日志文件，需要注意当指定目录不存在时无法正常启动，所以需要手动创建目录（supervisord 会自动创建日志文件）
-stdout_logfile = /data/logs/usercenter_stdout.log
-
-; 可以通过 environment 来添加需要的环境变量，一种常见的用法是修改 PYTHONPATH
-; environment=PYTHONPATH=$PYTHONPATH:/path/to/somewhere
-</code></pre><p>将进程配置添加到supervisord.conf文件中<br>推荐将各个进程配置放到单独的文件中，然后通过[include]配置项引用</p>
-<pre><code>[include]
-files = /etc/supervisor/*.conf
-</code></pre><p>6.supervisor服务启动<br>运行命令</p>
-<pre><code>supervisord -c /etc/supervisord.conf
-</code></pre><p>启动服务<br>若服务已启动会报以下错误：<br><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161102190531861-1862207493.png" alt=""><br>查找服务进程，kill，重新运行<br><img src="http://images2015.cnblogs.com/blog/300946/201611/300946-20161102190540190-1592905441.png" alt=""></p>
-<p>7.supervisor服务客户端管理<br>可以使用supervisord的命令行客户端管理工具supervisorctl，来管理进程。</p>
-<pre><code>$ supervisorctl status
-$ supervisorctl stop usercenter
-$ supervisorctl start usercenter
-$ supervisorctl restart usercenter
-$ supervisorctl reread
-$ supervisorctl update
-</code></pre><p>8.supervisor web管理界面</p>
-<pre><code>;[inet_http_server] ; HTTP 服务器，提供 web 管理界面
-;port=127.0.0.1:9001 ; Web 管理后台运行的 IP 和端口，如果开放到公网，需要注意安全性
-;username=user ; 登录管理后台的用户名
-;password=123 ; 登录管理后台的密码
-</code></pre><p>在浏览器中输入<a href="http://127.0.0.1:9001，可进入web管理界面" target="_blank" rel="external">http://127.0.0.1:9001，可进入web管理界面</a></p>
-
-          
+          1.什么是supervisorsupervisor是用python写的一个进程管理工具，用来启动，重启，关闭进程。
+2.supervisor的安装
+pip install supervisor
+3.supervisor的配置文件supervisor安装完毕后，会有一个配置文件supervisord.
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/02/supervisor使用详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1570,7 +1387,7 @@ $ supervisorctl update
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-01T11:10:00+08:00">
                 2016-11-01
@@ -1585,6 +1402,16 @@ $ supervisorctl update
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/01/python unicode字节串转成中文问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/01/python unicode字节串转成中文问题/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1610,14 +1437,15 @@ $ supervisorctl update
       
         
           
-            <p>如题，其实我的问题很简单，就是在写爬虫的时候拿到网页的信息包含类似”\u65b0\u6d6a\u5fae\u535a\u6ce8\u518c”的字符串，实际上这是unicode的中文编码，对应的中文为”新浪微博注册”。其实我就是想找一个函数让这一串东西显示中文而已，没想到百度了白天找到合适的。遇到这种问题千万不要用什么<br>“python编码” “unicode中文编码” “unicode解码”这样的关键字去搜，一大堆网页出来毫不相关。<br>其实这个问题一个函数搞定，如下：<br>Example 1:<br>&gt;&gt;&gt; s = r”\u65b0\u6d6a\u5fae\u535a\u6ce8\u518c”<br>&gt;&gt;&gt; s<br>‘\\u65b0\\u6d6a\\u5fae\\u535a\\u6ce8\\u518c’<br>&gt;&gt;&gt; print s<br>\u65b0\u6d6a\u5fae\u535a\u6ce8\u518c<br>&gt;&gt;&gt; s = s.decode(“unicode_escape”); #就是这个函数<br>&gt;&gt;&gt; print s<br>新浪微博注册</p>
-<p>Example 2:<br>&gt;&gt;&gt; str<em> = “Russopho\xe9bic, clichd and just pl\xe9ain stupid.”<br>&gt;&gt;&gt; print str</em><br>Russopho?bic, clichd and just pl?ain stupid.<br>&gt;&gt;&gt; str<em> = str</em>.decode(“unicode<em>escape”)<br>&gt;&gt;&gt; print str</em><br>Russophoebic, clichd and just pleain stupid.<br>(这个方法解决了我在插入数据到mongodb时遇到的”bson.errors.InvalidStringData: strings in documents<br>must be valid UTF-8”问题)</p>
-<p>附上关于这个问题的相关博客链接：<a href="http://www.cnblogs.com/yangze/archive/2010/11/16/1878469.html" target="_blank" rel="external">http://www.cnblogs.com/yangze/archive/2010/11/16/1878469.html</a></p>
-<p>另外还有一个与unicode字节串有关的问题，遇到这样的错误提示：Unicode equal comparison failed to convert<br>both arguments to Unicode - interpreting them as being<br>unequal。说明我们在对两个字符（串）进行对比的时候等号两边的类型<br>不一样，可能是一边是unicode字节串，一边是字符串。详见<a href="http://stackoverflow.com/questions/3400171" target="_blank" rel="external">http://stackoverflow.com/questions/3400171</a><br>/python-utf-8-comparison。  </p>
-<p>小结：<br>以后遇到奇葩问题要想好关键字再搜，不然很有可能一无所获。</p>
-<p>转自：<a href="http://windkeepblow.blog.163.com/blog/static/1914883312013988185783/" target="_blank" rel="external">http://windkeepblow.blog.163.com/blog/static/1914883312013988185783/</a></p>
-
-          
+          如题，其实我的问题很简单，就是在写爬虫的时候拿到网页的信息包含类似”\u65b0\u6d6a\u5fae\u535a\u6ce8\u518c”的字符串，实际上这是unicode的中文编码，对应的中文为”新浪微博注册”。其实我就是想找一个函数让这一串东西显示中文而已，没想到百度了白天找到合适的。遇到这
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/01/python unicode字节串转成中文问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1694,7 +1522,7 @@ $ supervisorctl update
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-27T07:50:00+08:00">
                 2016-10-27
@@ -1709,6 +1537,16 @@ $ supervisorctl update
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/27/对称加密和非对称加密/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/27/对称加密和非对称加密/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1734,12 +1572,17 @@ $ supervisorctl update
       
         
           
-            <p>1.什么是对称加密,非对称加密<br>对称加密是指加解密使用的是同样的密钥<br>非对称加密是指加解密使用的密钥不同。</p>
-<p>2.对称加密的优缺点<br>对称加密的特点是简单快速。<br>密钥越大，加密越强，但加解密过程越慢。<br>密钥容易被黑客拦截</p>
-<p>3.非对称加密的优缺点<br>非对称加密使用了一对密钥，公钥和私钥。私钥由解密方安全保管，公钥可以发给任何请求它的人。数据使用公钥加密，私钥解密。因为私钥不通过网络发送出去，所以非对称加密的安全性很高。<br>非对称加密很安全，但和对称加密比起来，非常慢。</p>
-<p>4.对称密钥使用非对称方式发送<br>对称密钥使用非对称方式发送，解决了对称密钥易被获取，和非对称密钥加解密慢的问题。<br>使用步骤如下：<br>1)A生成一个随机数作为对称密钥<br>2)A向B申请公钥<br>3)B将公钥发给A<br>4)A使用公钥加密对称密钥，将加密后的结果发给B<br>5)B使用私钥解密出对称密钥<br>6)A和B可以通过对称密钥对信息加解密了</p>
-
-          
+          1.什么是对称加密,非对称加密对称加密是指加解密使用的是同样的密钥非对称加密是指加解密使用的密钥不同。
+2.对称加密的优缺点对称加密的特点是简单快速。密钥越大，加密越强，但加解密过程越慢。密钥容易被黑客拦截
+3.非对称加密的优缺点非对称加密使用了一对密钥，公钥和私钥。私钥由解密方安全保管，公钥可以发
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/27/对称加密和非对称加密/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1815,7 +1658,7 @@ $ supervisorctl update
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -1824,7 +1667,7 @@ $ supervisorctl update
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -1843,6 +1686,26 @@ $ supervisorctl update
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -1881,11 +1744,11 @@ $ supervisorctl update
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -1966,34 +1829,167 @@ $ supervisorctl update
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 

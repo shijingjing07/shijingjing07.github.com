@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -108,14 +108,14 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
     }
   };
 </script>
@@ -131,7 +131,7 @@
   <title> 迪米特 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -188,9 +188,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Startseite
+            首页
           </a>
         </li>
       
@@ -198,9 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
+            归档
           </a>
         </li>
       
@@ -208,17 +204,36 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            标签
           </a>
         </li>
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
   
 </nav>
 
@@ -283,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-15T07:39:00+08:00">
                 2016-06-15
@@ -298,6 +313,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/15/C++ vector和list的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/15/C++ vector和list的区别/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -323,45 +348,15 @@
       
         
           
-            <p><strong>1.vector数据结构</strong><br>vector和数组类似，拥有一段连续的内存空间，并且起始地址不变。<br>因此能高效的进行随机存取，时间复杂度为o(1);<br>但因为内存空间是连续的，所以在进行插入和删除操作时，会造成内存块的拷贝，时间复杂度为o(n)。<br>另外，当数组中内存空间不够时，会重新申请一块内存空间并进行内存拷贝。</p>
-<p><strong>2.list数据结构</strong><br>list是由双向链表实现的，因此内存空间是不连续的。<br>只能通过指针访问数据，所以list的随机存取非常没有效率，时间复杂度为o(n);<br>但由于链表的特点，能高效地进行插入和删除。</p>
-<p><strong>3.vector和list的区别</strong><br>我们看一个简单的vector和list使用示例：</p>
-<pre><code>#include&lt;iostream&gt;
-#include&lt;vector&gt;
-#include&lt;list&gt;
-using namespace std;
-int main()
-{
-    vector&lt;int&gt; v;
-    list&lt;int&gt; l;
-    for(int i=0;i&lt;8;i++) ////往v和l中分别添加元素
-    {
-        v.push_back(i);
-        l.push_back(i);
-    }
-    cout&lt;&lt;&quot;v[2]=&quot;&lt;&lt;v[2]&lt;&lt;endl;
-    //cout&lt;&lt;&quot;l[2]=&quot;&lt;&lt;l[2]&lt;&lt;endl;  //编译错误,list没有重载[]
-    cout&lt;&lt;(v.begin()&lt;v.end())&lt;&lt;endl; 
-    //cout&lt;&lt;(l.begin()&lt;l.end())&lt;&lt;endl; /编译错误,list::iterator没有重载&lt;或&gt;
-    cout&lt;&lt;*(v.begin()+1)&lt;&lt;endl;
-    //cout&lt;&lt;*(l.begin()+1)&lt;&lt;endl; //编译错误,list::iterator没有重载+
-    vector&lt;int&gt;::iterator itv=v.begin();
-    list&lt;int&gt;::iterator itl=l.begin();
-    itv = itv+2;
-    //itl=itl+2; //编译错误,list::iterator没有重载+
-    itl++; //list::iterator中重载了++，只能使用++进行迭代访问。
-    itl++;
-    cout&lt;&lt;*itv&lt;&lt;endl;
-    cout&lt;&lt;*itl&lt;&lt;endl;
-    getchar();
-    return 0;
-}
-</code></pre><p>vector拥有一段连续的内存空间，能很好的支持随机存取，<br>因此vector&lt;int&gt;::iterator支持”+”，”+=”，”&lt;”等操作符。</p>
-<p>list的内存空间可以是不连续，它不支持随机访问，<br>因此list&lt;int&gt;::iterator则不支持”+”、”+=”、”&lt;”等</p>
-<p>vector&lt;int&gt;::iterator和list&lt;int&gt;::iterator都重载了”++”运算符。</p>
-<p>总之，如果需要高效的随机存取，而不在乎插入和删除的效率，使用vector;<br>如果需要大量的插入和删除，而不关心随机存取，则应使用list。</p>
-
-          
+          1.vector数据结构vector和数组类似，拥有一段连续的内存空间，并且起始地址不变。因此能高效的进行随机存取，时间复杂度为o(1);但因为内存空间是连续的，所以在进行插入和删除操作时，会造成内存块的拷贝，时间复杂度为o(n)。另外，当数组中内存空间不够时，会重新申请一块内存空间并进行内存拷贝。
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/15/C++ vector和list的区别/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -438,7 +433,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-15T03:10:00+08:00">
                 2016-06-15
@@ -453,6 +448,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/15/C++静态存储，动态存储/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/15/C++静态存储，动态存储/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -478,45 +483,16 @@ int main()
       
         
           
-            <p><strong>什么是静态存储，动态存储</strong><br>静态存储变量通常是在变量定义时就分定存储单元并一直保持不变， 直至整个程序结束。</p>
-<p>动态存储变量是在程序执行过程中，使用它时才分配存储单元， 使用完毕立即释放。<br>典型的例子是函数的形式参数，在函数定义时并不给形参分配存储单元，只是在函数被调用时，才予以分配，<br>调用函数完毕立即释放。如果一个函数被多次调用，则反复地分配、 释放形参变量的存储单元。</p>
-<p>从以上分析可知， 静态存储变量是一直存在的， 而动态存储变量则时而存在时而消失。<br>我们又把这种由于变量存储方式不同而产生的特性称变量的生存期。 生存期表示了变量存在的时间。<br>生存期和作用域是从时间和空间这两个不同的角度来描述变量的特性，这两者既有联系，又有区别。<br>一个变量究竟属于哪一种存储方式， 并不能仅从其作用域来判断，还应有明确的存储类型说明。</p>
-<p><strong>四种变量的存储方式和作用域</strong><br>在Ｃ语言中，有以下四种变量：静态变量(static)、自动变量(auto)、寄存器变量(register)、外部变量(extern)。<br>其中自动变量和寄存器变量属于动态存储方式，外部变量和静态局部变量属于静态存储方式。<br>下面我们详细介绍这四种变量：</p>
-<p>一、静态局部变量-静态存储<br>定义格式：<br>static 数据类型 变量名；</p>
-<p>存储特点：<br>静态局部变量属于静态存储。<br>在程序执行过程中，即使所在函数调用结束也不释放。<br>换句话说，在程序执行期间，静态局部变量始终存在，但其它函数是不能引用它们的。  </p>
-<p>初始化：<br>定义但不初始化，则自动赋以”０”（整型和实型）或’\0’（字符型）；<br>且每次调用它们所在的函数时，不再重新赋初值，只是保留上次调用结束时的值！</p>
-<p>使用场合：<br>需要保留函数上一次调用结束时的值。<br>变量只被引用而不改变其值。</p>
-<p>二、自动变量-动态存储<br>定义格式：<br>[auto] 数据类型 变量名；</p>
-<p>存储特点：<br>自动变量属于动态存储方式。<br>在函数或复合语句中定义的自动变量，只在该函数复合语句内有效；函数复合语句被调用时分配存储空间，调用结束就释放。  </p>
-<p>初始化：<br>定义而不初始化，则其值是不确定的。<br>如果初始化，则赋初值操作是在调用时进行的，且每次调用都要重新赋一次初值。</p>
-<p>由于自动变量的作用域和生存期，都局限于定义它的个体内（函数或复合语句），<br>因此不同的个体中允许使用同名的变量而不会混淆。<br>即使在函数内定义的自动变量，也可与该函数内部的复合语句中定义的自动变量同名。<br>建议：系统不会混淆，并不意味着人也不会混淆，所以尽量少用同名自动变量！</p>
-<p>自动变量与静态局部变量的示例如下：</p>
-<pre><code>void  auto_static() 
-{      
-    int var_auto=0; /*自动变量：每次调用都重新初始化*/ 
-    static int var_static=0; /*静态局部变量：只初始化1次*/ 
-    printf(&quot;var_auto=%d, var_static=%d\n&quot;, var_auto, var_static); 
-    ++var_auto; 
-    ++var_static; 
-} 
-void main() 
-{   int i; 
-    for(i=0; i&lt;5; i++) 
-        auto_static(); 
-} 
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160615110055417-1375673411.png" alt=""></p>
-<p>三、寄存器变量-动态存储<br>存储特点：<br>一般情况下，变量的值都是存储在内存中的。<br>为提高执行效率，Ｃ语言允许将局部变量的值存放到寄存器中，这种变量就称为寄存器变量。</p>
-<p>定义格式：<br>register 数据类型 变量名；  </p>
-<p>寄存器变量需要注意以下几点：<br>1)只有局部变量才能定义成寄存器变量，即全局变量不行。<br>2)对寄存器变量的实际处理，随系统而异。例如，微机上的MSC和TC 将寄存器变量实际当作自动变量处理。<br>3)允许使用的寄存器数目是有限的，不能定义任意多个寄存器变量。</p>
-<p>四、外部变量-静态存储<br>存储特点：<br>外部变量属于静态存储方式。又分为静态外部变量和非静态外部变量</p>
-<p>静态外部变量<br>只允许被本源文件中的函数引用<br>定义格式： static 数据类型 外部变量名；</p>
-<p>非静态外部变量<br>允许被其它源文件中的函数引用<br>定义时缺省static关键字的外部变量，即为非静态外部变量。<br>定义格式：数据类型 外部变量名；<br>其它源文件中的函数，引用非静态外部变量时，需要在引用函数所在的源文件中进行说明：<br>格式：extern 数据类型 外部变量表；  </p>
-<p>静态局部变量和静态外部变量同属静态存储方式，但两者区别较大：<br>1)定义的位置不同。<br>静态局部变量在函数内定义，静态外部变量在函数外定义。<br>2)作用域不同。<br>静态局部变量属于内部变量，其作用域仅限于定义它的函数内；<br>虽然生存期为整个源程序，但其它函数是不能使用它的。</p>
-<p>静态外部变量在函数外定义，其作用域为定义它的源文件内；<br>生存期为整个源程序，但其它源文件中的函数也是不能使用它的。<br>3)初始化处理不同。<br>静态局部变量，仅在第1次调用它所在的函数时被初始化，<br>当再次调用定义它的函数时，不再初始化，而是保留上1次调用结束时的值。<br>而静态外部变量是在函数外定义的，不存在静态内部变量的”重复”初始化问题，<br>其当前值由最近1次给它赋值的操作决定。</p>
-<p>把局部变量改变为静态内部变量后，改变了它的存储方式，即改变了它的生存期。<br>把外部变量改变为静态外部变量后，改变了它的作用域，限制了它的使用范围。<br>因此，关键字”static”在不同的地方所起的作用是不同的。</p>
-
-          
+          什么是静态存储，动态存储静态存储变量通常是在变量定义时就分定存储单元并一直保持不变， 直至整个程序结束。
+动态存储变量是在程序执行过程中，使用它时才分配存储单元， 使用完毕立即释放。典型的例子是函数的形式参数，在函数定义时并不给形参分配存储单元，只是在函数被调用时，才予以分配，调用函数完毕立即释放。
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/15/C++静态存储，动态存储/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -593,7 +569,7 @@ void main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-13T05:55:00+08:00">
                 2016-06-13
@@ -608,6 +584,16 @@ void main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/13/C++文件输入和输出/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/13/C++文件输入和输出/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -633,220 +619,17 @@ void main()
       
         
           
-            <p><strong>1.引入头文件fstream</strong><br>fstream头文件定义了用于文件输入的类ifstream和文件输出的类ofstream</p>
-<p><strong>2.写文件</strong><br>1)创建一个ofstream对象来管理输出流<br>2)将该对象与文件关联起来<br>3)使用cout方式使用该对象，唯一区别是输出将进入文件，而不是屏幕。<br>4)关闭到文件的连接<br>示例如下：</p>
-<pre><code>ofstream fout;
-fout.open(&quot;test.txt&quot;);
-fout&lt;&lt;&quot;write something&quot;;
-fout.close();
-</code></pre><p>创建对象和关联文件可使用构造函数合并到一步，以上代码等价于：</p>
-<pre><code>ofstream fout(&quot;test.txt&quot;);
-fout&lt;&lt;&quot;write something&quot;;
-fout.close();
-</code></pre><p><strong>3.读文件</strong><br>1)创建一个ifstream对象来管理输入流<br>2)将该对象与文件关联起来<br>3)使用ifstream的方法读文件<br>4)关闭到文件的连接<br>示例如下：</p>
-<pre><code>ifstream fin(&quot;test.txt&quot;);
-char ch;
-fin&gt;&gt;ch;//从文件中读取一个字符
-char buf[80];
-fin&gt;&gt;buf;//从文件中读取一个单词
-fin.getline(buf,80);//从文件中读取一行
-string line;
-getline(fin,line);//读取一行转换成字符串
-fin.close();
-</code></pre><p><strong>4.读写缓冲区</strong><br>fstream流管理对象在使用cout或cin方式，读或写时，是通过缓冲区和文件进行交互的，<br>而不是逐字节读取或写入文件的。</p>
-<p>关于close()函数，当流对象过期(如程序终止)时，到文件的连接自动关闭，<br>也可使用cose()显示关闭该连接。连接关闭后，将刷新缓冲区。</p>
-<p>与文件的连接关闭后，并不会删除流，fstream流对象和它管理的缓冲区仍然存在，<br>可以将流重新连接到文件。</p>
-<p><strong>5.一个简单的读写文件示例</strong></p>
-<pre><code>#include&lt;iostream&gt;
-#include&lt;fstream&gt;
-#include&lt;string&gt;
-using namespace std;
-const string filename=&quot;test.txt&quot;;
-int main()
-{
-ofstream fout(filename.c_str());
-if(!fout.is_open())
-{
-cerr&lt;&lt;&quot;无法打开文件 &quot;&lt;&lt;filename&lt;&lt;endl;
-exit(0);
-}
-cout&lt;&lt;&quot;输入密码：&quot;;
-float secret;
-cin&gt;&gt;secret;
-fout&lt;&lt;secret&lt;&lt;endl;
-fout.close();
+          1.引入头文件fstreamfstream头文件定义了用于文件输入的类ifstream和文件输出的类ofstream
+2.写文件1)创建一个ofstream对象来管理输出流2)将该对象与文件关联起来3)使用cout方式使用该对象，唯一区别是输出将进入文件，而不是屏幕。4)关闭到文件的连接示例如下：
 
-ifstream fin(filename.c_str());
-if(!fin.is_open())
-{
-cerr&lt;&lt;&quot;无法打开文件 &quot;&lt;&lt;filename&lt;&lt;endl;
-exit(0);
-}
-cout&lt;&lt;&quot;输入的密码为：\n&quot;;
-char ch;
-while(fin.get(ch))
-cout&lt;&lt;ch;
-fin.close();
-return 0;
-}
-</code></pre><p>程序中is_open()函数，是用来检查文件是否被打开<br>流对象的状态包括：<br>一切顺利，已达到文件尾，I/O操作失败等。如果一切顺利，流状态设置为0，否则设置为1。</p>
-<p><strong>6.打开多个文件</strong><br>1)需要同时打开多个文件，则需要为每个文件创建一个流。<br>2)需要依次打开一组文件，可以只打开一个流，将它依次关联到各个文件。</p>
-<p>如下例所示：</p>
-<pre><code>ifstream fin;
-fin.open(&quot;test.txt&quot;);
-fin.close();
-fin.clear();
-fin.open(&quot;test2.txt&quot;);
-fin.close();  
-</code></pre><p><strong>7.文件模式</strong></p>
-<table>
-<thead>
-<tr>
-<th><strong>常量</strong></th>
-<th><strong>含义</strong>  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ios_base::in</td>
-<td>打开文件，以便读取  </td>
-</tr>
-<tr>
-<td>ios_base::out</td>
-<td>打开文件，以便写入  </td>
-</tr>
-<tr>
-<td>ios_base::ate</td>
-<td>打开文件，并移到文件尾，和ios_base::app的区别是，后者只能在文件尾写入，前者只是将写入指针初始化在文件尾  </td>
-</tr>
-<tr>
-<td>ios_base::app</td>
-<td>追加到文件尾  </td>
-</tr>
-<tr>
-<td>ios_base::trunc</td>
-<td>如果文件存在，则清空文件内容  </td>
-</tr>
-<tr>
-<td>ios_base::binary</td>
-<td>二进制文件  </td>
-</tr>
-</tbody>
-</table>
-<p>对于ifstream open()，默认的模式为ios_base::in<br>对于ofstream open()，默认的模式为ios_base::out|ios_base::trunc，打开并清空文件</p>
-<p><strong>8.二进制模式 ios_base::binary </strong></p>
-<p>文件的存储类型有两种，文本格式或二进制格式。<br>文本格式便于读取，而二进制格式更加精确，占用空间小，读取速度快。<br>写操作：</p>
-<pre><code>fout.write((char*)&amp;T,sizeof T);
-</code></pre><p>读操作：</p>
-<pre><code>fin.read((char*)&amp;T,sizeof T);
-</code></pre><p>注意需要将类型实例地址，强制转换为char*类型。</p>
-<p><strong>9.随机存取</strong></p>
-<p>随机存取是指，读写指针直接移动到文件的任何位置。</p>
-<p>跳转函数：</p>
-<pre><code>istream &amp; seekg(streamoff,ios_base::seekdir);//相对地址
-istream &amp; seekg(streampos);//绝对地址
-</code></pre><p>第一个方法的意思是，离seekdir参数指定文件位置，距离streamoff的位置。<br>其中，streamoff单位的是字节，seekdir表示文件的三个位置(顶端ios_base::beg，底端ios_base::end，当前位置ios_base::cur)</p>
-<p>第二个方法的意思是，离文件开头streampos的位置<br>streampos表示文件中的绝对位置，单位是字节</p>
-<p>seekg()<br>移到文件开头</p>
-<p>tellg()<br>返回读写指针当前的位置</p>
-<p>下面，我们用二进制文件模式，写一个简单的随机存取示例：</p>
-<pre><code>#include&lt;iostream&gt;
-#include&lt;fstream&gt;
-#include&lt;iomanip&gt;
-const int LIM=20;
-struct planet
-{
-    char name[LIM];
-    double population;
-    double g;
-};
-const char *file = &quot;planets.dat&quot;;
-inline void eatline(){while(std::cin.get()!=&apos;\n&apos;) continue;}
-int main()
-{
-    using namespace std;
-    planet pl;
-    cout&lt;&lt;fixed;
-
-    fstream finout;
-    finout.open(file,ios_base::in|ios_base::out|ios_base::binary);
-    int ct = 0;
-    if(finout.is_open())
-    {
-        finout.seekg(0);
-        cout&lt;&lt;&quot;contents of file &quot;&lt;&lt;file&lt;&lt;endl;
-        while(finout.read((char *)&amp;pl,sizeof pl))
-        {
-            cout&lt;&lt;ct++&lt;&lt;&quot;:&quot;&lt;&lt;setw(20)&lt;&lt;pl.name&lt;&lt;&quot;:&quot;
-                &lt;&lt;setprecision(0)&lt;&lt;setw(12)&lt;&lt;pl.population
-                &lt;&lt;setprecision(2)&lt;&lt;setw(6)&lt;&lt;pl.g&lt;&lt;endl;
-        }
-        if(finout.eof())
-            finout.clear();
-        else{
-            cerr&lt;&lt;&quot;无法打开文件 &quot;&lt;&lt;file&lt;&lt;endl;
-            exit(0);
-        }
-    }
-    else{
-        cerr&lt;&lt;&quot;无法打开文件 &quot;&lt;&lt;file&lt;&lt;endl;
-        exit(0);
-    }
-    cout&lt;&lt;&quot;enter record number to change:&quot;;
-    long rec;
-    cin&gt;&gt;rec;
-    eatline();
-    if(rec&lt;0||rec&gt;=ct)
-    {
-        cerr&lt;&lt;&quot;无效 index number&quot;&lt;&lt;endl;
-        exit(0);
-    }
-    streampos place = rec*sizeof pl;
-    finout.seekg(place);
-    if(finout.fail())
-    {
-        cerr&lt;&lt;&quot;无法找到 index number&quot;&lt;&lt;endl;
-        exit(0);
-    }
-    finout.read((char *)&amp;pl,sizeof pl);
-    cout&lt;&lt;&quot;找到的 index number&quot;&lt;&lt;endl;
-    cout&lt;&lt;rec&lt;&lt;&quot;:&quot;&lt;&lt;setw(20)&lt;&lt;pl.name&lt;&lt;&quot;:&quot;
-                &lt;&lt;setprecision(0)&lt;&lt;setw(12)&lt;&lt;pl.population
-                &lt;&lt;setprecision(2)&lt;&lt;setw(6)&lt;&lt;pl.g&lt;&lt;endl;
-    if(finout.eof())
-        finout.clear();
-    cout&lt;&lt;&quot;输入name:&quot;;
-    cin.get(pl.name,LIM);
-    eatline();
-    cout&lt;&lt;&quot;population:&quot;;
-    cin&gt;&gt;pl.population;
-    cout&lt;&lt;&quot;g:&quot;;
-    cin&gt;&gt;pl.g;
-    finout.seekp(place);
-    finout.write((char*)&amp;pl,sizeof pl)&lt;&lt;flush;
-    if(finout.fail())
-    {
-        cerr&lt;&lt;&quot;写失败 index number&quot;&lt;&lt;endl;
-        exit(0);
-    }
-
-    ct = 0;
-    finout.seekg(0);
-    cout&lt;&lt;&quot;contents of file &quot;&lt;&lt;file&lt;&lt;endl;
-    while(finout.read((char *)&amp;pl,sizeof pl))
-    {
-        cout&lt;&lt;ct++&lt;&lt;&quot;:&quot;&lt;&lt;setw(20)&lt;&lt;pl.name&lt;&lt;&quot;:&quot;
-            &lt;&lt;setprecision(0)&lt;&lt;setw(12)&lt;&lt;pl.population
-            &lt;&lt;setprecision(2)&lt;&lt;setw(6)&lt;&lt;pl.g&lt;&lt;endl;
-    }
-    finout.close();
-    cout&lt;&lt;&quot;Done.\n&quot;;
-    return 0;
-}
-</code></pre><p>程序中，我们使用了一个特别的流管理对象fstream，<br>fstream继承子iostream,而iostream继承自istream和ostream<br>因此fstream继承了两个缓冲区，一个用于输入，一个用于输出<br>并能同步化两个缓冲区的处理。即输入指针和输出指针的位置始终相同。<br>这样用一个流管理对象，就可以同时进行读和写。</p>
-<p>参考资料：《C++ Primer.Plus》 pp.768-788</p>
-
-          
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/13/C++文件输入和输出/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -923,7 +706,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-12T03:12:00+08:00">
                 2016-06-12
@@ -938,6 +721,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/12/C++运算符重载详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/12/C++运算符重载详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -963,86 +756,20 @@ int main()
       
         
           
-            <p><strong>1.什么是运算符重载</strong></p>
-<p>运算符重载是一种函数重载。</p>
-<p>运算符函数的格式：<br>operatorop(argument-list)<br>例如，operator+()重载+运算符。<br>其中的op，必须是有效的C++运算符，如operator@()会报错，因为C++中没有@运算符。</p>
-<p><strong>2.重载运算符的使用</strong></p>
-<p>如下例所示：</p>
-<pre><code>class Test
-{
-public:
-Test operator+(Test &amp;test);
-}
-</code></pre><p>调用运算符函数的方式有两种：<br>Test t1;<br>Test t2;<br>1)普通函数调用<br>Test t3 = t1.operator+(t2);<br>2)运算符方式调用，实质上是调用的1)中的operator+()函数<br>Test t3 = t1+t2;</p>
-<p><strong>3.运算符重载示例</strong><br>示例代码如下，+运算符重载,计算时分相加。</p>
-<p>mytest.h</p>
-<pre><code>#pragma once
-class Time
-{
-private:
-    int hours;
-    int minutes;
-public:
-    Time();
-    Time(int h,int m=0);
-    Time operator+(const Time&amp;t) const;
-    void Show() const;
-};
-</code></pre><p>mytest.cpp</p>
-<pre><code>#include &quot;mytest.h&quot;
-#include&lt;iostream&gt;
-Time::Time()
-{
-    hours=minutes=0;
-}
-Time::Time(int h,int m)
-{
-    hours = h;
-    minutes = m;
-}
-Time Time::operator+(const Time &amp;t) const
-{
-    Time sum;
-    sum.minutes = minutes+t.minutes;
-    sum.hours = hours+t.hours+sum.minutes/60;
-    sum.minutes%=60;
-    return sum;
-}
-void Time::Show() const
-{
-    std::cout&lt;&lt;hours&lt;&lt;&quot; hours, &quot;&lt;&lt;minutes&lt;&lt;&quot; minutes&quot;&lt;&lt;std::endl;
-}
-</code></pre><p>test.cpp</p>
-<pre><code>#include &quot;mytest.h&quot;
-#include &lt;iostream&gt;
-int main()
-{
-    Time planning;
-    Time coding(2,40);
-    Time fixing(5,55);
-    Time total;
-
-    total = coding+fixing;
-
-    std::cout&lt;&lt;&quot;coding+fixing = &quot;;
-    total.Show();
-
-    total = coding.operator+(fixing);
-    std::cout&lt;&lt;&quot;coding.operator+(fixing) = &quot;;
-    total.Show();
-
-    total = coding+fixing+coding;
-    std::cout&lt;&lt;&quot;coding.operator+(fixing) = &quot;;
-    total.Show();
-
-    return 0;
-}
-</code></pre><p>输出结果：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160612111008949-2115776626.png" alt=""></p>
-<p><strong>4.运算符重载的注意事项：</strong><br>1)重载的运算符必须是有效的C++运算符<br>2)运算符操作数至少有一个是用户定义类型<br>这是为了防止重载标准类型的运算符<br>如将减法运算符(-)重载为计算两个double的和，而不是差，是不被允许的。<br>3)不能违反运算符原有的规则<br>如求模运算符(%)，必须要有两个操作数。<br>4)部分运算符不允许重载<br>如：sizeof,::,:等</p>
-<p>参考资料：《C++ Primer.Plus》 pp.381-390</p>
-
-          
+          1.什么是运算符重载
+运算符重载是一种函数重载。
+运算符函数的格式：operatorop(argument-list)例如，operator+()重载+运算符。其中的op，必须是有效的C++运算符，如operator@()会报错，因为C++中没有@运算符。
+2.重载运算符的使用
+如下例所示：
+cla
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/12/C++运算符重载详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1119,7 +846,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-08T09:41:00+08:00">
                 2016-06-08
@@ -1134,6 +861,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/08/图解正向代理、反向代理、透明代理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/08/图解正向代理、反向代理、透明代理/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1159,40 +896,16 @@ int main()
       
         
           
-            <p><strong>一、正向代理(Forward Proxy)</strong></p>
-<p>一般情况下，如果没有特别说明，代理技术默认说的是正向代理技术。关于正向代理的概念如下：<br>正向代理(forward)是一个位于客户端【用户A】和原始服务器(origin server)【服务器B】之间的服务器【代理服务器Z】，<br>为了从原始服务器取得内容，用户A向代理服务器Z发送一个请求并指定目标(服务器B)，然后代理服务器Z向服务器B转交请求并将获得的内容返回给客户端。<br>客户端必须要进行一些特别的设置才能使用正向代理。如下图1.1</p>
-<p> <img src="http://img1.51cto.com/attachment/201210/105641260.jpg" alt=""></p>
-<p>（图1.1）</p>
-<p>从上面的概念中，我们看出，文中所谓的正向代理就是代理服务器替代访问方【用户A】去访问目标服务器【服务器B】，这就是正向代理的意义所在。<br>而为什么要用代理服务器去代替访问方【用户A】去访问服务器B呢？这就要从代理服务器使用的意义说起。<br>使用正向代理服务器作用主要有以下几点：<br>1、访问本无法访问的服务器B，如下图1.2</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://img1.51cto.com/attachment/201210/105737336.jpg" alt=""></h2><h2 id="（图1-2）"><a href="#（图1-2）" class="headerlink" title="（图1.2）"></a>（图1.2）</h2><h2 id="-1"><a href="#-1" class="headerlink" title=" "></a> </h2><p>我们抛除复杂的网络路由情节来看图1.2，假设图中路由器从左到右命名为R1,R2<br>假设最初用户A要访问服务器B需要经过R1和R2路由器这样一个路由节点，<br>如果路由器R1或者路由器R2发生故障，那么就无法访问服务器B了。<br>但是如果用户A让代理服务器Z去代替自己访问服务器B，<br>由于代理服务器Z没有在路由器R1或R2节点中，而是通过其它的路由节点访问服务器B，那么用户A就可以得到服务器B的数据了。</p>
-<p>现实中的例子就是”翻墙”。不过自从VPN技术被广泛应用外，”翻墙”不但使用了传统的正向代理技术，有的还使用了VPN技术。</p>
-<p>2、加速访问服务器B</p>
-<p>这种说法目前不像以前那么流行了，主要是带宽流量的飞速发展。<br>早期的正向代理中，很多人使用正向代理就是提速。还是如图1.2<br>假设用户A到服务器B，经过R1路由器和R2路由器，而R1到R2路由器的链路是一个低带宽链路。<br>而用户A到代理服务器Z，从代理服务器Z到服务器B都是高带宽链路。那么很显然就可以加速访问服务器B了。</p>
-<p>3、Cache作用<br>Cache（缓存）技术和代理服务技术是紧密联系的（不光是正向代理，反向代理也使用了Cache（缓存）技术。<br>还如上图所示，如果在用户A访问服务器B某数据J之前，已经有人通过代理服务器Z访问过服务器B上得数据J，那么代理服务器Z会把数据J保存一段时间，<br>如果有人正好取该数据J，那么代理服务器Z不再访问服务器B，而把缓存的数据J直接发给用户A。<br>这一技术在Cache中术语就叫Cache命中。<br>如果有更多的像用户A的用户来访问代理服务器Z，那么这些用户都可以直接从代理服务器Z中取得数据J，而不用千里迢迢的去服务器B下载数据了。</p>
-<p>4、客户端访问授权<br>这方面的内容现今使用的还是比较多的，例如一些公司采用ISA SERVER做为正向代理服务器来授权用户是否有权限访问互联网，挼下图1.3</p>
-<h2 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="http://img1.51cto.com/attachment/201210/105935673.jpg" alt=""></h2><h2 id="（图1-3）"><a href="#（图1-3）" class="headerlink" title="（图1.3）"></a>（图1.3）</h2><p>图1.3防火墙作为网关，用来过滤外网对其的访问。<br>假设用户A和用户B都设置了代理服务器，用户A允许访问互联网，而用户B不允许访问互联网（这个在代理服务器Z上做限制）<br>这样用户A因为授权，可以通过代理服务器访问到服务器B，而用户B因为没有被代理服务器Z授权，<br>所以访问服务器B时，数据包会被直接丢弃。</p>
-<p>5、隐藏访问者的行踪<br>如下图1.4 我们可以看出服务器B并不知道访问自己的实际是用户A，因为代理服务器Z代替用户A去直接与服务器B进行交互。<br>如果代理服务器Z被用户A完全控制（或不完全控制），会惯以”肉鸡”术语称呼。</p>
-<h2 id="-3"><a href="#-3" class="headerlink" title=""></a><img src="http://img1.51cto.com/attachment/201210/110037136.jpg" alt=""></h2><h2 id="（图1-4）"><a href="#（图1-4）" class="headerlink" title="（图1.4）"></a>（图1.4）</h2><p>我们总结一下<br>正向代理是一个位于客户端和原始服务器(origin server)之间的服务器，<br>为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，<br>然后代理向原始服务器转交请求并将获得的内容返回给客户端。<br>客户端必须设置正向代理服务器，当然前提是要知道正向代理服务器的IP地址，还有代理程序的端口。</p>
-<p><strong>二、反向代理（reverse proxy）</strong><br>反向代理正好与正向代理相反，<br>对于客户端而言代理服务器就像是原始服务器，并且客户端不需要进行任何特别的设置。<br>客户端向反向代理的命名空间(name-space)中的内容发送普通请求，<br>接着反向代理将判断向何处(原始服务器)转交请求，并将获得的内容返回给客户端。</p>
-<p>使用反向代理服务器的作用如下：<br>1、保护和隐藏原始资源服务器，如下图2.1</p>
-<h2 id="-4"><a href="#-4" class="headerlink" title=""></a><img src="http://img1.51cto.com/attachment/201210/110207878.jpg" alt=""></h2><p>（图2.1）</p>
-<p>用户A始终认为它访问的是原始服务器B而不是代理服务器Z，但实用际上反向代理服务器接受用户A的应答，从原始资源服务器B中取得用户A的需求资源，然后发送给用户A。由于防火墙的作用，只允许代理服务器Z访问原始资源服务器B。尽管在这个虚拟的环境下，防火墙和反向代理的共同作用保护了原始资源服务器B，但用户A并不知情。</p>
-<p>2、负载均衡，如下图2.2</p>
-<p> <img src="http://img1.51cto.com/attachment/201210/110311352.jpg" alt=""></p>
-<p>（图2.2）</p>
-<p>当反向代理服务器不止一个的时候，我们甚至可以把它们做成集群，<br>当更多的用户访问资源服务器B的时候，让不同的代理服务器Z（x）去应答不同的用户，然后发送不同用户需要的资源。  </p>
-<p>当然反向代理服务器像正向代理服务器一样拥有CACHE的作用，<br>它可以缓存原始资源服务器B的资源，而不是每次都要向原始资源服务器B请求数据，<br>特别是一些静态的数据，比如图片和文件，<br>如果这些反向代理服务器能够做到和用户X来自同一个网络，那么用户X访问反向代理服务器X，就会得到很高质量的速度。<br>这正是CDN技术的核心。如下图2.3</p>
-<h2 id="-5"><a href="#-5" class="headerlink" title=""></a><img src="http://img1.51cto.com/attachment/201210/110403848.jpg" alt=""></h2><h2 id="（图2-3）"><a href="#（图2-3）" class="headerlink" title="（图2.3）"></a>（图2.3）</h2><p>我们并不是讲解CDN，所以去掉了CDN最关键的核心技术智能DNS。只是展示CDN技术实际上利用的正是反向代理原理这块。  </p>
-<p>反向代理结论与正向代理正好相反，对于客户端而言它就像是原始服务器，并且客户端不需要进行任何特别的设置。<br>客户端向反向代理的命名空间(name-space)中的内容发送普通请求，接着反向代理将判断向何处(原始服务器)转交请求，<br>并将获得的内容返回给客户端，就像这些内容原本就是它自己的一样。  </p>
-<p>基本上，网上做正反向代理的程序很多，能做正向代理的软件大部分也可以做反向代理。<br>开源软件中最流行的就是squid，既可以做正向代理，也有很多人用来做反向代理的前端服务器。另外MSISA也可以用来在WINDOWS平台下做正向代理。<br>反向代理中最主要的实践就是WEB服务，近些年来最火的就是Nginx了。<br>网上有人说NGINX不能做正向代理，其实是不对的。NGINX也可以做正向代理，不过用的人比较少了。</p>
-<p><strong>三、透明代理</strong><br>透明代理的意思是客户端根本不需要知道有代理服务器的存在，<br>它改编你的request fields（报文），并会传送真实IP。<br>注意，加密的透明代理则是属于匿名代理，意思是不用设置使用代理了。</p>
-<p>透明代理实践的例子就是时下很多公司使用的行为管理软件。</p>
-<p>比如为了工作效率或者安全，A公司屏蔽了QQ软件的使用。A公司的员工接上了网络，但发现无法使用qq。这就是透明代理捣的鬼。<br>公司在内网和外网的中间插入一个透明代理，这个代理会根据规则抓取请求内容，遇到qq的请求我就把这个请求给屏蔽掉，<br>这样就完成了透明屏蔽。当然了，如果你明白原理，就可以自己搞 个正向代理来绕过公司的屏蔽。如下图3.1</p>
-<p><img src="http://img1.51cto.com/attachment/201210/110500391.jpg" alt=""></p>
-<h1 id="（图3-1）"><a href="#（图3-1）" class="headerlink" title="（图3.1）"></a>（图3.1）</h1><p>用户A和用户B并不知道行为管理设备充当透明代理行为，<br>当用户A或用户B向服务器A或服务器B提交请求的时候，透明代理设备根据自身策略拦截并修改用户A或B的报文，<br>并作为实际的请求方，向服务器A或B发送请求，<br>当接收信息回传，透明代理再根据自身的设置把允许的报文发回至用户A或B，<br>如上图，如果透明代理设置不允许访问服务器B，那么用户A或者用户B就不会得到服务器B的数据。</p>
-<p>转自：<a href="http://z00w00.blog.51cto.com/515114/1031287" target="_blank" rel="external">http://z00w00.blog.51cto.com/515114/1031287</a></p>
-
-          
+          一、正向代理(Forward Proxy)
+一般情况下，如果没有特别说明，代理技术默认说的是正向代理技术。关于正向代理的概念如下：正向代理(forward)是一个位于客户端【用户A】和原始服务器(origin server)【服务器B】之间的服务器【代理服务器Z】，为了从原始服务器取得内容，用户A向
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/08/图解正向代理、反向代理、透明代理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1269,7 +982,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-08T06:28:00+08:00">
                 2016-06-08
@@ -1284,6 +997,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/08/C++ const使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/08/C++ const使用详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1309,101 +1032,18 @@ int main()
       
         
           
-            <p><strong>1.const常量和宏常量</strong><br>const int max=100;  </p>
-<p>#define max 100;<br>const常量相对宏常量有两个有点：<br>1)有类型安全检查<br>2)占用内存空间少</p>
-<p><strong>2.const变量在内存中的位置</strong><br>我们在C程序的内存布局中，已经通过示例进行了说明</p>
-<pre><code>#include &lt;stdio.h&gt;
-const int a = 10; ////全部常量a
-int main()
-{
-    const int b = 20; //局部常量b
-    int* pa = (int*)&amp;a;//报错，因为全部常量放在只读数据段
-    int* pb = (int*)&amp;b;//修改成功，因为局部常量放在栈上
-    *pa = 30;
-    *pb = 30;
-    return 0;
-}
-</code></pre><p><strong>3.const常成员变量的初始化</strong><br>在某个对象生存期内是常量。</p>
-<pre><code>class Test
-{
-public:
-    const int a;
-    Test(int i):a(i){}
-}
-</code></pre><p>const常量只能通过初始化列表的方式进行初始化。</p>
-<p><strong>4.const修饰对象</strong><br>该对象不能修改。只能访问成员变量，不能修改。只能调用常成员函数。<br>关于常成员函数，我们在后面介绍。<br>如下例所示:</p>
-<pre><code>#include&lt;iostream&gt;
-class Test
-{
-public:
-    int a;
-    void fun0(){}
-    void fun1() const{}
-};
-int main()
-{
-    Test test;
-    const Test&amp; a_test = test;
-    std::cout&lt;&lt;a_test.a&lt;&lt;std::endl;//正常，访问公共成员a
-    a_test.fun0();//报错，对象包含与成员函数不兼容的类型限定符
-    a_test.fun1();//正常
-    return 0;
-}
-</code></pre><p><strong>5.const修饰指针</strong><br>我们看一下下面四种写法：</p>
-<pre><code>1) const int* a = 10;
-2) int const *a = 10;
-3) int* const a = 10;
-4) const int* const a = 10;
-</code></pre><p>我们需要知道的是，<br>const在<em>左，表示指针指向的内容为常量，这也是我们平时说的常量指针<br>const在</em>右，表示指针本身为常量，这也是我们平时说的指针常量<br>因此，1),2)表示指针a指向的内容不能修改<br>3)表示指针a本身不能修改<br>4)表示指针a和a指向的内容都不能修改</p>
-<p><strong>6.const修饰成员函数,函数参数，返回值</strong><br>1)修饰成员函数</p>
-<pre><code>void fun1() const;
-</code></pre><p>成员函数名后加上const，即表明该函数为常成员函数。<br>常成员函数的const隐式修饰this指针，即对象不可修改,<br>所以，常成员函数只能访问成员变量，而不能修改。只能调用其他常成员函数。<br>如下例所示:</p>
-<pre><code>int g_a;
-void g_fun(){}
-class Test
-{
-public:
-    void fun0(){}
-    void fun1() const{} 
-    void fun2() const
-    {
-        a = 10;//报错，&quot;必须是可修改的左值&quot;
-        fun0();//报错，对象包含与成员函数不兼容的类型限定符
-        fun1();//正常，可调用其他常成员函数
-
-        g_a = 10;//正常
-        g_fun();//正常
-    }
-private:
-    int a;
-}
-</code></pre><p>2)修饰函数参数</p>
-<pre><code>void fun0(const Test* p_test);
-void fun1(const Test&amp; test);
-</code></pre><p>在传入的参数前，加上const，表明传入的参数不可修改。</p>
-<p>3)修饰函数返回值</p>
-<pre><code>const Test fun0();
-const Test* fun1();
-</code></pre><p>当使用const Test* fun1();返回指针时，该返回值只能赋给const修饰的同类型指针。<br>如下例所示：</p>
-<pre><code>class Test
-{
-public:
-    void fun0(){}
-    const Test fun1(){
-        return *this;
-    }
-    const Test* fun2(){
-        return this;
-    }
-};
-int main()
-{
-    Test test;
-    Test r = test.fun1();
-    const Test* rp = test.fun2();
-}
-</code></pre>
-          
+          1.const常量和宏常量const int max=100;  
+#define max 100;const常量相对宏常量有两个有点：1)有类型安全检查2)占用内存空间少
+2.const变量在内存中的位置我们在C程序的内存布局中，已经通过示例进行了说明
+#include &lt;stdio.h&g
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/08/C++ const使用详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1480,7 +1120,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-06T10:56:00+08:00">
                 2016-06-06
@@ -1495,6 +1135,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/06/C++多继承/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/06/C++多继承/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1520,222 +1170,35 @@ int main()
       
         
           
-            <p><strong>1.继承的三种方式：</strong></p>
-<p>公有继承(public),私有继承(private),保护继承(protected)<br>三种继承方式的说明，如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th><strong>特征</strong></th>
-<th><strong>公有继承</strong></th>
-<th><strong>保护继承</strong></th>
-<th><strong>私有继承</strong>  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>公有成员变成</strong></td>
-<td><strong>派生类的公有成员</strong></td>
-<td><strong>派生类的保护成员</strong></td>
-<td><strong>派生类的私有成员</strong>  </td>
-</tr>
-<tr>
-<td><strong>保护成员变成</strong></td>
-<td><strong>派生类的保护成员</strong></td>
-<td><strong>派生类的保护成员</strong></td>
-<td><strong>派生类的私有成员</strong>  </td>
-</tr>
-<tr>
-<td><strong>私有成员变成</strong></td>
-<td><strong>只能通过基类接口访问</strong></td>
-<td><strong>只能通过基类接口访问</strong></td>
-<td><strong>只能通过基类接口访问</strong>  </td>
-</tr>
-<tr>
-<td><strong>能否隐式向上转换</strong></td>
-<td><strong>是</strong></td>
-<td><strong>是</strong></td>
-<td><strong>否</strong>  </td>
-</tr>
-</tbody>
-</table>
-<p><strong>2.什么是多继承</strong></p>
-<p>一个类有多个基类，那么这种继承关系就叫做多继承。<br>比如有两个类，服务员类Waiter，歌手类Singer，我们有一个类既是服务员，又是歌手，<br>那么我们可以定义类的多继承关系如下：</p>
-<pre><code>class Waiter
-{};
-class Singer
-{};
-class SingerWaiter:public Waiter,public Singer
-{};
-</code></pre><p><strong>3.使用多继承会带来哪些问题</strong><br>多继承比单继承复杂，也更容易出现问题，因此我们不建议使用多继承。<br>多继承的两个主要问题是：<br>1)从两个不同的基类，继承同名方法<br>如下例所示：</p>
-<pre><code>class Waiter
-{
-public:
-    void work(){std::cout&lt;&lt;&quot;Service&quot;&lt;&lt;std::endl;}
-};
-class Singer
-{
-public:
-    void work(){std::cout&lt;&lt;&quot;Sing&quot;&lt;&lt;std::endl;}
-};
-class SingerWaiter:public Waiter,public Singer
-{};
-int main()
-{
-    SingerWaiter singerWaiter;
-    singerWaiter.work();
-    return 0;
-}
-</code></pre><p>编译器不知道该调用哪个基类的work方法，所以会报singerWaiter.work();不明确错误。<br>2)从多个基类间接继承同一个类的多个实例<br>如下例所示：</p>
-<pre><code>class Worker
-{};
-class Waiter:public Worker
-{};
-class Singer:public Worker
-{};
-class SingerWaiter:public Waiter,public Singer
-{};
-int main()
-{
-    SingerWaiter singerWaiter;
-    Worker *pw = &amp;singerWaiter;
-    return 0;
-}
-</code></pre><p>会报错Worker *pw = &amp;singerWaiter;基类Worker不明确。<br>这是因为SingerWaiter对象创建时，会分别调用Waiter类和Singer类的构造函数，<br>Waiter类和Singer类又会分别调用Worker类的构造函数，生成了两份Worker类的实例，<br>所以pw指针，不知道该指向哪一份Worker实例。</p>
-<p><strong>4.如何解决多继承带来的问题</strong><br>对于问题一，我们在调用时，需要明确指出具体要调用哪个类的方法，如下所示：</p>
-<pre><code>int main()
-{
-    SingerWaiter singerWaiter;
-    singerWaiter.Waiter::work();//调用Waiter类的方法
-    singerWaiter.Singer::work();//调用Singer类的方法
-    return 0;
-}
-</code></pre><p>对于问题二，我们引入了虚基类的概念。如下所示：</p>
-<pre><code>class Worker
-{};
-class Waiter:virtual public Worker
-{};
-class Singer:virtual public Worker
-{};
-class SingerWaiter:public Waiter,public Singer
-{};
-int main()
-{
-    SingerWaiter singerWaiter;
-    Worker *pw = &amp;singerWaiter;
-    return 0;
-}
-</code></pre><p>我们在子类继承时，声明一个virtual关键字，这时，就表明基类Worker是一个虚基类。<br>实例化SingerWaiter时产生的Waiter对象和Singer对象，共享一个基类Worker对象。</p>
-<p><strong>5.使用虚基类需要注意的问题</strong><br>我们知道继承关系中，类的构造函数具有传递性，如以下代码所示：</p>
-<pre><code>class A
-{
-private:
-    int a;
-public:
-    A(int n=0):a(n){}
-    int get(){return a;}
-};
-class B:public A
-{
-private:
-    int b;
-public:
-    B(int m=0,int n=0):A(n),b(m){}
-    int get(){return b;}
-};
-class C:public B
-{
-private:
-    int c;
-public:
-    C(int q=0,int m=0,int n=0):B(m,n),c(q){}
-    int get(){return c;}
-    void Show()
-    {
-        std::cout&lt;&lt;A::get()&lt;&lt;&quot; &quot;&lt;&lt;B::get()&lt;&lt;&quot; &quot;&lt;&lt;C::get()&lt;&lt;std::endl;
-    }
-};
-int main()
-{
-    C c(1,2,3);
-    c.Show();
-    return 0;
-}
-</code></pre><p>输出结果为： 3 2 1<br>调用C的构造函数，则B,A构造函数都将使用传入的参数进行初始化。</p>
-<p>我们再看使用虚基类的情况：</p>
-<pre><code>class A
-{
-private:
-    int a;
-public:
-    A(int n=0):a(n){}
-    int get(){return a;}
-};
-class B:virtual public A
-{
-private:
-    int b;
-public:
-    B(int m=0,int n=0):A(n),b(m){}
-    int get(){return b;}
-};
-class C:public B
-{
-private:
-    int c;
-public:
-    C(int q=0,int m=0,int n=0):B(m,n),c(q){}
-    int get(){return c;}
-    void Show()
-    {
-        std::cout&lt;&lt;A::get()&lt;&lt;&quot; &quot;&lt;&lt;B::get()&lt;&lt;&quot; &quot;&lt;&lt;C::get()&lt;&lt;std::endl;
-    }
-};
-int main()
-{
-    C c(1,2,3);
-    c.Show();
-    return 0;
-}
-</code></pre><p>输出结果为： 0 2 1<br>说明A并没有使用传入的参数进行初始化，<br>这是因为在虚基类中，我们假想会有多个子类向虚基类传递参数，为了避免这种情况，<br>在虚基类的情况下，禁止了子类C使用中间类B向虚基类A传递参数，此时调用的是A的默认构造函数。<br>那么我们该如何使用参数，初始化虚基类呢？<br>答案是我们可以在子类C中，直接调用虚基类A的构造函数进行初始化，如以下代码所示：</p>
-<pre><code>class A
-{
-private:
-    int a;
-public:
-    A(int n=0):a(n){}
-    int get(){return a;}
-};
-class B:virtual public A
-{
-private:
-    int b;
-public:
-    B(int m=0,int n=0):A(n),b(m){}
-    int get(){return b;}
-};
-class C:public B
-{
-private:
-    int c;
-public:
-    C(int q=0,int m=0,int n=0):A(m),B(m,n),c(q){}
-    int get(){return c;}
-    void Show()
-    {
-        std::cout&lt;&lt;A::get()&lt;&lt;&quot; &quot;&lt;&lt;B::get()&lt;&lt;&quot; &quot;&lt;&lt;C::get()&lt;&lt;std::endl;
-    }
-};
-int main()
-{
-    C c(1,2,3);
-    c.Show();
-    return 0;
-}
-</code></pre><p>输出结果为： 3 2 1</p>
-<p>跳过中间类，直接调用基类的构造函数，这种方式只适合虚基类。<br>在非虚基类中会报错”不允许使用间接非虚拟基类”。</p>
-<p>参考资料：《C++ Primer.Plus》 pp.551-567</p>
+          1.继承的三种方式：
+公有继承(public),私有继承(private),保护继承(protected)三种继承方式的说明，如下表所示：
 
-          
+
+
+特征
+公有继承
+保护继承
+私有继承  
+
+
+
+
+公有成员变成
+派生类的公有成员
+派生类的保护成员
+派生类的私有成员  
+
+
+保护成员变成
+派生类的保护成员
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/06/C++多继承/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1812,7 +1275,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-05T15:52:00+08:00">
                 2016-06-05
@@ -1827,6 +1290,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/05/C++抽象类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/05/C++抽象类/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1852,47 +1325,21 @@ int main()
       
         
           
-            <p><strong>1.为什么要有抽象类</strong></p>
-<p>我们举一个例子，程序有两个类，椭圆Ellipse类，圆Circle类。<br>我们知道椭圆是包括圆的，那么我们可以使用继承：</p>
-<pre><code>class Ellipse
+          1.为什么要有抽象类
+我们举一个例子，程序有两个类，椭圆Ellipse类，圆Circle类。我们知道椭圆是包括圆的，那么我们可以使用继承：
+class Ellipse
 {};
 class Circle:public Ellipse
 {};
-</code></pre><p>然而，我们在定义各自的成员变量和成员函数时，发现两个类的成员有很大的不同，<br>比如Ellipse类需要长短轴半径，中心坐标，方向角才能确定位置，另外还包括移动椭圆，返回椭圆面积，旋转椭圆的方法。<br>而Circle类只需要半径，中心坐标，就能确定位置，旋转方法对圆来说也是没有意义的。<br>可以看出，若简单使Circle继承Ellipse，将使简单的问题复杂化。</p>
-<p><strong>2.什么是抽象类</strong></p>
-<p>解决的方法是，我们可以抽象出Ellipse类，Circle类的公共部分</p>
-<pre><code>class BaseEllipse
-{
-private:
-    double x;
-    double y;
-public:
-    BaseEllipse(double a,double b):x(a),y(b){}
-    virtual ~BaseEllipse(){}
-    void Move(int a,int b){x=a;y=b;}
-    virtual double Area() const=0;//纯虚函数
-};
-</code></pre><p>当类声明中有纯虚函数，比如virtual double Area()=0;时，该类就是抽象类。<br>抽象类不能实例化，子类继承抽象类时，必须定义纯虚函数。</p>
-<pre><code>class Ellipse:public BaseEllipse
-{
-public:
-    virtual double Area() const
-    {
-        std::cout&lt;&lt;&quot;Ellipse::Area()&quot;&lt;&lt;std::endl;
-    }
-};
-class Circle:publi BaseEllipse
-{
-public:    
-    virtual double Area() const
-    {
-        std::cout&lt;&lt;&quot;Circle::Area()&quot;&lt;&lt;std::endl;
-    }
-};
-</code></pre><p><strong>3.抽象类与普通基类</strong><br>由上面的讲解，可看出，抽象类与普通基类的区别是，<br>普通基类表现的是一种父子关系，比如人和学生的关系。<br>抽象类更像是一种接口规则的约定，<br>比如规定了一些公共的move()方式，对人来说，移动的方式是”走”，对鸟来说，是”飞”，对鱼来说，是”游”<br>该约定类不能实例化，所有继承自抽象类的子类都必须覆盖其纯虚函数，迫使派生类遵循接口规则。  </p>
-<p> 参考资料：《C++ Primer.Plus》 pp.508-516</p>
-
-          
+然而，我们在定义各自的成员变量和成员函数时，发现两个类的成员
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/05/C++抽象类/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1969,7 +1416,7 @@ public:
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-04T19:59:00+08:00">
                 2016-06-04
@@ -1984,6 +1431,16 @@ public:
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/04/C++重载，重写，重定义/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/04/C++重载，重写，重定义/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2009,67 +1466,22 @@ public:
       
         
           
-            <p><strong>1.重载：</strong><br>重载是在一个类中，函数名一样，参数类型或参数个数不同的一系列函数<br>需要注意的是，与返回类型无关。</p>
-<pre><code>class Test
+          1.重载：重载是在一个类中，函数名一样，参数类型或参数个数不同的一系列函数需要注意的是，与返回类型无关。
+class Test
 {
 public:
     void show();
     void show(int a);
     void show(double a);
-    void show(int a,int b);
-    void show(int a,double b);
-};
-</code></pre><p><strong>2.重写</strong><br>我们比较熟悉的另一个词是”覆盖”<br>用在继承中，子类若没有重新定义父类的虚方法，则子类对象调用该方法时，使用的仍是父类的方法；<br>否则，子类覆盖了父类的虚方法，调用时使用的是重新定义的方法。</p>
-<pre><code>class Test
-{
-public:
-    virtual void show()
-    {
-        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
-    }
-};
-class SubTest:public Test
-{
-public:
-    virtual void show()
-    {
-        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
-    }
-};
-int main()
-{
-    Test *p = new SubTest;
-    p-&gt;show();
-    return 0;
-}
-</code></pre><p>输出结果：<br>SubTest::show()  </p>
-<p><strong>3.重定义</strong><br>我们比较熟悉的另一个词是”隐藏”<br>子类重新定义父类中有相同名称的非虚函数，则对象调用该非虚方法时，使用的对象本身定义的方法。</p>
-<pre><code>class Test
-{
-public:
-        void show()
-    {
-        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
-    }
-};
-class SubTest:public Test
-{
-public:
-    void show()
-    {
-        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
-    }
-};
-int main()
-{
-    Test *p = new SubTest;
-    p-&gt;show();
-    return 0;
-}
-</code></pre><p>输出结果：<br>Test::show()  </p>
-<p>关于重写与重定义，如果了解了虚函数表的原理，就很容易理解了，<br>关于虚函数表，可参考<a href="http://www.cnblogs.com/shijingjing07/p/5559989.html" target="_blank" rel="external">C++虚函数表与虚析构函数</a></p>
-
-          
+    void sho
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/04/C++重载，重写，重定义/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2146,7 +1558,7 @@ int main()
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-04T17:23:00+08:00">
                 2016-06-04
@@ -2161,6 +1573,16 @@ int main()
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/04/C++虚函数表与虚析构函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/04/C++虚函数表与虚析构函数/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -2186,100 +1608,17 @@ int main()
       
         
           
-            <p><strong>1.静态联编和动态联编</strong><br>联编：将源代码中的函数调用解释为要执行函数代码。  </p>
-<p>静态联编：编译时能确定唯一函数。<br>在C中，每个函数名都能确定唯一的函数代码。<br>在C++中，因为有函数重载，编译器须根据函数名，参数才能确定唯一的函数代码。  </p>
-<p>动态联编：编译时不能确定调用的函数代码，运行时才能。<br>C++中因为多态的存在，有时编译器不知道用户将选择哪种类型的对象，因此无法确定调用的唯一性，只有在运行时才能确定。</p>
-<p><strong>2.虚成员函数，指针或引用，动态联编</strong><br>指针或引用才能展现类的多态性。<br>当类中的方法声明为virtual时，使用指针或引用调用该方法，就是动态联编。<br>若是普通方法，则为静态联编。<br>示例如下：</p>
-<pre><code>class Test
-{
-public:
-    virtual show()
-    {
-        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
-    }
-};
-class SubTest:public Test
-{
-public:
-    virtual show()
-    {
-        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
-    }
-};
-int main()
-{
-    SubTest subTest;
-    Test * p = &amp;subTest;//指向子类的指针
-    Test &amp; a = subTest;//子类的引用
-    Test * p2 = new Test;//指向父类的指针
-    p-&gt;show();
-    a.show();
-    p2-&gt;show();
-    return 0;
-}
-</code></pre><p>程序没有释放内存，我们将在后面析构函数的时候，完善该程序。</p>
-<p><strong>3.动态联编使用原则</strong><br>动态联编，需要跟踪基类指针或引用指向的实际对象类型，因此效率低于静态联编。<br>1)当类不会用作基类时，成员函数不要声明为virtual<br>2)当成员函数不重新定义基类的方法，成员函数不要声明为virtual</p>
-<p><strong>4.关于虚函数</strong><br>1)父类成员函数若声明为virtual，则子类中也是虚的，若要重新定义该方法，可显式加上virtual关键字，也可不加，编译器编译时会自动加上。<br>2)使用指向对象的引用或指针来调用虚方法，将使用具体对象类型定义的方法，而不一定是引用或指针类型定义的方法。<br>SubTest subTest;<br>Test * p = &amp;subTest;//指向子类的指针<br>p-&gt;show();//将调用SubTest对象定义的show()方法</p>
-<p><strong>5.虚函数的工作原理</strong><br>当类中存在虚函数时，编译器默认会给对象添加一个隐藏成员。该成员为一个指向虚函数表(virtual function table,vtbl)的指针。<br>虚函数表是一个保存了虚函数地址的数组。编译器会检查类中所有的虚函数，依次将每个虚函数的地址，存入虚函数表。</p>
-<pre><code>class Test
-{
-public:
-    virtual show()
-    {
-        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
-    }
-private:
-    int a;
-};
-class SubTest:public Test
-{
-public:
-    virtual show()
-    {
-        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
-    }
-};
-</code></pre><p>内存结构图如下所示：</p>
-<p><img src="http://images2015.cnblogs.com/blog/300946/201606/300946-20160605012038071-1297873383.png" alt=""></p>
-<p>可以看出，父类和子类有独立的虚函数表，且虚函数表中虚函数指针也指向各自的虚函数地址，<br>若子类没有覆盖父类中的show方法，则虚函数指针show_ptr指向的虚函数show()的地址是一样的，均指向父类show()函数地址。虚函数表的存在和动态联编，就是多态的原理。</p>
-<p><strong>6.虚析构函数</strong><br>1)构造函数是特殊的，是没有虚函数的概念的。<br>构造函数是不继承的，创建子类对象时，将调用子类的构造函数，子类的构造函数将自动调用父类的构造函数。  </p>
-<p>2)析构函数应是虚函数，除非类不用做基类。<br>我们看下面的代码：<br>Test *p = new SubTest;<br>delete p;<br>p=NULL;</p>
-<p>由虚函数表，我们知道，若析构函数不声明为virtual，则调用的将是Test类的析构函数，而没有调用SubTest类的析构函数，此时造成了内存泄露。<br>所以析构函数必须声明为虚函数，调用的将是子类SubTest的析构函数，<br>我们还需要知道的一点是，子类析构函数，一定会调用父类析构函数，释放父类对象，则内存安全释放。<br>我们第一个例子的完整的示例代码如下：</p>
-<pre><code>class Test
-{
-public:
-    virtual show()
-    {
-        std::cout&lt;&lt;&quot;Test::show()&quot;&lt;&lt;std::endl;
-    }
-    virtual ~Test(){}
-};
-class SubTest:public Test
-{
-public:
-    virtual show()
-    {
-        std::cout&lt;&lt;&quot;SubTest::show()&quot;&lt;&lt;std::endl;
-    }
-};
-int main()
-{
-    SubTest subTest;
-    Test * p = &amp;subTest;//指向子类的指针
-    Test &amp; a = subTest;//子类的引用
-    Test * p2 = new Test;//指向父类的指针
-    p-&gt;show();
-    a.show();
-    p2-&gt;show();
-    delete p;
-    p=NULL;
-    delete p2;
-    p2=NULL;
-    return 0;
-}
-</code></pre><p>参考资料：《C++ Primer.Plus》 pp.490-507<br>                  <a href="http://www.cnblogs.com/%20http:/www.imooc.com/video/9199" target="_blank" rel="external"> http://www.imooc.com/video/9199</a></p>
-
-          
+          1.静态联编和动态联编联编：将源代码中的函数调用解释为要执行函数代码。  
+静态联编：编译时能确定唯一函数。在C中，每个函数名都能确定唯一的函数代码。在C++中，因为有函数重载，编译器须根据函数名，参数才能确定唯一的函数代码。  
+动态联编：编译时不能确定调用的函数代码，运行时才能。C++中因为多态
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/04/C++虚函数表与虚析构函数/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2355,7 +1694,7 @@ int main()
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -2364,7 +1703,7 @@ int main()
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">分类</span>
               
             </div>
           
@@ -2383,6 +1722,26 @@ int main()
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -2421,11 +1780,11 @@ int main()
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
@@ -2506,34 +1865,167 @@ int main()
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
 
 
-	
 
 
 
-
-
-  
 
 
 
 
 
   
-
   
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
 
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
 
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
 
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
 
-  
-  
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
   
 
