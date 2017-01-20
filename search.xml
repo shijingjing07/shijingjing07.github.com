@@ -4,6 +4,112 @@
   
     
     <entry>
+      <title><![CDATA[cnblogs博客迁移到hexo]]></title>
+      <url>https://shijingjing07.github.io/2017/01/20/cnblogs%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E5%88%B0hexo/</url>
+      <content type="html"><![CDATA[<h2 id="cnblogs博客备份"><a href="#cnblogs博客备份" class="headerlink" title="cnblogs博客备份"></a>cnblogs博客备份</h2><p>备份地址：<a href="https://i.cnblogs.com/BlogBackup.aspx?type=1" target="_blank" rel="external">https://i.cnblogs.com/BlogBackup.aspx?type=1</a><br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/1.png" alt=""><br>备份文件为xml格式，打开备份文件，如下所示：  </p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;yes&quot;?&gt;&lt;rss version=&quot;2.0&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:trackback=&quot;http://madskills.com/public/xml/rss/module/trackback/&quot; xmlns:wfw=&quot;http://wellformedweb.org/CommentAPI/&quot; xmlns:slash=&quot;http://purl.org/rss/1.0/modules/slash/&quot;&gt;&lt;channel&gt;&lt;title&gt;博客园-&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/&lt;/link&gt;&lt;description /&gt;&lt;language&gt;zh-cn&lt;/language&gt;&lt;lastBuildDate&gt;Fri, 20 Jan 2017 13:20:14 GMT&lt;/lastBuildDate&gt;&lt;pubDate&gt;Fri, 20 Jan 2017 13:20:14 GMT&lt;/pubDate&gt;&lt;ttl&gt;60&lt;/ttl&gt;&lt;item&gt;&lt;title&gt;博客迁移&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/16/6290517.html&lt;/link&gt;&lt;dc:creator&gt;迪米特&lt;/dc:creator&gt;&lt;author&gt;迪米特&lt;/author&gt;&lt;pubDate&gt;Mon, 16 Jan 2017 09:44:00 GMT&lt;/pubDate&gt;&lt;guid&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/16/6290517.html&lt;/guid&gt;&lt;description&gt;&lt;![CDATA[&lt;p&gt;博客迁移至&amp;nbsp;&lt;a href=&quot;https://shijingjing07.github.io/&quot; target=&quot;_blank&quot;&gt;https://shijingjing07.github.io/&lt;/a&gt;&lt;/p&gt;]]&gt;&lt;/description&gt;&lt;/item&gt;&lt;item&gt;&lt;title&gt;cookie欺骗&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/06/6256622.html&lt;/link&gt;&lt;dc:creator&gt;迪米特&lt;/dc:creator&gt;&lt;author&gt;迪米特&lt;/author&gt;&lt;pubDate&gt;Fri, 06 Jan 2017 07:55:00 GMT&lt;/pubDate&gt;&lt;guid&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/06/6256622.html&lt;/guid&gt;&lt;description&gt;&lt;![CDATA[&lt;p&gt;1.什么是cookie欺骗&lt;br /&gt;改变cookie的值，发给服务器，就是cookie欺骗。&lt;br /&gt;正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。&lt;/p&gt;
+&lt;p&gt;2.cookie使用示例&lt;/p&gt;
+&lt;p&gt;index.html 写入cookie {&apos;username&apos;:&apos;zhangsan&apos;,&apos;psw&apos;:&apos;123&apos;}&lt;/p&gt;
+&lt;div class=&quot;cnblogs_code&quot;&gt;
+&lt;pre&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;!&lt;/span&gt;&lt;span style=&quot;color: #ff00ff;&quot;&gt;DOCTYPE html&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;html&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;head&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;meta &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;http-equiv&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;Content-Type&quot;&lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt; content&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;text/html; charset=utf-8&quot;&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;title&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;title&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;meta &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;charset&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;utf-8&quot;&lt;/span&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;type&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;text/javascript&quot;&lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt; src&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;jquery.min.js&quot;&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;type&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;text/javascript&quot;&lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt; src&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;jquery.cookie.js&quot;&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;type&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;text/javascript&quot;&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;
+    $.cookie(&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&apos;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;username&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&apos;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;zhangsan&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;);
+    $.cookie(&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&apos;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;psw&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&apos;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;123&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;);
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;head&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;body&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;body&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;html&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;运行index.html,通过Chrome F12开发者工具，可以看到cookie信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://images2015.cnblogs.com/blog/300946/201701/300946-20170106155059847-848303078.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到cookie要和domain域名对应。每个cookie只能被对应的域名所访问，其他域名无法访问。&lt;/p&gt;
+&lt;p&gt;3.如何进行cookie欺骗&lt;/p&gt;
+&lt;p&gt;修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。&lt;br /&gt;步骤：&lt;br /&gt;1)修改host&lt;br /&gt;121.43.113.200      dev.test.com&lt;br /&gt;2)将index.html放入服务器121.43.113.200&lt;br /&gt;3)访问url:dev.test.com/index.html&lt;br /&gt;4)查看cookie信息&lt;br /&gt;&lt;img src=&quot;http://images2015.cnblogs.com/blog/300946/201701/300946-20170106155240675-1380622233.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;5)还原host&lt;br /&gt;#121.43.113.200      dev.test.com&lt;br /&gt;6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。&lt;/p&gt;
+&lt;p&gt;4.cookie欺骗防止&lt;br /&gt;随机码防止cookie欺骗&lt;br /&gt;原理：在服务端生成唯一随机码，每次提交cookie时带上随机码，和服务端的随机码校验。&lt;/p&gt;]]&gt;&lt;/description&gt;&lt;/item&gt;&lt;/channel&gt;&lt;/rss&gt;
+</code></pre><h2 id="2-将备份文件解析为-mk文件"><a href="#2-将备份文件解析为-mk文件" class="headerlink" title="2.将备份文件解析为.mk文件"></a>2.将备份文件解析为.mk文件</h2><p>备份文件中每个item节点，对应一篇文章。<br>将每个item中的title,pubDate,description解析出来，写入.mk文件。<br>代码如下所示：  </p>
+<pre><code>#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import html2text
+import xml.sax
+import datetime
+import sys  
+reload(sys)  
+sys.setdefaultencoding(&apos;utf8&apos;)   
+class MovieHandler( xml.sax.ContentHandler ):
+   def __init__(self):
+      self.CurrentData = &quot;&quot;
+      self.title = &quot;&quot;
+      self.pubDate = &quot;&quot;
+      self.description = &quot;&quot;
+
+   # 元素开始事件处理
+   def startElement(self, tag ,attributes):
+      self.CurrentData = tag
+      if tag==&quot;item&quot;:
+          self.title = &quot;&quot;
+          self.pubDate = &quot;&quot;
+          self.description = &quot;&quot;
+
+   # 元素结束事件处理
+   def endElement(self, tag):
+      if tag == &quot;item&quot;:
+          try:
+            filename=self.title+&quot;.md&quot;
+            fo = open(&quot;D:\\certs\\&quot;+filename,&apos;a&apos;)
+            fo.write( &quot;---\n&quot;)
+            fo.write(&quot;title: &quot;+self.title+&quot;\n&quot;)
+            GMT_FORMAT = &apos;%a, %d %b %Y %H:%M:%S GMT&apos;
+            writedate=datetime.datetime.strptime(self.pubDate, GMT_FORMAT)
+            fo.write( &quot;date: &quot;+writedate.strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)+&quot;\n&quot;)
+            fo.write( &quot;tags: \n&quot;)
+            fo.write( &quot;categories: \n&quot;)
+            fo.write( &quot;---\n&quot;)
+            writedesc=html2text.html2text(self.description)
+            fo.write(writedesc)
+            fo.close()
+          except Exception as error:
+            print error.message
+
+   # 内容事件处理
+   def characters(self, content):
+      if self.CurrentData == &quot;title&quot;:
+         self.title = content
+      elif self.CurrentData == &quot;pubDate&quot;:
+         self.pubDate = content
+      elif self.CurrentData == &quot;description&quot;:
+         self.description += content
+
+if ( __name__ == &quot;__main__&quot;):
+
+   # 创建一个 XMLReader
+   parser = xml.sax.make_parser()
+   # turn off namepsaces
+   parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+
+   # 重写 ContextHandler
+   Handler = MovieHandler()
+   parser.setContentHandler( Handler )
+
+   parser.parse(&quot;CNBlogs_BlogBackup_1_201701_201701.xml&quot;)
+</code></pre><p>程序执行后，在D:\certs目录下就生成了hexo网站需要的.mk文件。<br>如下所示：<br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/2.png" alt=""></p>
+<h2 id="将生成的-mk文件copy到hexo-posts目录下"><a href="#将生成的-mk文件copy到hexo-posts目录下" class="headerlink" title="将生成的.mk文件copy到hexo _posts目录下"></a>将生成的.mk文件copy到hexo _posts目录下</h2><pre><code>D:\hexo\source\_posts
+</code></pre><h2 id="重新生成静态文件"><a href="#重新生成静态文件" class="headerlink" title="重新生成静态文件"></a>重新生成静态文件</h2><pre><code>hexo c
+hexo g
+hexo s
+</code></pre><p>在浏览器中打开 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a><br>结果如下：<br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/3.png" alt=""></p>
+<h2 id="备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"><a href="#备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。" class="headerlink" title="备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"></a>备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。</h2>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[webapi应用架构详解]]></title>
       <url>https://shijingjing07.github.io/2017/01/16/webapi%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/</url>
       <content type="html"><![CDATA[<h2 id="webapi适用场景"><a href="#webapi适用场景" class="headerlink" title="webapi适用场景"></a>webapi适用场景</h2><p>常见的应用包括以下四类，PC客户端程序，APP程序，网站程序，H5程序。<br>这些应用需要的数据，服务可由同一个接口服务程序提供，这样，大大提高了产品多平台设计开发的效率，避免了重复的编码。</p>

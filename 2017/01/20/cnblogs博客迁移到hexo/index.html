@@ -1,0 +1,924 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="迪米特" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="cnblogs博客备份备份地址：https://i.cnblogs.com/BlogBackup.aspx?type=1备份文件为xml格式，打开备份文件，如下所示：  
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot; standalone=&amp;quot;yes&amp;quot;?&amp;gt;&amp;lt;rss version=&amp;quot;2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cnblogs博客迁移到hexo">
+<meta property="og:url" content="https://shijingjing07.github.io/2017/01/20/cnblogs博客迁移到hexo/index.html">
+<meta property="og:site_name" content="迪米特">
+<meta property="og:description" content="cnblogs博客备份备份地址：https://i.cnblogs.com/BlogBackup.aspx?type=1备份文件为xml格式，打开备份文件，如下所示：  
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot; standalone=&amp;quot;yes&amp;quot;?&amp;gt;&amp;lt;rss version=&amp;quot;2">
+<meta property="og:image" content="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/3.png">
+<meta property="og:updated_time" content="2017-01-20T13:44:16.011Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cnblogs博客迁移到hexo">
+<meta name="twitter:description" content="cnblogs博客备份备份地址：https://i.cnblogs.com/BlogBackup.aspx?type=1备份文件为xml格式，打开备份文件，如下所示：  
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot; standalone=&amp;quot;yes&amp;quot;?&amp;gt;&amp;lt;rss version=&amp;quot;2">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '4M7BK5YWNM',
+      apiKey: '72f42a4bca26d1e919ca01f61beea8b1',
+      indexName: 'hexosearch',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与「${query}」相关的内容","hits_stats":"${hits}条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://shijingjing07.github.io/2017/01/20/cnblogs博客迁移到hexo/"/>
+
+
+
+
+
+  <title> cnblogs博客迁移到hexo | 迪米特 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">迪米特</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">路过秋天</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://shijingjing07.github.io/2017/01/20/cnblogs博客迁移到hexo/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="迪米特">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="迪米特">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="迪米特" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                cnblogs博客迁移到hexo
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-20T21:43:53+08:00">
+                2017-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/20/cnblogs博客迁移到hexo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/20/cnblogs博客迁移到hexo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="cnblogs博客备份"><a href="#cnblogs博客备份" class="headerlink" title="cnblogs博客备份"></a>cnblogs博客备份</h2><p>备份地址：<a href="https://i.cnblogs.com/BlogBackup.aspx?type=1" target="_blank" rel="external">https://i.cnblogs.com/BlogBackup.aspx?type=1</a><br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/1.png" alt=""><br>备份文件为xml格式，打开备份文件，如下所示：  </p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;yes&quot;?&gt;&lt;rss version=&quot;2.0&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:trackback=&quot;http://madskills.com/public/xml/rss/module/trackback/&quot; xmlns:wfw=&quot;http://wellformedweb.org/CommentAPI/&quot; xmlns:slash=&quot;http://purl.org/rss/1.0/modules/slash/&quot;&gt;&lt;channel&gt;&lt;title&gt;博客园-&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/&lt;/link&gt;&lt;description /&gt;&lt;language&gt;zh-cn&lt;/language&gt;&lt;lastBuildDate&gt;Fri, 20 Jan 2017 13:20:14 GMT&lt;/lastBuildDate&gt;&lt;pubDate&gt;Fri, 20 Jan 2017 13:20:14 GMT&lt;/pubDate&gt;&lt;ttl&gt;60&lt;/ttl&gt;&lt;item&gt;&lt;title&gt;博客迁移&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/16/6290517.html&lt;/link&gt;&lt;dc:creator&gt;迪米特&lt;/dc:creator&gt;&lt;author&gt;迪米特&lt;/author&gt;&lt;pubDate&gt;Mon, 16 Jan 2017 09:44:00 GMT&lt;/pubDate&gt;&lt;guid&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/16/6290517.html&lt;/guid&gt;&lt;description&gt;&lt;![CDATA[&lt;p&gt;博客迁移至&amp;nbsp;&lt;a href=&quot;https://shijingjing07.github.io/&quot; target=&quot;_blank&quot;&gt;https://shijingjing07.github.io/&lt;/a&gt;&lt;/p&gt;]]&gt;&lt;/description&gt;&lt;/item&gt;&lt;item&gt;&lt;title&gt;cookie欺骗&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/06/6256622.html&lt;/link&gt;&lt;dc:creator&gt;迪米特&lt;/dc:creator&gt;&lt;author&gt;迪米特&lt;/author&gt;&lt;pubDate&gt;Fri, 06 Jan 2017 07:55:00 GMT&lt;/pubDate&gt;&lt;guid&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/06/6256622.html&lt;/guid&gt;&lt;description&gt;&lt;![CDATA[&lt;p&gt;1.什么是cookie欺骗&lt;br /&gt;改变cookie的值，发给服务器，就是cookie欺骗。&lt;br /&gt;正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。&lt;/p&gt;
+&lt;p&gt;2.cookie使用示例&lt;/p&gt;
+&lt;p&gt;index.html 写入cookie {&apos;username&apos;:&apos;zhangsan&apos;,&apos;psw&apos;:&apos;123&apos;}&lt;/p&gt;
+&lt;div class=&quot;cnblogs_code&quot;&gt;
+&lt;pre&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;!&lt;/span&gt;&lt;span style=&quot;color: #ff00ff;&quot;&gt;DOCTYPE html&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;html&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;head&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;meta &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;http-equiv&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;Content-Type&quot;&lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt; content&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;text/html; charset=utf-8&quot;&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;title&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;title&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;meta &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;charset&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;utf-8&quot;&lt;/span&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;type&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;text/javascript&quot;&lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt; src&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;jquery.min.js&quot;&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;type&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;text/javascript&quot;&lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt; src&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;jquery.cookie.js&quot;&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script &lt;/span&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;type&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;=&quot;text/javascript&quot;&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;
+    $.cookie(&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&apos;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;username&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&apos;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;zhangsan&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;);
+    $.cookie(&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&apos;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;psw&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&apos;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;123&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;background-color: #f5f5f5; color: #000000;&quot;&gt;);
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;script&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;head&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;body&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;body&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;html&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;运行index.html,通过Chrome F12开发者工具，可以看到cookie信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://images2015.cnblogs.com/blog/300946/201701/300946-20170106155059847-848303078.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到cookie要和domain域名对应。每个cookie只能被对应的域名所访问，其他域名无法访问。&lt;/p&gt;
+&lt;p&gt;3.如何进行cookie欺骗&lt;/p&gt;
+&lt;p&gt;修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。&lt;br /&gt;步骤：&lt;br /&gt;1)修改host&lt;br /&gt;121.43.113.200      dev.test.com&lt;br /&gt;2)将index.html放入服务器121.43.113.200&lt;br /&gt;3)访问url:dev.test.com/index.html&lt;br /&gt;4)查看cookie信息&lt;br /&gt;&lt;img src=&quot;http://images2015.cnblogs.com/blog/300946/201701/300946-20170106155240675-1380622233.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;5)还原host&lt;br /&gt;#121.43.113.200      dev.test.com&lt;br /&gt;6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。&lt;/p&gt;
+&lt;p&gt;4.cookie欺骗防止&lt;br /&gt;随机码防止cookie欺骗&lt;br /&gt;原理：在服务端生成唯一随机码，每次提交cookie时带上随机码，和服务端的随机码校验。&lt;/p&gt;]]&gt;&lt;/description&gt;&lt;/item&gt;&lt;/channel&gt;&lt;/rss&gt;
+</code></pre><h2 id="2-将备份文件解析为-mk文件"><a href="#2-将备份文件解析为-mk文件" class="headerlink" title="2.将备份文件解析为.mk文件"></a>2.将备份文件解析为.mk文件</h2><p>备份文件中每个item节点，对应一篇文章。<br>将每个item中的title,pubDate,description解析出来，写入.mk文件。<br>代码如下所示：  </p>
+<pre><code>#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import html2text
+import xml.sax
+import datetime
+import sys  
+reload(sys)  
+sys.setdefaultencoding(&apos;utf8&apos;)   
+class MovieHandler( xml.sax.ContentHandler ):
+   def __init__(self):
+      self.CurrentData = &quot;&quot;
+      self.title = &quot;&quot;
+      self.pubDate = &quot;&quot;
+      self.description = &quot;&quot;
+
+   # 元素开始事件处理
+   def startElement(self, tag ,attributes):
+      self.CurrentData = tag
+      if tag==&quot;item&quot;:
+          self.title = &quot;&quot;
+          self.pubDate = &quot;&quot;
+          self.description = &quot;&quot;
+
+   # 元素结束事件处理
+   def endElement(self, tag):
+      if tag == &quot;item&quot;:
+          try:
+            filename=self.title+&quot;.md&quot;
+            fo = open(&quot;D:\\certs\\&quot;+filename,&apos;a&apos;)
+            fo.write( &quot;---\n&quot;)
+            fo.write(&quot;title: &quot;+self.title+&quot;\n&quot;)
+            GMT_FORMAT = &apos;%a, %d %b %Y %H:%M:%S GMT&apos;
+            writedate=datetime.datetime.strptime(self.pubDate, GMT_FORMAT)
+            fo.write( &quot;date: &quot;+writedate.strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)+&quot;\n&quot;)
+            fo.write( &quot;tags: \n&quot;)
+            fo.write( &quot;categories: \n&quot;)
+            fo.write( &quot;---\n&quot;)
+            writedesc=html2text.html2text(self.description)
+            fo.write(writedesc)
+            fo.close()
+          except Exception as error:
+            print error.message
+
+   # 内容事件处理
+   def characters(self, content):
+      if self.CurrentData == &quot;title&quot;:
+         self.title = content
+      elif self.CurrentData == &quot;pubDate&quot;:
+         self.pubDate = content
+      elif self.CurrentData == &quot;description&quot;:
+         self.description += content
+
+if ( __name__ == &quot;__main__&quot;):
+
+   # 创建一个 XMLReader
+   parser = xml.sax.make_parser()
+   # turn off namepsaces
+   parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+
+   # 重写 ContextHandler
+   Handler = MovieHandler()
+   parser.setContentHandler( Handler )
+
+   parser.parse(&quot;CNBlogs_BlogBackup_1_201701_201701.xml&quot;)
+</code></pre><p>程序执行后，在D:\certs目录下就生成了hexo网站需要的.mk文件。<br>如下所示：<br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/2.png" alt=""></p>
+<h2 id="将生成的-mk文件copy到hexo-posts目录下"><a href="#将生成的-mk文件copy到hexo-posts目录下" class="headerlink" title="将生成的.mk文件copy到hexo _posts目录下"></a>将生成的.mk文件copy到hexo _posts目录下</h2><pre><code>D:\hexo\source\_posts
+</code></pre><h2 id="重新生成静态文件"><a href="#重新生成静态文件" class="headerlink" title="重新生成静态文件"></a>重新生成静态文件</h2><pre><code>hexo c
+hexo g
+hexo s
+</code></pre><p>在浏览器中打开 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a><br>结果如下：<br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/3.png" alt=""></p>
+<h2 id="备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"><a href="#备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。" class="headerlink" title="备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"></a>备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。</h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/16/webapi应用架构详解/" rel="next" title="webapi应用架构详解">
+                <i class="fa fa-chevron-left"></i> webapi应用架构详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/20/cnblogs博客迁移到hexo/"
+           data-title="cnblogs博客迁移到hexo" data-url="https://shijingjing07.github.io/2017/01/20/cnblogs博客迁移到hexo/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="迪米特" />
+          <p class="site-author-name" itemprop="name">迪米特</p>
+          <p class="site-description motion-element" itemprop="description">路过秋天</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">130</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shijingjing07" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/shijingjing07" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cnblogs博客备份"><span class="nav-number">1.</span> <span class="nav-text">cnblogs博客备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-将备份文件解析为-mk文件"><span class="nav-number">2.</span> <span class="nav-text">2.将备份文件解析为.mk文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将生成的-mk文件copy到hexo-posts目录下"><span class="nav-number">3.</span> <span class="nav-text">将生成的.mk文件copy到hexo _posts目录下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新生成静态文件"><span class="nav-number">4.</span> <span class="nav-text">重新生成静态文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"><span class="nav-number">5.</span> <span class="nav-text">备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迪米特</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shijingjing07"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
