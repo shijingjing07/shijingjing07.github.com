@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shijingjing07.github.io/"/>
-  <updated>2017-01-20T14:06:26.803Z</updated>
+  <updated>2017-01-20T14:07:58.440Z</updated>
   <id>https://shijingjing07.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://shijingjing07.github.io/2017/01/20/cnblogs%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E5%88%B0hexo/"/>
     <id>https://shijingjing07.github.io/2017/01/20/cnblogs博客迁移到hexo/</id>
     <published>2017-01-20T13:43:53.000Z</published>
-    <updated>2017-01-20T14:06:26.803Z</updated>
+    <updated>2017-01-20T14:07:58.440Z</updated>
     
     <content type="html"><![CDATA[<h2 id="cnblogs博客备份"><a href="#cnblogs博客备份" class="headerlink" title="cnblogs博客备份"></a>cnblogs博客备份</h2><p>备份地址：<a href="https://i.cnblogs.com/BlogBackup.aspx?type=1" target="_blank" rel="external">https://i.cnblogs.com/BlogBackup.aspx?type=1</a><br><img src="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/4.png" alt=""><br>备份文件为xml格式，打开备份文件，如下所示：  </p>
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;yes&quot;?&gt;&lt;rss version=&quot;2.0&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:trackback=&quot;http://madskills.com/public/xml/rss/module/trackback/&quot; xmlns:wfw=&quot;http://wellformedweb.org/CommentAPI/&quot; xmlns:slash=&quot;http://purl.org/rss/1.0/modules/slash/&quot;&gt;&lt;channel&gt;&lt;title&gt;博客园-&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/&lt;/link&gt;&lt;description /&gt;&lt;language&gt;zh-cn&lt;/language&gt;&lt;lastBuildDate&gt;Fri, 20 Jan 2017 13:20:14 GMT&lt;/lastBuildDate&gt;&lt;pubDate&gt;Fri, 20 Jan 2017 13:20:14 GMT&lt;/pubDate&gt;&lt;ttl&gt;60&lt;/ttl&gt;&lt;item&gt;&lt;title&gt;博客迁移&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/16/6290517.html&lt;/link&gt;&lt;dc:creator&gt;迪米特&lt;/dc:creator&gt;&lt;author&gt;迪米特&lt;/author&gt;&lt;pubDate&gt;Mon, 16 Jan 2017 09:44:00 GMT&lt;/pubDate&gt;&lt;guid&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/16/6290517.html&lt;/guid&gt;&lt;description&gt;&lt;![CDATA[&lt;p&gt;博客迁移至&amp;nbsp;&lt;a href=&quot;https://shijingjing07.github.io/&quot; target=&quot;_blank&quot;&gt;https://shijingjing07.github.io/&lt;/a&gt;&lt;/p&gt;]]&gt;&lt;/description&gt;&lt;/item&gt;&lt;item&gt;&lt;title&gt;cookie欺骗&lt;/title&gt;&lt;link&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/06/6256622.html&lt;/link&gt;&lt;dc:creator&gt;迪米特&lt;/dc:creator&gt;&lt;author&gt;迪米特&lt;/author&gt;&lt;pubDate&gt;Fri, 06 Jan 2017 07:55:00 GMT&lt;/pubDate&gt;&lt;guid&gt;http://www.cnblogs.com/shijingjing07/archive/2017/01/06/6256622.html&lt;/guid&gt;&lt;description&gt;&lt;![CDATA[&lt;p&gt;1.什么是cookie欺骗&lt;br /&gt;改变cookie的值，发给服务器，就是cookie欺骗。&lt;br /&gt;正常情况下，受浏览器的内部cookie机制所限，每个cookie只能被它的原服务器所访问，我们操作不了原服务器。&lt;/p&gt;
@@ -51,7 +51,7 @@
 &lt;p&gt;3.如何进行cookie欺骗&lt;/p&gt;
 &lt;p&gt;修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。&lt;br /&gt;步骤：&lt;br /&gt;1)修改host&lt;br /&gt;121.43.113.200      dev.test.com&lt;br /&gt;2)将index.html放入服务器121.43.113.200&lt;br /&gt;3)访问url:dev.test.com/index.html&lt;br /&gt;4)查看cookie信息&lt;br /&gt;&lt;img src=&quot;http://images2015.cnblogs.com/blog/300946/201701/300946-20170106155240675-1380622233.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;5)还原host&lt;br /&gt;#121.43.113.200      dev.test.com&lt;br /&gt;6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。&lt;/p&gt;
 &lt;p&gt;4.cookie欺骗防止&lt;br /&gt;随机码防止cookie欺骗&lt;br /&gt;原理：在服务端生成唯一随机码，每次提交cookie时带上随机码，和服务端的随机码校验。&lt;/p&gt;]]&gt;&lt;/description&gt;&lt;/item&gt;&lt;/channel&gt;&lt;/rss&gt;
-</code></pre><h2 id="2-将备份文件解析为-mk文件"><a href="#2-将备份文件解析为-mk文件" class="headerlink" title="2.将备份文件解析为.mk文件"></a>2.将备份文件解析为.mk文件</h2><p>备份文件中每个item节点，对应一篇文章。<br>将每个item中的title,pubDate,description解析出来，写入.mk文件。<br>代码如下所示：  </p>
+</code></pre><h2 id="将备份文件解析为-mk文件"><a href="#将备份文件解析为-mk文件" class="headerlink" title="将备份文件解析为.mk文件"></a>将备份文件解析为.mk文件</h2><p>备份文件中每个item节点，对应一篇文章。<br>将每个item中的title,pubDate,description解析出来，写入.mk文件。<br>代码如下所示：  </p>
 <pre><code>#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import html2text

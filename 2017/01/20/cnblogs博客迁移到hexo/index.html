@@ -97,7 +97,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/4.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/shijingjing07/shijingjing07.github.com/master/img/3.PNG">
-<meta property="og:updated_time" content="2017-01-20T14:06:26.803Z">
+<meta property="og:updated_time" content="2017-01-20T14:07:58.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cnblogs博客迁移到hexo">
 <meta name="twitter:description" content="cnblogs博客备份备份地址：https://i.cnblogs.com/BlogBackup.aspx?type=1备份文件为xml格式，打开备份文件，如下所示：  
@@ -378,7 +378,7 @@
 &lt;p&gt;3.如何进行cookie欺骗&lt;/p&gt;
 &lt;p&gt;修改hosts，将域名(dev.test.com)对应的ip转为自己的ip(121.43.113.200)，写在自己的ip下修改cookie，会发现域名对应的cookie更改了。&lt;br /&gt;步骤：&lt;br /&gt;1)修改host&lt;br /&gt;121.43.113.200      dev.test.com&lt;br /&gt;2)将index.html放入服务器121.43.113.200&lt;br /&gt;3)访问url:dev.test.com/index.html&lt;br /&gt;4)查看cookie信息&lt;br /&gt;&lt;img src=&quot;http://images2015.cnblogs.com/blog/300946/201701/300946-20170106155240675-1380622233.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;5)还原host&lt;br /&gt;#121.43.113.200      dev.test.com&lt;br /&gt;6)访问url:dev.test.com，会发现dev.test.com中的cookie已被修改。&lt;/p&gt;
 &lt;p&gt;4.cookie欺骗防止&lt;br /&gt;随机码防止cookie欺骗&lt;br /&gt;原理：在服务端生成唯一随机码，每次提交cookie时带上随机码，和服务端的随机码校验。&lt;/p&gt;]]&gt;&lt;/description&gt;&lt;/item&gt;&lt;/channel&gt;&lt;/rss&gt;
-</code></pre><h2 id="2-将备份文件解析为-mk文件"><a href="#2-将备份文件解析为-mk文件" class="headerlink" title="2.将备份文件解析为.mk文件"></a>2.将备份文件解析为.mk文件</h2><p>备份文件中每个item节点，对应一篇文章。<br>将每个item中的title,pubDate,description解析出来，写入.mk文件。<br>代码如下所示：  </p>
+</code></pre><h2 id="将备份文件解析为-mk文件"><a href="#将备份文件解析为-mk文件" class="headerlink" title="将备份文件解析为.mk文件"></a>将备份文件解析为.mk文件</h2><p>备份文件中每个item节点，对应一篇文章。<br>将每个item中的title,pubDate,description解析出来，写入.mk文件。<br>代码如下所示：  </p>
 <pre><code>#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import html2text
@@ -630,7 +630,7 @@ hexo s
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cnblogs博客备份"><span class="nav-number">1.</span> <span class="nav-text">cnblogs博客备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-将备份文件解析为-mk文件"><span class="nav-number">2.</span> <span class="nav-text">2.将备份文件解析为.mk文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将生成的-mk文件copy到hexo-posts目录下"><span class="nav-number">3.</span> <span class="nav-text">将生成的.mk文件copy到hexo _posts目录下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新生成静态文件"><span class="nav-number">4.</span> <span class="nav-text">重新生成静态文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"><span class="nav-number">5.</span> <span class="nav-text">备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cnblogs博客备份"><span class="nav-number">1.</span> <span class="nav-text">cnblogs博客备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将备份文件解析为-mk文件"><span class="nav-number">2.</span> <span class="nav-text">将备份文件解析为.mk文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将生成的-mk文件copy到hexo-posts目录下"><span class="nav-number">3.</span> <span class="nav-text">将生成的.mk文件copy到hexo _posts目录下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新生成静态文件"><span class="nav-number">4.</span> <span class="nav-text">重新生成静态文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。"><span class="nav-number">5.</span> <span class="nav-text">备份文件中没有分类，标签节点，所以无法将这两部分迁移到hexo。</span></a></li></ol></div>
             
 
           </div>
